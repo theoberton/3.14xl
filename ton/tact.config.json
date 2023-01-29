@@ -1,0 +1,7 @@
+{
+    "projects": [{
+        "name": "pixel",
+        "path": "./src/contracts/nft.tact",
+        "output": "./src/output"
+    }]
+}
