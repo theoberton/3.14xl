@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-// import App from './App'
-import Ipfs from './pages/Ipfs';
-import './index.css'
+import './assets/styles/index.scss';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router/routes';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <Ipfs />
+    <RouterProvider router={router}/>
   </React.StrictMode>,
 )

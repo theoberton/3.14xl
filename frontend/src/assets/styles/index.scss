@@ -1,0 +1,71 @@
+@import 'assets/styles/variables.scss';
+
+// Global classes and elements styles declaration
+
+body {
+  margin: 0;
+  font-family: $open-sans-font;
+  font-size: $font-base;
+  font-weight: $font-normal;
+  color: $blue-one;
+}
+
+input[type='number'] {
+  &::-webkit-inner-spin-button,
+  -webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-grow: 1;
+}
+
+body {
+  flex-grow: 1;
+}
+
+#root > div {
+  flex-grow: 1;
+}
+
+@font-face {
+  font-family: 'Sans';
+  font-style: normal;
+  font-weight: $font-light;
+  src: url('../fonts/Syne-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: 'Sans';
+  font-style: normal;
+  font-weight: $font-normal;
+  src: url('../fonts/Syne-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Sans';
+  font-style: normal;
+  font-weight: $font-semi-bold;
+  src: url('../fonts/Syne-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: 'Sans';
+  font-style: normal;
+  font-weight: $font-bold;
+  src: url('../fonts/Syne-Bold.ttf');
+}
