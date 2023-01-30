@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "ipfs-core": "^0.18.0",
+    "it-all": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
