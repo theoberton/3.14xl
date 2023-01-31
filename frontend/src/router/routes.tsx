@@ -1,15 +1,20 @@
-import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom';
-import Landing from './../features/Landing';
+import { Route, Routes } from "react-router-dom";
+import { history } from 'helpers/navigation';
+import CustomRouter from 'components/CustomRouter';
 
-const routes: RouteObject[] = [
-	{
-		path: '/',
-		element: <Landing />,
-		children: [
-			{ path: 'not-found', element: <div /> },
-			{ path: '*', element: <Navigate replace to="/not-found" /> },
-		],
-	},
-];
+import WalletLayout from 'layouts/WalletLayout'
+import LandingPage from 'pages/Landing'
 
-export const router = createBrowserRouter(routes);
+function ApplicationRoutes() {
+    return (
+        <CustomRouter history={history}>
+            <Routes>
+                <Route element={<WalletLayout />}>
+                    <Route index path='' element={<LandingPage />} />
+                </Route>
+            </Routes>
+        </CustomRouter>
+    );
+};
+
+export default ApplicationRoutes;
