@@ -3,52 +3,52 @@ import _ from 'lodash';
 import { useFormikContext, useField } from 'formik';
 
 export const useCustomStateFormField = (fieldName: string) => {
-  const { errors, status, touched, setTouched, setStatus } = useFormikContext();
+	const { errors, status, touched, setTouched, setStatus } = useFormikContext();
 
-  const [field] = useField(fieldName);
+	const [field] = useField(fieldName);
 
-  const [fieldState, setFieldState] = useState({
-    isFocused: false,
-    isSuccess: false,
-  });
+	const [fieldState, setFieldState] = useState({
+		isFocused: false,
+		isSuccess: false,
+	});
 
-  const onFocus = () => {
-    setFieldState({ ...fieldState, isFocused: true });
-  };
+	const onFocus = () => {
+		setFieldState({ ...fieldState, isFocused: true });
+	};
 
-  const getError = () => {
-    if (!field.name) return null;
+	const getError = () => {
+		if (!field.name) return null;
 
-    const isTouched = touched && _.get(touched, field.name);
+		const isTouched = touched && _.get(touched, field.name);
 
-    let error = null;
+		let error = null;
 
-    if (isTouched && errors && _.get(errors, field.name)) {
-      error = _.get(errors, field.name);
+		if (isTouched && errors && _.get(errors, field.name)) {
+			error = _.get(errors, field.name);
 
-      if (status) {
-        setStatus(null);
-      }
-    }
+			if (status) {
+				setStatus(null);
+			}
+		}
 
-    return _.upperFirst(error);
-  };
+		return _.upperFirst(error);
+	};
 
-  const onBlur = () => {
-    let isSuccess = false;
+	const onBlur = () => {
+		let isSuccess = false;
 
-    if (!getError()) {
-      isSuccess = true;
-    }
+		if (!getError()) {
+			isSuccess = true;
+		}
 
-    setTouched({ ...touched, [field.name]: true });
+		setTouched({ ...touched, [field.name]: true });
 
-    setFieldState({ ...fieldState, isFocused: false, isSuccess });
-  };
+		setFieldState({ ...fieldState, isFocused: false, isSuccess });
+	};
 
-  return {
-    onFocus,
-    onBlur,
-    getError,
-  };
+	return {
+		onFocus,
+		onBlur,
+		getError,
+	};
 };
