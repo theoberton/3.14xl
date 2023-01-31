@@ -16,8 +16,8 @@ export const useCustomStateFormField = (fieldName: string) => {
 		setFieldState({ ...fieldState, isFocused: true });
 	};
 
-	const getError = () => {
-		if (!field.name) return null;
+  const getError = (): string | null => {
+    if (!field.name) return null;
 
 		const isTouched = touched && _.get(touched, field.name);
 
