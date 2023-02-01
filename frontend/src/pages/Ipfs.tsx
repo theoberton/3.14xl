@@ -1,19 +1,8 @@
-import { useState, useEffect } from 'react';
-import { create, IPFS, Options } from 'ipfs-core';
+import { useState } from 'react';
 import { AddResult } from 'ipfs-core-types/src/root';
 import all from 'it-all';
+import useIpfs from '@/hooks/useIpfs';
 
-function useIpfs(options: Options) {
-	const [ipfs, setIpfs] = useState<IPFS>();
-
-	useEffect(() => {
-		(async () => {
-			setIpfs(await create(options));
-		})();
-	}, []);
-
-	return ipfs;
-}
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 type Preview = Modify<
@@ -24,7 +13,7 @@ type Preview = Modify<
 >;
 
 function Ipfs() {
-	const ipfs = useIpfs({});
+	const ipfs = useIpfs();
 	const [files, setFiles] = useState<FileList | null>(null);
 	const [previews, setPreviews] = useState<Preview[]>();
 

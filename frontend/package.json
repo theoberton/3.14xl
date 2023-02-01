@@ -11,19 +11,25 @@
   "dependencies": {
     "@orbs-network/ton-access": "^2.2.2",
     "@tonconnect/ui-react": "^0.0.14",
-    "@types/history": "^5.0.0",
     "formik": "^2.2.9",
     "history": "^5.3.0",
     "ipfs-core": "^0.18.0",
     "it-all": "^2.0.0",
     "lodash": "^4.17.21",
+    "qs": "^6.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0",
     "ton": "^13.3.0",
-    "ton-core": "^0.46.0"
+    "ton-core": "^0.46.0",
+    "tonweb": "^0.0.59",
+    "vite-plugin-node-polyfills": "^0.7.0"
   },
   "devDependencies": {
+
+    "@types/history": "^5.0.0",
+    "@types/qs": "^6.9.7",
+    "@types/bn.js": "^5.1.1",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import 'assets/styles/index.scss';
+import '@/assets/styles/index.scss';
 import ApplicationRoutes from './router/routes';
 
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
@@ -11,8 +11,8 @@ const manifestUrl = 'https://raw.githubusercontent.com/ton-community/tutorials/m
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <TonConnectUIProvider manifestUrl={manifestUrl}>
+    <TonConnectUIProvider manifestUrl={manifestUrl}> 
       <ApplicationRoutes />
-    </TonConnectUIProvider>,
+    </TonConnectUIProvider>
   </React.StrictMode>
 )

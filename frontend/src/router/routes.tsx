@@ -1,9 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import { history } from 'helpers/navigation';
-import CustomRouter from 'components/CustomRouter';
+import { history } from '@/helpers/navigation';
+import CustomRouter from '@/components/CustomRouter';
 
-import WalletLayout from 'layouts/WalletLayout'
-import LandingPage from 'pages/Landing'
+import WalletLayout from '@/layouts/WalletLayout';
+import LandingPage from '@/pages/Landing';
+import CreateEditionPage from '@/pages/CreateEdition';
+import EditionPage from '@/pages/Edition';
 
 function ApplicationRoutes() {
     return (
@@ -11,6 +13,8 @@ function ApplicationRoutes() {
             <Routes>
                 <Route element={<WalletLayout />}>
                     <Route index path='' element={<LandingPage />} />
+                    <Route path='edition' element={<CreateEditionPage />} />
+                    <Route path='edition/:address' element={<EditionPage />} />
                 </Route>
             </Routes>
         </CustomRouter>
