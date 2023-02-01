@@ -45,6 +45,10 @@ contract NftCollection with Deployable, Ownable {
         });
     }
 
+    receive(msg: Slice) { 
+        reply("Deploy Ok".asComment());
+    }
+
     get fun content(): Slice {
         return self.content;
     }
