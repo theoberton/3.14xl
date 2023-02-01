@@ -16,5 +16,6 @@ import { getClient, getProvider } from "./utils/helpers";
   printAddress(owner);  
 
   const totalSupply = await contract.getTotalSupply(provider);
-  print('NFT Collection total supply', { totalSupply });
+  const content = await contract.getContent(provider);
+  print('NFT Collection', { totalSupply, content });
 })();

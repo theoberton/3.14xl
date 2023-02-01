@@ -7,9 +7,10 @@
   "scripts": {
     "build": "tact --config ./tact.config.json",
     "test": "jest",
-    "deploy": "ts-node ./src/contract.deploy.ts",
-    "get": "ts-node ./src/contract.get.ts",
-    "mint": "ts-node ./src/contract.mint.ts"
+    "collection-deploy": "ts-node ./src/collection.deploy.ts",
+    "collection-get": "ts-node ./src/collection.get.ts",
+    "collection-mint": "ts-node ./src/collection.mint.ts",
+    "item-get": "ts-node ./src/item.get.ts"
   },
   "dependencies": {
     "@types/jest": "^29.2.4",

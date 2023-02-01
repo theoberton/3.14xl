@@ -7,9 +7,10 @@ import { setDeployedContractAddress } from './env';
 
 (async () => {
     const deployerAddress = await getDeployerAddress();
+    const content = 24n;
 
-    const deployOkCell = beginCell().store(storeDeployOk({ $$type: 'DeployOk', queryId: 10n })).endCell();
-    const init = await NftCollection.init(deployerAddress);
+    const deployOkCell = beginCell().store(storeDeployOk({ $$type: 'DeployOk', queryId: 0n })).endCell();
+    const init = await NftCollection.init(deployerAddress, content);
     const address = contractAddress(0, init);
     const deployAmount = toNano('0.05');
     const testnet = true;
