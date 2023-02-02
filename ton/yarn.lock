@@ -664,10 +664,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@ton-community/blueprint@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@ton-community/blueprint/-/blueprint-0.0.2.tgz#a29cd20f88dfffa78ee5494af4c60d1d3842bd61"
-  integrity sha512-WcwfsI8mrcX8WxbY8s5UP/F6w067NkgaA3GWwMgzlCS7irdzvaaxqoASHRY6VYqRTemclTFygWXdC3nZgz3tvw==
+"@ton-community/blueprint@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@ton-community/blueprint/-/blueprint-0.0.3.tgz#c0d2f8a113f31348dcf7bf16af6fb0f401f0d929"
+  integrity sha512-CRLMBtL6CESvqMnskXLUkrKoGxPHu1D3iGIXcQpUDyH22P6b2F3AEluXMG8K8Hh/iCYcybVaQGnjuCE8kN7lRg==
   dependencies:
     "@orbs-network/ton-access" "^2.2.2"
     "@ton-community/func-js" "^0.4.0"

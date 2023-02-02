@@ -37,6 +37,6 @@
     "typescript": "^4.9.4"
   },
   "devDependencies": {
-    "@ton-community/blueprint": "^0.0.2"
+    "@ton-community/blueprint": "^0.0.3"
   }
 }
