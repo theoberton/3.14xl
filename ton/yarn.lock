@@ -3191,19 +3191,19 @@ ton-crypto@^3.0.0, ton-crypto@^3.2.0:
     ton-crypto-primitives "2.0.0"
     tweetnacl "1.0.3"
 
-ton-emulator@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.npmjs.org/ton-emulator/-/ton-emulator-1.3.0.tgz"
-  integrity sha512-g+RmOpfRtjCYaqJxv0xtGNWVMSab5FXS+TTTmxu7iOxUcNRee/B5CQJv8y5C7kwUfmuhqVY/wTsDFaDCoXusTQ==
+ton-emulator@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ton-emulator/-/ton-emulator-2.0.0.tgz#5b259d03dbec098feb1f9047132a6c0ddb115e48"
+  integrity sha512-mhLCF6H1HFAJEV4B+A08HeRqXdoV0zf8DOsndB1etU7YbK3IkyZ0k0WiEW4H8KRX7ttKeu7SmIFzCsVSHXpmRw==
   dependencies:
     prando "^6.0.1"
     teslabot "^1.5.0"
     zod "^3.20.2"
 
-ton-tact@^0.8.11:
-  version "0.8.11"
-  resolved "https://registry.yarnpkg.com/ton-tact/-/ton-tact-0.8.11.tgz#e348eafe1d0d85819814e53cddf21e28c082e8db"
-  integrity sha512-5RtWnNbKM6f/Z8ixbgTubmCMTRdzLILCdW2NYf+b1XFd6ImXMm47lQNosuF+alCdWzfwX0E+KQSbqRSK41AJsA==
+ton-tact@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/ton-tact/-/ton-tact-0.9.0.tgz#68d321975dfd696dad310c90b56bab586bcc2ef1"
+  integrity sha512-TK9idKg4sPQi1VZ+naBZ1kzm64qlXQSqiroDHZD0ffhsnIdOW2n6BbQDk5NqjvA5Db49ZsgjMSAlwJ0dGFdm1Q==
   dependencies:
     "@ipld/dag-pb" "2.1.18"
     "@types/tmp" "^0.2.3"

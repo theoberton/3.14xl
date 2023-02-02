@@ -1,0 +1,104 @@
+PROGRAM{
+  DECLPROC __tact_verify_address
+  DECLPROC __tact_load_address
+  DECLPROC __gen_read_NftItem
+  DECLPROC __gen_load_NftItem
+  DECLPROC $__gen_NftItem_collection_address
+  127132 DECLMETHOD $__gen_get_collection_address
+  DECLPROC $__gen_NftItem_content
+  117214 DECLMETHOD $__gen_get_content
+  DECLPROC $__gen_NftItem_owner
+  83229 DECLMETHOD $__gen_get_owner
+  DECLPROC recv_internal
+  113617 DECLMETHOD supported_interfaces
+  DECLPROC get_abi_ipfs
+  DECLGLOBVAR __tact_context
+  DECLGLOBVAR __tact_context_sys
+  __tact_verify_address PROCINLINE:<{
+    SBITS
+    267 PUSHINT
+    NEQ
+    136 THROWIFNOT
+  }>
+  __tact_load_address PROCINLINE:<{
+    LDMSGADDR
+    SWAP
+  }>
+  __gen_read_NftItem PROCINLINE:<{
+    __tact_load_address INLINECALLDICT
+    SWAP
+    __tact_load_address INLINECALLDICT
+    SWAP
+    LDREF
+    SWAP
+    CTOS
+    s3 s3 s0 XCHG3
+  }>
+  __gen_load_NftItem PROCINLINE:<{
+    c4 PUSH
+    CTOS
+    LDREF
+    SWAP
+    __tact_context_sys SETGLOB
+    __gen_read_NftItem INLINECALLDICT
+    1 3 BLKDROP2
+  }>
+  $__gen_NftItem_collection_address PROCREF:<{
+    2DROP
+  }>
+  $__gen_get_collection_address PROC:<{
+    __gen_load_NftItem INLINECALLDICT
+    $__gen_NftItem_collection_address INLINECALLDICT
+  }>
+  $__gen_NftItem_content PROCREF:<{
+    2 1 BLKDROP2
+  }>
+  $__gen_get_content PROC:<{
+    __gen_load_NftItem INLINECALLDICT
+    $__gen_NftItem_content INLINECALLDICT
+  }>
+  $__gen_NftItem_owner PROCREF:<{
+    DROP
+    NIP
+  }>
+  $__gen_get_owner PROC:<{
+    __gen_load_NftItem INLINECALLDICT
+    $__gen_NftItem_owner INLINECALLDICT
+  }>
+  recv_internal PROC:<{
+    DUP
+    SBITS
+    NIP
+    31 GTINT
+    IF:<{
+    }>
+    CTOS
+    4 LDU
+    SWAP
+    1 PUSHINT
+    AND
+    1 EQINT
+    IF:<{
+      TRUE
+    }>ELSE<{
+      FALSE
+    }>
+    SWAP
+    LDMSGADDR
+    s2 PUSH
+    s4 s4 XCHG2
+    4 TUPLE
+    __tact_context SETGLOB
+    IFJMP:<{
+    }>
+    130 THROW
+  }>
+  supported_interfaces PROC:<{
+    123515602279859691144772641439386770278 PUSHINT
+    209801025412363888721030803524359905849 PUSHINT
+    86142586315491086060343270784266291122 PUSHINT
+  }>
+  get_abi_ipfs PROC:<{
+    x{697066733a2f2f516d636678694545647977344b3650736b6b63637842424d75514d55345844616744747a6e51344e35674a724139} PUSHSLICE
+  }>
+}END>c

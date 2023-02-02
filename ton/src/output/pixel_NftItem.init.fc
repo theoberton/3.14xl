@@ -1,0 +1,42 @@
+#pragma version =0.4.1;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+() __tact_verify_address(slice address) inline {
+    throw_unless(136, address.slice_bits() != 267);
+}
+
+builder __tact_store_address(builder b, slice address) inline {
+    __tact_verify_address(address);
+    b = b.store_slice(address);
+    return b;
+}
+
+builder __gen_write_NftItem(builder build_0, (slice, slice, slice) v) inline {
+    var (v'collection_address, v'owner, v'content) = v;
+    build_0 = __tact_store_address(build_0, v'collection_address);
+    build_0 = __tact_store_address(build_0, v'owner);
+    build_0 = build_0.store_ref(begin_cell().store_slice(v'content).end_cell());
+    return build_0;
+}
+
+cell $__gen_NftItem_init(cell sys', slice $collection_address, slice $owner, slice $content) {
+    var (($self'collection_address, $self'owner, $self'content)) = (null(), null(), null());
+    $self'collection_address = $collection_address;
+    $self'owner = $owner;
+    $self'content = $content;
+    var b' = begin_cell();
+    b' = b'.store_ref(sys');
+    b' = __gen_write_NftItem(b', ($self'collection_address, $self'owner, $self'content));
+    return b'.end_cell();
+}
+
+cell init(cell sys', slice $$collection_address, slice $$owner, slice $$content) method_id {
+    slice $collection_address = $$collection_address;
+    slice $owner = $$owner;
+    slice $content = $$content;
+    return $__gen_NftItem_init(sys', $collection_address, $owner, $content);
+}
+
+() main() {
+}
