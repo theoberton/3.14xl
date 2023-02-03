@@ -2,6 +2,8 @@
 
 .button {
   display: flex;
+  position: relative;
+
   align-items: center;
   justify-content: center;
   border: 1px solid $salad-one;
@@ -15,6 +17,17 @@
   white-space: nowrap;
   font-weight: $font-semi-bold;
 
+
+  &Expanded {
+    width: 100%;
+  }
+
+  &Wrapper {
+    &Expanded {
+      @extend .button;
+      width: 100%;
+    }
+  }
 
   &WithIcon {
     @extend .button;
@@ -40,12 +53,14 @@
   }
 
   &Content {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 8fr 1fr;
 
     &Main {
       display: flex;
       align-items: center;
+      justify-content: center;
     }
   }
 }

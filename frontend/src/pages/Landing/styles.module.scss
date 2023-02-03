@@ -3,12 +3,14 @@
 .landing {
 	&Presentation {
 		&Section {
+			padding: 40px 0;
 			display: flex;
 			flex-direction: row;
 			gap: 80px;
 		}
 
 		&Details {
+			font-size: $font-medium;
 			display: flex;
 			flex-direction: column;
 			gap: 40px;
