@@ -5,6 +5,8 @@ import NFTExampleOne from '@/assets/images/png/landing/discoverSequenceOne.png';
 import NFTExampleTwo from '@/assets/images/png/landing/discoverSequenceTwo.png';
 import NFTExampleThree from '@/assets/images/png/landing/discoverSequenceThree.png';
 import DiscoverNFT from '@/assets/images/svg/common/discoverNft.svg';
+import { ButtonKinds } from '@/components/Button/interfaces';
+
 import styles from '@/pages/Landing/styles.module.scss';
 
 
@@ -43,7 +45,7 @@ function PresentationSection() {
 								Whether you are just starting out or have been in the game for a while, it's never been easier to build something remarkable.
 							</div>
 					</div>
-          <Button icon={ArrowIcon}> Create new collection </Button>
+          <Button kind={ButtonKinds.basicWithIconArrowRight} > Create new collection </Button>
 				</div>
 			</div>
 		</div>

@@ -2,23 +2,26 @@
 import cn from 'classnames';
 import commonStyles from '@/pages/styles.module.scss';
 import styles from '@/components/Button/styles.module.scss';
+import ArrowLeftIcon from '@/assets/images/svg/button/arrowLeft.svg';
+import ArrowRightIcon from '@/assets/images/svg/button/arrowRight.svg';
+import { ButtonKinds } from '@/components/Button/interfaces';
 
-interface ButtonProps {
+type ButtonProps = {
   onClick?: () => void;
   isDisabled?: boolean;
   children: React.ReactNode,
-  icon: string;
-  isExpanded?: boolean;
-}
+  kind: ButtonKinds;
+  icon?: string;
+};
 
 function Button(props: ButtonProps) {
   const {
     onClick,
-    children,
     icon,
     isDisabled,
   } = props;
 
+  const buttonContent = getButtonContent(props);
   const isIconExists = Boolean(icon);
 
   const btnClass = cn({
@@ -28,23 +31,74 @@ function Button(props: ButtonProps) {
   });
 
   return (
-    <div>
       <button
         type = 'button'
         className={btnClass}
         onClick={!isDisabled ? onClick : () => {}}
       >
+        {buttonContent}
+      </button>
+  );
+}
+
+function getButtonContent(props: ButtonProps): React.ReactNode {
+  const {
+    children,
+    icon,
+    kind,
+  } = props;
+
+  let basicButtonContent: JSX.Element | null = null;
+
+  if(kind == ButtonKinds.basic) {
+      basicButtonContent = (
         <div className={styles.buttonContent}>
           <div className={styles.buttonContentMain}>{children}</div>
+        </div>
+    );
+  } else if(kind == ButtonKinds.arrowLeft) {
+      basicButtonContent = (
+        <div className={styles.buttonContent}>
           {icon && (
             <div className={styles.buttonIconWrapper}>
-              <img className={styles.buttonIconRight} src={icon} />
+              <img className={styles.buttonIconRight} src={ArrowLeftIcon} />
             </div>
           )}
         </div>
-      </button>
-    </div>
+    );
+  } else if(kind == ButtonKinds.arrowRight) {
+    basicButtonContent = (
+      <div className={styles.buttonContent}>
+        {icon && (
+          <div className={styles.buttonIconWrapper}>
+            <img className={styles.buttonIconRight} src={ArrowRightIcon} />
+          </div>
+        )}
+      </div>
   );
+  } else if(kind == ButtonKinds.basicWithIconArrowLeft) {
+    basicButtonContent = (
+      <div className={styles.buttonContent}>
+        <div className={styles.buttonContentMain}>{children}</div>
+        {icon && (
+          <div className={styles.buttonIconWrapper}>
+            <img className={styles.buttonIconRight} src={ArrowLeftIcon} />
+          </div>
+        )}
+      </div>
+  );
+  } else if(kind == ButtonKinds.basicWithIconArrowRight) {
+    basicButtonContent = (
+      <div className={styles.buttonContent}>
+        <div className={styles.buttonContentMain}>{children}</div>
+        <div className={styles.buttonIconWrapper}>
+          <img className={styles.buttonIconRight} src={ArrowRightIcon} />
+        </div>
+      </div>
+  );
+  }
+
+  return basicButtonContent;
 }
 
 export default Button;
