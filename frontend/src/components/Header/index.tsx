@@ -1,10 +1,15 @@
 import { TonConnectButton } from '@tonconnect/ui-react';
+import Logo from '@/assets/images/svg/common/logo.svg'
+import styles from '@/components/Header/styles.module.scss';
 
 function Header() {
-	return <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-			<span>Header for basic pages with wallet at the right top</span>
+	return (
+		<div className={styles.headerContainer}>
+			<img src={Logo} />
 			<TonConnectButton />
-		</div>;
+
+		</div>
+	);
 }
 
 export default Header;

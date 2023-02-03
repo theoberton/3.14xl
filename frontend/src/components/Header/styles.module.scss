@@ -1,0 +1,15 @@
+@import '@/assets/styles/variables.scss';
+
+.header {
+  &Container {
+    display: flex;
+    position: relative;
+    height: 50px;
+    justify-content: space-between;
+    padding-left: 10% !important;
+    padding-right: 10% !important;
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 10px 0;
+  }
+}
