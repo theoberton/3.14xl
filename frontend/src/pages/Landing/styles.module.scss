@@ -6,8 +6,6 @@
     border-top: 1px solid $gray-two;
     padding: 20px ;
   }
-
-
  
   &Presentation {
     &Section {
@@ -17,6 +15,7 @@
     }
 
     &Details {
+      font-size: $font-medium;
       display: flex;
       flex-direction: column;
       gap: 40px;

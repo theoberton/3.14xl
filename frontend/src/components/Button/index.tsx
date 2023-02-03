@@ -8,6 +8,7 @@ interface ButtonProps {
   isDisabled?: boolean;
   children: React.ReactNode,
   icon: string;
+  isExpanded?: boolean;
 }
 
 function Button(props: ButtonProps) {
@@ -27,20 +28,22 @@ function Button(props: ButtonProps) {
   });
 
   return (
-    <button
-      type = 'button'
-      className={btnClass}
-      onClick={!isDisabled ? onClick : () => {}}
-    >
-      <div className={styles.buttonContent}>
-        <div className={styles.buttonContentMain}>{children}</div>
-        {icon && (
-          <div className={styles.buttonIconWrapper}>
-            <img className={styles.buttonIconRight} src={icon} />
-          </div>
-        )}
-      </div>
-    </button>
+    <div>
+      <button
+        type = 'button'
+        className={btnClass}
+        onClick={!isDisabled ? onClick : () => {}}
+      >
+        <div className={styles.buttonContent}>
+          <div className={styles.buttonContentMain}>{children}</div>
+          {icon && (
+            <div className={styles.buttonIconWrapper}>
+              <img className={styles.buttonIconRight} src={icon} />
+            </div>
+          )}
+        </div>
+      </button>
+    </div>
   );
 }
 

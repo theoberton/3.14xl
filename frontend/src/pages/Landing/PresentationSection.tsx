@@ -43,13 +43,7 @@ function PresentationSection() {
 								Whether you are just starting out or have been in the game for a while, it's never been easier to build something remarkable.
 							</div>
 					</div>
-          <div>
-							<Button
-								icon={ArrowIcon}
-							>
-								Create new collection
-							</Button>
-						</div>
+          <Button icon={ArrowIcon}> Create new collection </Button>
 				</div>
 			</div>
 		</div>
