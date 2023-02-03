@@ -1,62 +1,51 @@
 @import '@/assets/styles/variables.scss';
 
 .landing {
-  &Container {
-    margin: 0 10%;
-    border-top: 1px solid $gray-two;
-    padding: 20px ;
-  }
+	&Presentation {
+		&Section {
+			display: flex;
+			flex-direction: row;
+			gap: 80px;
+		}
 
+		&Details {
+			display: flex;
+			flex-direction: column;
+			gap: 40px;
+			margin-left: -50px;
+			align-items: center;
+		}
 
- 
-  &Presentation {
-    &Section {
-      display: flex;
-      flex-direction: row;
-      gap: 80px;
-    }
+		&Examples {
+			display: flex;
 
-    &Details {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-      margin-left: -50px;
-      align-items: center;
-    }
+			:nth-child(1) {
+				margin-left: -20px;
+			}
+		}
 
-    &Examples {
-      display: flex;
+		&Example {
+			&Wrapper {
+				border-radius: 100%;
+				margin-left: -50px;
+				background-color: $white;
+			}
+			height: 160px;
+		}
 
-      :nth-child(1) {
-        margin-left: -20px;
-      }
-    }
+		&Explanation {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
 
-    &Example {
+			&Section {
+				color: $grey-one;
+			}
+		}
 
-      &Wrapper {
-        border-radius: 100%;
-        margin-left: -50px;
-        background-color: $white;
-      }
-      height: 160px;
-    }
-
-    &Explanation {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-
-      &Section {
-        color: $grey-one;
-      }
-    }
-
-
-
-    &Slogan {
-      font-size: $font-extra-huge;
-      margin-right: 70px;
-    }
-  }
+		&Slogan {
+			font-size: $font-extra-huge;
+			margin-right: 70px;
+		}
+	}
 }

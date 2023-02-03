@@ -1,0 +1,43 @@
+$breakpoint-xs: 575.98px;
+$breakpoint-s: 767.98px;
+$breakpoint-m: 991.98px;
+$breakpoint-l: 1199.98px;
+$breakpoint-xl: 1399.98px;
+
+.pageContainer {
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	padding: 0 15px;
+}
+
+@media (min-width: $breakpoint-xs) {
+	.pageContainer {
+		padding: 0 calc(50% - 270px);
+	}
+}
+
+@media (min-width: $breakpoint-s) {
+	.pageContainer {
+		padding: 0 calc(50% - 360px);
+	}
+}
+
+@media (min-width: $breakpoint-m) {
+	.pageContainer {
+		padding: 0 calc(50% - 480px);
+	}
+}
+
+@media (min-width: $breakpoint-l) {
+	.pageContainer {
+		padding: 0 calc(50% - 590px);
+	}
+}
+
+@media (min-width: $breakpoint-xl) {
+	.pageContainer {
+		padding: 0 calc(50% - 690px);
+	}
+}
