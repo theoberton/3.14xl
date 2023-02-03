@@ -9,7 +9,7 @@ import { ButtonKinds } from '@/components/Button/interfaces';
 type ButtonProps = {
   onClick?: () => void;
   isDisabled?: boolean;
-  children: React.ReactNode,
+  children?: React.ReactNode,
   kind: ButtonKinds;
   icon?: string;
 };
@@ -48,8 +48,10 @@ function getButtonContent(props: ButtonProps): React.ReactNode {
     kind,
   } = props;
 
+  console.log('kind', kind);
+  console.log('ButtonKinds.arrowRight', ButtonKinds.arrowRight)
   let basicButtonContent: JSX.Element | null = null;
-
+  console.log('ArrowRightIcon', ArrowRightIcon);
   if(kind == ButtonKinds.basic) {
       basicButtonContent = (
         <div className={styles.buttonContent}>
@@ -69,22 +71,18 @@ function getButtonContent(props: ButtonProps): React.ReactNode {
   } else if(kind == ButtonKinds.arrowRight) {
     basicButtonContent = (
       <div className={styles.buttonContent}>
-        {icon && (
-          <div className={styles.buttonIconWrapper}>
-            <img className={styles.buttonIconRight} src={ArrowRightIcon} />
-          </div>
-        )}
+        <div className={styles.buttonIconWrapper}>
+          <img className={styles.buttonIconRight} src={ArrowRightIcon} />
+        </div>
       </div>
   );
   } else if(kind == ButtonKinds.basicWithIconArrowLeft) {
     basicButtonContent = (
       <div className={styles.buttonContent}>
         <div className={styles.buttonContentMain}>{children}</div>
-        {icon && (
           <div className={styles.buttonIconWrapper}>
             <img className={styles.buttonIconRight} src={ArrowLeftIcon} />
           </div>
-        )}
       </div>
   );
   } else if(kind == ButtonKinds.basicWithIconArrowRight) {
