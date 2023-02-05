@@ -9,7 +9,7 @@ import styles from '@/pages/Landing/styles.module.scss';
 
 function PresentationSection() {
 	return (
-		<div className={styles.landingPresentationSection}>
+		<section className={styles.landingPresentationSection}>
 			<div className={styles.landingPresentationSlogan}>
 				<div>Bring</div>
 				<div>visions</div>
@@ -17,18 +17,10 @@ function PresentationSection() {
 			</div>
 			<div className={styles.landingPresentationDetails}>
 				<div className={styles.landingPresentationExamples}>
-					<div className={styles.landingPresentationExampleWrapper}>
-						<img className={styles.landingPresentationExample} src={NFTExampleOne} />
-					</div>
-					<div className={styles.landingPresentationExampleWrapper}>
-						<img className={styles.landingPresentationExample} src={NFTExampleTwo} />
-					</div>
-					<div className={styles.landingPresentationExampleWrapper}>
-						<img className={styles.landingPresentationExample} src={NFTExampleThree} />
-					</div>
-					<div className={styles.landingPresentationExampleWrapper}>
-						<img src={DiscoverNFT} />
-					</div>
+					<img className={styles.landingPresentationExample} src={NFTExampleOne} />
+					<img className={styles.landingPresentationExample} src={NFTExampleTwo} />
+					<img className={styles.landingPresentationExample} src={NFTExampleThree} />
+					<img className={styles.landingPresentationExample} src={DiscoverNFT} />
 				</div>
 				<div className={styles.landingPresentationExplanation}>
 					<div className={styles.landingPresentationExplanationSection}>
@@ -43,9 +35,13 @@ function PresentationSection() {
 						easier to build something remarkable.
 					</div>
 				</div>
-				<Button icon={ArrowIcon}> Create new collection </Button>
+				<div className={styles.landingPresentationButton}>
+					<Button isExpanded={true} icon={ArrowIcon}>
+						Create new collection
+					</Button>
+				</div>
 			</div>
-		</div>
+		</section>
 	);
 }
 

@@ -6,48 +6,59 @@
 			padding: 40px 0;
 			display: flex;
 			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
 			gap: 80px;
+			flex: 1;
 		}
 
 		&Details {
 			font-size: $font-medium;
 			display: flex;
 			flex-direction: column;
-			gap: 40px;
-			margin-left: -50px;
 			align-items: center;
+			justify-content: center;
+			gap: 40px;
+			flex: 1;
 		}
 
 		&Examples {
 			display: flex;
-
-			:nth-child(1) {
-				margin-left: -20px;
-			}
+			margin-left: 50px;
 		}
 
 		&Example {
-			&Wrapper {
-				border-radius: 100%;
-				margin-left: -50px;
-				background-color: $white;
-			}
-			height: 160px;
+			border-radius: 100%;
+			margin-left: -50px;
+			background-color: $white;
+
+			height: max-content;
+			width: max-content;
+
+			height: 180px;
+			width: 180px;
 		}
 
 		&Explanation {
 			display: flex;
 			flex-direction: column;
 			gap: 20px;
+			max-width: 550px;
 
 			&Section {
 				color: $grey-one;
+				max-width: 100%;
 			}
 		}
 
 		&Slogan {
 			font-size: $font-extra-huge;
 			margin-right: 70px;
+		}
+
+		&Button {
+			width: 100%;
+			max-width: 500px;
 		}
 	}
 }

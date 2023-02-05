@@ -1,50 +1,39 @@
-
 import cn from 'classnames';
 import commonStyles from '@/pages/styles.module.scss';
 import styles from '@/components/Button/styles.module.scss';
 
 interface ButtonProps {
-  onClick?: () => void;
-  isDisabled?: boolean;
-  children: React.ReactNode,
-  icon: string;
-  isExpanded?: boolean;
+	onClick?: () => void;
+	isDisabled?: boolean;
+	children: React.ReactNode;
+	icon: string;
+	isExpanded?: boolean;
 }
 
 function Button(props: ButtonProps) {
-  const {
-    onClick,
-    children,
-    icon,
-    isDisabled,
-  } = props;
+	const { onClick, children, icon, isDisabled, isExpanded = false } = props;
 
-  const isIconExists = Boolean(icon);
+	const isIconExists = Boolean(icon);
 
-  const btnClass = cn({
-    [styles.button]: true,
-    [styles.buttonWithIcon]: isIconExists,
-    [commonStyles.unselectable]: true,
-  });
+	const btnClass = cn({
+		[styles.button]: true,
+		[styles.buttonWithIcon]: isIconExists,
+		[styles.buttonExpanded]: isExpanded,
+		[commonStyles.unselectable]: true,
+	});
 
-  return (
-    <div>
-      <button
-        type = 'button'
-        className={btnClass}
-        onClick={!isDisabled ? onClick : () => {}}
-      >
-        <div className={styles.buttonContent}>
-          <div className={styles.buttonContentMain}>{children}</div>
-          {icon && (
-            <div className={styles.buttonIconWrapper}>
-              <img className={styles.buttonIconRight} src={icon} />
-            </div>
-          )}
-        </div>
-      </button>
-    </div>
-  );
+	return (
+		<button type="button" className={btnClass} onClick={!isDisabled ? onClick : () => {}}>
+			<div className={styles.buttonContent}>
+				<div className={styles.buttonContentMain}>{children}</div>
+				{icon && (
+					<div className={styles.buttonIconWrapper}>
+						<img className={styles.buttonIconRight} src={icon} />
+					</div>
+				)}
+			</div>
+		</button>
+	);
 }
 
 export default Button;
