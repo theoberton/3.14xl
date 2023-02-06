@@ -6,8 +6,7 @@
 
   align-items: center;
   justify-content: center;
-  border: 1px solid $salad-one;
-  background-color: $salad-one;
+  border: none;
   color: $black-one;
   border-radius: 50px;
   padding-top: 20px;
@@ -17,6 +16,7 @@
   cursor: pointer;
   white-space: nowrap;
   font-weight: $font-semi-bold;
+  border-radius: 100% !important;
 
 
   &Expanded {
@@ -28,6 +28,7 @@
       @extend .button;
       width: 100%;
     }
+
   }
 
   &WithIcon {
@@ -40,15 +41,29 @@
   }
 
   &Icon {
-    &Wrapper {
-      margin-left: 10px;
+    &Image {
+      display: block;
       height: 40px;
       width: 40px;
       text-align: center;
       display: flex;
       justify-content: center;
+      border-radius: 100px;
       background-color: $white;
       border-radius: 100px;
+      border: 1px solid $gray-two;
+
+      &Salad {
+        @extend .buttonIconImage;
+        background-color: $salad-one;
+        border: 1px solid $salad-one
+      }
+
+      &White {
+        @extend .buttonIconImage;
+        background-color: $white;
+        border: 0px solid $gray-one;
+      }
     }
 
   }
@@ -57,11 +72,20 @@
     display: grid;
     width: 100%;
     grid-template-columns: 8fr 1fr;
+    border-radius: 20px;
+    padding: 2px px 2px 0;
 
     &Main {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    &White {
+      background-color: $white;
+    }
+    &Salad {
+      background-color: $salad-one;
     }
   }
 }

@@ -12,6 +12,7 @@ type ButtonProps = {
   children?: React.ReactNode,
   kind: ButtonKinds;
   icon?: string;
+  green?: Boolean;
 };
 
 function Button(props: ButtonProps) {
@@ -44,54 +45,56 @@ function Button(props: ButtonProps) {
 function getButtonContent(props: ButtonProps): React.ReactNode {
   const {
     children,
-    icon,
     kind,
+    green,
   } = props;
 
-  console.log('kind', kind);
-  console.log('ButtonKinds.arrowRight', ButtonKinds.arrowRight)
   let basicButtonContent: JSX.Element | null = null;
-  console.log('ArrowRightIcon', ArrowRightIcon);
+
+  const imageClassname = cn({
+    [styles.buttonIconImage]: true,
+    [styles.buttonIconImageSalad]: green,
+  });
+  const contentClassname = cn({
+    [styles.buttonContent]: true,
+    [styles.buttonContentSalad]: green,
+  });
+
   if(kind == ButtonKinds.basic) {
       basicButtonContent = (
-        <div className={styles.buttonContent}>
+        <div className={contentClassname}>
           <div className={styles.buttonContentMain}>{children}</div>
         </div>
     );
   } else if(kind == ButtonKinds.arrowLeft) {
       basicButtonContent = (
-        <div className={styles.buttonContent}>
-          {icon && (
-            <div className={styles.buttonIconWrapper}>
-              <img className={styles.buttonIconRight} src={ArrowLeftIcon} />
-            </div>
-          )}
-        </div>
+            <img className={imageClassname} src={ArrowLeftIcon} />
     );
   } else if(kind == ButtonKinds.arrowRight) {
     basicButtonContent = (
-      <div className={styles.buttonContent}>
-        <div className={styles.buttonIconWrapper}>
-          <img className={styles.buttonIconRight} src={ArrowRightIcon} />
-        </div>
-      </div>
+          <img className={imageClassname} src={ArrowRightIcon} />
   );
   } else if(kind == ButtonKinds.basicWithIconArrowLeft) {
+    const finalImageClassname = cn({
+      [imageClassname]: true,
+      [styles.buttonContentWhite]: green,
+    });
     basicButtonContent = (
-      <div className={styles.buttonContent}>
+      <div className={contentClassname}>
         <div className={styles.buttonContentMain}>{children}</div>
-          <div className={styles.buttonIconWrapper}>
-            <img className={styles.buttonIconRight} src={ArrowLeftIcon} />
-          </div>
+            <img className={finalImageClassname} src={ArrowLeftIcon} />
       </div>
   );
   } else if(kind == ButtonKinds.basicWithIconArrowRight) {
+    const finalImageClassname = cn({
+      [imageClassname]: true,
+      [styles.buttonContentWhite]: green,
+    });
+
     basicButtonContent = (
-      <div className={styles.buttonContent}>
+      <div className={contentClassname}>
         <div className={styles.buttonContentMain}>{children}</div>
-        <div className={styles.buttonIconWrapper}>
-          <img className={styles.buttonIconRight} src={ArrowRightIcon} />
-        </div>
+          <img className={finalImageClassname} src={ArrowRightIcon} />
       </div>
   );
   }

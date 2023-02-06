@@ -6,22 +6,41 @@
 
   &Menu {
     &Title {
+      padding: 20px;
+      font-size: $font-huge;
+      border-right: 1px solid $gray-two;
+      border-left: 1px solid $gray-two;
+      border-top: 1px solid $gray-two;
+    }
 
+    &Button {
+      &Wrapper {
+        display: flex;
+        align-items: flex-end;
+      }
     }
 
     &Actions {
-      :nth-child(1) {
-        border-top: none;
+      >:nth-child(1) {
+        border-top: 1px solid $gray-two;
       }
+
     }
 
     &Item {
       padding: 20px;
-      border: 1px solid $gray-two;
+      border-right: 1px solid $gray-two;
+      border-left: 1px solid $gray-two;
+      border-bottom: 1px solid $gray-two;
+      gap: 10px;
       display: flex;
+      justify-content: space-between;
 
       &Content {
         font-weight: $font-bold;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
       }
      
       &Caption {
@@ -44,10 +63,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-bottom: 20%;
     }
 
     &Navigation {
-      padding-left: 50px;
+      padding: 20px 20px 20px 50px;
     }
   }
 

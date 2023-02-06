@@ -51,6 +51,7 @@ function PresentationSection() {
           <Button
 						kind={ButtonKinds.basicWithIconArrowRight}
 						onClick={goToCreateCollectionPage}
+						green
 					>
 						Create new collection 
 					</Button>

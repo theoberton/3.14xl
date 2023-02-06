@@ -24,8 +24,8 @@ function MenuItem(props: MenuItemProps) {
           {caption}
         </div>
       </div>
-      <div>
-        <Button kind={ButtonKinds.arrowRight} onClick={onClick}/>
+      <div className={styles.collectionMenuButtonWrapper}>
+        <Button green kind={ButtonKinds.arrowRight} onClick={onClick}/>
       </div>
     </div>
   );
