@@ -15,22 +15,23 @@ PROGRAM{
     STSLICER
   }>
   __gen_write_NftItem PROCINLINE:<{
-    2SWAP
+    s4 s3 XCHG2
     __tact_store_address INLINECALLDICT
+    257 PUSHINT
+    STIX
     ROT
     __tact_store_address INLINECALLDICT
-    NEWC
-    ROT
-    STSLICER
-    ENDC
-    SWAP
     STREF
   }>
   $__gen_NftItem_init PROC:<{
-    s0 s3 XCHG
+    DROP
+    PUSHNULL
+    PUSHNULL
+    PUSHNULL
+    s0 s4 XCHG
     NEWC
     STREF
-    s0 s3 XCHG
+    s0 s4 XCHG
     __gen_write_NftItem INLINECALLDICT
     ENDC
   }>

@@ -4,7 +4,7 @@ import { NftItem } from "../output/pixel_NftItem";
 import { NetworkProvider } from "@ton-community/blueprint";
 
 export async function run(network: NetworkProvider) {
-  const contract = NftItem.fromAddress(Address.parse("EQCperERmGH-8LX4NzwebgRbzUmdvL5nSTSFy4S1CDnq6wBB"));
+  const contract = NftItem.fromAddress(Address.parse("EQDiV821bqP9xItNI1vDmueInfQJSBUiBeDZiXupCoQDDvKm"));
   const provider = network.provider(contract.address);
 
   const owner = await contract.getOwner(provider);

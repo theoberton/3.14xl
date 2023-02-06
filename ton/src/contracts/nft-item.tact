@@ -1,21 +1,20 @@
 import "@stdlib/ownable";
 
 contract NftItem with Ownable {
-  collection_address: Address;
+  collectionAddress: Address;
+  index: Int;
   owner: Address;
-  content: Slice;
+  content: Cell;
 
-  init(collection_address: Address, owner: Address, content: Slice) {
-    self.collection_address = collection_address;
-    self.owner = owner;
-    self.content = content;
+  init(collectionAddress: Address, index: Int) {
+    self.collectionAddress = collectionAddress;
   }
 
   get fun collection_address(): Address {
-    return self.collection_address;
+    return self.collectionAddress;
   }
 
-  get fun content(): Slice {
+  get fun content(): Cell {
     return self.content;
   }
 }

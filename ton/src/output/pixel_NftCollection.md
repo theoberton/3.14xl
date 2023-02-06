@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: NftCollection
-BOC Size: 966 bytes
+BOC Size: 1327 bytes
 
 # Types
-Total Types: 7
+Total Types: 11
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -17,9 +17,25 @@ Signature: `Context{bounced:bool,sender:address,value:int257,raw:^slice}`
 TLB: `_ bounce:bool to:address value:int257 mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell = SendParameters`
 Signature: `SendParameters{bounce:bool,to:address,value:int257,mode:int257,body:Maybe ^cell,code:Maybe ^cell,data:Maybe ^cell}`
 
-## MintItem
-TLB: `mint_item#3fdb3de8 to:address = MintItem`
-Signature: `MintItem{to:address}`
+## CollectionData
+TLB: `_ nextItemIndex:int257 collectionContentUrl:^cell owner:address = CollectionData`
+Signature: `CollectionData{nextItemIndex:int257,collectionContentUrl:^cell,owner:address}`
+
+## RoyaltyParams
+TLB: `_ numerator:int257 denominator:int257 destination:address = RoyaltyParams`
+Signature: `RoyaltyParams{numerator:int257,denominator:int257,destination:address}`
+
+## GetRoyaltyParams
+TLB: `get_royalty_params#693d3950 queryId:uint64 = GetRoyaltyParams`
+Signature: `GetRoyaltyParams{queryId:uint64}`
+
+## ReportRoyaltyParams
+TLB: `report_royalty_params#a8cb00ad queryId:uint64 numerator:uint16 denominator:uint16 destination:address = ReportRoyaltyParams`
+Signature: `ReportRoyaltyParams{queryId:uint64,numerator:uint16,denominator:uint16,destination:address}`
+
+## InitNftItem
+TLB: `init_nft_item#16593175 queryId:uint64 owner:address = InitNftItem`
+Signature: `InitNftItem{queryId:uint64,owner:address}`
 
 ## ChangeOwner
 TLB: `change_owner#0f474d03 newOwner:address = ChangeOwner`
@@ -34,10 +50,17 @@ TLB: `deploy_ok#aff90f57 queryId:uint64 = DeployOk`
 Signature: `DeployOk{queryId:uint64}`
 
 # Get Methods
-Total Get Methods: 3
+Total Get Methods: 5
 
-## content
+## get_collection_data
 
-## total_supply
+## get_nft_address_by_index
+Argument: itemIndex
+
+## get_nft_content
+Argument: itemIndex
+Argument: itemContent
+
+## royalty_params
 
 ## owner

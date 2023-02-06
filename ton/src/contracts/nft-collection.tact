@@ -1,8 +1,36 @@
 import "@stdlib/ownable";
 import "@stdlib/deploy";
+import "@stdlib/content";
 
-message MintItem {
-    to: Address;
+
+
+struct CollectionData {
+    nextItemIndex: Int;
+    collectionContentUrl: Cell;
+    owner: Address;
+}
+
+struct RoyaltyParams {
+    numerator: Int;
+    denominator: Int;
+    destination: Address;
+}
+
+
+message(0x693d3950) GetRoyaltyParams {
+    queryId: Int as uint64;
+}
+
+message(0xa8cb00ad) ReportRoyaltyParams {
+    queryId: Int as uint64;
+    numerator:  Int as uint16;
+    denominator: Int as uint16;
+    destination: Address;
+}
+
+message InitNftItem {
+    queryId: Int as uint64;
+    owner: Address;
 }
 
 // struct TokenTransferInternal {
@@ -14,19 +42,26 @@ message MintItem {
 
 contract NftCollection with Deployable, Ownable {
     owner: Address;
-    content: Slice;
-    total_supply: Int = 0;
+    nextItemIndex: Int = 0;
+    collectionContentUrl: Cell;
+    nftItemContentUrl: Cell;
+    royaltyParams: RoyaltyParams;
+    
 
 
-    init(owner: Address, content: Slice) {
+    init(owner: Address, collectionContentUrl: String, nftItemContentUrl: String, royaltyParams: RoyaltyParams) {
         self.owner = owner;
-        self.content = content;
+        self.collectionContentUrl = createOffchainContent(collectionContentUrl);
+        self.nftItemContentUrl = createOffchainContent(nftItemContentUrl);
+        self.royaltyParams = royaltyParams;
     }
 
-    receive(msg: MintItem) {
-        self.total_supply = self.total_supply + 1;
+    fun getNftItemInit(itemIndex: Int): StateInit {
+        return initOf NftItem(myAddress(), itemIndex);
+    }
 
-        let winit: StateInit = initOf NftItem(myAddress(), msg.to, self.content);
+    receive("Mint!") {
+        let winit: StateInit = self.getNftItemInit(self.nextItemIndex);
         let nftItemAddress: Address = contractAddress(winit);
 
         send(SendParameters{
@@ -34,27 +69,50 @@ contract NftCollection with Deployable, Ownable {
             value: 0, 
             bounce: false,
             mode: SendRemainingValue,
-            // body: TokenTransferInternal{ 
-            //     queryId: 0,
-            //     from: myAddress(),
-            //     forwardTonAmount: 0,
-            //     forwardPayload: emptySlice()
-            // }.toCell(),
+            body: InitNftItem{ 
+                queryId: 0,
+                owner: context().sender
+            }.toCell(),
             code: winit.code,
             data: winit.data
         });
+
+        self.nextItemIndex = self.nextItemIndex + 1;
     }
 
-    receive(msg: Slice) { 
-        reply("Deploy Ok".asComment());
+    receive(msg: GetRoyaltyParams) {   
+        send(SendParameters{
+                to: context().sender,
+                value: 0,
+                mode: 64, 
+                bounce: false,
+                body: ReportRoyaltyParams {
+                    queryId: msg.queryId,
+                    numerator:  self.royaltyParams.numerator,
+                    denominator: self.royaltyParams.denominator,
+                    destination: self.royaltyParams.destination
+                }.toCell()
+        });        
     }
 
-    get fun content(): Slice {
-        return self.content;
+    get fun get_collection_data(): CollectionData {
+        return CollectionData{
+            nextItemIndex: self.nextItemIndex,
+            collectionContentUrl: self.collectionContentUrl,
+            owner: self.owner
+        };
     }
 
-     get fun total_supply(): Int {
-        return self.total_supply;
+     get fun get_nft_address_by_index(itemIndex: Int): Address {
+        return contractAddress(self.getNftItemInit(itemIndex));
     }
+
+     get fun get_nft_content(itemIndex: Int, itemContent: Cell): Cell {
+        return self.nftItemContentUrl;
+     }
+
+     get fun royalty_params(): RoyaltyParams {
+        return self.royaltyParams;
+     }
 }
     

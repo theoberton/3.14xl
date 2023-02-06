@@ -3152,10 +3152,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-ton-core@>=0.44.0:
-  version "0.44.0"
-  resolved "https://registry.yarnpkg.com/ton-core/-/ton-core-0.44.0.tgz#5769fd2ebefdc147b3bc3bb83e2c3ae9fe1b8279"
-  integrity sha512-EnYKUHc4EUiL3BmppK+AQLqZaaw/BPBNmOC9xJRqiKRqs11gIn/LY3qzp4/23JWojBwXH7S7M6Rf8YN+In5Zhw==
+ton-core@>=0.47.0:
+  version "0.47.0"
+  resolved "https://registry.yarnpkg.com/ton-core/-/ton-core-0.47.0.tgz#1ce90a1abe3f05d0651e95962f2b9fdbd1b4e13c"
+  integrity sha512-v5JEhJG/EYtKaI8PtmV5lXAIveSK+Bb+yyukRFmUpJ1Y9YmkvBowZ1n4lubKCSDhlQy8JO7M5VKA5fj15qZjwQ==
   dependencies:
     symbol.inspect "1.0.1"
 
@@ -3200,10 +3200,10 @@ ton-emulator@^2.0.0:
     teslabot "^1.5.0"
     zod "^3.20.2"
 
-ton-tact@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/ton-tact/-/ton-tact-0.9.0.tgz#68d321975dfd696dad310c90b56bab586bcc2ef1"
-  integrity sha512-TK9idKg4sPQi1VZ+naBZ1kzm64qlXQSqiroDHZD0ffhsnIdOW2n6BbQDk5NqjvA5Db49ZsgjMSAlwJ0dGFdm1Q==
+ton-tact@^0.9.2:
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/ton-tact/-/ton-tact-0.9.2.tgz#e8eca436b431c5fe2055a567d7f7d941f283b606"
+  integrity sha512-QY9gScDQeSu5gJ0S3sRmStSDtunUtiiJKe7oyZSnqAoezII8y0qchOe9hY//MRkp2yxc9lEfxtM4dFW8yiYe5g==
   dependencies:
     "@ipld/dag-pb" "2.1.18"
     "@types/tmp" "^0.2.3"
@@ -3217,7 +3217,7 @@ ton-tact@^0.9.0:
     prando "^6.0.1"
     qs "^6.11.0"
     tmp "^0.2.1"
-    ton-core ">=0.44.0"
+    ton-core ">=0.47.0"
     ton-crypto "^3.2.0"
     tvm-disassembler "^2.0.0"
     zod "^3.20.2"

@@ -27,12 +27,12 @@ PROGRAM{
   __gen_read_NftItem PROCINLINE:<{
     __tact_load_address INLINECALLDICT
     SWAP
+    257 PUSHINT
+    LDIX
     __tact_load_address INLINECALLDICT
     SWAP
     LDREF
-    SWAP
-    CTOS
-    s3 s3 s0 XCHG3
+    4 -ROLL
   }>
   __gen_load_NftItem PROCINLINE:<{
     c4 PUSH
@@ -41,25 +41,25 @@ PROGRAM{
     SWAP
     __tact_context_sys SETGLOB
     __gen_read_NftItem INLINECALLDICT
-    1 3 BLKDROP2
+    1 4 BLKDROP2
   }>
   $__gen_NftItem_collection_address PROCREF:<{
-    2DROP
+    3 BLKDROP
   }>
   $__gen_get_collection_address PROC:<{
     __gen_load_NftItem INLINECALLDICT
     $__gen_NftItem_collection_address INLINECALLDICT
   }>
   $__gen_NftItem_content PROCREF:<{
-    2 1 BLKDROP2
+    3 1 BLKDROP2
   }>
   $__gen_get_content PROC:<{
     __gen_load_NftItem INLINECALLDICT
     $__gen_NftItem_content INLINECALLDICT
   }>
   $__gen_NftItem_owner PROCREF:<{
-    DROP
-    NIP
+    s1 s3 XCHG
+    3 BLKDROP
   }>
   $__gen_get_owner PROC:<{
     __gen_load_NftItem INLINECALLDICT
@@ -99,6 +99,6 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d636678694545647977344b3650736b6b63637842424d75514d55345844616744747a6e51344e35674a724139} PUSHSLICE
+    x{697066733a2f2f516d566673364e456d344a3266655936686878336e596435314d6b776355397053666d6556505167647950373839} PUSHSLICE
   }>
 }END>c
