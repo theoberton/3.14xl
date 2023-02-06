@@ -15,22 +15,23 @@ global cell __tact_context_sys;
     return (cs, raw);
 }
 
-(slice, ((slice, slice, slice))) __gen_read_NftItem(slice sc_0) inline {
-    var v'collection_address = sc_0~__tact_load_address();
+(slice, ((slice, int, slice, cell))) __gen_read_NftItem(slice sc_0) inline {
+    var v'collectionAddress = sc_0~__tact_load_address();
+    var v'index = sc_0~load_int(257);
     var v'owner = sc_0~__tact_load_address();
-    var v'content = sc_0~load_ref().begin_parse();
-    return (sc_0, (v'collection_address, v'owner, v'content));
+    var v'content = sc_0~load_ref();
+    return (sc_0, (v'collectionAddress, v'index, v'owner, v'content));
 }
 
-(slice, slice, slice) __gen_load_NftItem() inline {
+(slice, int, slice, cell) __gen_load_NftItem() inline {
     slice sc = get_data().begin_parse();
     __tact_context_sys = sc~load_ref();
     return sc~__gen_read_NftItem();
 }
 
-slice $__gen_NftItem_collection_address((slice, slice, slice) $self) impure inline_ref {
-    var (($self'collection_address, $self'owner, $self'content)) = $self;
-    return $self'collection_address;
+slice $__gen_NftItem_collection_address((slice, int, slice, cell) $self) impure inline_ref {
+    var (($self'collectionAddress, $self'index, $self'owner, $self'content)) = $self;
+    return $self'collectionAddress;
 }
 
 _ $__gen_get_collection_address() method_id(127132) {
@@ -39,8 +40,8 @@ _ $__gen_get_collection_address() method_id(127132) {
     return res;
 }
 
-slice $__gen_NftItem_content((slice, slice, slice) $self) impure inline_ref {
-    var (($self'collection_address, $self'owner, $self'content)) = $self;
+cell $__gen_NftItem_content((slice, int, slice, cell) $self) impure inline_ref {
+    var (($self'collectionAddress, $self'index, $self'owner, $self'content)) = $self;
     return $self'content;
 }
 
@@ -50,8 +51,8 @@ _ $__gen_get_content() method_id(117214) {
     return res;
 }
 
-slice $__gen_NftItem_owner((slice, slice, slice) $self) impure inline_ref {
-    var (($self'collection_address, $self'owner, $self'content)) = $self;
+slice $__gen_NftItem_owner((slice, int, slice, cell) $self) impure inline_ref {
+    var (($self'collectionAddress, $self'index, $self'owner, $self'content)) = $self;
     return $self'owner;
 }
 
@@ -92,5 +93,5 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() {
-    return "ipfs://QmcfxiEEdyw4K6PskkccxBBMuQMU4XDagDtznQ4N5gJrA9";
+    return "ipfs://QmVfs6NEm4J2feY6hhx3nYd51MkwcU9pSfmeVPQgdyP789";
 }

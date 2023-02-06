@@ -12,28 +12,111 @@ builder __tact_store_address(builder b, slice address) inline {
     return b;
 }
 
-builder __gen_write_NftCollection(builder build_0, (slice, slice, int) v) inline {
-    var (v'owner, v'content, v'total_supply) = v;
-    build_0 = __tact_store_address(build_0, v'owner);
-    build_0 = build_0.store_ref(begin_cell().store_slice(v'content).end_cell());
-    build_0 = build_0.store_int(v'total_supply, 257);
+forall X0, X1, X2 -> (X0, X1, X2) __tact_tuple_destroy_3(tuple v) asm "3 UNTUPLE";
+
+tuple __tact_string_builder_start(builder b) inline {
+    return tpush(tpush(empty_tuple(), b), null());
+}
+
+cell __tact_string_builder_end(tuple builders) inline {
+    (builder b, tuple tail) = uncons(builders);
+    cell c = b.end_cell();
+    while(~ null?(tail)) {
+        (b, tail) = uncons(tail);
+        c = b.store_ref(c).end_cell();
+    }
+    return c;
+}
+
+((tuple), ()) __tact_string_builder_append(tuple builders, slice sc) inline_ref {
+    int sliceRefs = slice_refs(sc);
+    int sliceBits = slice_bits(sc);
+
+    while((sliceBits > 0) | (sliceRefs > 0)) {
+
+        ;; Load the current builder
+        (builder b, tuple tail) = uncons(builders);
+        int remBytes = 127 - (builder_bits(b) / 8);
+        int exBytes = sliceBits / 8;
+
+        ;; Append bits
+        int amount = min(remBytes, exBytes);
+        if (amount > 0) {
+            slice read = sc~load_bits(amount * 8);
+            b = b.store_slice(read);
+        }
+
+        ;; Update builders
+        builders = cons(b, tail);
+
+        ;; Check if we need to add a new cell and continue
+        if (exBytes - amount > 0) {
+            var bb = begin_cell();
+            builders = cons(bb, builders);
+            sliceBits = (exBytes - amount) * 8;
+        } elseif (sliceRefs > 0) {
+            sc = sc~load_ref().begin_parse();
+            sliceRefs = slice_refs(sc);
+            sliceBits = slice_bits(sc);
+        } else {
+            sliceBits = 0;
+            sliceRefs = 0;
+        }
+    }
+
+    return ((builders), ());
+}
+
+builder __gen_write_RoyaltyParams(builder build_0, (int, int, slice) v) inline {
+    var (v'numerator, v'denominator, v'destination) = v;
+    build_0 = build_0.store_int(v'numerator, 257);
+    build_0 = build_0.store_int(v'denominator, 257);
+    build_0 = __tact_store_address(build_0, v'destination);
     return build_0;
 }
 
-cell $__gen_NftCollection_init(cell sys', slice $owner, slice $content) {
-    var (($self'owner, $self'content, $self'total_supply)) = (null(), null(), 0);
+builder __gen_write_NftCollection(builder build_0, (slice, int, cell, cell, (int, int, slice)) v) inline {
+    var (v'owner, v'nextItemIndex, v'collectionContentUrl, v'nftItemContentUrl, (v'royaltyParams'numerator, v'royaltyParams'denominator, v'royaltyParams'destination)) = v;
+    build_0 = __tact_store_address(build_0, v'owner);
+    build_0 = build_0.store_int(v'nextItemIndex, 257);
+    build_0 = build_0.store_ref(v'collectionContentUrl);
+    build_0 = build_0.store_ref(v'nftItemContentUrl);
+    var build_1 = begin_cell();
+    build_1 = __gen_write_RoyaltyParams(build_1, (v'royaltyParams'numerator, v'royaltyParams'denominator, v'royaltyParams'destination));
+    build_0 = store_ref(build_0, build_1.end_cell());
+    return build_0;
+}
+
+(int, int, slice) __gen_RoyaltyParams_from_tuple(tuple v) inline {
+    var (int v'numerator, int v'denominator, slice v'destination) = __tact_tuple_destroy_3(v);
+    return (v'numerator, v'denominator, v'destination);
+}
+
+cell $createOffchainContent(slice $link) impure inline_ref {
+    tuple $builder = __tact_string_builder_start(store_uint(begin_cell(), 1, 8));
+    $builder~__tact_string_builder_append($link);
+    return __tact_string_builder_end($builder);
+}
+
+cell $__gen_NftCollection_init(cell sys', slice $owner, slice $collectionContentUrl, slice $nftItemContentUrl, (int, int, slice) $royaltyParams) {
+    var (($royaltyParams'numerator, $royaltyParams'denominator, $royaltyParams'destination)) = $royaltyParams;
+    var (($self'owner, $self'nextItemIndex, $self'collectionContentUrl, $self'nftItemContentUrl, ($self'royaltyParams'numerator, $self'royaltyParams'denominator, $self'royaltyParams'destination))) = (null(), 0, null(), null(), null());
     $self'owner = $owner;
-    $self'content = $content;
+    $self'collectionContentUrl = $createOffchainContent($collectionContentUrl);
+    $self'nftItemContentUrl = $createOffchainContent($nftItemContentUrl);
+    ($self'royaltyParams'numerator, $self'royaltyParams'denominator, $self'royaltyParams'destination) = ($royaltyParams'numerator, $royaltyParams'denominator, $royaltyParams'destination);
     var b' = begin_cell();
     b' = b'.store_ref(sys');
-    b' = __gen_write_NftCollection(b', ($self'owner, $self'content, $self'total_supply));
+    b' = __gen_write_NftCollection(b', ($self'owner, $self'nextItemIndex, $self'collectionContentUrl, $self'nftItemContentUrl, ($self'royaltyParams'numerator, $self'royaltyParams'denominator, $self'royaltyParams'destination)));
     return b'.end_cell();
 }
 
-cell init(cell sys', slice $$owner, slice $$content) method_id {
+cell init(cell sys', slice $$owner, slice $$collectionContentUrl, slice $$nftItemContentUrl, tuple $$royaltyParams) method_id {
     slice $owner = $$owner;
-    slice $content = $$content;
-    return $__gen_NftCollection_init(sys', $owner, $content);
+    slice $collectionContentUrl = $$collectionContentUrl;
+    slice $nftItemContentUrl = $$nftItemContentUrl;
+    (int, int, slice) $royaltyParams = __gen_RoyaltyParams_from_tuple($$royaltyParams);
+    return $__gen_NftCollection_init(sys', $owner, $collectionContentUrl, $nftItemContentUrl, $royaltyParams);
 }
 
 () main() {

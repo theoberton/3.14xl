@@ -1,5 +1,6 @@
 import { toNano, Address } from "ton-core";
 import { NftCollection, MintItem } from "../output/pixel_NftCollection";
+import { NftItem } from "../output/pixel_NftItem";
 import { NetworkProvider } from "@ton-community/blueprint";
 import { printAddress, print } from "../utils/print";
 
@@ -19,8 +20,11 @@ export async function run(network: NetworkProvider) {
     sender,
     {
       value: toNano("0.05"),
-      bounce: undefined,
+      bounce: false,
     },
     mintItemMessage
   );
+
+  print("NFT Collection address");
+  printAddress(openedContract.address);
 }
