@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/bn.js": "^5.1.1",
     "@types/history": "^5.0.0",
+    "@types/lodash": "^4.14.191",
     "@types/node": "^18.11.18",
     "@types/qs": "^6.9.7",
     "@types/react": "^18.0.26",
