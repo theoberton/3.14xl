@@ -2,8 +2,8 @@
 
 // Global classes and elements styles declaration
 :root {
-  font-size: $font-base !important;
-  font-weight: $font-semi-bold;
+	font-size: $font-base !important;
+	font-weight: $font-semi-bold;
 	font-size: $font-medium;
 
 	font-synthesis: none;
@@ -14,11 +14,16 @@
 }
 
 * {
-  font-family: 'Sans' !important; // due to ton-connect goober dependency
+	font-family: 'Sans' !important; // due to ton-connect goober dependency
+	user-select: none;
+}
+
+img {
+	-webkit-user-drag: none;
 }
 
 body {
-  margin: 0;
+	margin: 0;
 }
 
 input[type='number'] {

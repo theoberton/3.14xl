@@ -1,0 +1,47 @@
+$breakpoint-xs: 575.98px;
+$breakpoint-s: 767.98px;
+$breakpoint-m: 991.98px;
+$breakpoint-l: 1199.98px;
+$breakpoint-xl: 1399.98px;
+
+.pageContainer {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	width: 100vw;
+
+	> * {
+		width: 100%;
+		padding-inline: 15px;
+	}
+}
+
+@media (min-width: $breakpoint-xs) {
+	.pageContainer > * {
+		padding-inline: calc(50% - 270px);
+	}
+}
+
+@media (min-width: $breakpoint-s) {
+	.pageContainer > * {
+		padding-inline: calc(50% - 360px);
+	}
+}
+
+@media (min-width: $breakpoint-m) {
+	.pageContainer > * {
+		padding-inline: calc(50% - 480px);
+	}
+}
+
+@media (min-width: $breakpoint-l) {
+	.pageContainer > * {
+		padding-inline: calc(50% - 590px);
+	}
+}
+
+@media (min-width: $breakpoint-xl) {
+	.pageContainer > * {
+		padding-inline: calc(50% - 690px);
+	}
+}

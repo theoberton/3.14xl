@@ -3,10 +3,10 @@ import Header from '../components/Header';
 
 function BasePage() {
 	return (
-		<div>
+		<>
 			<Header />
 			<Outlet />
-		</div>
+		</>
 	);
 }
 
