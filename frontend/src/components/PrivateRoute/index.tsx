@@ -1,18 +1,18 @@
-import { useTonConnect } from 'hooks/useTonConnect';
+import { useTonConnect } from '@/hooks';
 
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 function PrivateRoute() {
-  const location = useLocation();
-  const { connected } = useTonConnect();
+	const location = useLocation();
+	const { connected } = useTonConnect();
 
-  const redirectionScreen = connected ? (
-    <Navigate to='/not-found' state={{ from: location }} replace />
-  ) : (
-    <Navigate to='/' state={{ from: location }} replace />
-  );
+	const redirectionScreen = connected ? (
+		<Navigate to="/not-found" state={{ from: location }} replace />
+	) : (
+		<Navigate to="/" state={{ from: location }} replace />
+	);
 
-  return connected ? <Outlet /> : redirectionScreen;
+	return connected ? <Outlet /> : redirectionScreen;
 }
 
 export default PrivateRoute;

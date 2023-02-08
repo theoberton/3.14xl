@@ -1,9 +1,9 @@
 import { useField } from 'formik';
 
-import classNames from 'classnames';
-import styles from 'components/Input/styles.module.scss';
+import { useCustomStateFormField } from '@/hooks';
 
-import { useCustomStateFormField } from 'hooks/useCustomStateFormField';
+import classNames from 'classnames';
+import styles from './styles.module.scss';
 
 interface Props {
 	placeholder?: string;
@@ -16,7 +16,7 @@ interface Props {
 	disabled?: boolean;
 }
 
-function Input(props: Props) {
+export function Input(props: Props) {
 	const { name, placeholder, type, label, className, disabled, isSubmitting, isInfoType } = props;
 	const [field] = useField(name);
 
@@ -71,5 +71,3 @@ function Input(props: Props) {
 		</div>
 	);
 }
-
-export default Input;

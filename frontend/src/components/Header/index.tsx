@@ -1,8 +1,8 @@
 import { TonConnectButton } from '@tonconnect/ui-react';
 import Logo from '@/assets/images/svg/common/logo.svg';
-import styles from '@/components/Header/styles.module.scss';
+import styles from './styles.module.scss';
 
-function Header() {
+export function Header() {
 	return (
 		<header>
 			<div className={styles.headerContainer}>
@@ -12,5 +12,3 @@ function Header() {
 		</header>
 	);
 }
-
-export default Header;

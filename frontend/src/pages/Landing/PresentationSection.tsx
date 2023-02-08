@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import Button from '@/components/Button';
+import { Button } from '@/components/Button';
 import NFTExampleOne from '@/assets/images/png/landing/discoverSequenceOne.png';
 import NFTExampleTwo from '@/assets/images/png/landing/discoverSequenceTwo.png';
 import NFTExampleThree from '@/assets/images/png/landing/discoverSequenceThree.png';
@@ -8,9 +8,9 @@ import DiscoverNFT from '@/assets/images/svg/common/discoverNft.svg';
 import { ButtonKinds } from '@/components/Button/interfaces';
 
 import styles from '@/pages/Landing/styles.module.scss';
-import { navigate } from '@/helpers/navigation';
+import { navigate } from '@/helpers';
 
-function PresentationSection() {
+export function PresentationSection() {
 	const goToCreateCollectionPage = useCallback(() => navigate('create-collection'), []);
 
 	return (
@@ -55,5 +55,3 @@ function PresentationSection() {
 		</section>
 	);
 }
-
-export default PresentationSection;

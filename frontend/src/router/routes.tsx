@@ -1,13 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
-import { history } from '@/helpers/navigation';
-import CustomRouter from '@/components/CustomRouter';
 
-import WalletLayout from '@/layouts/WalletLayout';
-import LandingPage from '@/pages/Landing';
-import CreateEditionPage from '@/pages/CreateEdition';
-import EditionPage from '@/pages/Edition';
-import CreateCollection from '@/pages/CreateCollection';
-import PageContainer from '@/layouts/PageContainer';
+import { history } from '@/helpers';
+import { CustomRouter } from '@/components';
+import { WalletLayout, PageContainer } from '@/layouts';
+import { LandingPage, CreateEditionPage, EditionPage, CreateCollection } from '@/pages';
 
 function ApplicationRoutes() {
 	return (

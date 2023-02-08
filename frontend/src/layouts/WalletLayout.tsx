@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import Header from '../components/Header';
+import { Header } from '@/components';
 
-function BasePage() {
+export function WalletLayout() {
 	return (
 		<>
 			<Header />
@@ -9,5 +9,3 @@ function BasePage() {
 		</>
 	);
 }
-
-export default BasePage;

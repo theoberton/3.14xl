@@ -1,8 +1,6 @@
-import PresentationSection from '@/pages/Landing/PresentationSection';
+import { PresentationSection } from './PresentationSection';
 import styles from '@/pages/Landing/styles.module.scss';
 
-function LandingPage() {
+export function LandingPage() {
 	return <PresentationSection />;
 }
-
-export default LandingPage;
