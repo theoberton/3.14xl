@@ -4,7 +4,7 @@ import path from 'node:path';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 // https://vitejs.dev/config/
 export default defineConfig({
-	base: '/3.14xl/',
+	base: './',
 	define: {
 		global: 'window', // Polyfill for ipfs-core
 	},
