@@ -4,7 +4,7 @@ import { NetworkProvider } from "@ton-community/blueprint";
 import { printAddress, print } from "../utils/print";
 
 export async function run(network: NetworkProvider) {
-  const contract = await NftCollection.fromAddress(Address.parse("EQCsRPdF0OBVT9PqMuYIF9GQSoJjxTVEt1CyEYt2lDiofL9P"));
+  const contract = await NftCollection.fromAddress(Address.parse("EQAdUZgiBUH-m_9aAtOburMflgYvJzncBxTxVH6azlLsUo1n"));
 
   const provider = network.provider(contract.address);
 
@@ -12,7 +12,6 @@ export async function run(network: NetworkProvider) {
   print("NFT Collection owner");
   printAddress(owner);
 
-  const totalSupply = await contract.getTotalSupply(provider);
-  const content = await contract.getContent(provider);
-  print("NFT Collection", { totalSupply, content });
+  const data = await contract.getGetCollectionData(provider);
+  print("NFT Collection", { data });
 }
