@@ -1409,11 +1409,6 @@ dot-case@^3.0.4:
     no-case "^3.0.4"
     tslib "^2.0.3"
 
-dotenv@^16.0.3:
-  version "16.0.3"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
-  integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
-
 electron-to-chromium@^1.4.284:
   version "1.4.292"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.292.tgz#e3a3dca3780c8ce01e2c1866b5ec2fbe31c423e3"
@@ -1435,16 +1430,6 @@ enquirer@^2.3.6:
   integrity sha512-yjNnPr315/FjS4zIsUxYguYUPP2e1NK4d7E7ZOLiyYCcbFBiTMyID+2wvm2w6+pZ/odMA7cRkjhsPbltwBOrLg==
   dependencies:
     ansi-colors "^4.1.1"
-
-env-var@^7.3.0:
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/env-var/-/env-var-7.3.0.tgz#34c744ca8fe72b8b2a70509ab047a10e3ae44aae"
-  integrity sha512-qwtwYJ9d3XFxXRDudPEAMszaggpDgcfb1ZGYb9/cNyMugN2/a8EtviopnRL6c+petj2vp6/gxwYd9ExL1/iPcw==
-
-envfile@^6.18.0:
-  version "6.18.0"
-  resolved "https://registry.yarnpkg.com/envfile/-/envfile-6.18.0.tgz#bcb6275af19ba5c961c70c3f3b5c8baf568bdbf6"
-  integrity sha512-IsYv64dtlNXTm4huvCBpbXsdZQurYUju9WoYCkSj+SDYpO3v4/dq346QsCnNZ3JcnWw0G3E6+saVkVtmPw98Gg==
 
 err-code@^3.0.1:
   version "3.0.1"
