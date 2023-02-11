@@ -1,0 +1,20 @@
+
+@import '@/assets/styles/variables.scss';
+@import '@/assets/styles/index.scss';
+
+.label {
+  @extend .unselectable;
+  border-radius: 20px;
+  max-width: fit-content;
+  max-height: min-content;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  cursor: default;
+
+
+  &Black {
+    color: $white;
+    background-color: $black-one;
+  }
+}

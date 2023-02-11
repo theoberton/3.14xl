@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { useFormikContext, useField } from 'formik';
 
 export const useCustomStateFormField = (fieldName: string) => {
-	const { errors, status, touched, setTouched, setStatus } = useFormikContext();
+	const { errors, status, touched, setTouched, setStatus, } = useFormikContext();
 
 	const [field] = useField(fieldName);
 

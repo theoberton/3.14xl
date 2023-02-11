@@ -4,8 +4,10 @@ import CustomRouter from '@/components/CustomRouter';
 
 import WalletLayout from '@/layouts/WalletLayout';
 import LandingPage from '@/pages/Landing';
-import CreateEditionPage from '@/pages/CreateEdition';
+import CreateEditionPageOld from '@/pages/CreateEdition';
 import EditionPage from '@/pages/Edition';
+import CreateCollection from '@/pages/CreateCollection';
+import CreateEditionPage from '@/pages/CRTEdition';
 
 function ApplicationRoutes() {
     return (
@@ -13,9 +15,11 @@ function ApplicationRoutes() {
             <Routes>
                 <Route element={<WalletLayout />}>
                     <Route index path='' element={<LandingPage />} />
-                    <Route path='edition' element={<CreateEditionPage />} />
+                    <Route path='edition' element={<CreateEditionPageOld />} />
                     <Route path='edition/:address' element={<EditionPage />} />
                 </Route>
+                <Route path="create-collection" element={<CreateCollection />} />
+                <Route path="create-edition" element={<CreateEditionPage />}/>
             </Routes>
         </CustomRouter>
     );

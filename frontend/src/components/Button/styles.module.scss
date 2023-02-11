@@ -1,22 +1,18 @@
 @import '@/assets/styles/variables.scss';
 
 .button {
-  display: flex;
   position: relative;
-
-  align-items: center;
-  justify-content: center;
-  border: 1px solid $salad-one;
-  background-color: $salad-one;
+  border: none;
   color: $black-one;
   border-radius: 50px;
-  padding: 20px;
   margin: 0 5px;
-  max-height: 2rem;
   cursor: pointer;
   white-space: nowrap;
   font-weight: $font-semi-bold;
 
+  &Disabled {
+    background-color: $gray-six;
+  }
 
   &Expanded {
     width: 100%;
@@ -39,29 +35,69 @@
   }
 
   &Icon {
-    &Wrapper {
-      margin-left: 10px;
+    &Image {
+      display: block;
       height: 40px;
       width: 40px;
       text-align: center;
       display: flex;
       justify-content: center;
+      border-radius: 100px;
       background-color: $white;
       border-radius: 100px;
+      border: 1px solid $gray-two;
+
+      &Salad {
+        @extend .buttonIconImage;
+        background-color: $salad-one;
+        border: 1px solid $salad-one
+      }
+
+      &White {
+        @extend .buttonIconImage;
+        background-color: $white;
+        border: 0px solid $gray-one;
+      }
     }
 
   }
 
   &Content {
-    display: grid;
-    width: 100%;
-    grid-template-columns: 8fr 1fr;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 20px;
 
+    &WithArrow {
+      @extend .buttonContent;
+      display: grid;
+      width: 100%;
+      grid-template-columns: 8fr 1fr;
+      border-radius: 20px;
+      padding: 0;
+    }
+
+    &Basic {
+      @extend .buttonContent;
+      display: flex;
+      padding-left: 20px;
+      padding-right: 20px;
+      align-items: center;
+      justify-content: center;
+    }
     &Main {
       display: flex;
       align-items: center;
       justify-content: center;
     }
+
+    &White {
+      background-color: $white;
+    }
+    &Salad {
+      background-color: $salad-one;
+      
+    }
   }
 }
+
 

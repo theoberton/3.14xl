@@ -1,17 +1,26 @@
 $black-one: #111111;
 
 $salad-one: #e1ffa0;
-
-$grey-one: #888888;
-
-$open-sans-font: 'Open Sans';
+$open-sans-font: 'Sans';
+$syne-font: 'Syne';
 
 $white: #fff;
+$gray-one: #888888;
+
 $gray-two: #DDDDDD;
 $gray-three: #c4c9d8;
+$gray-four: #F6F6F6;
+$gray-five: #f2f2f2;
+$gray-six: #e1e1e1;
+
+$error-one: #f5365c;
+
+:export {
+  black: $black-one;
+}
 
 $font-small: 7px;
-$font-small-enlarged: 13px;
+$font-small-enlarged: 12px;
 $font-base: 14px;
 $font-medium: 16px;
 $font-medium-enlarged: 18px;
@@ -20,6 +29,7 @@ $font-big-enlarged: 24px;
 $font-huge: 26px;
 $font-huge-enlarged: 42px;
 $font-extra-huge: 130px;
+$font-mega-huge: 160px;
 
 $font-extra-bold: 700;
 $font-bold: 600;

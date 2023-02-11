@@ -1,0 +1,66 @@
+@import '@/assets/styles/variables.scss';
+
+.input {
+  &Error {
+    color: $error-one;
+    font-size: $font-small-enlarged;
+    text-align: left;
+    padding-top: 5px;
+  }
+
+  &Container {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  &Label {
+    line-height: 1.4rem;
+  }
+
+  &FieldArea {
+    display: flex;
+    position: relative;
+    margin-top: 5px;
+
+    &MarginTopFree {
+      @extend .inputFieldArea;
+      margin-top: 0;
+    }
+  }
+
+  &:focus {
+    outline: 1px solid $gray-one;
+  }
+
+  &WithIcon {
+    padding-left: 40px;
+  }
+
+  color: $black-one;
+  border: 0px;
+  background-color: $gray-four;
+  padding: 8px 15px;
+  width: 100%;
+  font-size: $font-medium;
+  font-family: $open-sans-font;
+  resize: none;
+  padding: 0.3em 1em;
+  font-size: inherit;
+
+  &Gray {
+    @extend .input;
+    color: $gray-two;
+  }
+
+  &InfoType {
+    @extend .input;
+
+    color: $gray-one;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: default;
+    padding: 7px 0;
+    overflow: hidden;
+  }
+}

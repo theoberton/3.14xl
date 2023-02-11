@@ -1,0 +1,14 @@
+@import '@/assets/styles/variables.scss';
+
+.label {
+  margin-bottom: 5px;
+}
+
+.select {
+  &Error {
+    color: $error-one;
+    font-size: $font-base;
+    text-align: left;
+    padding-top: 5px;
+  }
+}

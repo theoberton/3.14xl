@@ -1,0 +1,64 @@
+@import '@/assets/styles/variables.scss';
+@import '@/assets/styles/index.scss';
+
+.input {
+  border: 0px;
+  background-color: $gray-four;
+  padding: 8px 15px;
+  width: 100%;
+  font-size: inherit;
+
+  &NoEdit {
+    cursor: not-allowed;
+  }
+
+  &Wrapper {
+    position: relative;
+  }
+
+  &Units {
+    @extend .unselectable;
+
+    display: flex;
+    align-items: center;
+    position: absolute;
+    color: $gray-one;
+    font-weight: $font-light;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+  }
+
+  &Caption {
+    color: $gray-one;
+    text-transform: uppercase;
+
+    &Optional {
+      color: $gray-one;
+    }
+  }
+
+  &Error {
+    color: $error-one;
+    font-size: $font-small-enlarged;
+    text-align: left;
+    padding-top: 5px;
+  }
+
+  &Container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &Marginless {
+      @extend .inputContainer;
+      margin-top: 0;
+    }
+  }
+
+  &Label {
+    line-height: 1.4rem;
+  }
+}

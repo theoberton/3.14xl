@@ -1,0 +1,144 @@
+@import '@/assets/styles/variables.scss';
+@import '@/components/Input/styles.module.scss';
+
+.createEdition {
+
+  padding-right: 20%;
+  border-right: 1px solid $gray-two;
+
+  &ActionTitle {
+    font-size: $font-big-enlarged;
+  }
+
+  &FormArea {
+    
+  }
+  
+  &SubmitButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  &NavigationHeader {
+    padding-bottom: 15px;
+  }
+
+  &Wrapper {
+    padding: 2% 4%;
+  }
+
+  &Container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 15px 20px;
+  }
+}
+
+.preview {
+  max-width: 40vw;
+
+  &Image {
+    max-width: 50vw;
+    max-height: 50vh;
+    &Wrapper {
+      text-align: center;
+      margin-bottom: 30px;
+      border: none;
+    }
+
+    &Empty {
+      @extend .previewImage;
+      
+      background-color: $gray-five;
+      min-width: 350px;
+      min-height: 350px;
+    }
+  }
+
+  &Labels {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    >:nth-child(1) {
+      border-right: 0;
+    }
+  }
+  &Label {
+    color: $gray-one;
+    font-size: $font-small-enlarged;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    
+
+    &Item {
+      flex-direction: column;
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      flex-grow: 1;
+      border: 1px solid $gray-two;
+    }
+
+    &Value {
+      font-size: $font-medium-enlarged;
+    }
+  }
+
+  &Section {
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+  }
+
+  &MainAttributes {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+    margin: 30px 0;
+
+    &Name {
+      font-size: $font-big-enlarged;
+    }
+
+    &Description {
+      overflow-wrap: anywhere;
+      color: $gray-one;
+    }
+  }
+}
+
+.customField {
+  &Container {
+    @extend .inputContainer;
+  }
+
+  &Controls {
+    &EditionSize {
+      display: grid;
+      grid-template-columns: 5fr 10fr;
+      grid-gap: 20px;
+    }
+
+    &ValidityDate {
+      display: grid;
+      grid-template-columns: 5fr 5fr;
+      grid-gap: 20px;
+    }
+  }
+
+  &Item {
+    display: flex;
+    align-items: center;
+
+    >div {
+      width: 100%;
+    }
+  }
+
+  &Label {
+    @extend .inputLabel;
+  }
+}

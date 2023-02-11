@@ -1,20 +1,29 @@
 @import './variables.scss';
 
 // Global classes and elements styles declaration
+:root {
+  font-size: $font-medium;
+  font-weight: $font-semi-bold;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+}
+
+* {
+  font-family: 'Sans' !important; // due to ton-connect goober dependency
+}
 
 body {
   margin: 0;
-  font-family: $open-sans-font;
-  font-size: $font-base;
-  font-weight: $font-semi-bold;
-	font-size: $font-medium;
 }
 
 input[type='number'] {
 	&::-webkit-inner-spin-button,
 	-webkit-outer-spin-button {
 		-webkit-appearance: none;
-		-moz-appearance: none;
 		margin: 0;
 	}
 }
@@ -64,4 +73,18 @@ body,
 	font-style: normal;
 	font-weight: $font-bold;
 	src: url('../fonts/Syne-Bold.ttf');
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
 }
