@@ -1,11 +1,11 @@
 import { Form, useFormikContext } from 'formik';
-import styles from '@/pages/createEdition/styles.module.scss';
+import styles from '@/pages/CreateEdition/styles.module.scss';
 
 import { Button, MediaInput, TextArea, Input } from '@/components';
 import { ButtonKinds } from '@/components/Button/interfaces';
-import { FormValues } from '@/pages/createEdition/interfaces';
-import EditionSize from '@/pages/createEdition/EditionSize';
-import ValidityPeriod from '@/pages/createEdition/ValidityPeriod';
+import { FormValues } from '@/pages/CreateEdition/interfaces';
+import EditionSize from '@/pages/CreateEdition/EditionSize';
+import ValidityPeriod from '@/pages/CreateEdition/ValidityPeriod';
 
 function FormArea() {
 	const { isValid, dirty } = useFormikContext<FormValues>();

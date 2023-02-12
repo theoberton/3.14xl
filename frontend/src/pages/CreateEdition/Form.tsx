@@ -1,10 +1,10 @@
 import { Formik } from 'formik';
-import styles from '@/pages/createEdition/styles.module.scss';
-import FormArea from '@/pages/createEdition/FormArea';
-import { formSchema } from '@/pages/createEdition/validation';
+import styles from '@/pages/CreateEdition/styles.module.scss';
+import FormArea from '@/pages/CreateEdition/FormArea';
+import { formSchema } from '@/pages/CreateEdition/validation';
 import { useCallback } from 'react';
-import { FormValues } from '@/pages/createEdition/interfaces';
-import EditionPreview from '@/pages/createEdition/Preview';
+import { FormValues } from '@/pages/CreateEdition/interfaces';
+import EditionPreview from '@/pages/CreateEdition/Preview';
 import { EDITIONS_SIZES } from '@/constants/common';
 
 const createEditionInitialValues: FormValues = {

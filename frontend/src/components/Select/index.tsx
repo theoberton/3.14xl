@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import ReactSelect from 'react-select';
+import ReactSelect, {SingleValue} from 'react-select';
 
 import { useField, useFormikContext } from 'formik';
 
@@ -7,10 +7,15 @@ import styles from '@/components/Select/styles.module.scss';
 import { useCustomStateFormField } from '@/hooks/useCustomStateFormField';
 import { EDITIONS_SIZES } from '@/constants/common';
 
+interface OptionType { 
+	value: EDITIONS_SIZES;
+	label: string;
+}
+
 interface SelectProps {
 	name: string;
 	label?: string;
-	options: { value: EDITIONS_SIZES; label: string }[];
+	options: OptionType[];
 	disabled?: boolean;
 	className?: string;
 	isSearchable?: boolean;
@@ -65,8 +70,10 @@ export function Select(props: SelectProps) {
 	};
 
 	const onSelectChange = useCallback(
-		option => {
-			setFieldValue(name, option.value);
+		(option: SingleValue<OptionType>) => {
+			if(option?.value) {
+				setFieldValue(name, option.value);
+			}
 		},
 		[name, setFieldValue]
 	);

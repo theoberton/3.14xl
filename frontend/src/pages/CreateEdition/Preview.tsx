@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik';
 import { Label } from '@/components';
-import styles from '@/pages/createEdition/styles.module.scss';
-import { FormValues } from '@/pages/createEdition/interfaces';
+import styles from '@/pages/CreateEdition/styles.module.scss';
+import { FormValues } from '@/pages/CreateEdition/interfaces';
 
 function EditionPreview() {
 	const { values } = useFormikContext<FormValues>();

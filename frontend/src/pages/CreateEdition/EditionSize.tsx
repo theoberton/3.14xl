@@ -1,5 +1,5 @@
 import { Select, Input } from '@/components';
-import styles from '@/pages/createEdition/styles.module.scss';
+import styles from '@/pages/CreateEdition/styles.module.scss';
 import { EDITIONS_SIZES } from '@/constants/common';
 
 import { useField } from 'formik';

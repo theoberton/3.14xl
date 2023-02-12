@@ -1,6 +1,6 @@
 import { DatePicker } from '@/components';
 import { DATE_INPUT_FORMAT } from '@/constants/common';
-import styles from '@/pages/createEdition/styles.module.scss';
+import styles from '@/pages/CreateEdition/styles.module.scss';
 
 function ValidityPeriod() {
 	return (
