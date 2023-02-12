@@ -16,7 +16,7 @@ import styles from '@/components/DatePicker/styles.module.scss';
 
 const INVALID_DATE = new Date('');
 
-interface DatePickerProps {
+interface DatepickerProps {
 	name: string;
 	label?: string;
 	inputFormat: string;
@@ -29,7 +29,7 @@ interface DatePickerProps {
 	defaultCalendarMonth?: Date;
 }
 
-export function DatePicker({
+export function Datepicker({
 	name,
 	label,
 	inputFormat,
@@ -40,7 +40,7 @@ export function DatePicker({
 	maxDate,
 	minDate,
 	defaultCalendarMonth,
-}: DatePickerProps) {
+}: DatepickerProps) {
 	const [field] = useField(name);
 
 	const { value } = field;

@@ -1,4 +1,4 @@
-export * from './DatePicker';
+export * from './Datepicker';
 export * from './Button';
 export * from './CustomRouter';
 export * from './Select';

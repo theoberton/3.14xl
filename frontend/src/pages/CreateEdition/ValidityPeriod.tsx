@@ -1,4 +1,4 @@
-import { DatePicker } from '@/components';
+import { Datepicker } from '@/components';
 import { DATE_INPUT_FORMAT } from '@/constants/common';
 import styles from '@/pages/CreateEdition/styles.module.scss';
 
@@ -10,14 +10,14 @@ function ValidityPeriod() {
 				<span className={styles.inputCaptionOptional}>{' (Optional)'}</span>
 			</label>
 			<div className={styles.customFieldControlsValidityDate}>
-				<DatePicker
+				<Datepicker
 					name="validity.start"
 					inputFormat={DATE_INPUT_FORMAT}
 					disablePast
 					popperProps={{ placement: 'right' }}
 					placeholder={'Now'}
 				/>
-				<DatePicker
+				<Datepicker
 					name="validity.end"
 					inputFormat={DATE_INPUT_FORMAT}
 					disablePast
