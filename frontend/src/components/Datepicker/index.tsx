@@ -90,7 +90,6 @@ export function DatePicker({
 	);
 
 	const resultValue = value ? format(new Date(value), DATE_INPUT_FORMAT) : null;
-	console.log('resultValue', resultValue);
 
 	return (
 		<LocalizationProvider dateAdapter={AdapterDateFns}>

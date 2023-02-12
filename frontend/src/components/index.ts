@@ -1,3 +1,4 @@
+export * from './DatePicker';
 export * from './Button';
 export * from './CustomRouter';
 export * from './Select';
@@ -7,5 +8,4 @@ export * from './Input';
 export * from './PrivateRoute';
 export * from './Loader';
 export * from './TextArea';
-export * from './DatePicker';
 export * from './Label';
