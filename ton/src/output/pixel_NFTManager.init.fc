@@ -1,0 +1,40 @@
+#pragma version =0.4.1;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+() __tact_verify_address(slice address) inline {
+    throw_unless(136, address.slice_bits() != 267);
+}
+
+builder __tact_store_address(builder b, slice address) inline {
+    __tact_verify_address(address);
+    b = b.store_slice(address);
+    return b;
+}
+
+builder __gen_write_NftManager(builder build_0, (slice, slice, cell) v) inline {
+    var (v'owner, v'nft_collection_address, v'content) = v;
+    build_0 = __tact_store_address(build_0, v'owner);
+    build_0 = __tact_store_address(build_0, v'nft_collection_address);
+    build_0 = build_0.store_ref(v'content);
+    return build_0;
+}
+
+cell $__gen_NftManager_init(cell sys', slice $owner, cell $content) {
+    var (($self'owner, $self'nft_collection_address, $self'content)) = (null(), null(), null());
+    $self'owner = $owner;
+    $self'content = $content;
+    var b' = begin_cell();
+    b' = b'.store_ref(sys');
+    b' = __gen_write_NftManager(b', ($self'owner, $self'nft_collection_address, $self'content));
+    return b'.end_cell();
+}
+
+cell init(cell sys', slice $$owner, cell $$content) method_id {
+    slice $owner = $$owner;
+    cell $content = $$content;
+    return $__gen_NftManager_init(sys', $owner, $content);
+}
+
+() main() {
+}

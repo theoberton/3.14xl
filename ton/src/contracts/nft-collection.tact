@@ -2,8 +2,6 @@ import "@stdlib/ownable";
 import "@stdlib/deploy";
 import "@stdlib/content";
 
-
-
 struct CollectionData {
     nextItemIndex: Int;
     collectionContentUrl: Cell;
@@ -32,6 +30,7 @@ message InitNftItem {
     queryId: Int as uint64;
     owner: Address;
 }
+
 
 // struct TokenTransferInternal {
 //     queryId: Int as uint64;
