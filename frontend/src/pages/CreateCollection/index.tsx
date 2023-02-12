@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
-import { navigate } from '@/helpers';
-import { Button, ButtonKinds } from '@/components';
-import CollectionMenu from './CollectionMenu';
-import styles from './styles.module.scss';
+import CollectionMenu from '@/pages/CreateCollection/CollectionMenu';
+import { Button } from '@/components';
+import { ButtonKinds } from '@/components/interfaces';
+import styles from '@/pages/CreateCollection/styles.module.scss';
+import { navigate } from '@/helpers/navigation';
 
 export function CreateCollection() {
 	const goToLandingPage = useCallback(() => navigate('/'), []);

@@ -1,11 +1,12 @@
 import MenuItem from '@/pages/CreateCollection/CollectionMenu/MenuItem';
 import styles from '@/pages/CreateCollection/styles.module.scss';
+import { navigate } from '@/helpers/navigation';
 
 const collectionsSettings = [
 	{
 		title: 'Editions',
 		caption: 'Create a collection with multiple copies of a single media',
-		onClick: () => {},
+		onClick: () => navigate('/create-edition'),
 	},
 	{
 		title: 'Drops',
@@ -20,7 +21,7 @@ function CollectionMenu() {
 			<div className={styles.collectionMenuTitle}>Collection type</div>
 			<div className={styles.collectionMenuActions}>
 				{collectionsSettings.map(setting => (
-					<MenuItem {...setting} key={setting.caption} />
+					<MenuItem {...setting} />
 				))}
 			</div>
 		</div>

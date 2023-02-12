@@ -2,24 +2,23 @@ import { Route, Routes } from 'react-router-dom';
 
 import { history } from '@/helpers';
 import { CustomRouter } from '@/components';
-import { WalletLayout, PageContainer } from '@/layouts';
-import { LandingPage, CreateEditionPage, EditionPage, CreateCollection } from '@/pages';
+import { WalletLayout } from '@/layouts';
+
+import { CreateEdition, CreateCollection, LandingPage } from '@/pages';
 
 function ApplicationRoutes() {
 	return (
 		<CustomRouter history={history}>
 			<Routes>
-				<Route element={<PageContainer />}>
-					<Route element={<WalletLayout />}>
-						<Route index path="" element={<LandingPage />} />
-						<Route path="edition" element={<CreateEditionPage />} />
-						<Route path="edition/:address" element={<EditionPage />} />
-					</Route>
+				<Route element={<WalletLayout />}>
+					<Route index path="" element={<LandingPage />} />
+					{/* <Route path='edition' element={<CreateEditionPageOld />} />
+                    <Route path='edition/:address' element={<EditionPage />} /> */}
 				</Route>
 				<Route path="create-collection" element={<CreateCollection />} />
+				<Route path="create-edition" element={<CreateEdition />} />
 			</Routes>
 		</CustomRouter>
 	);
 }
-
 export default ApplicationRoutes;

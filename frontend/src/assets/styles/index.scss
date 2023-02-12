@@ -2,9 +2,8 @@
 
 // Global classes and elements styles declaration
 :root {
-	font-size: $font-base !important;
-	font-weight: $font-semi-bold;
 	font-size: $font-medium;
+	font-weight: $font-semi-bold;
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -15,11 +14,6 @@
 
 * {
 	font-family: 'Sans' !important; // due to ton-connect goober dependency
-	user-select: none;
-}
-
-img {
-	-webkit-user-drag: none;
 }
 
 body {
@@ -30,7 +24,6 @@ input[type='number'] {
 	&::-webkit-inner-spin-button,
 	-webkit-outer-spin-button {
 		-webkit-appearance: none;
-		-moz-appearance: none;
 		margin: 0;
 	}
 }
@@ -46,8 +39,6 @@ html,
 body,
 #root {
 	min-height: 100vh;
-	display: flex;
-	flex-grow: 1;
 }
 
 #root > div {
@@ -80,4 +71,18 @@ body,
 	font-style: normal;
 	font-weight: $font-bold;
 	src: url('../fonts/Syne-Bold.ttf');
+}
+
+.unselectable {
+	-webkit-touch-callout: none;
+	/* iOS Safari */
+	-webkit-user-select: none;
+	/* Safari */
+	-khtml-user-select: none;
+	/* Konqueror HTML */
+	-moz-user-select: none;
+	/* Old versions of Firefox */
+	-ms-user-select: none;
+	/* Internet Explorer/Edge */
+	user-select: none;
 }

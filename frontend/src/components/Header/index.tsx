@@ -1,6 +1,6 @@
 import { TonConnectButton } from '@tonconnect/ui-react';
 import Logo from '@/assets/images/svg/common/logo.svg';
-import styles from './styles.module.scss';
+import styles from '@/components/Header/styles.module.scss';
 
 export function Header() {
 	return (

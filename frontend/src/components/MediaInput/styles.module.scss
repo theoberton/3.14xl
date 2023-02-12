@@ -1,0 +1,70 @@
+@import '@/assets/styles/variables.scss';
+
+.input {
+	border: 0px;
+	background-color: $gray-four;
+	padding: 8px 30px 8px 26px;
+	width: 100%;
+	font-size: inherit;
+	cursor: pointer;
+
+	&Loader {
+		position: absolute;
+		right: -30px;
+		display: flex;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+		align-items: center;
+	}
+
+	&:active {
+		animation: grow 0.1s ease-out;
+	}
+
+	&MinifiedImage {
+		max-width: 17px;
+		max-height: 17px;
+		position: absolute;
+		left: 5px;
+		margin: auto;
+		top: 0;
+		bottom: 0;
+	}
+
+	&Wrapper {
+		position: relative;
+	}
+
+	&Icon {
+		position: absolute;
+		height: 15px;
+		width: 15px;
+		right: 10px;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+	}
+
+	&Container {
+		margin-top: 20px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		cursor: pointer;
+	}
+
+	&Label {
+		line-height: 1.4rem;
+	}
+}
+
+@keyframes grow {
+	0% {
+		transform: scale(1);
+	}
+
+	100% {
+		transform: scale(1.2);
+	}
+}

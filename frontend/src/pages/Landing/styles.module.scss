@@ -1,58 +1,56 @@
 @import '@/assets/styles/variables.scss';
 
 .landing {
-  &Container {
-    margin: 0 10%;
-    border-top: 1px solid $gray-two;
-    padding: 20px ;
-  }
- 
-  &Presentation {
-    &Section {
-      display: grid;
-      grid-auto-flow: column;
-      grid-template-columns: 18fr 4fr;
-    }
+	&Container {
+		margin: 0 10%;
+		border-top: 1px solid $gray-two;
+		padding: 20px;
+	}
 
-    &Details {
-      font-size: $font-medium;
-      display: flex;
-      flex-direction: column;
-      gap: 90px;
-      margin-left: -50px;
-      align-items: center;
-    }
+	&Presentation {
+		&Section {
+			display: flex;
+			flex-direction: column;
+		}
 
-    &Examples {
-      display: flex;
+		&Details {
+			font-size: $font-medium;
+			display: flex;
+			flex-direction: column;
+			gap: 90px;
+			margin-left: -50px;
+			align-items: center;
+		}
 
-      :nth-child(1) {
-        margin-left: -20px;
-      }
-    }
+		&Examples {
+			display: flex;
 
-    &Example {
+			:nth-child(1) {
+				margin-left: -20px;
+			}
+		}
 
-      &Wrapper {
-        border-radius: 100%;
-        margin-left: -50px;
-        background-color: $white;
-      }
-      height: 160px;
-    }
+		&Example {
+			&Wrapper {
+				border-radius: 100%;
+				margin-left: -50px;
+				background-color: $white;
+			}
+			height: 160px;
+		}
 
-    &Explanation {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+		&Explanation {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
 
-      &Section {
-        color: $gray-one;
-      }
-    }
+			&Section {
+				color: $white;
+			}
+		}
 
-    &Slogan {
-      font-size: $font-extra-huge;
-    }
-  }
+		&Slogan {
+			font-size: $font-extra-huge;
+		}
+	}
 }

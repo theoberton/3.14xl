@@ -2,7 +2,7 @@ import { useTonConnect } from '@/hooks';
 
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-function PrivateRoute() {
+export function PrivateRoute() {
 	const location = useLocation();
 	const { connected } = useTonConnect();
 
@@ -14,5 +14,3 @@ function PrivateRoute() {
 
 	return connected ? <Outlet /> : redirectionScreen;
 }
-
-export default PrivateRoute;

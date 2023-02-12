@@ -1,21 +1,23 @@
 import cn from 'classnames';
 import commonStyles from '@/pages/styles.module.scss';
+import styles from '@/components/Button/styles.module.scss';
 import ArrowLeftIcon from '@/assets/images/svg/button/arrowLeft.svg';
 import ArrowRightIcon from '@/assets/images/svg/button/arrowRight.svg';
-import { ButtonKinds } from '@/components';
-import styles from './styles.module.scss';
+import { ButtonKinds } from '@/components/interfaces';
 
 type ButtonProps = {
 	onClick?: () => void;
-	isDisabled?: boolean;
+	type?: 'submit' | 'button' | 'reset';
+	disabled?: boolean;
 	children?: React.ReactNode;
 	kind: ButtonKinds;
 	icon?: string;
-	green?: Boolean;
+	green?: boolean;
+	expanded?: boolean;
 };
 
 export function Button(props: ButtonProps) {
-	const { onClick, icon, isDisabled } = props;
+	const { type = 'button', onClick, icon, disabled, expanded = false } = props;
 
 	const buttonContent = getButtonContent(props);
 	const isIconExists = Boolean(icon);
@@ -23,18 +25,19 @@ export function Button(props: ButtonProps) {
 	const btnClass = cn({
 		[styles.button]: true,
 		[styles.buttonWithIcon]: isIconExists,
+		[styles.buttonExpanded]: expanded,
 		[commonStyles.unselectable]: true,
 	});
 
 	return (
-		<button type="button" className={btnClass} onClick={!isDisabled ? onClick : () => {}}>
+		<button type={type} className={btnClass} onClick={!disabled ? onClick : () => {}}>
 			{buttonContent}
 		</button>
 	);
 }
 
 function getButtonContent(props: ButtonProps): React.ReactNode {
-	const { children, kind, green } = props;
+	const { children, kind, green, disabled } = props;
 
 	let basicButtonContent: JSX.Element | null = null;
 
@@ -42,14 +45,16 @@ function getButtonContent(props: ButtonProps): React.ReactNode {
 		[styles.buttonIconImage]: true,
 		[styles.buttonIconImageSalad]: green,
 	});
-	const contentClassname = cn({
-		[styles.buttonContent]: true,
-		[styles.buttonContentSalad]: green,
+	const commonContentClassnames = cn({
+		[styles.buttonContentSalad]: !disabled && green,
+		[styles.buttonDisabled]: disabled,
 	});
 
 	if (kind == ButtonKinds.basic) {
+		const resultClassname = cn(styles.buttonContentBasic, commonContentClassnames);
+
 		basicButtonContent = (
-			<div className={contentClassname}>
+			<div className={resultClassname}>
 				<div className={styles.buttonContentMain}>{children}</div>
 			</div>
 		);
@@ -58,26 +63,29 @@ function getButtonContent(props: ButtonProps): React.ReactNode {
 	} else if (kind == ButtonKinds.arrowRight) {
 		basicButtonContent = <img className={imageClassname} src={ArrowRightIcon} />;
 	} else if (kind == ButtonKinds.basicWithIconArrowLeft) {
-		const finalImageClassname = cn({
+		const resultImageClassname = cn({
 			[imageClassname]: true,
 			[styles.buttonContentWhite]: green,
 		});
+		const resultClassname = cn(styles.buttonContentWithArrow, commonContentClassnames);
+
 		basicButtonContent = (
-			<div className={contentClassname}>
+			<div className={resultClassname}>
 				<div className={styles.buttonContentMain}>{children}</div>
-				<img className={finalImageClassname} src={ArrowLeftIcon} />
+				<img className={resultImageClassname} src={ArrowLeftIcon} />
 			</div>
 		);
 	} else if (kind == ButtonKinds.basicWithIconArrowRight) {
-		const finalImageClassname = cn({
+		const resultImageClassname = cn({
 			[imageClassname]: true,
 			[styles.buttonContentWhite]: green,
 		});
+		const resultClassname = cn(styles.buttonContentWithArrow, commonContentClassnames);
 
 		basicButtonContent = (
-			<div className={contentClassname}>
+			<div className={resultClassname}>
 				<div className={styles.buttonContentMain}>{children}</div>
-				<img className={finalImageClassname} src={ArrowRightIcon} />
+				<img className={resultImageClassname} src={ArrowRightIcon} />
 			</div>
 		);
 	}

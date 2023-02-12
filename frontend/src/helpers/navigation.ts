@@ -1,6 +1,6 @@
 import { createBrowserHistory, To } from 'history';
 
-export const history = createBrowserHistory()
+export const history = createBrowserHistory();
 
 export const goBack = () => history.back();
 

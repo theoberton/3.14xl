@@ -1,9 +1,7 @@
 import { useCallback } from 'react';
 
 import { Button } from '@/components/Button';
-import NFTExampleOne from '@/assets/images/png/landing/discoverSequenceOne.png';
-import NFTExampleTwo from '@/assets/images/png/landing/discoverSequenceTwo.png';
-import NFTExampleThree from '@/assets/images/png/landing/discoverSequenceThree.png';
+
 import DiscoverNFT from '@/assets/images/svg/common/discoverNft.svg';
 import { ButtonKinds } from '@/components/Button/interfaces';
 
@@ -22,15 +20,6 @@ export function PresentationSection() {
 			</div>
 			<div className={styles.landingPresentationDetails}>
 				<div className={styles.landingPresentationExamples}>
-					<div className={styles.landingPresentationExampleWrapper}>
-						<img className={styles.landingPresentationExample} src={NFTExampleOne} />
-					</div>
-					<div className={styles.landingPresentationExampleWrapper}>
-						<img className={styles.landingPresentationExample} src={NFTExampleTwo} />
-					</div>
-					<div className={styles.landingPresentationExampleWrapper}>
-						<img className={styles.landingPresentationExample} src={NFTExampleThree} />
-					</div>
 					<div className={styles.landingPresentationExampleWrapper}>
 						<img src={DiscoverNFT} />
 					</div>

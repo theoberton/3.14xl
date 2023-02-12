@@ -1,0 +1,18 @@
+@import '@/assets/styles/variables.scss';
+
+.datePickerWrapper {
+	display: flex;
+	position: relative;
+	align-items: center;
+	margin-top: 5px;
+
+	&MarginTopFree {
+		@extend .datePickerWrapper;
+		margin-top: 0;
+	}
+}
+
+.datePickerItem {
+	position: absolute;
+	right: 10px;
+}

@@ -1,6 +1,6 @@
 import { Button } from '@/components';
-import { ButtonKinds } from '@/components/Button/interfaces';
-import styles from '../styles.module.scss';
+import styles from '@/pages/CreateCollection/styles.module.scss';
+import { ButtonKinds } from '@/components/interfaces';
 
 type MenuItemProps = {
 	title: string;
@@ -10,6 +10,7 @@ type MenuItemProps = {
 
 function MenuItem(props: MenuItemProps) {
 	const { title, caption, onClick } = props;
+
 	return (
 		<div className={styles.collectionMenuItem}>
 			<div className={styles.collectionMenuItemContent}>

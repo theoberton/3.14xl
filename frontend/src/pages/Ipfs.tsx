@@ -3,7 +3,6 @@ import { AddResult } from 'ipfs-core-types/src/root';
 import all from 'it-all';
 import useIpfs from '@/hooks/useIpfs';
 
-
 type Modify<T, R> = Omit<T, keyof R> & R;
 type Preview = Modify<
 	AddResult,
