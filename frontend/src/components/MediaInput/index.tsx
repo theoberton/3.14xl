@@ -86,7 +86,7 @@ export function MediaInput(props: Props) {
 		}
 	}, [fileRef]);
 
-	const handleClearInput = useCallback((e: React.MouseEvent<HTMLInputElement>) => {
+	const handleClearInput = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
 		e.stopPropagation();
 		setFieldValue(name, undefined);
 	}, []);
@@ -95,7 +95,7 @@ export function MediaInput(props: Props) {
 	const inputIcon = value ? crossIcon : uploadIcon;
 
 	const handleInputClick = useCallback(
-		(e: React.MouseEvent<HTMLInputElement>) => {
+		(e: React.MouseEvent<HTMLImageElement>) => {
 			if (disabled) return;
 
 			const manageInputHandler = value ? handleClearInput : () => {};
@@ -130,7 +130,7 @@ export function MediaInput(props: Props) {
 					placeholder={placeholder}
 					value={field.value || ''}
 				/>
-				<img src={inputIcon} className={inputIconClass} />
+				<img src={inputIcon} className={inputIconClass} onClick={handleInputClick} />
 				{
 					<div className={styles.inputLoader}>
 						{isMediaUploading && <Loader size={LoaderSizes.small} />}
