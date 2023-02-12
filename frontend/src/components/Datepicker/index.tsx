@@ -89,6 +89,8 @@ export function DatePicker({
 		[name, setFieldValue]
 	);
 
+	console.log('sadfasdfasdf');
+
 	const resultValue = value ? format(new Date(value), DATE_INPUT_FORMAT) : null;
 
 	return (
