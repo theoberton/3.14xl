@@ -12,7 +12,7 @@ import { DATE_VALIDITY_REGEX, DATE_INPUT_FORMAT } from '@/constants/common';
 import classNames from 'classnames';
 
 import inputStyles from '@/components/Input/styles.module.scss';
-import styles from '@/components/DatePicker/styles.module.scss';
+import styles from '@/components/Datepicker/styles.module.scss';
 
 const INVALID_DATE = new Date('');
 
