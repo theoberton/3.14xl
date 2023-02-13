@@ -2,21 +2,98 @@ SETCP0
 (:methods
   recv_internal: 
 
-  4: 
+  14: 
     PUSHNULL
-    s0 s3 XCHG
+    <{
+      MYADDR
+      0 PUSHINT
+      8 7 6 PUSH3
+      s8 s7 PUSH2
+      <{
+        NEWC
+        7 1 BLKSWAP
+        s7 s6 XCHG2
+        STSLICER
+        s1 s4 XCHG
+        64 STU
+        s1 s2 XCHG
+        STREF
+        STREF
+        s1 s3 s3 XCHG3
+        s2 s3 XCHG2
+        16 STU
+        16 STU
+        s0 s1 XCHG
+        STSLICER
+        ENDC
+      }> CALLREF
+      s2 s-1 PUXC
+    }> CALLREF
+    1 2 BLKDROP2
+    <{
+      0 PUSHINT
+      ROTREV
+      NEWC
+      0 PUSHINT
+      s0 s1 XCHG
+      2 STU
+      3 PUSHINT
+      s0 s1 XCHG
+      2 STU
+      0 PUSHINT
+      s0 s1 XCHG
+      1 STU
+      s1 s2 XCHG
+      STREF
+      STREF
+      ENDC
+      HASHCU
+      NEWC
+      2 PUSHINT
+      s0 s1 XCHG
+      2 STU
+      0 PUSHINT
+      s0 s1 XCHG
+      1 STU
+      s1 s2 XCHG
+      8 STI
+      256 STU
+      ENDC
+      CTOS
+    }> CALLREF
+    s0 s8 XCHG
     NEWC
     STREF
-    s3 s3 XCHG2
-    2SWAP
+    s0 s8 XCHG
+    s8 s7 XCHG2
     STSLICER
-    ROT
+    5 1 BLKSWAP
+    s4 s5 XCHG2
+    STREF
+    s1 s2 XCHG
+    STREF
+    s2 s3 XCHG2
+    s2 s3 XCHG2
+    16 STU
+    16 STU
+    s0 s1 XCHG
     STSLICER
+    s0 s2 XCHG
+    NEWC
+    STREF
+    s0 s1 XCHG
+    STSLICER
+    ENDC
+    s0 s1 XCHG
     STREF
     ENDC
 
   107886: 
-    4 CALLDICT
+    s0 s1 XCHG
+    3 UNTUPLE
+    3 UNTUPLE
+    1 5 BLKSWAP
+    14 CALLDICT
 ) 19 DICTPUSHCONST
 DICTIGETJMPZ
 11 THROWARG

@@ -17,12 +17,6 @@ struct CollectionInitData {
   royalty: RoyaltyParams;
 }
 
-message DeployNftCollection {
-  content: Cell;
-  nft_item_code: Cell;
-  nft_collection_code: Cell;
-  royalty: RoyaltyParams;
-}
 
 struct ItemContent {
   owner: Address;
@@ -33,51 +27,82 @@ message(0x1) Mint {
   query_id: Int as uint64;
   item_index: Int as uint64;
   amount: Int as coins;
-  item_content: ItemContent;
+  item_content: ItemContent as Cell;
 }
 
 message MintSafe {
   query_id: Int as uint64;
   next_item_index: Int as uint64;
+  itemContent: Cell;
 }
+
+message UpdateNftCollectionAddress {
+  nft_collection_address: Address;
+}
+
+message DeployNftCollection {
+  query_id: Int;
+}
+
+struct NftCollectionInit {
+  content: Cell;
+  nft_item_code: Cell;
+  royalty: RoyaltyParams;
+}
+
+1. 
 
 contract NftManager with Deployable, Ownable {
   owner: Address;
+  nft_collection_init: NftCollectionInit;
+  nft_collection_code: Cell;
+  nft_collection_address: Address;
+
   // price: Int;
   // datetime_start: Int;
   // datetime_end: Int;
-  nft_collection_address: Address;
   // total_supply: Int;
   // max_supply: Int;
-  content: Cell;
 
-  init(owner: Address, content: Cell) {
+  init(owner: Address, nft_collection_init: NftCollectionInit, nft_collection_code: Cell) {
     self.owner = owner;
-    self.content = content;
+    self.nft_collection_init = nft_collection_init;
+    self.nft_collection_code = nft_collection_code;
+
+    let winit: StateInit = self.getNftCollectionStateInit();
+    self.nft_collection_address = contractAddress(winit);
   }
 
-  fun getCollectionStateInit(msg: DeployNftCollection): StateInit {
-    let data: Cell = CollectionInitData {
-      owner: myAddress(),
-      next_item_index: 0,
-      content: msg.content,
-      nft_item_code: msg.nft_item_code,
-      royalty: msg.royalty
-    }.toCell();
-    return StateInit{ code: msg.nft_collection_code, data: data };
+  receive(msg: UpdateNftCollectionAddress) {
+    self.requireNotInit();
+    self.requireOwner();
+
+    self.nft_collection_address = msg.nft_collection_address;
+  }
+
+  fun getNftCollectionStateInit(): StateInit {
+    return StateInit {
+      code: self.nft_collection_code,
+      data: CollectionInitData {
+        owner: myAddress(),
+        next_item_index: 0,
+        content: self.nft_collection_init.content,
+        nft_item_code: self.nft_collection_init.nft_item_code,
+        royalty: self.nft_collection_init.royalty
+      }.toCell() 
+    };
   }
 
   receive(msg: DeployNftCollection) {
-    let collectionStateInit: StateInit = self.getCollectionStateInit(msg);
-    let collectionAddress: Address = contractAddress(collectionStateInit);
-
+    let winit: StateInit = self.getNftCollectionStateInit();
+    
     send(SendParameters{
-      to: collectionAddress,
+      to: contractAddress(winit),
       value: 0,
       mode: 64,
       bounce: false,
-      code: collectionStateInit.code,
-      data: collectionStateInit.data
+      code: winit.code,
+      data: winit.data
     });
   }
 
@@ -92,7 +117,7 @@ contract NftManager with Deployable, Ownable {
       body: Mint {
         query_id: msg.query_id,
         item_index: msg.next_item_index,
-        amount: 0,
+        amount: ctx.value,
         item_content: ItemContent {
           owner: ctx.sender,
           content: emptyCell()
@@ -105,3 +130,6 @@ contract NftManager with Deployable, Ownable {
     return self.nft_collection_address;
   }
 }
+
+
+

@@ -1,25 +1,31 @@
 import { Address, toNano } from "ton-core";
-import { NFTManager, MintSafe } from "../output/pixel_NFTManager";
-import { NftCollection } from "../output/pixel_NftCollection";
+import { NftManager, MintSafe } from "../output/pixel_NftManager";
 import { NetworkProvider } from "@ton-community/blueprint";
+import TonWeb from 'tonweb';
 
 export async function run(network: NetworkProvider) {
-  const managerAddress = Address.parse('EQAvSqL8hr_FsdFfPPhVaBKabWGXHuL_cLA7FYTg9E3yQKI7');
-  const managerContract = NFTManager.fromAddress(managerAddress);
-  const managerOpenedContract = network.open(managerContract);
-  const nftCollectionAddress = await managerOpenedContract.getNftCollectionAddress();
-  const nftCollectionContract = NftCollection.fromAddress(nftCollectionAddress);
-  const nftCollectionOpenedContract = network.open(nftCollectionContract);
-  const collectionData = await nftCollectionOpenedContract.getGetCollectionData();
+  const managerAddress = Address.parse('EQC-qcNxtdu0beWHZZoynGsoKGo7ZLev7rd3UYTO31LM4AqH');
+  const managerContract = NftManager.fromAddress(managerAddress);
+  const openedContract = network.open(managerContract);
+  const collectionAddress = await openedContract.getNftCollectionAddress()
+
+
+  const tonweb = new TonWeb(
+    new TonWeb.HttpProvider('https://testnet.toncenter.com/api/v2/jsonRPC', {
+      apiKey: '4ff403d7763b912464241855e03d414c1deda0d73811ceb6c694d2b5f8737611',
+    })
+  );
+  const collectionContract = new TonWeb.token.nft.NftCollection(tonweb.provider, { address: collectionAddress.toString() });
+  const collectionData = await collectionContract.getCollectionData();
+  console.log('Collection owner', collectionData.ownerAddress.toString());
 
   const mintMessage: MintSafe = {
     $$type: 'MintSafe',
     query_id: 0n,
-    next_item_index: collectionData.nextItemIndex
+    next_item_index: BigInt(collectionData.nextItemIndex)
   };
 
-  await managerOpenedContract.send(network.sender(), {
-    value: toNano('0.05'),
-    bounce: true,
+  await openedContract.send(network.sender(), {
+    value: toNano('0.08'),
   }, mintMessage);
 }

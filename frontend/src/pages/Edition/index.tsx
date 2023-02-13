@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTonAddress } from '@tonconnect/ui-react';
 import TonWeb from 'tonweb';
 import qs from 'qs';
 import { toNano } from 'ton-core';
@@ -26,6 +27,7 @@ function useAsync<T>(callback: AsyncCallback<T>) {
 
 export function EditionPage() {
 	const { address } = useParams();
+	const ownerAddress = useTonAddress();
 	const collection = new NftCollection(tonweb.provider, { address });
 
 	const collectionData = useAsync(useCallback(() => collection.getCollectionData(), []));
@@ -40,7 +42,7 @@ export function EditionPage() {
 
 	console.log({ collectionData, content });
 
-	if (!collectionData || !content || !address) {
+	if (!collectionData || !content || !address || !ownerAddress) {
 		return <div>loading</div>;
 	}
 
@@ -48,8 +50,8 @@ export function EditionPage() {
 		const mintMessage = collection.createMintBody({
 			itemIndex: collectionData.nextItemIndex,
 			amount: new BN(40000000),
-			itemOwnerAddress: new Address(address),
-			itemContentUri: collectionData.collectionContentUri,
+			itemOwnerAddress: new Address(ownerAddress),
+			itemContentUri: '0/meta.json'
 		});
 
 		const mintMessageBoc = await mintMessage.toBoc(false);
