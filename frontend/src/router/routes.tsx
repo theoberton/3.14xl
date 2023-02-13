@@ -17,6 +17,7 @@ function ApplicationRoutes() {
 				</Route>
 				<Route path="create-collection" element={<CreateCollection />} />
 				<Route path="create-edition" element={<CreateEdition />} />
+				<Route path="*" element={<div>not found page right here</div>} />
 			</Routes>
 		</CustomRouter>
 	);

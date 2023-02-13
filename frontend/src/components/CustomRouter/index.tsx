@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { Router } from 'react-router-dom';
 import { BrowserHistory } from 'history';
 
@@ -15,6 +15,10 @@ export function CustomRouter({ history, ...props }: CustomRouterHistory) {
 	});
 
 	useLayoutEffect(() => history.listen(setState), [history]);
+
+	useEffect(() => {
+		console.log(state);
+	}, [state]);
 
 	return (
 		<Router
