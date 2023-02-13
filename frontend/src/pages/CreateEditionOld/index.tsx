@@ -31,7 +31,7 @@ export function CreateEditionPage() {
 		const content = {
 			name: 'Oberton',
 			description: 'OBER MEGATON',
-			image: 'https://ipfs.io/ipfs/' + collectionImageIpfs.cid.toString(),
+			image: 'https://cloudflare-ipfs.com/ipfs/' + collectionImageIpfs.cid.toString(),
 			external_link: 'https://matketplacecreatures.io',
 			seller_fee_basis_points: 100,
 			fee_recipient: address,
@@ -45,9 +45,8 @@ export function CreateEditionPage() {
 			ownerAddress: ownerAddress,
 			royalty: 0.05,
 			royaltyAddress: ownerAddress,
-			collectionContentUri: 'https://ipfs.io/ipfs/' + collectionContentIpfs.cid.toString(),
-			nftItemContentBaseUri:
-				'https://raw.githubusercontent.com/ton-blockchain/token-contract/main/nft/web-example/',
+			collectionContentUri: 'https://cloudflare-ipfs.com/ipfs/' + collectionContentIpfs.cid.toString(),
+			nftItemContentBaseUri: 'https://s.getgems.io/nft/c/63e948eb70950885f3c557b0/',
 			nftItemCodeHex: NftItem.codeHex,
 		});
 
