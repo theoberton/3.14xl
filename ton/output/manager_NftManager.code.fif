@@ -5,41 +5,27 @@ PROGRAM{
   DECLPROC __tact_store_bool
   DECLPROC __tact_load_address
   DECLPROC __tact_store_address
-  DECLPROC __tact_create_address
-  DECLPROC __tact_compute_contract_address
   DECLPROC __tact_address_eq
   DECLPROC __gen_read_Deploy
   DECLPROC __gen_write_DeployOk
   DECLPROC __gen_writecell_DeployOk
-  DECLPROC __gen_write_RoyaltyParams
-  DECLPROC __gen_read_RoyaltyParams
-  DECLPROC __gen_write_CollectionInitData
-  DECLPROC __gen_writecell_CollectionInitData
-  DECLPROC __gen_write_ItemContent
   DECLPROC __gen_write_Mint
   DECLPROC __gen_writecell_Mint
   DECLPROC __gen_read_MintSafe
-  DECLPROC __gen_read_UpdateNftCollectionAddress
-  DECLPROC __gen_read_DeployNftCollection
-  DECLPROC __gen_write_NftCollectionInit
-  DECLPROC __gen_read_NftCollectionInit
+  DECLPROC __gen_read_SetNftCollectionAddress
   DECLPROC __gen_write_NftManager
   DECLPROC __gen_read_NftManager
   DECLPROC __gen_Context_get_sender
   DECLPROC __gen_load_NftManager
   DECLPROC __gen_store_NftManager
-  DECLPROC $emptyCell
-  DECLPROC $contractAddress
   DECLPROC $send
   DECLPROC $reply
-  DECLPROC $__gen_NftManager_getNftCollectionStateInit
   DECLPROC $__gen_NftManager_nft_collection_address
   76510 DECLMETHOD $__gen_get_nft_collection_address
   DECLPROC $__gen_NftManager_requireOwner
   DECLPROC $__gen_NftManager_owner
   83229 DECLMETHOD $__gen_get_owner
-  DECLPROC $__gen_NftManager_receive_UpdateNftCollectionAddress
-  DECLPROC $__gen_NftManager_receive_DeployNftCollection
+  DECLPROC $__gen_NftManager_receive_SetNftCollectionAddress
   DECLPROC $__gen_NftManager_receive_MintSafe
   DECLPROC $__gen_NftManager_receive_Deploy
   DECLPROC recv_internal
@@ -73,38 +59,6 @@ PROGRAM{
   __tact_store_address PROCINLINE:<{
     STSLICER
   }>
-  __tact_create_address PROCINLINE:<{
-    NEWC
-    2 PUSHINT
-    SWAP
-    2 STU
-    0 PUSHINT
-    SWAP
-    1 STU
-    s1 s2 XCHG
-    8 STI
-    256 STU
-    ENDC
-    CTOS
-  }>
-  __tact_compute_contract_address PROCINLINE:<{
-    NEWC
-    0 PUSHINT
-    SWAP
-    2 STU
-    3 PUSHINT
-    SWAP
-    2 STU
-    0 PUSHINT
-    SWAP
-    1 STU
-    s1 s2 XCHG
-    STREF
-    STREF
-    ENDC
-    HASHCU
-    __tact_create_address INLINECALLDICT
-  }>
   __tact_address_eq PROCINLINE:<{
     SDEQ
   }>
@@ -129,64 +83,27 @@ PROGRAM{
     __gen_write_DeployOk INLINECALLDICT
     ENDC
   }>
-  __gen_write_RoyaltyParams PROCINLINE:<{
-    s2 s3 XCHG2
-    16 STU
-    16 STU
-    SWAP
-    __tact_store_address INLINECALLDICT
-  }>
-  __gen_read_RoyaltyParams PROCINLINE:<{
-    16 LDU
-    16 LDU
-    __tact_load_address INLINECALLDICT
-    s3 s3 s0 XCHG3
-  }>
-  __gen_write_CollectionInitData PROCINLINE:<{
-    s7 s6 XCHG2
-    __tact_store_address INLINECALLDICT
-    s1 s4 XCHG
-    64 STU
-    s1 s2 XCHG
-    STREF
-    STREF
-    s1 s3 s3 XCHG3
-    __gen_write_RoyaltyParams INLINECALLDICT
-  }>
-  __gen_writecell_CollectionInitData PROCREF:<{
-    NEWC
-    7 -ROLL
-    __gen_write_CollectionInitData INLINECALLDICT
-    ENDC
-  }>
-  __gen_write_ItemContent PROCINLINE:<{
-    -ROT
-    __tact_store_address INLINECALLDICT
-    STREF
-  }>
   __gen_write_Mint PROCINLINE:<{
     1 PUSHINT
-    s0 s6 XCHG2
+    s0 s5 XCHG2
     32 STU
-    s1 s4 XCHG
+    s1 s3 XCHG
     64 STU
-    s1 s2 XCHG
     64 STU
     SWAP
     STGRAMS
-    s0 s2 XCHG
-    __gen_write_ItemContent INLINECALLDICT
+    STREF
   }>
   __gen_writecell_Mint PROCREF:<{
     NEWC
-    5 -ROLL
+    4 -ROLL
     __gen_write_Mint INLINECALLDICT
     ENDC
   }>
   __gen_read_MintSafe PROCINLINE:<{
     32 LDU
     SWAP
-    668914693 PUSHINT
+    3905926369 PUSHINT
     EQUAL
     129 THROWIFNOT
     64 LDU
@@ -194,66 +111,30 @@ PROGRAM{
     LDREF
     3 -ROLL
   }>
-  __gen_read_UpdateNftCollectionAddress PROCINLINE:<{
+  __gen_read_SetNftCollectionAddress PROCINLINE:<{
     32 LDU
     SWAP
-    2705250259 PUSHINT
+    435957060 PUSHINT
     EQUAL
     129 THROWIFNOT
     __tact_load_address INLINECALLDICT
   }>
-  __gen_read_DeployNftCollection PROCINLINE:<{
-    32 LDU
-    SWAP
-    632976760 PUSHINT
-    EQUAL
-    129 THROWIFNOT
-    257 PUSHINT
-    LDIX
-    SWAP
-  }>
-  __gen_write_NftCollectionInit PROCINLINE:<{
-    s4 s5 XCHG2
-    STREF
-    s1 s2 XCHG
-    STREF
-    s2 s3 XCHG2
-    __gen_write_RoyaltyParams INLINECALLDICT
-  }>
-  __gen_read_NftCollectionInit PROCINLINE:<{
-    LDREF
-    LDREF
-    __gen_read_RoyaltyParams INLINECALLDICT
-    s3 s5 XCHG
-    s3 s4 XCHG
-  }>
   __gen_write_NftManager PROCINLINE:<{
-    s8 s7 XCHG2
+    2SWAP
     __tact_store_address INLINECALLDICT
-    5 -ROLL
-    __gen_write_NftCollectionInit INLINECALLDICT
-    s0 s2 XCHG
-    NEWC
-    STREF
+    s1 s2 XCHG
+    257 PUSHINT
+    STIX
     SWAP
     __tact_store_address INLINECALLDICT
-    ENDC
-    SWAP
-    STREF
   }>
   __gen_read_NftManager PROCINLINE:<{
     __tact_load_address INLINECALLDICT
     SWAP
-    __gen_read_NftCollectionInit INLINECALLDICT
-    s0 s5 XCHG
-    LDREF
-    SWAP
-    CTOS
-    LDREF
+    257 PUSHINT
+    LDIX
     __tact_load_address INLINECALLDICT
-    NIP
-    s2 s8 XCHG
-    s2 s7 XCHG
+    s3 s3 s0 XCHG3
   }>
   __gen_Context_get_sender PROCINLINE:<{
     s2 s3 XCHG
@@ -266,26 +147,17 @@ PROGRAM{
     SWAP
     __tact_context_sys SETGLOB
     __gen_read_NftManager INLINECALLDICT
-    1 8 BLKDROP2
+    1 3 BLKDROP2
   }>
   __gen_store_NftManager PROCINLINE:<{
     NEWC
     __tact_context_sys GETGLOB
     SWAP
     STREF
-    8 -ROLL
+    3 -ROLL
     __gen_write_NftManager INLINECALLDICT
     ENDC
     c4 POP
-  }>
-  $emptyCell PROCREF:<{
-    NEWC
-    ENDC
-  }>
-  $contractAddress PROCREF:<{
-    0 PUSHINT
-    -ROT
-    __tact_compute_contract_address INLINECALLDICT
   }>
   $send PROCREF:<{
     NEWC
@@ -399,16 +271,8 @@ PROGRAM{
     PUSHNULL
     $send INLINECALLDICT
   }>
-  $__gen_NftManager_getNftCollectionStateInit PROCREF:<{
-    MYADDR
-    0 PUSHINT
-    s8 s7 s6 PUSH3
-    s8 s7 PUSH2
-    __gen_writecell_CollectionInitData INLINECALLDICT
-    s2 s(-1) PUXC
-  }>
   $__gen_NftManager_nft_collection_address PROCREF:<{
-    7 1 BLKDROP2
+    2 1 BLKDROP2
   }>
   $__gen_get_nft_collection_address PROC:<{
     __gen_load_NftManager INLINECALLDICT
@@ -417,53 +281,41 @@ PROGRAM{
   $__gen_NftManager_requireOwner PROCREF:<{
     __tact_context_get INLINECALLDICT
     __gen_Context_get_sender INLINECALLDICT
-    s8 PUSH
+    s3 PUSH
     __tact_address_eq INLINECALLDICT
     132 THROWIFNOT
   }>
   $__gen_NftManager_owner PROCREF:<{
-    7 BLKDROP
+    2DROP
   }>
   $__gen_get_owner PROC:<{
     __gen_load_NftManager INLINECALLDICT
     $__gen_NftManager_owner INLINECALLDICT
   }>
-  $__gen_NftManager_receive_UpdateNftCollectionAddress PROCINLINE:<{
-    8 -ROLL
+  $__gen_NftManager_receive_SetNftCollectionAddress PROCINLINE:<{
+    3 -ROLL
     $__gen_NftManager_requireOwner INLINECALLDICT
-    DROP
-    7 ROLL
-  }>
-  $__gen_NftManager_receive_DeployNftCollection PROCINLINE:<{
-    DROP
-    $__gen_NftManager_getNftCollectionStateInit INLINECALLDICT
-    FALSE
-    s2 s1 PUSH2
-    $contractAddress INLINECALLDICT
-    2SWAP
-    0 PUSHINT
-    64 PUSHINT
-    2SWAP
-    PUSHNULL
-    -ROT
-    $send INLINECALLDICT
+    s2 PUSH
+    6362 PUSHINT
+    s0 s2 XCHG
+    __tact_address_eq INLINECALLDICT
+    THROWANYIFNOT
+    ROT
   }>
   $__gen_NftManager_receive_MintSafe PROCINLINE:<{
-    DROP
     __tact_context_get INLINECALLDICT
-    DROP
-    s2 POP
+    s1 s3 XCHG
+    3 BLKDROP
+    s0 s3 XCHG
     FALSE
     0 PUSHINT
+    s4 s5 XCHG2
     64 PUSHINT
-    $emptyCell INLINECALLDICT
-    s4 s7 XCHG
-    s3 s6 XCHG
-    s5 s7 s0 XCHG3
+    s0 s4 XCHG
     __gen_writecell_Mint INLINECALLDICT
     s4 PUSH
     s0 s3 XCHG
-    s4 s4 XCHG2
+    s4 s4 s4 XCHG3
     PUSHNULL
     PUSHNULL
     $send INLINECALLDICT
@@ -505,55 +357,27 @@ PROGRAM{
       2DROP
     }>
     DUP
-    2705250259 PUSHINT
+    435957060 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
       __gen_load_NftManager INLINECALLDICT
-      s0 s8 XCHG
-      __gen_read_UpdateNftCollectionAddress INLINECALLDICT
+      s0 s3 XCHG
+      __gen_read_SetNftCollectionAddress INLINECALLDICT
       NIP
-      s7 s8 XCHG
-      s6 s7 XCHG
-      s5 s6 XCHG
-      s4 s5 XCHG
-      s3 s4 XCHG
       s1 s3 s0 XCHG3
-      $__gen_NftManager_receive_UpdateNftCollectionAddress INLINECALLDICT
+      $__gen_NftManager_receive_SetNftCollectionAddress INLINECALLDICT
       __gen_store_NftManager INLINECALLDICT
     }>
     DUP
-    632976760 PUSHINT
+    3905926369 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
       __gen_load_NftManager INLINECALLDICT
-      s0 s8 XCHG
-      __gen_read_DeployNftCollection INLINECALLDICT
-      NIP
-      s7 s8 XCHG
-      s6 s7 XCHG
-      s5 s6 XCHG
-      s4 s5 XCHG
-      s3 s4 XCHG
-      s1 s3 s0 XCHG3
-      $__gen_NftManager_receive_DeployNftCollection INLINECALLDICT
-      __gen_store_NftManager INLINECALLDICT
-    }>
-    DUP
-    668914693 PUSHINT
-    EQUAL
-    IFJMP:<{
-      DROP
-      __gen_load_NftManager INLINECALLDICT
-      s0 s8 XCHG
+      s0 s3 XCHG
       __gen_read_MintSafe INLINECALLDICT
       s3 POP
-      s9 s10 XCHG
-      s8 s9 XCHG
-      s7 s8 XCHG
-      s6 s7 XCHG
-      s5 s6 XCHG
       s4 s5 XCHG
       s3 s4 XCHG
       ROT
@@ -564,14 +388,9 @@ PROGRAM{
     EQUAL
     IFJMP:<{
       __gen_load_NftManager INLINECALLDICT
-      s0 s8 XCHG
+      s0 s3 XCHG
       __gen_read_Deploy INLINECALLDICT
       NIP
-      s7 s8 XCHG
-      s6 s7 XCHG
-      s5 s6 XCHG
-      s4 s5 XCHG
-      s3 s4 XCHG
       s1 s3 s0 XCHG3
       $__gen_NftManager_receive_Deploy INLINECALLDICT
       __gen_store_NftManager INLINECALLDICT
@@ -585,6 +404,6 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d595a354c777a4452565856346f6144794744776b445370646b6b714b33386e72533663727348767576397037} PUSHSLICE
+    x{697066733a2f2f516d5257676d3273623456747269596e57475a62637155484b7734423234714d537a38426975646b316e69656b79} PUSHSLICE
   }>
 }END>c

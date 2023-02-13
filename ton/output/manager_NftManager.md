@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: NftManager
-BOC Size: 1110 bytes
+BOC Size: 731 bytes
 
 # Types
-Total Types: 14
+Total Types: 9
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -29,37 +29,17 @@ Signature: `Deploy{queryId:uint64}`
 TLB: `deploy_ok#aff90f57 queryId:uint64 = DeployOk`
 Signature: `DeployOk{queryId:uint64}`
 
-## RoyaltyParams
-TLB: `_ royalty_factor:uint16 roaylty_base:uint16 roaylty_address:address = RoyaltyParams`
-Signature: `RoyaltyParams{royalty_factor:uint16,roaylty_base:uint16,roaylty_address:address}`
-
-## CollectionInitData
-TLB: `_ owner:address next_item_index:uint64 content:^cell nft_item_code:^cell royalty:RoyaltyParams{royalty_factor:uint16,roaylty_base:uint16,roaylty_address:address} = CollectionInitData`
-Signature: `CollectionInitData{owner:address,next_item_index:uint64,content:^cell,nft_item_code:^cell,royalty:RoyaltyParams{royalty_factor:uint16,roaylty_base:uint16,roaylty_address:address}}`
-
-## ItemContent
-TLB: `_ owner:address content:^cell = ItemContent`
-Signature: `ItemContent{owner:address,content:^cell}`
-
 ## Mint
-TLB: `mint#00000001 query_id:uint64 item_index:uint64 amount:coins item_content:ItemContent{owner:address,content:^cell} = Mint`
-Signature: `Mint{query_id:uint64,item_index:uint64,amount:coins,item_content:ItemContent{owner:address,content:^cell}}`
+TLB: `mint#00000001 query_id:uint64 item_index:uint64 amount:coins item_content:^cell = Mint`
+Signature: `Mint{query_id:uint64,item_index:uint64,amount:coins,item_content:^cell}`
 
 ## MintSafe
-TLB: `mint_safe#27ded405 query_id:uint64 next_item_index:uint64 itemContent:^cell = MintSafe`
-Signature: `MintSafe{query_id:uint64,next_item_index:uint64,itemContent:^cell}`
+TLB: `mint_safe#e8cfb4e1 query_id:uint64 next_item_index:uint64 item_content:^cell = MintSafe`
+Signature: `MintSafe{query_id:uint64,next_item_index:uint64,item_content:^cell}`
 
-## UpdateNftCollectionAddress
-TLB: `update_nft_collection_address#a13ed7d3 nft_collection_address:address = UpdateNftCollectionAddress`
-Signature: `UpdateNftCollectionAddress{nft_collection_address:address}`
-
-## DeployNftCollection
-TLB: `deploy_nft_collection#25ba7578 query_id:int257 = DeployNftCollection`
-Signature: `DeployNftCollection{query_id:int257}`
-
-## NftCollectionInit
-TLB: `_ content:^cell nft_item_code:^cell royalty:RoyaltyParams{royalty_factor:uint16,roaylty_base:uint16,roaylty_address:address} = NftCollectionInit`
-Signature: `NftCollectionInit{content:^cell,nft_item_code:^cell,royalty:RoyaltyParams{royalty_factor:uint16,roaylty_base:uint16,roaylty_address:address}}`
+## SetNftCollectionAddress
+TLB: `set_nft_collection_address#19fc2d44 nft_collection_address:address = SetNftCollectionAddress`
+Signature: `SetNftCollectionAddress{nft_collection_address:address}`
 
 # Get Methods
 Total Get Methods: 2

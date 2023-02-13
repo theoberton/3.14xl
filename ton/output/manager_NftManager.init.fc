@@ -12,108 +12,29 @@ builder __tact_store_address(builder b, slice address) inline {
     return b;
 }
 
-slice __tact_create_address(int chain, int hash) inline {
-    var b = begin_cell();
-    b = b.store_uint(2, 2);
-    b = b.store_uint(0, 1);
-    b = b.store_int(chain, 8);
-    b = b.store_uint(hash, 256);
-    return b.end_cell().begin_parse();
-}
-
-slice __tact_compute_contract_address(int chain, cell code, cell data) inline {
-    var b = begin_cell();
-    b = b.store_uint(0, 2);
-    b = b.store_uint(3, 2);
-    b = b.store_uint(0, 1);
-    b = b.store_ref(code);
-    b = b.store_ref(data);
-    var hash = cell_hash(b.end_cell());
-    return __tact_create_address(chain, hash);
-}
-
-forall X0, X1, X2 -> (X0, X1, X2) __tact_tuple_destroy_3(tuple v) asm "3 UNTUPLE";
-
-builder __gen_write_RoyaltyParams(builder build_0, (int, int, slice) v) inline {
-    var (v'royalty_factor, v'roaylty_base, v'roaylty_address) = v;
-    build_0 = build_0.store_uint(v'royalty_factor, 16);
-    build_0 = build_0.store_uint(v'roaylty_base, 16);
-    build_0 = __tact_store_address(build_0, v'roaylty_address);
-    return build_0;
-}
-
-builder __gen_write_CollectionInitData(builder build_0, (slice, int, cell, cell, (int, int, slice)) v) inline {
-    var (v'owner, v'next_item_index, v'content, v'nft_item_code, (v'royalty'royalty_factor, v'royalty'roaylty_base, v'royalty'roaylty_address)) = v;
+builder __gen_write_NftManager(builder build_0, (slice, int, slice) v) inline {
+    var (v'owner, v'seed, v'nft_collection_address) = v;
     build_0 = __tact_store_address(build_0, v'owner);
-    build_0 = build_0.store_uint(v'next_item_index, 64);
-    build_0 = build_0.store_ref(v'content);
-    build_0 = build_0.store_ref(v'nft_item_code);
-    build_0 = __gen_write_RoyaltyParams(build_0, (v'royalty'royalty_factor, v'royalty'roaylty_base, v'royalty'roaylty_address));
+    build_0 = build_0.store_int(v'seed, 257);
+    build_0 = __tact_store_address(build_0, v'nft_collection_address);
     return build_0;
 }
 
-cell __gen_writecell_CollectionInitData((slice, int, cell, cell, (int, int, slice)) v) inline_ref {
-    return __gen_write_CollectionInitData(begin_cell(), v).end_cell();
-}
-
-builder __gen_write_NftCollectionInit(builder build_0, (cell, cell, (int, int, slice)) v) inline {
-    var (v'content, v'nft_item_code, (v'royalty'royalty_factor, v'royalty'roaylty_base, v'royalty'roaylty_address)) = v;
-    build_0 = build_0.store_ref(v'content);
-    build_0 = build_0.store_ref(v'nft_item_code);
-    build_0 = __gen_write_RoyaltyParams(build_0, (v'royalty'royalty_factor, v'royalty'roaylty_base, v'royalty'roaylty_address));
-    return build_0;
-}
-
-builder __gen_write_NftManager(builder build_0, (slice, (cell, cell, (int, int, slice)), cell, slice) v) inline {
-    var (v'owner, (v'nft_collection_init'content, v'nft_collection_init'nft_item_code, (v'nft_collection_init'royalty'royalty_factor, v'nft_collection_init'royalty'roaylty_base, v'nft_collection_init'royalty'roaylty_address)), v'nft_collection_code, v'nft_collection_address) = v;
-    build_0 = __tact_store_address(build_0, v'owner);
-    build_0 = __gen_write_NftCollectionInit(build_0, (v'nft_collection_init'content, v'nft_collection_init'nft_item_code, (v'nft_collection_init'royalty'royalty_factor, v'nft_collection_init'royalty'roaylty_base, v'nft_collection_init'royalty'roaylty_address)));
-    var build_1 = begin_cell();
-    build_1 = build_1.store_ref(v'nft_collection_code);
-    build_1 = __tact_store_address(build_1, v'nft_collection_address);
-    build_0 = store_ref(build_0, build_1.end_cell());
-    return build_0;
-}
-
-(int, int, slice) __gen_RoyaltyParams_from_tuple(tuple v) inline {
-    var (int v'royalty_factor, int v'roaylty_base, slice v'roaylty_address) = __tact_tuple_destroy_3(v);
-    return (v'royalty_factor, v'roaylty_base, v'roaylty_address);
-}
-
-(cell, cell, (int, int, slice)) __gen_NftCollectionInit_from_tuple(tuple v) inline {
-    var (cell v'content, cell v'nft_item_code, tuple v'royalty) = __tact_tuple_destroy_3(v);
-    return (v'content, v'nft_item_code, __gen_RoyaltyParams_from_tuple(v'royalty));
-}
-
-slice $contractAddress((cell, cell) $s) impure inline_ref {
-    var (($s'code, $s'data)) = $s;
-    return __tact_compute_contract_address(0, $s'code, $s'data);
-}
-
-((slice, (cell, cell, (int, int, slice)), cell, slice), (cell, cell)) $__gen_NftManager_getNftCollectionStateInit((slice, (cell, cell, (int, int, slice)), cell, slice) $self) impure inline_ref {
-    var (($self'owner, ($self'nft_collection_init'content, $self'nft_collection_init'nft_item_code, ($self'nft_collection_init'royalty'royalty_factor, $self'nft_collection_init'royalty'roaylty_base, $self'nft_collection_init'royalty'roaylty_address)), $self'nft_collection_code, $self'nft_collection_address)) = $self;
-    return (($self'owner, ($self'nft_collection_init'content, $self'nft_collection_init'nft_item_code, ($self'nft_collection_init'royalty'royalty_factor, $self'nft_collection_init'royalty'roaylty_base, $self'nft_collection_init'royalty'roaylty_address)), $self'nft_collection_code, $self'nft_collection_address), ($self'nft_collection_code, __gen_writecell_CollectionInitData((my_address(), 0, $self'nft_collection_init'content, $self'nft_collection_init'nft_item_code, ($self'nft_collection_init'royalty'royalty_factor, $self'nft_collection_init'royalty'roaylty_base, $self'nft_collection_init'royalty'roaylty_address)))));
-}
-
-cell $__gen_NftManager_init(cell sys', slice $owner, (cell, cell, (int, int, slice)) $nft_collection_init, cell $nft_collection_code) {
-    var (($nft_collection_init'content, $nft_collection_init'nft_item_code, ($nft_collection_init'royalty'royalty_factor, $nft_collection_init'royalty'roaylty_base, $nft_collection_init'royalty'roaylty_address))) = $nft_collection_init;
-    var (($self'owner, ($self'nft_collection_init'content, $self'nft_collection_init'nft_item_code, ($self'nft_collection_init'royalty'royalty_factor, $self'nft_collection_init'royalty'roaylty_base, $self'nft_collection_init'royalty'roaylty_address)), $self'nft_collection_code, $self'nft_collection_address)) = (null(), null(), null(), null());
+cell $__gen_NftManager_init(cell sys', slice $owner, int $seed) {
+    var (($self'owner, $self'seed, $self'nft_collection_address)) = (null(), null(), null());
     $self'owner = $owner;
-    ($self'nft_collection_init'content, $self'nft_collection_init'nft_item_code, ($self'nft_collection_init'royalty'royalty_factor, $self'nft_collection_init'royalty'roaylty_base, $self'nft_collection_init'royalty'roaylty_address)) = ($nft_collection_init'content, $nft_collection_init'nft_item_code, ($nft_collection_init'royalty'royalty_factor, $nft_collection_init'royalty'roaylty_base, $nft_collection_init'royalty'roaylty_address));
-    $self'nft_collection_code = $nft_collection_code;
-    var ($winit'code, $winit'data) = ($self'owner, ($self'nft_collection_init'content, $self'nft_collection_init'nft_item_code, ($self'nft_collection_init'royalty'royalty_factor, $self'nft_collection_init'royalty'roaylty_base, $self'nft_collection_init'royalty'roaylty_address)), $self'nft_collection_code, $self'nft_collection_address)~$__gen_NftManager_getNftCollectionStateInit();
-    $self'nft_collection_address = $contractAddress(($winit'code, $winit'data));
+    $self'seed = $seed;
+    $self'nft_collection_address = $owner;
     var b' = begin_cell();
     b' = b'.store_ref(sys');
-    b' = __gen_write_NftManager(b', ($self'owner, ($self'nft_collection_init'content, $self'nft_collection_init'nft_item_code, ($self'nft_collection_init'royalty'royalty_factor, $self'nft_collection_init'royalty'roaylty_base, $self'nft_collection_init'royalty'roaylty_address)), $self'nft_collection_code, $self'nft_collection_address));
+    b' = __gen_write_NftManager(b', ($self'owner, $self'seed, $self'nft_collection_address));
     return b'.end_cell();
 }
 
-cell init(cell sys', slice $$owner, tuple $$nft_collection_init, cell $$nft_collection_code) method_id {
+cell init(cell sys', slice $$owner, int $$seed) method_id {
     slice $owner = $$owner;
-    (cell, cell, (int, int, slice)) $nft_collection_init = __gen_NftCollectionInit_from_tuple($$nft_collection_init);
-    cell $nft_collection_code = $$nft_collection_code;
-    return $__gen_NftManager_init(sys', $owner, $nft_collection_init, $nft_collection_code);
+    int $seed = $$seed;
+    return $__gen_NftManager_init(sys', $owner, $seed);
 }
 
 () main() {

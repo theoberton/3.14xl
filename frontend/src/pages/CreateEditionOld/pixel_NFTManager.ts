@@ -1,5 +1,5 @@
 import { Cell, Slice, Address, Builder, beginCell, ComputeError, TupleItem, TupleReader, Dictionary, contractAddress, ContractProvider, Sender, Contract, ContractABI, TupleBuilder, DictionaryValue } from 'ton-core';
-import { ContractSystem, ContractExecutor } from 'ton-emulator';
+import { Buffer} from 'buffer';
 
 export type StateInit = {
     $$type: 'StateInit';
@@ -291,12 +291,56 @@ function dictValueParserDeployOk(): DictionaryValue<DeployOk> {
         }
     }
 }
+export type ItemContent = {
+    $$type: 'ItemContent';
+    owner: Address;
+    content: Cell;
+}
+
+export function storeItemContent(src: ItemContent) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeAddress(src.owner);
+        b_0.storeRef(src.content);
+    };
+}
+
+export function loadItemContent(slice: Slice) {
+    let sc_0 = slice;
+    let _owner = sc_0.loadAddress();
+    let _content = sc_0.loadRef();
+    return { $$type: 'ItemContent' as const, owner: _owner, content: _content };
+}
+
+function loadTupleItemContent(source: TupleReader) {
+    let _owner = source.readAddress();
+    let _content = source.readCell();
+    return { $$type: 'ItemContent' as const, owner: _owner, content: _content };
+}
+
+function storeTupleItemContent(source: ItemContent) {
+    let builder = new TupleBuilder();
+    builder.writeAddress(source.owner);
+    builder.writeCell(source.content);
+    return builder.build();
+}
+
+function dictValueParserItemContent(): DictionaryValue<ItemContent> {
+    return {
+        serialize: (src, buidler) => {
+            buidler.storeRef(beginCell().store(storeItemContent(src)).endCell());
+        },
+        parse: (src) => {
+            return loadItemContent(src.loadRef().beginParse());
+        }
+    }
+}
 export type Mint = {
     $$type: 'Mint';
     query_id: bigint;
     item_index: bigint;
     amount: bigint;
-    item_content: Cell;
+    item_content: ItemContent;
 }
 
 export function storeMint(src: Mint) {
@@ -306,7 +350,7 @@ export function storeMint(src: Mint) {
         b_0.storeUint(src.query_id, 64);
         b_0.storeUint(src.item_index, 64);
         b_0.storeCoins(src.amount);
-        b_0.storeRef(src.item_content);
+        b_0.store(storeItemContent(src.item_content));
     };
 }
 
@@ -316,7 +360,7 @@ export function loadMint(slice: Slice) {
     let _query_id = sc_0.loadUintBig(64);
     let _item_index = sc_0.loadUintBig(64);
     let _amount = sc_0.loadCoins();
-    let _item_content = sc_0.loadRef();
+    let _item_content = loadItemContent(sc_0);
     return { $$type: 'Mint' as const, query_id: _query_id, item_index: _item_index, amount: _amount, item_content: _item_content };
 }
 
@@ -324,7 +368,7 @@ function loadTupleMint(source: TupleReader) {
     let _query_id = source.readBigNumber();
     let _item_index = source.readBigNumber();
     let _amount = source.readBigNumber();
-    let _item_content = source.readCell();
+    const _item_content = loadTupleItemContent(source.readTuple());
     return { $$type: 'Mint' as const, query_id: _query_id, item_index: _item_index, amount: _amount, item_content: _item_content };
 }
 
@@ -333,7 +377,7 @@ function storeTupleMint(source: Mint) {
     builder.writeNumber(source.query_id);
     builder.writeNumber(source.item_index);
     builder.writeNumber(source.amount);
-    builder.writeCell(source.item_content);
+    builder.writeTuple(storeTupleItemContent(source.item_content));
     return builder.build();
 }
 
@@ -351,40 +395,40 @@ export type MintSafe = {
     $$type: 'MintSafe';
     query_id: bigint;
     next_item_index: bigint;
-    item_content: Cell;
+    itemContent: Cell;
 }
 
 export function storeMintSafe(src: MintSafe) {
     return (builder: Builder) => {
         let b_0 = builder;
-        b_0.storeUint(3905926369, 32);
+        b_0.storeUint(668914693, 32);
         b_0.storeUint(src.query_id, 64);
         b_0.storeUint(src.next_item_index, 64);
-        b_0.storeRef(src.item_content);
+        b_0.storeRef(src.itemContent);
     };
 }
 
 export function loadMintSafe(slice: Slice) {
     let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 3905926369) { throw Error('Invalid prefix'); }
+    if (sc_0.loadUint(32) !== 668914693) { throw Error('Invalid prefix'); }
     let _query_id = sc_0.loadUintBig(64);
     let _next_item_index = sc_0.loadUintBig(64);
-    let _item_content = sc_0.loadRef();
-    return { $$type: 'MintSafe' as const, query_id: _query_id, next_item_index: _next_item_index, item_content: _item_content };
+    let _itemContent = sc_0.loadRef();
+    return { $$type: 'MintSafe' as const, query_id: _query_id, next_item_index: _next_item_index, itemContent: _itemContent };
 }
 
 function loadTupleMintSafe(source: TupleReader) {
     let _query_id = source.readBigNumber();
     let _next_item_index = source.readBigNumber();
-    let _item_content = source.readCell();
-    return { $$type: 'MintSafe' as const, query_id: _query_id, next_item_index: _next_item_index, item_content: _item_content };
+    let _itemContent = source.readCell();
+    return { $$type: 'MintSafe' as const, query_id: _query_id, next_item_index: _next_item_index, itemContent: _itemContent };
 }
 
 function storeTupleMintSafe(source: MintSafe) {
     let builder = new TupleBuilder();
     builder.writeNumber(source.query_id);
     builder.writeNumber(source.next_item_index);
-    builder.writeCell(source.item_content);
+    builder.writeCell(source.itemContent);
     return builder.build();
 }
 
@@ -441,8 +485,8 @@ function dictValueParserSetNftCollectionAddress(): DictionaryValue<SetNftCollect
 }
 async function NftManager_init(owner: Address, seed: bigint) {
     const __init = 'te6ccgEBBgEAOAABFP8A9KQT9LzyyAsBAgFiAgMCAs0EBQAJoUrd4AkAAdQAKdKiCJ5GYhia1niwlAgIDngADni2TA==';
-    const __code = 'te6ccgECEwEAAs8AART/APSkE/S88sgLAQIBYgIDA5bQcCHXScIflTAg1wsf3gLQ0wMBcbDAAZF/kXDiAfpAIlBmbwT4YQKRW+AgghAZ/C1EuuMCIIIQ6M+04brjAoIQlGqYtrrjAjDywIIEBQYCASANDgGgMO1E0NQB+GL6QAEBgQEB1wD6QAFDMGwTA9MfAYIQGfwtRLry4IH6QAExQTBVINs8IoEY2gLHBfL0WMj4QgHMVSBazxYSgQEBzwABzxbJ7VQHAsQw7UTQ1AH4YvpAAQGBAQHXAPpAAUMwbBMD0x8BghDoz7ThuvLggdM/0z/UVSAzEEUQNFj4QW8kE18DA3BwUEWAQATbPCQDRERtbds8yPhCAcxVIFrPFhKBAQHPAAHPFsntVAgLAortRNDUAfhi+kABAYEBAdcA+kABQzBsEwPTHwGCEJRqmLa68uCB0z8BMUEw2zzbPMj4QgHMVSBazxYSgQEBzwABzxbJ7VQJCgAc+EFvJBAjXwMjxwXy4IQAJMhVMHFQBcsfE8s/yz8B+gLMyQAcyAGCEK/5D1dYyx/LP8kBJPhBbyQQI18DfwJwgEJYbW3bPAsB9shxAcoBUAcBygBwAcoCUAXPFlAD+gJwAcpoI26zJW6zsY5MfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzJczMwFwAcoA4iFuswwAMJx/AcoAASBu8tCAAcyVMXABygDiyQH7AAIBIA8QAHG93owTgudh6ullc9j0J2HOslQo2zQThO6xqWlbI+WZFp15b++LEcwTggZzq084r86ShYDrC3EyPZQBN7qt7tRNDUAfhi+kABAYEBAdcA+kABQzBsE9s8gRATe4Ud7UTQ1AH4YvpAAQGBAQHXAPpAAUMwbBPbPIEgAEbCEAAls=';
-    const __system = 'te6cckECFQEAAtkAAQHAAQEFoG0/AgEU/wD0pBP0vPLICwMCAWILBAIBIAYFAHG93owTgudh6ullc9j0J2HOslQo2zQThO6xqWlbI+WZFp15b++LEcwTggZzq084r86ShYDrC3EyPZQCASAJBwE3uFHe1E0NQB+GL6QAEBgQEB1wD6QAFDMGwT2zyAgAAlsBN7qt7tRNDUAfhi+kABAYEBAdcA+kABQzBsE9s8gKAARsIQOW0HAh10nCH5UwINcLH94C0NMDAXGwwAGRf5Fw4gH6QCJQZm8E+GECkVvgIIIQGfwtRLrjAiCCEOjPtOG64wKCEJRqmLa64wIw8sCCEw8MAortRNDUAfhi+kABAYEBAdcA+kABQzBsEwPTHwGCEJRqmLa68uCB0z8BMUEw2zzbPMj4QgHMVSBazxYSgQEBzwABzxbJ7VQODQEk+EFvJBAjXwN/AnCAQlhtbds8EAAcyAGCEK/5D1dYyx/LP8kCxDDtRNDUAfhi+kABAYEBAdcA+kABQzBsEwPTHwGCEOjPtOG68uCB0z/TP9RVIDMQRRA0WPhBbyQTXwMDcHBQRYBABNs8JANERG1t2zzI+EIBzFUgWs8WEoEBAc8AAc8Wye1UEhAB9shxAcoBUAcBygBwAcoCUAXPFlAD+gJwAcpoI26zJW6zsY5MfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzJczMwFwAcoA4iFusxEAMJx/AcoAASBu8tCAAcyVMXABygDiyQH7AAAkyFUwcVAFyx8Tyz/LPwH6AszJAaAw7UTQ1AH4YvpAAQGBAQHXAPpAAUMwbBMD0x8BghAZ/C1EuvLggfpAATFBMFUg2zwigRjaAscF8vRYyPhCAcxVIFrPFhKBAQHPAAHPFsntVBQAHPhBbyQQI18DI8cF8uCE/Ixscw==';
+    const __code = 'te6ccgECFAEAAt0AART/APSkE/S88sgLAQIBYgIDA5bQcCHXScIflTAg1wsf3gLQ0wMBcbDAAZF/kXDiAfpAIlBmbwT4YQKRW+AgghAZ/C1EuuMCIIIQJ97UBbrjAoIQlGqYtrrjAjDywIIEBQYCASAODwGgMO1E0NQB+GL6QAEBgQEB1wD6QAFDMGwTA9MfAYIQGfwtRLry4IH6QAExQTBVINs8IoEY2gLHBfL0WMj4QgHMVSBazxYSgQEBzwABzxbJ7VQHA8ww7UTQ1AH4YvpAAQGBAQHXAPpAAUMwbBMD0x8BghAn3tQFuvLggdM/0z/UVSAzEEUQNFgw+EFvJDAycHCAQNs8EEcQNkVw2zwkA1BEbW3bPMj4QgHMVSBazxYSgQEBzwABzxbJ7VQICQwCiu1E0NQB+GL6QAEBgQEB1wD6QAFDMGwTA9MfAYIQlGqYtrry4IHTPwExQTDbPNs8yPhCAcxVIFrPFhKBAQHPAAHPFsntVAoLABz4QW8kECNfAyPHBfLghAAEyMkALshVQHFQBssfFMs/Ess/AfoCAlnPFszJABzIAYIQr/kPV1jLH8s/yQEk+EFvJBAjXwN/AnCAQlhtbds8DAH2yHEBygFQBwHKAHABygJQBc8WUAP6AnABymgjbrMlbrOxjkx/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMlzMzAXABygDiIW6zDQAwnH8BygABIG7y0IABzJUxcAHKAOLJAfsAAgEgEBEAcb3ejBOC52Hq6WVz2PQnYc6yVCjbNBOE7rGpaVsj5ZkWnXlv74sRzBOCBnOrTzivzpKFgOsLcTI9lAE3uq3u1E0NQB+GL6QAEBgQEB1wD6QAFDMGwT2zyBIBN7hR3tRNDUAfhi+kABAYEBAdcA+kABQzBsE9s8gTAARsIQACWw==';
+    const __system = 'te6cckECFgEAAucAAQHAAQEFoG0/AgEU/wD0pBP0vPLICwMCAWILBAIBIAYFAHG93owTgudh6ullc9j0J2HOslQo2zQThO6xqWlbI+WZFp15b++LEcwTggZzq084r86ShYDrC3EyPZQCASAJBwE3uFHe1E0NQB+GL6QAEBgQEB1wD6QAFDMGwT2zyAgAAlsBN7qt7tRNDUAfhi+kABAYEBAdcA+kABQzBsE9s8gKAARsIQOW0HAh10nCH5UwINcLH94C0NMDAXGwwAGRf5Fw4gH6QCJQZm8E+GECkVvgIIIQGfwtRLrjAiCCECfe1AW64wKCEJRqmLa64wIw8sCCFA8MAortRNDUAfhi+kABAYEBAdcA+kABQzBsEwPTHwGCEJRqmLa68uCB0z8BMUEw2zzbPMj4QgHMVSBazxYSgQEBzwABzxbJ7VQODQEk+EFvJBAjXwN/AnCAQlhtbds8EAAcyAGCEK/5D1dYyx/LP8kDzDDtRNDUAfhi+kABAYEBAdcA+kABQzBsEwPTHwGCECfe1AW68uCB0z/TP9RVIDMQRRA0WDD4QW8kMDJwcIBA2zwQRxA2RXDbPCQDUERtbds8yPhCAcxVIFrPFhKBAQHPAAHPFsntVBMSEAH2yHEBygFQBwHKAHABygJQBc8WUAP6AnABymgjbrMlbrOxjkx/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMlzMzAXABygDiIW6zEQAwnH8BygABIG7y0IABzJUxcAHKAOLJAfsAAC7IVUBxUAbLHxTLPxLLPwH6AgJZzxbMyQAEyMkBoDDtRNDUAfhi+kABAYEBAdcA+kABQzBsEwPTHwGCEBn8LUS68uCB+kABMUEwVSDbPCKBGNoCxwXy9FjI+EIBzFUgWs8WEoEBAc8AAc8Wye1UFQAc+EFvJBAjXwMjxwXy4ITfQZzm';
     let systemCell = Cell.fromBase64(__system);
     let builder = new TupleBuilder();
     builder.writeCell(systemCell);
@@ -451,20 +495,8 @@ async function NftManager_init(owner: Address, seed: bigint) {
     let __stack = builder.build();
     let codeCell = Cell.fromBoc(Buffer.from(__code, 'base64'))[0];
     let initCell = Cell.fromBoc(Buffer.from(__init, 'base64'))[0];
-    let system = await ContractSystem.create();
-    let executor = await ContractExecutor.create({ code: initCell, data: new Cell() }, system);
-    let res = await executor.get('init', __stack);
-    if (!res.success) { throw Error(res.error); }
-    if (res.exitCode !== 0 && res.exitCode !== 1) {
-        if (NftManager_errors[res.exitCode]) {
-            throw new ComputeError(NftManager_errors[res.exitCode].message, res.exitCode, { logs: res.logs });
-        } else {
-            throw new ComputeError('Exit code: ' + res.exitCode, res.exitCode, { logs: res.logs });
-        }
-    }
-    
-    let data = res.stack.readCell();
-    return { code: codeCell, data };
+
+    return { code: codeCell, data: beginCell().storeRef(systemCell).storeAddress(owner).storeInt(seed, 257).storeAddress(owner).endCell() };
 }
 
 const NftManager_errors: { [key: number]: { message: string } } = {
@@ -553,4 +585,4 @@ export class NftManager implements Contract {
         return result;
     }
     
-}
+}   

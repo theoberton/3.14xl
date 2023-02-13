@@ -1,17 +1,7 @@
 PROGRAM{
   DECLPROC __tact_verify_address
   DECLPROC __tact_store_address
-  DECLPROC __tact_create_address
-  DECLPROC __tact_compute_contract_address
-  DECLPROC __gen_write_RoyaltyParams
-  DECLPROC __gen_write_CollectionInitData
-  DECLPROC __gen_writecell_CollectionInitData
-  DECLPROC __gen_write_NftCollectionInit
   DECLPROC __gen_write_NftManager
-  DECLPROC __gen_RoyaltyParams_from_tuple
-  DECLPROC __gen_NftCollectionInit_from_tuple
-  DECLPROC $contractAddress
-  DECLPROC $__gen_NftManager_getNftCollectionStateInit
   DECLPROC $__gen_NftManager_init
   107886 DECLMETHOD init
   DECLPROC main
@@ -24,120 +14,24 @@ PROGRAM{
   __tact_store_address PROCINLINE:<{
     STSLICER
   }>
-  __tact_create_address PROCINLINE:<{
-    NEWC
-    2 PUSHINT
-    SWAP
-    2 STU
-    0 PUSHINT
-    SWAP
-    1 STU
-    s1 s2 XCHG
-    8 STI
-    256 STU
-    ENDC
-    CTOS
-  }>
-  __tact_compute_contract_address PROCINLINE:<{
-    NEWC
-    0 PUSHINT
-    SWAP
-    2 STU
-    3 PUSHINT
-    SWAP
-    2 STU
-    0 PUSHINT
-    SWAP
-    1 STU
-    s1 s2 XCHG
-    STREF
-    STREF
-    ENDC
-    HASHCU
-    __tact_create_address INLINECALLDICT
-  }>
-  __gen_write_RoyaltyParams PROCINLINE:<{
-    s2 s3 XCHG2
-    16 STU
-    16 STU
-    SWAP
-    __tact_store_address INLINECALLDICT
-  }>
-  __gen_write_CollectionInitData PROCINLINE:<{
-    s7 s6 XCHG2
-    __tact_store_address INLINECALLDICT
-    s1 s4 XCHG
-    64 STU
-    s1 s2 XCHG
-    STREF
-    STREF
-    s1 s3 s3 XCHG3
-    __gen_write_RoyaltyParams INLINECALLDICT
-  }>
-  __gen_writecell_CollectionInitData PROCREF:<{
-    NEWC
-    7 -ROLL
-    __gen_write_CollectionInitData INLINECALLDICT
-    ENDC
-  }>
-  __gen_write_NftCollectionInit PROCINLINE:<{
-    s4 s5 XCHG2
-    STREF
-    s1 s2 XCHG
-    STREF
-    s2 s3 XCHG2
-    __gen_write_RoyaltyParams INLINECALLDICT
-  }>
   __gen_write_NftManager PROCINLINE:<{
-    s8 s7 XCHG2
+    2SWAP
     __tact_store_address INLINECALLDICT
-    5 -ROLL
-    __gen_write_NftCollectionInit INLINECALLDICT
-    s0 s2 XCHG
-    NEWC
-    STREF
+    s1 s2 XCHG
+    257 PUSHINT
+    STIX
     SWAP
     __tact_store_address INLINECALLDICT
-    ENDC
-    SWAP
-    STREF
-  }>
-  __gen_RoyaltyParams_from_tuple PROCINLINE:<{
-    3 UNTUPLE
-  }>
-  __gen_NftCollectionInit_from_tuple PROCINLINE:<{
-    3 UNTUPLE
-    __gen_RoyaltyParams_from_tuple INLINECALLDICT
-  }>
-  $contractAddress PROCREF:<{
-    0 PUSHINT
-    -ROT
-    __tact_compute_contract_address INLINECALLDICT
-  }>
-  $__gen_NftManager_getNftCollectionStateInit PROCREF:<{
-    MYADDR
-    0 PUSHINT
-    s8 s7 s6 PUSH3
-    s8 s7 PUSH2
-    __gen_writecell_CollectionInitData INLINECALLDICT
-    s2 s(-1) PUXC
   }>
   $__gen_NftManager_init PROC:<{
-    PUSHNULL
-    $__gen_NftManager_getNftCollectionStateInit INLINECALLDICT
-    1 2 BLKDROP2
-    $contractAddress INLINECALLDICT
-    s0 s8 XCHG
+    s1 s0 s2 PUXC2
     NEWC
     STREF
-    s0 s8 XCHG
+    s3 s1 s3 XCHG3
     __gen_write_NftManager INLINECALLDICT
     ENDC
   }>
   init PROC:<{
-    SWAP
-    __gen_NftCollectionInit_from_tuple INLINECALLDICT
-    5 ROLL
     $__gen_NftManager_init CALLDICT
   }>
   main PROC:<{

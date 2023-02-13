@@ -4,6 +4,7 @@ import '@/assets/styles/index.scss';
 import ApplicationRoutes from '@/router/routes';
 
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
+import { IPFSProvider } from './hooks';
 
 // TO DO : replace with custom
 const manifestUrl =
@@ -11,8 +12,10 @@ const manifestUrl =
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
-		<TonConnectUIProvider manifestUrl={manifestUrl}>
-			<ApplicationRoutes />
-		</TonConnectUIProvider>
+		<IPFSProvider>
+			<TonConnectUIProvider manifestUrl={manifestUrl}>
+				<ApplicationRoutes />
+			</TonConnectUIProvider>
+		</IPFSProvider>
 	</React.StrictMode>
 );

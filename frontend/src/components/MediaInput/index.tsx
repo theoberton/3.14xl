@@ -2,7 +2,7 @@ import { useField, useFormikContext } from 'formik';
 import { useRef, useCallback, ChangeEvent, useState } from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
-import useIpfs from '@/hooks/useIpfs';
+import { useIPFS } from '@/hooks/useIpfs';
 import crossIcon from '@/assets/images/svg/common/crossIcon.svg';
 import uploadIcon from '@/assets/images/svg/common/uploadIcon.svg';
 
@@ -29,7 +29,7 @@ export function MediaInput(props: Props) {
 
 	const fileRef = useRef<HTMLInputElement>(null);
 	const minifiedImageRef = useRef<HTMLImageElement>(null);
-	const ipfs = useIpfs();
+	const ipfs = useIPFS();
 
 	const { value, name: fieldName, onChange } = field;
 	const { setFieldValue, status } = useFormikContext();
@@ -55,7 +55,7 @@ export function MediaInput(props: Props) {
 
 				collectionImageIpfs = await ipfs.add(file);
 
-				const fileLink = 'https://ipfs.io/ipfs/' + collectionImageIpfs.cid.toString();
+				const fileLink = 'https://cloudflare-ipfs.com/ipfs/' + collectionImageIpfs.cid.toString();
 				console.log('fileLink', fileLink);
 
 				setFieldValue(name, fileLink);

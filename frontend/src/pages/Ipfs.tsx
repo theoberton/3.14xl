@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AddResult } from 'ipfs-core-types/src/root';
 import all from 'it-all';
-import useIpfs from '@/hooks/useIpfs';
+import { useIPFS } from '@/hooks/useIpfs';
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 type Preview = Modify<
@@ -12,7 +12,7 @@ type Preview = Modify<
 >;
 
 function Ipfs() {
-	const ipfs = useIpfs();
+	const ipfs = useIPFS();
 	const [files, setFiles] = useState<FileList | null>(null);
 	const [previews, setPreviews] = useState<Preview[]>();
 
@@ -71,7 +71,7 @@ function Ipfs() {
 					<img
 						style={{ objectFit: 'cover', height: '100%' }}
 						key={p.cid as React.Key}
-						src={`https://ipfs.io/ipfs/${p.cid}`}
+						src={`https://cloudflare-ipfs.com/ipfs/${p.cid}`}
 					/>
 				))}
 			</div>
