@@ -1,7 +1,5 @@
 import "@stdlib/ownable";
 import "@stdlib/deploy";
-// import "./nft-collection";
-// import "./nft-item";
 
 struct RoyaltyParams {
   royalty_factor: Int as uint16;
@@ -27,7 +25,7 @@ message(0x1) Mint {
   query_id: Int as uint64;
   item_index: Int as uint64;
   amount: Int as coins;
-  item_content: ItemContent as Cell;
+  item_content: ItemContent;
 }
 
 message MintSafe {
@@ -49,8 +47,6 @@ struct NftCollectionInit {
   nft_item_code: Cell;
   royalty: RoyaltyParams;
 }
-
-1. 
 
 contract NftManager with Deployable, Ownable {
   owner: Address;
@@ -74,7 +70,6 @@ contract NftManager with Deployable, Ownable {
   }
 
   receive(msg: UpdateNftCollectionAddress) {
-    self.requireNotInit();
     self.requireOwner();
 
     self.nft_collection_address = msg.nft_collection_address;

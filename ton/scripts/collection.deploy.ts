@@ -1,5 +1,5 @@
 import { toNano, beginCell, Address } from "ton-core";
-import { NftCollection, RoyaltyParams } from "../output/pixel_NftCollection";
+import { NftCollection, RoyaltyParams } from "../output/nft_NftCollection";
 import { NetworkProvider } from "@ton-community/blueprint";
 
 export async function run(network: NetworkProvider) {
@@ -13,7 +13,7 @@ export async function run(network: NetworkProvider) {
     destination: owner,
   };
 
-  const myContract = await NftCollection.fromInit(owner, "content URL", "content Url", roylityPrams);
+  const myContract = await NftCollection.fromInit(owner, `content URL ${randomSeed}`, "content Url2", roylityPrams);
 
   await network.deploy(myContract, toNano("0.05"));
 

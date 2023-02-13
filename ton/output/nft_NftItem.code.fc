@@ -1,0 +1,97 @@
+#pragma version =0.4.1;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+global (int, slice, int, slice) __tact_context;
+global cell __tact_context_sys;
+
+() __tact_verify_address(slice address) inline {
+    throw_unless(136, address.slice_bits() != 267);
+}
+
+(slice, slice) __tact_load_address(slice cs) inline {
+    slice raw = cs~load_msg_addr();
+    __tact_verify_address(raw);
+    return (cs, raw);
+}
+
+(slice, ((slice, int, slice, cell))) __gen_read_NftItem(slice sc_0) inline {
+    var v'collectionAddress = sc_0~__tact_load_address();
+    var v'index = sc_0~load_int(257);
+    var v'owner = sc_0~__tact_load_address();
+    var v'content = sc_0~load_ref();
+    return (sc_0, (v'collectionAddress, v'index, v'owner, v'content));
+}
+
+(slice, int, slice, cell) __gen_load_NftItem() inline {
+    slice sc = get_data().begin_parse();
+    __tact_context_sys = sc~load_ref();
+    return sc~__gen_read_NftItem();
+}
+
+slice $__gen_NftItem_collection_address((slice, int, slice, cell) $self) impure inline_ref {
+    var (($self'collectionAddress, $self'index, $self'owner, $self'content)) = $self;
+    return $self'collectionAddress;
+}
+
+_ $__gen_get_collection_address() method_id(127132) {
+    var self = __gen_load_NftItem();
+    var res = $__gen_NftItem_collection_address(self);
+    return res;
+}
+
+cell $__gen_NftItem_content((slice, int, slice, cell) $self) impure inline_ref {
+    var (($self'collectionAddress, $self'index, $self'owner, $self'content)) = $self;
+    return $self'content;
+}
+
+_ $__gen_get_content() method_id(117214) {
+    var self = __gen_load_NftItem();
+    var res = $__gen_NftItem_content(self);
+    return res;
+}
+
+slice $__gen_NftItem_owner((slice, int, slice, cell) $self) impure inline_ref {
+    var (($self'collectionAddress, $self'index, $self'owner, $self'content)) = $self;
+    return $self'owner;
+}
+
+_ $__gen_get_owner() method_id(83229) {
+    var self = __gen_load_NftItem();
+    var res = $__gen_NftItem_owner(self);
+    return res;
+}
+
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = ((msg_flags & 1) == 1 ? true : false);
+    slice msg_sender_addr = cs~load_msg_addr();
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value, cs);
+    
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        return ();
+    }
+    
+    throw(130);
+}
+
+_ supported_interfaces() method_id {
+    return (
+        "org.ton.introspection.v0"H >> 128,
+        "org.ton.abi.ipfs.v0"H >> 128,
+        "org.ton.ownable"H >> 128
+    );
+}
+
+_ get_abi_ipfs() {
+    return "ipfs://QmVfs6NEm4J2feY6hhx3nYd51MkwcU9pSfmeVPQgdyP789";
+}

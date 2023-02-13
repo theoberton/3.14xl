@@ -1,5 +1,5 @@
 import { Address } from "ton-core";
-import { NftCollection } from "../output/pixel_NftCollection";
+import { NftCollection } from "../output/nft_NftCollection";
 import { NetworkProvider } from "@ton-community/blueprint";
 import { printAddress, print } from "../utils/print";
 

@@ -1,7 +1,12 @@
 {
     "projects": [{
-        "name": "pixel",
-        "path": "./contracts/nft.tact",
+        "name": "manager",
+        "path": "./contracts/nft-manager.tact",
+        "output": "./output"
+    },
+    {
+        "name": "nft",
+        "path": "./contracts/nft-set.tact",
         "output": "./output"
     }]
 }
