@@ -23,6 +23,7 @@ export function CustomRouter({ history, ...props }: CustomRouterHistory) {
 	return (
 		<Router
 			{...props}
+			basename="/3.14xl/"
 			location={state.location}
 			navigationType={state.action}
 			navigator={history}
