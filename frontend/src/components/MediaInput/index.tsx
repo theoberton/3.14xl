@@ -44,7 +44,6 @@ export function MediaInput(props: Props) {
 
 	const onSelectFile = useCallback(
 		async (e: ChangeEvent<HTMLInputElement>) => {
-			debugger
 			const file = e.target.files && e.target.files[0];
 
 			if (!ipfs || !file) {

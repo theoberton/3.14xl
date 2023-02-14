@@ -10,7 +10,6 @@ export function IPFSProvider({ children }: React.PropsWithChildren) {
 	useEffect(() => {
 		(async () => {
 			const ipfsInstance = await create();
-			console.log('ipfsInstance', ipfsInstance);
 
 			setIpfs(ipfsInstance);
 		})();

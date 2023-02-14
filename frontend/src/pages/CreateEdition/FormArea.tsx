@@ -14,9 +14,19 @@ function FormArea() {
 	return (
 		<Form>
 			<div className={styles.createEdition}>
-				<div className={styles.createEditionActionTitle}>Collection details</div>
+				<div className={styles.createEditionActionTitleWrapper}>
+					<div className={styles.createEditionActionTitle}>Collection details</div>
+					<Button
+						kind={ButtonKinds.basic}
+						basicInverted
+						mini
+						type="reset"
+						>
+							Clear fields
+						</Button>
+				</div>
 				<div className={styles.createEditionFormArea}>
-					<Input label={'Name'} name="name" placeholder="The Project" max={30} type="text" />
+					<Input label={'Name'} name="name" placeholder="The Project" max={80} type="text" />
 					<Input label={'Symbol'} name="symbol" type="text" max={15} placeholder="$SYMBOL" />
 					<TextArea
 						label={'Description'}

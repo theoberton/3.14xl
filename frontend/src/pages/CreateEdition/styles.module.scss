@@ -11,7 +11,14 @@
 	}
 
 	&ActionTitle {
-		font-size: $font-big-enlarged;
+		font-size: $font-big;
+
+		&Wrapper {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 20px;
+		}
 	}
 
 	&FormArea {
@@ -37,6 +44,7 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		padding: 15px 20px;
+
 		@media (max-width: $breakpoint-l) {
 			grid-template-columns: 1fr;
 			padding: 15px;
@@ -48,14 +56,23 @@
 .preview {
 	max-width: 40vw;
 
+	&ImageContainer {
+		display: flex;
+		align-items: center;
+	}
+
 	&Mobile {
+		&ContentWrapper {
+			margin: 0 5px;
+			border-bottom: 1px solid $gray-eleven;
+		}
 		width: 100vw;
     display: grid;
-		grid-template-columns: 3fr 7fr 4fr;
+		grid-template-columns: 3fr 7fr 5fr;
 	}
 
 	&Modal {
-		max-width: 60vw;
+		max-width: 80vw;
 	}
 
 	&Image {
@@ -92,7 +109,7 @@
 				@extend .previewImageEmpty;
 				border-radius: 5px;
 				border-width: 0;
-				min-width: 40px;
+				min-width: 45px;
 				min-height: 45px;
 			}
 		}
@@ -149,6 +166,7 @@
 		&Mobile {
 			font-size: $font-small-enlarged;
 			display: flex;
+			white-space: break-spaces;
 			gap: 10px;
 			flex-direction: column;
 			padding: 10px 0;

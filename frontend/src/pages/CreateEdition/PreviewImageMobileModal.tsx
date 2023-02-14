@@ -9,19 +9,17 @@ type PreviewImageMobileProps  = {
   closeModal: () => void;
 }
 
-function PreviewImageMobile(props: PreviewImageMobileProps) {
+function PreviewImageMobileModal(props: PreviewImageMobileProps) {
   const { media, isOpen, closeModal } = props;
   const close = useCallback(() => {
     closeModal();
   }, [closeModal]);
 
   return (
-    <Modal open={isOpen} showCloseIcon onClose={close}>
-      <div>
+    <Modal open={isOpen} showCloseIcon onClose={close} closeOnOverlayClick center>
         <img src={media} className={styles.previewModal} />
-      </div>
     </Modal>
   );
 }
 
-export default PreviewImageMobile
+export default PreviewImageMobileModal

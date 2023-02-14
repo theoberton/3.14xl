@@ -3,7 +3,7 @@ import { Label } from '@/components';
 import styles from '@/pages/CreateEdition/styles.module.scss';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
 import tonLogo from '@/assets/images/svg/common/tonLogo.svg';
-import PreviewImageMobile from '@/pages/CreateEdition/PreviewImageMobile';
+import PreviewImageMobileModal from '@/pages/CreateEdition/PreviewImageMobileModal';
 import { useState, useCallback } from 'react';
 
 function PreviewMobile() {
@@ -15,7 +15,6 @@ function PreviewMobile() {
 	}, []);
 	const openPreviewImage = useCallback(() => {
 		setImagePreviewOpenedStatus(true)
-
 	}, []);
 
 	return (
@@ -33,18 +32,6 @@ function PreviewMobile() {
 						)}
 					</div>
 				}
-				{/* <div className={styles.previewLabels}>
-					<div className={styles.previewLabelItem}>
-						<div className={styles.previewLabel}>Edition price</div>
-						<div className={styles.previewLabelValue}>
-							{`${values.price ? values.price : '0.00'} TON`}
-						</div>
-					</div>
-					<div className={styles.previewLabelItem}>
-						<div className={styles.previewLabel}>Total supply</div>
-						<div className={styles.previewLabelValue}>OPEN</div>
-					</div>
-				</div> */}
 				<div className={styles.previewMainAttributesMobile}>
           <Label text={values.symbol ? values.symbol : '$SYMBOL'} grey mini />
 					<div className={styles.previewMainAttributesNameMobile}>
@@ -58,7 +45,7 @@ function PreviewMobile() {
 			</div>
 			{
 				values.media &&
-					<PreviewImageMobile
+					<PreviewImageMobileModal
 						isOpen={isImagePreviewOpened}
 						closeModal={closePreviewImageModal}
 						media={values.media}
