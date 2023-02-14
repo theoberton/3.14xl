@@ -3,7 +3,7 @@ import Spinner from 'react-spinners/ClipLoader';
 import { LoaderSizes } from '@/components/interfaces';
 
 const colors = {
-	black: '#111',
+	white: 'white',
 };
 
 interface LoaderProps {
@@ -19,5 +19,5 @@ const sizeMapper = {
 export function Loader(props: LoaderProps) {
 	const { size } = props;
 
-	return <Spinner loading size={sizeMapper[size]} color={colors.black} />;
+	return <Spinner loading size={sizeMapper[size]} color={colors.white} />;
 }

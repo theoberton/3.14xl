@@ -31,24 +31,24 @@ export function Select(props: SelectProps) {
 	const customStyles = {
 		control: (controlStyles: any) => ({
 			...controlStyles,
-			borderColor: '#F6F6F6',
+			borderColor: '#212121',
 			boxShadow: '#805FC0',
 			borderRadius: '4px',
 			fontSize: '14px',
-			backgroundColor: '#F6F6F6',
+			backgroundColor: '#212121',
 			'&:focus': {
 				outline: '4px solid #805FC0',
-				borderColor: '#F6F6F6',
+				borderColor: '#212121',
 			},
 			'&:hover': {
-				borderColor: '#F6F6F6',
+				borderColor: '#212121',
 			},
 		}),
 		option: (optionStyles: any, { isSelected }: any) => ({
 			...optionStyles,
 			fontSize: '14px',
-			color: '#111',
-			backgroundColor: isSelected ? '#e1e1e1' : '#FFF',
+			color: 'white',
+			backgroundColor: isSelected ? '#212121' : '#212121',
 		}),
 		container: (constainerStyles: any) => ({
 			...constainerStyles,
@@ -56,16 +56,27 @@ export function Select(props: SelectProps) {
 				outline: '4px solid #805FC0',
 				borderColor: '#805FC0',
 			},
-			outlineColor: '#F6F6F6',
+			backgroundColor: '#212121',
+			outlineColor: '#212121',
 		}),
 		dropdownIndicator: (baseStyles: any) => ({
 			...baseStyles,
 			padding: '0 8px',
 		}),
+		menu: (baseStyles: any) => ({
+			...baseStyles,
+			backgroundColor: '#212121',
+		}),
 		indicatorSeparator: () => ({ display: 'none' }),
+		singleValue: (baseStyles: any) => ({
+			...baseStyles,
+			color: 'white',
+			backgroundColor: '#212121',
+		}),
 		valueContainer: (baseStyles: any) => ({
 			...baseStyles,
-			padding: '0 8px',
+			color: 'white',
+			backgroundColor: '#212121',
 		}),
 	};
 

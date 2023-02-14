@@ -2,15 +2,35 @@
 
 .landing {
 	&Container {
-		margin: 0 10%;
-		border-top: 1px solid $gray-two;
+		position: relative;
 		padding: 20px;
+		background-color: $black-one;
+	}
+
+	&Cube {
+		max-width: 40vw;
+		position: absolute;
+		z-index: 0;
+
+		&Right {
+
+			right: 0;
+			top: 3%;
+			@extend .landingCube;
+		}
+
+		&Left {
+			top: 0;
+			left: 0;
+			@extend .landingCube;
+		}
 	}
 
 	&Presentation {
 		&Section {
 			display: flex;
 			flex-direction: column;
+			color: $white;
 		}
 
 		&Details {
@@ -46,11 +66,17 @@
 
 			&Section {
 				color: $white;
+				text-align: center;
+				max-width: 30vw;
 			}
 		}
 
 		&Slogan {
 			font-size: $font-extra-huge;
+			&Item {
+				display: block;
+				text-align: center;
+			}
 		}
 	}
 }

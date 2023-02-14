@@ -17,14 +17,15 @@ type ButtonProps = {
 };
 
 export function Button(props: ButtonProps) {
-	const { type = 'button', onClick, icon, disabled, expanded = false } = props;
+	const { type = 'button', onClick, disabled, expanded = false, kind } = props;
 
 	const buttonContent = getButtonContent(props);
-	const isIconExists = Boolean(icon);
+
+	const isWithIconType = [ButtonKinds.arrowLeft, ButtonKinds.arrowRight].includes(kind);
 
 	const btnClass = cn({
 		[styles.button]: true,
-		[styles.buttonWithIcon]: isIconExists,
+		[styles.buttonWithIcon]: isWithIconType,
 		[styles.buttonExpanded]: expanded,
 		[commonStyles.unselectable]: true,
 	});

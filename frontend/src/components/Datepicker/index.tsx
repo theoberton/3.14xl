@@ -4,7 +4,6 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { format } from 'date-fns';
-
 import { PopperProps as MuiPopperProps } from '@mui/material/Popper';
 
 import { useCustomStateFormField } from '@/hooks/useCustomStateFormField';
@@ -89,14 +88,11 @@ export function Datepicker({
 		[name, setFieldValue]
 	);
 
-	const resultValue = value ? format(new Date(value), DATE_INPUT_FORMAT) : null;
-
 	return (
 		<LocalizationProvider dateAdapter={AdapterDateFns}>
 			<DateTimePicker
 				inputFormat={inputFormat}
-				value={resultValue}
-				// className={className}
+				value={value}
 				disableFuture={disableFuture}
 				disablePast={disablePast}
 				PopperProps={popperProps}
@@ -124,7 +120,7 @@ export function Datepicker({
 							/>
 							<i className={styles.datePickerItem}>{InputProps?.endAdornment}</i>
 						</div>
-						{error && <div className={styles.inputError}>{error}</div>}
+						{error && <div className={inputStyles.inputError}>{error}</div>}
 					</div>
 				)}
 			/>

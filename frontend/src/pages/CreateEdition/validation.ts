@@ -7,10 +7,10 @@ export const formSchema = () => {
 		description: yup.string().max(300),
 		media: yup.mixed().required('Media is required'),
 		price: yup.number().min(0.000000001).max(1000000000000),
-		period: yup
+		validity: yup
 			.object({
-				start: yup.date(),
-				end: yup.date(),
+				start: yup.date().typeError('Invalid date provided'),
+				end: yup.date().typeError('Invalid date provided'),
 			})
 			.optional(),
 		mintLimitPerAddress: yup.number(),

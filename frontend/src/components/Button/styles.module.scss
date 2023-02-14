@@ -4,12 +4,11 @@
 	position: relative;
 	border: none;
 	color: $black-one;
-	border-radius: 50px;
+	border-radius: 8px;
 	margin: 0 5px;
 	cursor: pointer;
 	white-space: nowrap;
 	font-weight: $font-semi-bold;
-	border-radius: 100% !important;
 
 	&Disabled {
 		background-color: $gray-six;
@@ -28,6 +27,7 @@
 
 	&WithIcon {
 		@extend .button;
+		border-radius: 100% !important;
 		padding-right: 0;
 	}
 
@@ -65,14 +65,13 @@
 	&Content {
 		padding-top: 15px;
 		padding-bottom: 15px;
-		border-radius: 20px;
+		border-radius: 8px;
 
 		&WithArrow {
 			@extend .buttonContent;
 			display: grid;
 			width: 100%;
 			grid-template-columns: 8fr 1fr;
-			border-radius: 20px;
 			padding: 0;
 		}
 
@@ -93,8 +92,14 @@
 		&White {
 			background-color: $white;
 		}
-		&Salad {
-			background-color: $salad-one;
-		}
+	}
+}
+
+
+.wallet {
+	>div> button {
+		@extend .button;
+		background-color: transparent;
+		border: 1px solid $white;
 	}
 }

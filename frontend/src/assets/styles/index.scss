@@ -4,8 +4,8 @@
 :root {
 	font-size: $font-medium;
 	font-weight: $font-semi-bold;
-
 	font-synthesis: none;
+	color: $white;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -39,6 +39,8 @@ html,
 body,
 #root {
 	min-height: 100vh;
+	min-width: 100vw;
+	display: flex;
 }
 
 #root > div {

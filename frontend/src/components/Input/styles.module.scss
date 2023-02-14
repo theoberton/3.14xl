@@ -3,9 +3,11 @@
 
 .input {
 	border: 0px;
-	background-color: $gray-four;
+	background-color: $gray-seven;
 	padding: 8px 15px;
 	width: 100%;
+	color: $white;
+
 	font-size: inherit;
 
 	&NoEdit {

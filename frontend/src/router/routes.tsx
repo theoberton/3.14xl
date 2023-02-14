@@ -10,9 +10,10 @@ function ApplicationRoutes() {
 	return (
 		<CustomRouter history={history}>
 			<Routes>
+				<Route index path="" element={<LandingPage />} />
 				<Route element={<WalletLayout />}>
-					<Route index path="" element={<LandingPage />} />
 					<Route path='edition' element={<CreateEditionOld />} />
+					<Route path="create-edition" element={<CreateEdition />} />
 				</Route>
 				<Route path="create-collection" element={<CreateCollection />} />
 				<Route path="create-edition" element={<CreateEdition />} />

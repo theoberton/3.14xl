@@ -13,9 +13,9 @@ export function CreateEdition() {
 	return (
 		<div className={styles.createEditionWrapper}>
 			<div className={styles.createEditonSettingsSection}>
-				<div className={styles.createEditionNavigationHeader}>
+				{/* <div className={styles.createEditionNavigationHeader}>
 					<Button kind={ButtonKinds.arrowLeft} onClick={goToLandingPage} />
-				</div>
+				</div> */}
 				<Form />
 			</div>
 		</div>
