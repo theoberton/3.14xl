@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: NftManager
-BOC Size: 731 bytes
+BOC Size: 968 bytes
 
 # Types
 Total Types: 9
@@ -34,8 +34,8 @@ TLB: `mint#00000001 query_id:uint64 item_index:uint64 amount:coins item_content:
 Signature: `Mint{query_id:uint64,item_index:uint64,amount:coins,item_content:^cell}`
 
 ## MintSafe
-TLB: `mint_safe#e8cfb4e1 query_id:uint64 next_item_index:uint64 item_content:^cell = MintSafe`
-Signature: `MintSafe{query_id:uint64,next_item_index:uint64,item_content:^cell}`
+TLB: `mint_safe#c6159a72 query_id:uint64 next_item_index:uint64 item_owner:address = MintSafe`
+Signature: `MintSafe{query_id:uint64,next_item_index:uint64,item_owner:address}`
 
 ## SetNftCollectionAddress
 TLB: `set_nft_collection_address#19fc2d44 nft_collection_address:address = SetNftCollectionAddress`

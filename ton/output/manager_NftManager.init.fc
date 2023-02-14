@@ -12,29 +12,32 @@ builder __tact_store_address(builder b, slice address) inline {
     return b;
 }
 
-builder __gen_write_NftManager(builder build_0, (slice, int, slice) v) inline {
-    var (v'owner, v'seed, v'nft_collection_address) = v;
+builder __gen_write_NftManager(builder build_0, (slice, int, slice, int) v) inline {
+    var (v'owner, v'seed, v'nft_collection_address, v'mint_price) = v;
     build_0 = __tact_store_address(build_0, v'owner);
     build_0 = build_0.store_int(v'seed, 257);
     build_0 = __tact_store_address(build_0, v'nft_collection_address);
+    build_0 = build_0.store_coins(v'mint_price);
     return build_0;
 }
 
-cell $__gen_NftManager_init(cell sys', slice $owner, int $seed) {
-    var (($self'owner, $self'seed, $self'nft_collection_address)) = (null(), null(), null());
+cell $__gen_NftManager_init(cell sys', slice $owner, int $seed, int $mint_price) {
+    var (($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price)) = (null(), null(), null(), null());
     $self'owner = $owner;
     $self'seed = $seed;
     $self'nft_collection_address = $owner;
+    $self'mint_price = $mint_price;
     var b' = begin_cell();
     b' = b'.store_ref(sys');
-    b' = __gen_write_NftManager(b', ($self'owner, $self'seed, $self'nft_collection_address));
+    b' = __gen_write_NftManager(b', ($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price));
     return b'.end_cell();
 }
 
-cell init(cell sys', slice $$owner, int $$seed) method_id {
+cell init(cell sys', slice $$owner, int $$seed, int $$mint_price) method_id {
     slice $owner = $$owner;
     int $seed = $$seed;
-    return $__gen_NftManager_init(sys', $owner, $seed);
+    int $mint_price = $$mint_price;
+    return $__gen_NftManager_init(sys', $owner, $seed, $mint_price);
 }
 
 () main() {

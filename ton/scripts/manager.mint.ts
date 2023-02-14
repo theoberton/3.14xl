@@ -4,7 +4,9 @@ import { NetworkProvider } from "@ton-community/blueprint";
 import TonWeb from "tonweb";
 
 export async function run(network: NetworkProvider) {
-  const managerAddress = Address.parse("EQC-qcNxtdu0beWHZZoynGsoKGo7ZLev7rd3UYTO31LM4AqH");
+  const owner = network.sender().address!;
+
+  const managerAddress = Address.parse("EQDA7QtP0JNOjovowLGPwiItsdB2C0rep_o6H8H4MC_9RrCF");
   const managerContract = NftManager.fromAddress(managerAddress);
   const openedContract = network.open(managerContract);
   const collectionAddress = await openedContract.getNftCollectionAddress();
@@ -24,6 +26,7 @@ export async function run(network: NetworkProvider) {
     $$type: "MintSafe",
     query_id: 0n,
     next_item_index: BigInt(collectionData.nextItemIndex),
+    item_owner: owner
   };
 
   await openedContract.send(
