@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import TonWeb from 'tonweb';
 import { useTonAddress, useTonConnectUI, TonConnectUI } from '@tonconnect/ui-react';
-import { useIPFS } from '@/hooks/useIpfs';
-import { IPFS } from 'ipfs-core';
-import PinataClient from '@pinata/sdk';
+// import PinataClient from '@pinata/sdk';
+// const pinataClient = new PinataClient('927deb7fb786df139a7c', '083bb02c296236ca5dd5fce3f3d573e6a787d60167524641a0e5c62bdff0edeb')
+import { ThirdwebStorage } from '@thirdweb-dev/storage';
+
+const storage = new ThirdwebStorage();
 
 import { beginCell, toNano, Address, storeStateInit } from "ton-core";
 import { NftManager, storeSetNftCollectionAddress } from "./pixel_NFTManager";
 
-const pinataClient = new PinataClient('927deb7fb786df139a7c', '083bb02c296236ca5dd5fce3f3d573e6a787d60167524641a0e5c62bdff0edeb')
 const tonweb = new TonWeb(
 	new TonWeb.HttpProvider('https://testnet.toncenter.com/api/v2/jsonRPC', {
 		apiKey: '4ff403d7763b912464241855e03d414c1deda0d73811ceb6c694d2b5f8737611',
@@ -23,11 +24,10 @@ export type Params = {
 	image: string;
 	symbol: string;
 	creatorAddress: string;
+	price: string;
 }
 
-export const createEdition = async (ipfs: IPFS, tonConnectUI: TonConnectUI, params: Params) => {
-	if (!ipfs) throw new Error('IPFS not inited');
-
+export const createEdition = async (tonConnectUI: TonConnectUI, params: Params) => {
 	/** Upload collection metadata */
 	const content = {
 		name: params.name,
@@ -36,6 +36,7 @@ export const createEdition = async (ipfs: IPFS, tonConnectUI: TonConnectUI, para
 		// external_link: 'https://matketplacecreatures.io',
 		// seller_fee_basis_points: 100,
 		// fee_recipient: address,
+		price: params.price,
 		symbol: params.symbol,
 		feeRecipient: params.creatorAddress,
 	};
@@ -43,21 +44,29 @@ export const createEdition = async (ipfs: IPFS, tonConnectUI: TonConnectUI, para
 	// console.log(collectionContentIpfs);
 
 console.log('start pinning');
-	const collectionContentIpfs = await pinataClient.pinJSONToIPFS(content);
-console.log(collectionContentIpfs)
+	const collectionContentUri =  await storage.upload(content);
+	const collectionContentUrl = storage.resolveScheme(collectionContentUri);
 
-console.log('https://cloudflare-ipfs.com/ipfs/' + collectionContentIpfs.IpfsHash)
+console.log(collectionContentUrl)
+
 	const ownerAddress = new TonWeb.utils.Address(params.creatorAddress);
+	console.log(ownerAddress);
 
-	const nftManagerContract = await NftManager.fromInit(Address.parse(params.creatorAddress), BigInt(Math.floor(Math.random() * 1000000)));
-
+	const nftManagerParams = {
+		owner: Address.parse(params.creatorAddress),
+		seed: BigInt(Math.floor(Math.random() * 1000000)),
+		mintPrice: toNano(params.price)
+	};
+	console.log(nftManagerParams);
+	const nftManagerContract = NftManager.fromInit(nftManagerParams.owner, nftManagerParams.seed, nftManagerParams.mintPrice);
+console.log(nftManagerContract);
 	/** Generate deploy link */
 	const nftCollection = new NftCollection(tonweb.provider, {
 		ownerAddress: new TonWeb.utils.Address(nftManagerContract.address.toString()),
 		royalty: 0.05,
 		royaltyAddress: ownerAddress,
-		collectionContentUri: 'https://cloudflare-ipfs.com/ipfs/' + collectionContentIpfs.IpfsHash,
-		nftItemContentBaseUri: 'https://cloudflare-ipfs.com/ipfs/' + collectionContentIpfs.IpfsHash,
+		collectionContentUri: collectionContentUrl,
+		nftItemContentBaseUri: collectionContentUrl,
 		nftItemCodeHex: NftItem.codeHex,
 	});
 
@@ -99,7 +108,6 @@ console.log('https://cloudflare-ipfs.com/ipfs/' + collectionContentIpfs.IpfsHash
 };
 
 export function CreateEditionOld() {
-	const ipfs = useIPFS();
 	const address = useTonAddress();
 	const [tonConnectUI] = useTonConnectUI();
 	const [file, setFile] = useState<File | null>();
@@ -108,18 +116,19 @@ export function CreateEditionOld() {
 	return (
 		<div>
 			<button onClick={async () => {
-				if (!ipfs) throw new Error('IPFS not inited');
 				if (!file) throw new Error('No file');
 
 				/** Upload collection image */
-				const collectionImageIpfs = await ipfs.add(file);
-				console.log(collectionImageIpfs);
+				const collectionImageUri =  await storage.upload(file);
+				const collectionImageUrl = storage.resolveScheme(collectionImageUri);
+				console.log(collectionImageUrl);
 
-				await createEdition(ipfs, tonConnectUI, {
+				await createEdition(tonConnectUI, {
 					name: 'OBERTON',
 					description: 'nice very nice',
-					image: 'https://cloudflare-ipfs.com/ipfs/' + collectionImageIpfs.cid.toString(),
+					image: collectionImageUrl,
 					symbol: '$OBER',
+					price: '0.05',
 					creatorAddress: address
 				})
 			}}>Create Edition</button>

@@ -18,6 +18,7 @@
     "@mui/x-date-pickers": "^5.0.18",
     "@orbs-network/ton-access": "^2.2.2",
     "@pinata/sdk": "^2.1.0",
+    "@thirdweb-dev/storage": "^1.0.8",
     "@tonconnect/ui-react": "^0.0.14",
     "@types/lodash": "^4.14.191",
     "buffer": "^6.0.3",

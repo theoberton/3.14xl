@@ -29,24 +29,23 @@ const createEditionInitialValues: FormValues = {
 };
 
 function CreateEditionForm() {
-	const ipfs = useIPFS();
 	const address = useTonAddress();
 	const [tonConnectUI] = useTonConnectUI();
 
 	const handleSubmit = useCallback(async (values: FormValues) => {
-		if (!ipfs) throw new Error('IPFS not inited');
 		if (!values.media) throw new Error('No media');
 
 		console.log('values', values);
 
-		await createEdition(ipfs, tonConnectUI,{
+		await createEdition(tonConnectUI,{
 			name: values.name,
 			description: values.description,
 			image: values.media,
 			symbol: values.symbol,
+			price: values.price,
 			creatorAddress: address
 		})
-	}, [ipfs, address, tonConnectUI]);
+	}, [address, tonConnectUI]);
 
 	return (
 		<Formik

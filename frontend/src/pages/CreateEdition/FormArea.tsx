@@ -27,21 +27,14 @@ function FormArea() {
 					<Input
 						label={'Price'}
 						name="price"
-						type="number"
-						min={0.000000001}
+						type="text"
+						// type="number"
+						// min={0.000000001}
 						placeholder="0.01"
 						units="TON"
 					/>
 					<EditionSize />
 					<ValidityPeriod />
-					{/* <Input
-						label={'Mint limit per address'}
-						name="mintLimitPerAddress"
-						min={0}
-						type="number"
-						optional
-						placeholder="Unlimited"
-					/> */}
 					{/* <Input label={'Payout address'} name="payoutAddress" type="text" placeholder="Address" /> */}
 					<div className={styles.createEditionSubmitButton}>
 						<Button type="submit" green disabled={!isFormValid} expanded kind={ButtonKinds.basic}>

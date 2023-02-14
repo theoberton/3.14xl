@@ -773,6 +773,15 @@
   dependencies:
     "@sinonjs/commons" "^2.0.0"
 
+"@thirdweb-dev/storage@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@thirdweb-dev/storage/-/storage-1.0.8.tgz#0feb995216041f46bfcf68bdf25a478ae2994599"
+  integrity sha512-OkQMpFpIZ7KnmS5ciyifoA+8Q/lk2Q5kljD+IUUmb0PN6q710hvzLaS89awZ1tiEI/AgQPx8xVM9R0sW1+P2oQ==
+  dependencies:
+    cross-fetch "^3.1.5"
+    form-data "^4.0.0"
+    uuid "^9.0.0"
+
 "@ton-community/blueprint@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@ton-community/blueprint/-/blueprint-0.2.0.tgz#086fd2ba3fd2b0021867399737dccffb70197ef5"
@@ -1513,6 +1522,13 @@ create-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
+
+cross-fetch@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
+  integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
+  dependencies:
+    node-fetch "2.6.7"
 
 cross-spawn@^7.0.3:
   version "7.0.3"
@@ -3761,6 +3777,11 @@ util-deprecate@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
+
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 v8-compile-cache-lib@^3.0.1:
   version "3.0.1"

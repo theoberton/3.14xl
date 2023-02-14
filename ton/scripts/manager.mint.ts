@@ -2,11 +2,14 @@ import { Address, toNano } from "ton-core";
 import { NftManager, MintSafe } from "../output/manager_NftManager";
 import { NetworkProvider } from "@ton-community/blueprint";
 import TonWeb from "tonweb";
+import { ThirdwebStorage } from '@thirdweb-dev/storage';
+
+const storage = new ThirdwebStorage();
 
 export async function run(network: NetworkProvider) {
   const owner = network.sender().address!;
 
-  const managerAddress = Address.parse("EQDA7QtP0JNOjovowLGPwiItsdB2C0rep_o6H8H4MC_9RrCF");
+  const managerAddress = Address.parse("EQBAhJU5L3-Qjg35FX8Jbd-5WGmuEm25JUo7NeBkVM6UMjj3");
   const managerContract = NftManager.fromAddress(managerAddress);
   const openedContract = network.open(managerContract);
   const collectionAddress = await openedContract.getNftCollectionAddress();
@@ -20,7 +23,9 @@ export async function run(network: NetworkProvider) {
     address: collectionAddress.toString(),
   });
   const collectionData = await collectionContract.getCollectionData();
+  const collectionContent = await storage.downloadJSON(collectionData.collectionContentUri);
   console.log("Collection owner", collectionData.ownerAddress.toString());
+  console.log("Collection content", collectionContent);
 
   const mintMessage: MintSafe = {
     $$type: "MintSafe",
@@ -29,10 +34,11 @@ export async function run(network: NetworkProvider) {
     item_owner: owner
   };
 
+
   await openedContract.send(
     network.sender(),
     {
-      value: toNano("0.08"),
+      value: toNano("0.1") + toNano(collectionContent.price),
     },
     mintMessage
   );

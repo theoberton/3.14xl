@@ -439,20 +439,17 @@ function dictValueParserSetNftCollectionAddress(): DictionaryValue<SetNftCollect
         }
     }
 }
-async function NftManager_init(owner: Address, seed: bigint) {
-    const __init = 'te6ccgEBBgEAOAABFP8A9KQT9LzyyAsBAgFiAgMCAs0EBQAJoUrd4AkAAdQAKdKiCJ5GYhia1niwlAgIDngADni2TA==';
-    const __code = 'te6ccgECFAEAAuAAART/APSkE/S88sgLAQIBYgIDA5bQcCHXScIflTAg1wsf3gLQ0wMBcbDAAZF/kXDiAfpAIlBmbwT4YQKRW+AgghAZ/C1EuuMCIIIQxhWacrrjAoIQlGqYtrrjAjDywIIEBQYCASAODwGiMO1E0NQB+GL6QAEBgQEB1wD6QAFDMGwTA9MfAYIQGfwtRLry4IH6QAExQTBVINs8IoIAmsICxwXy9FjI+EIBzFUgWs8WEoEBAc8AAc8Wye1UBwPaMO1E0NQB+GL6QAEBgQEB1wD6QAFDMGwTA9MfAYIQxhWacrry4IHTP9M/+kABQzAzEEUQNFj4QW8kMDHIMgLPFts8AczJA3BwUEOAQAbbPCQDUERtbds8yPhCAcxVIFrPFhKBAQHPAAHPFsntVAgJDAKK7UTQ1AH4YvpAAQGBAQHXAPpAAUMwbBMD0x8BghCUapi2uvLggdM/ATFBMNs82zzI+EIBzFUgWs8WEoEBAc8AAc8Wye1UCgsAHPhBbyQQI18DI8cF8uCEAATIyQAkyFUwcVAFyx8Tyz/LPwH6AszJABzIAYIQr/kPV1jLH8s/yQEk+EFvJBAjXwN/AnCAQlhtbds8DAH2yHEBygFQBwHKAHABygJQBc8WUAP6AnABymgjbrMlbrOxjkx/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMlzMzAXABygDiIW6zDQAwnH8BygABIG7y0IABzJUxcAHKAOLJAfsAAgEgEBEAcb3ejBOC52Hq6WVz2PQnYc6yVCjbNBOE7rGpaVsj5ZkWnXlv74sRzBOCBnOrTzivzpKFgOsLcTI9lAE3uq3u1E0NQB+GL6QAEBgQEB1wD6QAFDMGwT2zyBIBN7hR3tRNDUAfhi+kABAYEBAdcA+kABQzBsE9s8gTAARsIQACWw==';
-    const __system = 'te6cckECFgEAAuoAAQHAAQEFoG0/AgEU/wD0pBP0vPLICwMCAWILBAIBIAYFAHG93owTgudh6ullc9j0J2HOslQo2zQThO6xqWlbI+WZFp15b++LEcwTggZzq084r86ShYDrC3EyPZQCASAJBwE3uFHe1E0NQB+GL6QAEBgQEB1wD6QAFDMGwT2zyAgAAlsBN7qt7tRNDUAfhi+kABAYEBAdcA+kABQzBsE9s8gKAARsIQOW0HAh10nCH5UwINcLH94C0NMDAXGwwAGRf5Fw4gH6QCJQZm8E+GECkVvgIIIQGfwtRLrjAiCCEMYVmnK64wKCEJRqmLa64wIw8sCCFA8MAortRNDUAfhi+kABAYEBAdcA+kABQzBsEwPTHwGCEJRqmLa68uCB0z8BMUEw2zzbPMj4QgHMVSBazxYSgQEBzwABzxbJ7VQODQEk+EFvJBAjXwN/AnCAQlhtbds8EAAcyAGCEK/5D1dYyx/LP8kD2jDtRNDUAfhi+kABAYEBAdcA+kABQzBsEwPTHwGCEMYVmnK68uCB0z/TP/pAAUMwMxBFEDRY+EFvJDAxyDICzxbbPAHMyQNwcFBDgEAG2zwkA1BEbW3bPMj4QgHMVSBazxYSgQEBzwABzxbJ7VQTEhAB9shxAcoBUAcBygBwAcoCUAXPFlAD+gJwAcpoI26zJW6zsY5MfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzJczMwFwAcoA4iFusxEAMJx/AcoAASBu8tCAAcyVMXABygDiyQH7AAAkyFUwcVAFyx8Tyz/LPwH6AszJAATIyQGiMO1E0NQB+GL6QAEBgQEB1wD6QAFDMGwTA9MfAYIQGfwtRLry4IH6QAExQTBVINs8IoIAmsICxwXy9FjI+EIBzFUgWs8WEoEBAc8AAc8Wye1UFQAc+EFvJBAjXwMjxwXy4IQgcqeo';
+function NftManager_init(owner: Address, seed: bigint, mint_price: bigint) {
+    const __init = 'te6ccgEBBgEAOwABFP8A9KQT9LzyyAsBAgFiAgMCAs0EBQAJoUrd4AkAAdQAL9EQJkZgIoGagh54tAgIDngCxniwD9AWTA==';
+    const __code = 'te6ccgECGAEAA7wAART/APSkE/S88sgLAQIBYgIDA5bQcCHXScIflTAg1wsf3gLQ0wMBcbDAAZF/kXDiAfpAIlBmbwT4YQKRW+AgghAZ/C1EuuMCIIIQxhWacrrjAoIQlGqYtrrjAjDywIIEBQYCASASEwG2MO1E0NQB+GL6QAEBgQEB1wD6QAEB+gBVMGwUBNMfAYIQGfwtRLry4IH6QAExEDRBMFUw2zwjggCawgPHBRLy9EEwyPhCAcxVMFBDzxaBAQHPAFjPFgH6AsntVAcBqjDtRNDUAfhi+kABAYEBAdcA+kABAfoAVTBsFATTHwGCEMYVmnK68uCB0z/TP/pAAUMwMxBWEEUQNFjbPMj4QgHMVTBQQ88WgQEBzwBYzxYB+gLJ7VQIAprtRNDUAfhi+kABAYEBAdcA+kABAfoAVTBsFATTHwGCEJRqmLa68uCB0z8BMRA0QTDbPNs8yPhCAcxVMFBDzxaBAQHPAFjPFgH6AsntVA4PABz4QW8kECNfAyTHBfLghASK+EFvJDAxyDICzxbbPAHMyYE1aiWCCvrwgKBSMLzy9HByi/TkZUIGl0ZW0gbWludGVkjbPG1tLFFKRDTbPANwcFBDgEAGCQoQCwAEyMkBQshwAcsfbwABb4xtb4wB2zxvIgHJkyFus5YBbyJZzMnoMQwCFNs8JQNQRG1t2zwNEAC6INdKIddJlyDCACLCALGOSgNvIoB/Is8xqwKhBasCUVW2CCDCAJwgqgIV1xhQM88WQBTeWW8CU0GhwgCZyAFvAlBEoaoCjhIxM8IAmdQw0CDXSiHXSZJwIOLi6F8DACTIVTBxUAXLHxPLP8s/AfoCzMkAHMgBghCv+Q9XWMsfyz/JAST4QW8kECNfA38CcIBCWG1t2zwQAfbIcQHKAVAHAcoAcAHKAlAFzxZQA/oCcAHKaCNusyVus7GOTH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMyXMzMBcAHKAOIhbrMRADCcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wACASAUFQBxvd6ME4LnYerpZXPY9CdhzrJUKNs0E4TusalpWyPlmRadeW/vixHME4IGc6tPOK/OkoWA6wtxMj2UAT26re7UTQ1AH4YvpAAQGBAQHXAPpAAQH6AFUwbBTbPIFgE9uFHe1E0NQB+GL6QAEBgQEB1wD6QAEB+gBVMGwU2zyBcABhNfAwAEXwM=';
+    const __system = 'te6cckECGgEAA8YAAQHAAQEFoG0/AgEU/wD0pBP0vPLICwMCAWILBAIBIAYFAHG93owTgudh6ullc9j0J2HOslQo2zQThO6xqWlbI+WZFp15b++LEcwTggZzq084r86ShYDrC3EyPZQCASAJBwE9uFHe1E0NQB+GL6QAEBgQEB1wD6QAEB+gBVMGwU2zyAgABF8DAT26re7UTQ1AH4YvpAAQGBAQHXAPpAAQH6AFUwbBTbPICgAGE18DA5bQcCHXScIflTAg1wsf3gLQ0wMBcbDAAZF/kXDiAfpAIlBmbwT4YQKRW+AgghAZ/C1EuuMCIIIQxhWacrrjAoIQlGqYtrrjAjDywIIYDwwCmu1E0NQB+GL6QAEBgQEB1wD6QAEB+gBVMGwUBNMfAYIQlGqYtrry4IHTPwExEDRBMNs82zzI+EIBzFUwUEPPFoEBAc8AWM8WAfoCye1UDg0BJPhBbyQQI18DfwJwgEJYbW3bPBMAHMgBghCv+Q9XWMsfyz/JAaow7UTQ1AH4YvpAAQGBAQHXAPpAAQH6AFUwbBQE0x8BghDGFZpyuvLggdM/0z/6QAFDMDMQVhBFEDRY2zzI+EIBzFUwUEPPFoEBAc8AWM8WAfoCye1UEASK+EFvJDAxyDICzxbbPAHMyYE1aiWCCvrwgKBSMLzy9HByi/TkZUIGl0ZW0gbWludGVkjbPG1tLFFKRDTbPANwcFBDgEAGFxUTEQIU2zwlA1BEbW3bPBITACTIVTBxUAXLHxPLP8s/AfoCzMkB9shxAcoBUAcBygBwAcoCUAXPFlAD+gJwAcpoI26zJW6zsY5MfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzJczMwFwAcoA4iFusxQAMJx/AcoAASBu8tCAAcyVMXABygDiyQH7AAFCyHAByx9vAAFvjG1vjAHbPG8iAcmTIW6zlgFvIlnMyegxFgC6INdKIddJlyDCACLCALGOSgNvIoB/Is8xqwKhBasCUVW2CCDCAJwgqgIV1xhQM88WQBTeWW8CU0GhwgCZyAFvAlBEoaoCjhIxM8IAmdQw0CDXSiHXSZJwIOLi6F8DAATIyQG2MO1E0NQB+GL6QAEBgQEB1wD6QAEB+gBVMGwUBNMfAYIQGfwtRLry4IH6QAExEDRBMFUw2zwjggCawgPHBRLy9EEwyPhCAcxVMFBDzxaBAQHPAFjPFgH6AsntVBkAHPhBbyQQI18DJMcF8uCEHcFliQ==';
     let systemCell = Cell.fromBase64(__system);
-    let builder = new TupleBuilder();
-    builder.writeCell(systemCell);
-    builder.writeAddress(owner);
-    builder.writeNumber(seed);
-    let __stack = builder.build();
+
     let codeCell = Cell.fromBoc(Buffer.from(__code, 'base64'))[0];
-    let initCell = Cell.fromBoc(Buffer.from(__init, 'base64'))[0];
-    
-    return { code: codeCell, data: beginCell().storeRef(systemCell).storeAddress(owner).storeInt(seed, 257).storeAddress(owner).endCell() };
+
+    console.log(codeCell);
+    let data = beginCell().storeRef(systemCell).storeAddress(owner).storeInt(seed, 257).storeAddress(owner).storeCoins(mint_price).endCell();
+    return { code: codeCell, data };
 }
 
 const NftManager_errors: { [key: number]: { message: string } } = {
@@ -479,17 +476,18 @@ const NftManager_errors: { [key: number]: { message: string } } = {
     134: { message: `Invalid argument` },
     135: { message: `Code of a contract was not found` },
     136: { message: `Invalid address` },
+    13674: { message: `Insufficient amount sent` },
     39618: { message: `NFT Manager Already Initialized` },
 }
 
 export class NftManager implements Contract {
     
-    static async init(owner: Address, seed: bigint) {
-        return await NftManager_init(owner,seed);
+    static init(owner: Address, seed: bigint, mint_price: bigint) {
+        return NftManager_init(owner,seed,mint_price);
     }
     
-    static async fromInit(owner: Address, seed: bigint) {
-        const init = await NftManager_init(owner,seed);
+    static fromInit(owner: Address, seed: bigint, mint_price: bigint) {
+        const init = NftManager_init(owner,seed,mint_price);
         const address = contractAddress(0, init);
         return new NftManager(address, init);
     }

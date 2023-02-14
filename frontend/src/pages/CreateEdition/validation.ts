@@ -13,7 +13,6 @@ export const formSchema = () => {
 				end: yup.date().typeError('Invalid date provided'),
 			})
 			.optional(),
-		mintLimitPerAddress: yup.number(),
-		payoutAddress: yup.string().required('Payout is required in order to get royalty'),
+		// payoutAddress: yup.string().required('Payout is required in order to get royalty'),
 	});
 };

@@ -10,6 +10,7 @@
     "deploy": "blueprint run"
   },
   "dependencies": {
+    "@thirdweb-dev/storage": "^1.0.8",
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.14",
     "@types/qs": "^6.9.7",
