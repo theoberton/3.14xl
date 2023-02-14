@@ -34,15 +34,15 @@ function FormArea() {
 					/>
 					<EditionSize />
 					<ValidityPeriod />
-					<Input
+					{/* <Input
 						label={'Mint limit per address'}
 						name="mintLimitPerAddress"
 						min={0}
 						type="number"
 						optional
 						placeholder="Unlimited"
-					/>
-					<Input label={'Payout address'} name="payoutAddress" type="text" placeholder="Address" />
+					/> */}
+					{/* <Input label={'Payout address'} name="payoutAddress" type="text" placeholder="Address" /> */}
 					<div className={styles.createEditionSubmitButton}>
 						<Button type="submit" green disabled={!isFormValid} expanded kind={ButtonKinds.basic}>
 							Create edition

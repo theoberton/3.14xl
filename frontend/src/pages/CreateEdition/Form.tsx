@@ -33,8 +33,6 @@ function CreateEditionForm() {
 	const address = useTonAddress();
 	const [tonConnectUI] = useTonConnectUI();
 
-
-
 	const handleSubmit = useCallback(async (values: FormValues) => {
 		if (!ipfs) throw new Error('IPFS not inited');
 		if (!values.media) throw new Error('No media');

@@ -57,7 +57,7 @@ console.log('https://cloudflare-ipfs.com/ipfs/' + collectionContentIpfs.IpfsHash
 		royalty: 0.05,
 		royaltyAddress: ownerAddress,
 		collectionContentUri: 'https://cloudflare-ipfs.com/ipfs/' + collectionContentIpfs.IpfsHash,
-		nftItemContentBaseUri: content.image,
+		nftItemContentBaseUri: 'https://cloudflare-ipfs.com/ipfs/' + collectionContentIpfs.IpfsHash,
 		nftItemCodeHex: NftItem.codeHex,
 	});
 
