@@ -5,8 +5,20 @@
 	padding-right: 20%;
 	border-right: 1px solid $gray-two;
 
+	@media (max-width: $breakpoint-l) {
+		border-right: 0;
+		padding-right: 0;
+	}
+
 	&ActionTitle {
-		font-size: $font-big-enlarged;
+		font-size: $font-big;
+
+		&Wrapper {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 20px;
+		}
 	}
 
 	&FormArea {
@@ -24,6 +36,7 @@
 	}
 
 	&Wrapper {
+		position: relative;
 		padding: 2% 4%;
 	}
 
@@ -31,27 +44,74 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		padding: 15px 20px;
+
+		@media (max-width: $breakpoint-l) {
+			grid-template-columns: 1fr;
+			padding: 15px;
+
+		}
 	}
 }
 
 .preview {
 	max-width: 40vw;
 
+	&ImageContainer {
+		display: flex;
+		align-items: center;
+	}
+
+	&Mobile {
+		&ContentWrapper {
+			margin: 0 5px;
+			border-bottom: 1px solid $gray-eleven;
+		}
+		width: 100vw;
+    display: grid;
+		grid-template-columns: 3fr 7fr 5fr;
+	}
+
+	&Modal {
+		max-width: 80vw;
+	}
+
 	&Image {
 		max-width: 50vw;
 		max-height: 50vh;
+
+		&Mobile {
+			max-width: 60px;
+			max-height: 60px;	
+		}
+
 		&Wrapper {
 			text-align: center;
 			margin-bottom: 30px;
 			border: none;
+
+			&Mobile {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 15px;
+				text-align: center;
+				border: none;
+			}
 		}
 
 		&Empty {
 			@extend .previewImage;
-
 			background-color: $gray-eight;
 			min-width: 350px;
 			min-height: 350px;
+
+			&Mobile {
+				@extend .previewImageEmpty;
+				border-radius: 5px;
+				border-width: 0;
+				min-width: 45px;
+				min-height: 45px;
+			}
 		}
 	}
 
@@ -88,6 +148,13 @@
 		display: flex;
 		justify-content: center;
 		padding: 0 20px;
+
+		&Mobile {
+			position: fixed;
+			top: 0;
+			left: 0;
+			background-color: $black-one;
+		}
 	}
 
 	&MainAttributes {
@@ -96,8 +163,29 @@
 		justify-content: space-between;
 		margin: 30px 0;
 
+		&Mobile {
+			font-size: $font-small-enlarged;
+			display: flex;
+			white-space: break-spaces;
+			gap: 10px;
+			flex-direction: column;
+			padding: 10px 0;
+		}
+
+		&Price {
+			&Mobile {
+				white-space: nowrap;
+				font-size: $font-base;
+				display: flex;
+				align-items: center;
+			}
+		}
+
 		&Name {
 			font-size: $font-big-enlarged;
+			&Mobile {
+				font-size: $font-medium;
+			}
 		}
 
 		&Description {
@@ -123,6 +211,11 @@
 			display: grid;
 			grid-template-columns: 5fr 5fr;
 			grid-gap: 20px;
+			
+			// &Separator {
+			// 	display: flex;
+			// 	align-items: center;
+			// }
 		}
 	}
 
@@ -137,5 +230,13 @@
 
 	&Label {
 		@extend .inputLabel;
+	}
+}
+
+.tonLogo {
+	max-width: 60px;
+
+	&Mobile {
+		max-width: 25px;
 	}
 }

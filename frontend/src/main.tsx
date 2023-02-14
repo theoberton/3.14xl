@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import '@/assets/styles/index.scss';
+import 'react-responsive-modal/styles.css';
+
 import ApplicationRoutes from '@/router/routes';
 
 import { TonConnectUIProvider } from '@tonconnect/ui-react';

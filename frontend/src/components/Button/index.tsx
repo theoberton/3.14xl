@@ -1,5 +1,4 @@
 import cn from 'classnames';
-import commonStyles from '@/pages/styles.module.scss';
 import styles from '@/components/Button/styles.module.scss';
 import ArrowLeftIcon from '@/assets/images/svg/button/arrowLeft.svg';
 import ArrowRightIcon from '@/assets/images/svg/button/arrowRight.svg';
@@ -14,10 +13,12 @@ type ButtonProps = {
 	icon?: string;
 	green?: boolean;
 	expanded?: boolean;
+	basicInverted?: boolean;
+	mini?: boolean;
 };
 
 export function Button(props: ButtonProps) {
-	const { type = 'button', onClick, disabled, expanded = false, kind } = props;
+	const { type = 'button', onClick, disabled, expanded = false, basicInverted, kind, mini } = props;
 
 	const buttonContent = getButtonContent(props);
 
@@ -25,9 +26,9 @@ export function Button(props: ButtonProps) {
 
 	const btnClass = cn({
 		[styles.button]: true,
+		[styles.buttonBasicInverted]: basicInverted,
 		[styles.buttonWithIcon]: isWithIconType,
 		[styles.buttonExpanded]: expanded,
-		[commonStyles.unselectable]: true,
 	});
 
 	return (
@@ -38,7 +39,7 @@ export function Button(props: ButtonProps) {
 }
 
 function getButtonContent(props: ButtonProps): React.ReactNode {
-	const { children, kind, green, disabled } = props;
+	const { children, kind, green, disabled,  mini } = props;
 
 	let basicButtonContent: JSX.Element | null = null;
 
@@ -47,12 +48,17 @@ function getButtonContent(props: ButtonProps): React.ReactNode {
 		[styles.buttonIconImageSalad]: green,
 	});
 	const commonContentClassnames = cn({
-		[styles.buttonContentSalad]: !disabled && green,
 		[styles.buttonDisabled]: disabled,
+		[styles.buttonMini]: mini,
 	});
 
 	if (kind == ButtonKinds.basic) {
-		const resultClassname = cn(styles.buttonContentBasic, commonContentClassnames);
+		const resultClassname = cn({
+			[commonContentClassnames]: true,
+			[styles.buttonContentBasic]: !mini,
+			[styles.buttonDisabled]: disabled,
+			[styles.buttonContentBasicMini]: mini,
+		});
 
 		basicButtonContent = (
 			<div className={resultClassname}>

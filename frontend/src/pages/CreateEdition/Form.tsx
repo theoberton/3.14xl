@@ -9,6 +9,9 @@ import { FormValues } from '@/pages/CreateEdition/interfaces';
 import EditionPreview from '@/pages/CreateEdition/Preview';
 import { EDITIONS_SIZES } from '@/constants/common';
 import { createEdition } from '../CreateEditionOld';
+import { useMediaQuery } from 'react-responsive'
+import EditionPreviewMobile from '@/pages/CreateEdition/PreviewMobile';
+
 
 const createEditionInitialValues: FormValues = {
 	name: '',
@@ -35,8 +38,6 @@ function CreateEditionForm() {
 	const handleSubmit = useCallback(async (values: FormValues) => {
 		if (!values.media) throw new Error('No media');
 
-		console.log('values', values);
-
 		await createEdition(tonConnectUI,{
 			name: values.name,
 			description: values.description,
@@ -47,6 +48,9 @@ function CreateEditionForm() {
 		})
 	}, [address, tonConnectUI]);
 
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+
+	
 	return (
 		<Formik
 			initialValues={createEditionInitialValues}
@@ -56,7 +60,7 @@ function CreateEditionForm() {
 		>
 			<div className={styles.createEditionContainer}>
 				<FormArea />
-				<EditionPreview />
+				{isTabletOrMobile ? <EditionPreviewMobile /> : <EditionPreview />}
 			</div>
 		</Formik>
 	);

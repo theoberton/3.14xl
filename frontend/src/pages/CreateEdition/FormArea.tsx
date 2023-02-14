@@ -14,9 +14,19 @@ function FormArea() {
 	return (
 		<Form>
 			<div className={styles.createEdition}>
-				<div className={styles.createEditionActionTitle}>Collection details</div>
+				<div className={styles.createEditionActionTitleWrapper}>
+					<div className={styles.createEditionActionTitle}>Collection details</div>
+					<Button
+						kind={ButtonKinds.basic}
+						basicInverted
+						mini
+						type="reset"
+						>
+							Clear fields
+						</Button>
+				</div>
 				<div className={styles.createEditionFormArea}>
-					<Input label={'Name'} name="name" placeholder="The Project" type="text" />
+					<Input label={'Name'} name="name" placeholder="The Project" max={80} type="text" />
 					<Input label={'Symbol'} name="symbol" type="text" max={15} placeholder="$SYMBOL" />
 					<TextArea
 						label={'Description'}
@@ -35,9 +45,18 @@ function FormArea() {
 					/>
 					<EditionSize />
 					<ValidityPeriod />
-					{/* <Input label={'Payout address'} name="payoutAddress" type="text" placeholder="Address" /> */}
+					{/* <Input
+						label={'Mint limit per address'}
+						name="mintLimitPerAddress"
+						min={0}
+						max={1000000000000}
+						type="number"
+						optional
+						placeholder="Unlimited"
+					/> */}
+					<Input label={'Payout address'} name="payoutAddress" type="text" placeholder="Address" />
 					<div className={styles.createEditionSubmitButton}>
-						<Button type="submit" green disabled={!isFormValid} expanded kind={ButtonKinds.basic}>
+						<Button type="submit" disabled={!isFormValid} expanded kind={ButtonKinds.basic}>
 							Create edition
 						</Button>
 					</div>
