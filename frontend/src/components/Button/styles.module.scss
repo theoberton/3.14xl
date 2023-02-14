@@ -5,6 +5,7 @@
 	border: none;
 	color: $black-one;
 	border-radius: 8px;
+	font-size: $font-medium;
 	margin: 0 5px;
 	cursor: pointer;
 	white-space: nowrap;
@@ -98,6 +99,12 @@
 
 .wallet {
 	>div> button {
+		@extend .button;
+		background-color: transparent;
+		border: 1px solid $white;
+	}
+
+	>div> div> button {
 		@extend .button;
 		background-color: transparent;
 		border: 1px solid $white;

@@ -15,4 +15,14 @@
 		color: $white;
 		background-color: $black-one;
 	}
+	&Grey {
+		color: $white;
+		background-color: $gray-nine;
+	}
+
+	&Mini {
+		@extend .label;
+		padding: 5px 10px;
+		border-radius: 4px;
+	}
 }
