@@ -1,5 +1,5 @@
 const env = process.env.NODE_ENV;
-export const routerBaseName = env === 'production' ? '/3.14xl/' : '/';
+export const BASE_PATH = env === 'production' ? '/3.14xl' : '/';
 
 export enum EDITIONS_SIZES {
 	FIXED = 'fixed',

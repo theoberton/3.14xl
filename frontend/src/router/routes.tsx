@@ -11,13 +11,13 @@ function ApplicationRoutes() {
 		<CustomRouter history={history}>
 			<Routes>
 				<Route element={<PageContainer />}>
-					<Route index path="" element={<LandingPage />} />
+					<Route index path="/" element={<LandingPage />} />
 					<Route element={<WalletLayout />}>
-						<Route path="edition" element={<CreateEditionOld />} />
-						<Route path="create-edition" element={<CreateEdition />} />
+						<Route path="/edition" element={<CreateEditionOld />} />
+						<Route path="/create-edition" element={<CreateEdition />} />
 					</Route>
 				</Route>
-				<Route path="create-collection" element={<CreateCollection />} />
+				<Route path="/create-collection" element={<CreateCollection />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</CustomRouter>

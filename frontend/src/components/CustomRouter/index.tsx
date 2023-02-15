@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from 'react';
 import { Router } from 'react-router-dom';
 import { BrowserHistory } from 'history';
-import { routerBaseName } from '@/constants/common';
+import { BASE_PATH } from '@/constants/common';
 
 interface CustomRouterHistory {
 	history: BrowserHistory;
@@ -20,7 +20,7 @@ export function CustomRouter({ history, ...props }: CustomRouterHistory) {
 	return (
 		<Router
 			{...props}
-			basename={routerBaseName}
+			basename={BASE_PATH}
 			location={state.location}
 			navigationType={state.action}
 			navigator={history}
