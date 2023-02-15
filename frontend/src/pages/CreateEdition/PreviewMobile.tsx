@@ -11,20 +11,17 @@ function PreviewMobile() {
 	const [isImagePreviewOpened, setImagePreviewOpenedStatus] = useState(false);
 
 	const closePreviewImageModal = useCallback(() => {
-		setImagePreviewOpenedStatus(false)
+		setImagePreviewOpenedStatus(false);
 	}, []);
 	const openPreviewImage = useCallback(() => {
-		setImagePreviewOpenedStatus(true)
+		setImagePreviewOpenedStatus(true);
 	}, []);
 
 	return (
 		<div className={styles.previewSectionMobile}>
 			<div className={styles.previewMobile}>
 				{
-					<div
-						className={styles.previewImageWrapperMobile}
-						onClick={openPreviewImage}
-					>
+					<div className={styles.previewImageWrapperMobile} onClick={openPreviewImage}>
 						{values.media ? (
 							<img className={styles.previewImageMobile} src={values.media} />
 						) : (
@@ -33,24 +30,23 @@ function PreviewMobile() {
 					</div>
 				}
 				<div className={styles.previewMainAttributesMobile}>
-          <Label text={values.symbol ? values.symbol : '$SYMBOL'} grey mini />
+					<Label text={values.symbol ? values.symbol : '$SYMBOL'} grey mini />
 					<div className={styles.previewMainAttributesNameMobile}>
 						{values.name ? values.name : 'Collection name'}
 					</div>
 				</div>
-        <div className={styles.previewMainAttributesPriceMobile}>
-            <img src={tonLogo} className={styles.tonLogoMobile}/>
-            {`${values.price ? values.price : '0.00'} TON`}
-          </div>
+				<div className={styles.previewMainAttributesPriceMobile}>
+					<img src={tonLogo} className={styles.tonLogoMobile} />
+					{`${values.price ? values.price : '0.00'} TON`}
+				</div>
 			</div>
-			{
-				values.media &&
-					<PreviewImageMobileModal
-						isOpen={isImagePreviewOpened}
-						closeModal={closePreviewImageModal}
-						media={values.media}
-					/>
-			}
+			{values.media && (
+				<PreviewImageMobileModal
+					isOpen={isImagePreviewOpened}
+					closeModal={closePreviewImageModal}
+					media={values.media}
+				/>
+			)}
 		</div>
 	);
 }

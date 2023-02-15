@@ -18,9 +18,7 @@ function ValidityPeriod() {
 					popperProps={{ placement: 'right' }}
 					placeholder={'Now'}
 				/>
-				{/* <div className={styles.customFieldControlsValidityDateSeparator}>
-					<img src={arrowRight} />
-				</div> */}
+				<img src={arrowRight} />
 				<Datepicker
 					name="validity.end"
 					inputFormat={DATE_INPUT_FORMAT}

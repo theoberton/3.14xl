@@ -8,7 +8,7 @@ import styles from '@/pages/Landing/styles.module.scss';
 import { navigate } from '@/helpers';
 
 export function PresentationSection() {
-	const goToCreateEditionPage = useCallback(() => navigate('create-edition'), []);
+	const goToCreateCollectionPage = useCallback(() => navigate('create-collection'), []);
 
 	return (
 		<section className={styles.landingPresentationSection}>
@@ -20,11 +20,11 @@ export function PresentationSection() {
 			<div className={styles.landingPresentationDetails}>
 				<div className={styles.landingPresentationExplanation}>
 					<div className={styles.landingPresentationExplanationSection}>
-						Whether you are just starting out or have been  in the game for a while, it's never been
+						Whether you are just starting out or have been in the game for a while, it's never been
 						easier to build something remarkable.
 					</div>
 				</div>
-				<Button kind={ButtonKinds.basic} onClick={goToCreateEditionPage}>
+				<Button kind={ButtonKinds.basic} onClick={goToCreateCollectionPage}>
 					Create new collection
 				</Button>
 			</div>

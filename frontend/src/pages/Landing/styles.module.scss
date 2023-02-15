@@ -5,23 +5,27 @@
 		position: relative;
 		padding: 20px;
 		background-color: $black-one;
+		height: 100%;
+		overflow: hidden;
 	}
 
 	&Cube {
-		max-width: 40vw;
 		position: absolute;
 		z-index: 0;
 
-		&Right {
-
-			right: 0;
-			top: 3%;
+		&Left {
+			z-index: 1;
+			width: 50vw;
+			top: 0;
+			left: 0;
 			@extend .landingCube;
 		}
 
-		&Left {
+		&Right {
+			z-index: 3;
+			width: 45vw;
+			right: 0;
 			top: 0;
-			left: 0;
 			@extend .landingCube;
 		}
 	}
@@ -38,7 +42,6 @@
 			display: flex;
 			flex-direction: column;
 			gap: 90px;
-			margin-left: -50px;
 			align-items: center;
 		}
 
@@ -53,7 +56,6 @@
 		&Example {
 			&Wrapper {
 				border-radius: 100%;
-				margin-left: -50px;
 				background-color: $white;
 			}
 			height: 160px;
@@ -65,16 +67,29 @@
 			gap: 20px;
 
 			&Section {
-				color: $white;
 				text-align: center;
-				max-width: 30vw;
+				max-width: 375px;
+
+				color: $white;
+				font-weight: 500;
+				text-shadow: 1px 3px $black-one;
+				z-index: 4;
 			}
 		}
 
 		&Slogan {
+			z-index: 1;
+
 			font-size: $font-extra-huge;
+			text-shadow: 3px 3px 5px $black-one;
+			margin-bottom: 0.25em;
+
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
 			&Item {
-				display: block;
 				text-align: center;
 			}
 		}

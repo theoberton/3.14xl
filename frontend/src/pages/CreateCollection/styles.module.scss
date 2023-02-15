@@ -8,6 +8,7 @@
 		&Title {
 			padding: 20px;
 			font-size: $font-huge;
+			color: $black-one;
 			border-right: 1px solid $gray-two;
 			border-left: 1px solid $gray-two;
 			border-top: 1px solid $gray-two;
@@ -44,9 +45,11 @@
 
 			&Caption {
 				font-weight: $font-normal;
+				color: $gray-one;
 			}
 
 			&Title {
+				color: $black-one;
 				font-weight: $font-bold;
 				font-size: $font-medium-enlarged;
 			}
@@ -71,6 +74,10 @@
 
 	&RightSide {
 		background-image: url('../../assets/images/png/createCollection/createProject.png');
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position-x: 100%;
+
 		display: flex;
 		align-items: center;
 		justify-content: center;

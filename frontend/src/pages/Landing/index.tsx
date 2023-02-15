@@ -6,11 +6,11 @@ import styles from '@/pages/Landing/styles.module.scss';
 
 export function LandingPage() {
 	return (
-			<div className={styles.landingContainer}>
-				<img src={CubeLeft} className={styles.landingCubeLeft} />
-				<img src={CubeRight} className={styles.landingCubeRight}/>
-				<Header />
-				<PresentationSection />
-			</div>
+		<div className={styles.landingContainer}>
+			<img src={CubeLeft} className={styles.landingCubeLeft} />
+			<img src={CubeRight} className={styles.landingCubeRight} />
+			<Header transparent />
+			<PresentationSection />
+		</div>
 	);
 }

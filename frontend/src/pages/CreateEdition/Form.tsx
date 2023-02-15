@@ -9,9 +9,8 @@ import { FormValues } from '@/pages/CreateEdition/interfaces';
 import EditionPreview from '@/pages/CreateEdition/Preview';
 import { EDITIONS_SIZES } from '@/constants/common';
 import { createEdition } from '../CreateEditionOld';
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
 import EditionPreviewMobile from '@/pages/CreateEdition/PreviewMobile';
-
 
 const createEditionInitialValues: FormValues = {
 	name: '',
@@ -35,22 +34,24 @@ function CreateEditionForm() {
 	const address = useTonAddress();
 	const [tonConnectUI] = useTonConnectUI();
 
-	const handleSubmit = useCallback(async (values: FormValues) => {
-		if (!values.media) throw new Error('No media');
+	const handleSubmit = useCallback(
+		async (values: FormValues) => {
+			if (!values.media) throw new Error('No media');
 
-		await createEdition(tonConnectUI,{
-			name: values.name,
-			description: values.description,
-			image: values.media,
-			symbol: values.symbol,
-			price: values.price,
-			creatorAddress: address
-		})
-	}, [address, tonConnectUI]);
+			await createEdition(tonConnectUI, {
+				name: values.name,
+				description: values.description,
+				image: values.media,
+				symbol: values.symbol,
+				price: values.price,
+				creatorAddress: address,
+			});
+		},
+		[address, tonConnectUI]
+	);
 
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
 
-	
 	return (
 		<Formik
 			initialValues={createEditionInitialValues}
@@ -58,10 +59,10 @@ function CreateEditionForm() {
 			enableReinitialize
 			onSubmit={handleSubmit}
 		>
-			<div className={styles.createEditionContainer}>
+			<section className={styles.createEditionContainer}>
 				<FormArea />
 				{isTabletOrMobile ? <EditionPreviewMobile /> : <EditionPreview />}
-			</div>
+			</section>
 		</Formik>
 	);
 }

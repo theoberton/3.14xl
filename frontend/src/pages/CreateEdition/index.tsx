@@ -10,14 +10,5 @@ import Form from '@/pages/CreateEdition/Form';
 export function CreateEdition() {
 	const goToLandingPage = useCallback(() => navigate('/'), []);
 
-	return (
-		<div className={styles.createEditionWrapper}>
-			<div className={styles.createEditonSettingsSection}>
-				{/* <div className={styles.createEditionNavigationHeader}>
-					<Button kind={ButtonKinds.arrowLeft} onClick={goToLandingPage} />
-				</div> */}
-				<Form />
-			</div>
-		</div>
-	);
+	return <Form />;
 }
