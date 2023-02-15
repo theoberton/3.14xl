@@ -8,7 +8,7 @@ import styles from '@/pages/Landing/styles.module.scss';
 import { navigate } from '@/helpers';
 
 export function PresentationSection() {
-	const goToCreateCollectionPage = useCallback(() => navigate('create-collection'), []);
+	const goToCreateCollectionPage = useCallback(() => navigate('/create-collection'), []);
 
 	return (
 		<section className={styles.landingPresentationSection}>
