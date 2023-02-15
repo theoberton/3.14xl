@@ -16,7 +16,6 @@ function ApplicationRoutes() {
 						<Route path="edition" element={<CreateEditionOld />} />
 						<Route path="create-edition" element={<CreateEdition />} />
 					</Route>
-					<Route path="create-edition" element={<CreateEdition />} />
 				</Route>
 				<Route path="create-collection" element={<CreateCollection />} />
 				<Route path="*" element={<NotFound />} />
