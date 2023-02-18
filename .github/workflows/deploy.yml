@@ -40,6 +40,7 @@ jobs:
         with:
           node-version: 18
           cache: 'yarn'
+          working-directory: frontend
       - name: Install dependencies
         run: yarn install --immutable
       - name: Build
