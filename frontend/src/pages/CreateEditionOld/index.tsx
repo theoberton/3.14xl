@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import TonWeb from 'tonweb';
 import { useTonAddress, useTonConnectUI, TonConnectUI } from '@tonconnect/ui-react';
-// import PinataClient from '@pinata/sdk';
-// const pinataClient = new PinataClient('927deb7fb786df139a7c', '083bb02c296236ca5dd5fce3f3d573e6a787d60167524641a0e5c62bdff0edeb')
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 
 const storage = new ThirdwebStorage();
@@ -40,14 +38,11 @@ export const createEdition = async (tonConnectUI: TonConnectUI, params: Params) 
 		symbol: params.symbol,
 		feeRecipient: params.creatorAddress,
 	};
-	// const collectionContentIpfs = await ipfs.add(JSON.stringify(content, null, 2));
-	// console.log(collectionContentIpfs);
 
-console.log('start pinning');
-	const collectionContentUri =  await storage.upload(content);
+	const collectionContentUri = await storage.upload(content);
 	const collectionContentUrl = storage.resolveScheme(collectionContentUri);
 
-console.log(collectionContentUrl)
+	console.log(collectionContentUrl)
 
 	const ownerAddress = new TonWeb.utils.Address(params.creatorAddress);
 	console.log(ownerAddress);

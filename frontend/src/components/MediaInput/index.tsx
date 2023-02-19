@@ -2,7 +2,7 @@ import { useField, useFormikContext } from 'formik';
 import { useRef, useCallback, ChangeEvent, useState } from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
-import { useIPFS } from '@/hooks/useIpfs';
+import { ThirdwebStorage } from '@thirdweb-dev/storage';
 import crossIcon from '@/assets/images/svg/common/crossIcon.svg';
 import uploadIcon from '@/assets/images/svg/common/uploadIcon.svg';
 
@@ -12,6 +12,8 @@ import { Loader } from '@/components';
 import styles from '@/components/MediaInput/styles.module.scss';
 
 import { useCustomStateFormField } from '@/hooks/useCustomStateFormField';
+
+const storage = new ThirdwebStorage();
 
 interface Props {
 	placeholder?: string;
@@ -29,7 +31,6 @@ export function MediaInput(props: Props) {
 
 	const fileRef = useRef<HTMLInputElement>(null);
 	const minifiedImageRef = useRef<HTMLImageElement>(null);
-	const ipfs = useIPFS();
 
 	const { value, name: fieldName, onChange } = field;
 	const { setFieldValue, status } = useFormikContext();
@@ -46,16 +47,15 @@ export function MediaInput(props: Props) {
 		async (e: ChangeEvent<HTMLInputElement>) => {
 			const file = e.target.files && e.target.files[0];
 
-			if (!ipfs || !file) {
+			if (!file) {
 				return;
 			}
-			let collectionImageIpfs;
+
 			try {
 				setIsMediaUploadingStatus(true);
 
-				collectionImageIpfs = await ipfs.add(file);
-
-				const fileLink = 'https://cloudflare-ipfs.com/ipfs/' + collectionImageIpfs.cid.toString();
+				const ipfsLink = await storage.upload(file);
+				const fileLink =  storage.resolveScheme(ipfsLink);
 				console.log('fileLink', fileLink);
 
 				setFieldValue(name, fileLink);
@@ -65,7 +65,7 @@ export function MediaInput(props: Props) {
 				setIsMediaUploadingStatus(false);
 			}
 		},
-		[minifiedImageRef.current, ipfs]
+		[minifiedImageRef.current]
 	);
 
 	const inputLabelClass = classNames({

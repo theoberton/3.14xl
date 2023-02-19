@@ -5,9 +5,6 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 // https://vitejs.dev/config/
 export default defineConfig({
 	base: './',
-	define: {
-		global: 'window', // Polyfill for ipfs-core
-	},
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),

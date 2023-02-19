@@ -4,7 +4,6 @@ import { useTonAddress } from '@tonconnect/ui-react';
 import TonWeb from 'tonweb';
 import qs from 'qs';
 import { toNano } from 'ton-core';
-import BN from 'bn.js';
 
 const tonweb = new TonWeb(
 	new TonWeb.HttpProvider('https://testnet.toncenter.com/api/v2/jsonRPC', {
@@ -49,7 +48,7 @@ export function EditionPage() {
 	const mint = async () => {
 		const mintMessage = collection.createMintBody({
 			itemIndex: collectionData.nextItemIndex,
-			amount: new BN(40000000),
+			amount: TonWeb.utils.toNano('0.4'),
 			itemOwnerAddress: new Address(ownerAddress),
 			itemContentUri: '0/meta.json'
 		});

@@ -1,6 +1,5 @@
 import { Formik } from 'formik';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
-import { useIPFS } from '@/hooks/useIpfs';
 import styles from '@/pages/CreateEdition/styles.module.scss';
 import FormArea from '@/pages/CreateEdition/FormArea';
 import { formSchema } from '@/pages/CreateEdition/validation';

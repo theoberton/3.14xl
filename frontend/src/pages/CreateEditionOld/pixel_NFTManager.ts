@@ -1,5 +1,5 @@
 import { Cell, Slice, Address, Builder, beginCell, ComputeError, TupleItem, TupleReader, Dictionary, contractAddress, ContractProvider, Sender, Contract, ContractABI, TupleBuilder, DictionaryValue } from 'ton-core';
-import { Buffer} from 'buffer';
+import { Buffer } from 'buffer';
 
 export type StateInit = {
     $$type: 'StateInit';
