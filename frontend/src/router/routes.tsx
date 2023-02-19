@@ -1,7 +1,5 @@
-import { Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
-import { history } from '@/helpers';
-import { CustomRouter } from '@/components';
 import { PageContainer, WalletLayout } from '@/layouts';
 
 import {
@@ -14,7 +12,7 @@ import {
 
 function ApplicationRoutes() {
 	return (
-		<CustomRouter history={history}>
+		<HashRouter window={window}>
 			<Routes>
 				<Route element={<PageContainer />}>
 					<Route index path="/" element={<LandingPage />} />
@@ -26,7 +24,7 @@ function ApplicationRoutes() {
 				<Route path="/create-collection" element={<CreateCollection />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
-		</CustomRouter>
+		</HashRouter>
 	);
 }
 export default ApplicationRoutes;

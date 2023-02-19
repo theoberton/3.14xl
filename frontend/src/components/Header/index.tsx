@@ -5,12 +5,14 @@ import classNames from 'classnames';
 import Logo from '@/assets/images/svg/common/logo.svg';
 import styles from '@/components/Header/styles.module.scss';
 import buttonStyles from '@/components/Button/styles.module.scss';
-import { navigate } from '@/helpers/navigation';
+import { useNavigate } from 'react-router';
+
 interface IProps {
 	transparent?: boolean;
 }
 
 export function Header({ transparent }: IProps) {
+	const navigate = useNavigate();
 	const goToSourcePage = useCallback(() => navigate('/'), []);
 
 	const headerClass = classNames([

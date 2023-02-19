@@ -1,13 +1,14 @@
 import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/Button';
 
 import { ButtonKinds } from '@/components/Button/interfaces';
 
 import styles from '@/pages/Landing/styles.module.scss';
-import { navigate } from '@/helpers';
 
 export function PresentationSection() {
+	const navigate = useNavigate();
 	const goToCreateCollectionPage = useCallback(() => navigate('/create-edition'), []);
 
 	return (
