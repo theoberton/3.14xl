@@ -3,3 +3,4 @@ export * from './CreateEditionOld';
 export * from './CreateEdition';
 export * from './Landing';
 export * from './NotFound';
+export * from './EditionDetails';

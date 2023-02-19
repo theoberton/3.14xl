@@ -1,0 +1,167 @@
+@import '@/assets/styles/variables.scss';
+
+.editionDetails {
+	&Container {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: flex-start;
+
+		padding-top: 30px;
+
+		@media (max-width: $breakpoint-m) {
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+		}
+	}
+
+	&Preview {
+		max-width: 50%;
+		height: fit-content;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+
+		@media (max-width: $breakpoint-m) {
+			max-width: 100%;
+		}
+
+		&Image {
+			max-width: 50vw;
+			flex: 1;
+
+			> img {
+				width: 100%;
+			}
+		}
+
+		&Info {
+			width: 100%;
+			padding-block: 30px;
+
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+
+			> p {
+				padding-right: 1em;
+			}
+		}
+	}
+
+	&Info {
+		flex: 1;
+		padding-inline: 80px;
+		max-width: 50%;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+
+		@media (max-width: $breakpoint-m) {
+			max-width: 100%;
+			padding-inline: 0px;
+		}
+
+		> div {
+			width: 100%;
+
+			margin-bottom: 40px;
+
+			&:not(:last-child):not(:first-child) {
+				padding-bottom: 40px;
+				border-bottom: 1px solid $gray-eleven;
+			}
+		}
+
+		h3 {
+			color: $gray-one;
+			font-size: $font-base;
+			text-transform: uppercase;
+			font-weight: lighter;
+		}
+
+		&MintData {
+			border: 1px solid $gray-eleven;
+			border-radius: 2px;
+
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+
+			&Block {
+				&:first-child {
+					border-right: 1px solid $gray-eleven;
+				}
+
+				padding: 25px;
+				width: 50%;
+
+				> p {
+					color: $gray-one;
+					font-size: $font-small-enlarged;
+					text-transform: uppercase;
+					margin-bottom: 5px;
+				}
+			}
+		}
+
+		&Price {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+
+			&Block {
+				width: 50%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+
+				&:first-child {
+					align-items: flex-start;
+				}
+
+				&:last-child {
+					align-items: flex-end;
+				}
+			}
+		}
+
+		&About {
+			h1 {
+				font-size: $font-huge;
+				margin: 0.3em 0;
+			}
+
+			p {
+				color: $gray-one;
+				font-size: $font-base;
+				font-weight: lighter;
+			}
+		}
+
+		&Data {
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 16px;
+
+			> div {
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+
+				p {
+				}
+
+				span {
+					color: $gray-one;
+					font-weight: lighter;
+				}
+			}
+		}
+	}
+}

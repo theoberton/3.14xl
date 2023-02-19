@@ -4,7 +4,14 @@ import { history } from '@/helpers';
 import { CustomRouter } from '@/components';
 import { PageContainer, WalletLayout } from '@/layouts';
 
-import { CreateEdition, CreateCollection, LandingPage, CreateEditionOld, NotFound } from '@/pages';
+import {
+	CreateEdition,
+	CreateCollection,
+	LandingPage,
+	CreateEditionOld,
+	NotFound,
+	EditionDetailsPage,
+} from '@/pages';
 
 function ApplicationRoutes() {
 	return (
@@ -14,6 +21,7 @@ function ApplicationRoutes() {
 					<Route index path="/" element={<LandingPage />} />
 					<Route element={<WalletLayout />}>
 						<Route path="/edition" element={<CreateEditionOld />} />
+						<Route path="/edition/:editionId" element={<EditionDetailsPage />} />
 						<Route path="/create-edition" element={<CreateEdition />} />
 					</Route>
 				</Route>
