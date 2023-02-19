@@ -1,8 +1,9 @@
 {
   "name": "3.14xl",
-  "private": true,
   "version": "0.0.1",
-  "type": "module",
+  "repository": "https://github.com/theoberton/3.14xl.git",
+  "author": "Oberton",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
