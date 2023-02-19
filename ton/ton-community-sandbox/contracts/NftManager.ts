@@ -64,13 +64,13 @@ export class NftManager implements Contract {
 
     async getCollectionAddress(provider: ContractProvider): Promise<Address> {
         const { stack } = await provider.get('nft_collection_address', new TupleBuilder().build())
-        console.debug(stack)
+
         return stack.readAddress();
     }
 
     async getOwner(provider: ContractProvider): Promise<Address> {
       const { stack } = await provider.get('owner', new TupleBuilder().build())
-      // console.debug(stack)
+
       return stack.readAddress();
   }
 }
