@@ -15,7 +15,7 @@ export function PresentationSection() {
 			<div className={styles.landingPresentationSlogan}>
 				<span className={styles.landingPresentationSloganItem}>Bring</span>
 				<span className={styles.landingPresentationSloganItem}>visions</span>
-				<span className={styles.landingPresentationSloganItem}>to life</span>
+				<span className={styles.landingPresentationSloganItem}>to life!</span>
 			</div>
 			<div className={styles.landingPresentationDetails}>
 				<div className={styles.landingPresentationExplanation}>
