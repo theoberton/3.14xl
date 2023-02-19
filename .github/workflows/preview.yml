@@ -14,6 +14,7 @@ jobs:
   Deploy-Preview:
     environment:
       name: preview
+      url: ${{ steps.deployment.outputs.target_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
