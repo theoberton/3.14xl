@@ -55,7 +55,7 @@ export const createEdition = async (tonConnectUI: TonConnectUI, params: Params) 
 		maxSupply: BigInt(params.maxSupply)
 	};
 	console.log(nftManagerParams);
-	const nftManagerContract = NftManager.fromInit(nftManagerParams.owner, nftManagerParams.seed, nftManagerParams.mintPrice, nftManagerParams.maxSupply);
+	const nftManagerContract = await NftManager.fromInit(nftManagerParams.owner, nftManagerParams.seed, nftManagerParams.mintPrice, nftManagerParams.maxSupply);
 console.log(nftManagerContract);
 	/** Generate deploy link */
 	const nftCollection = new NftCollection(tonweb.provider, {
