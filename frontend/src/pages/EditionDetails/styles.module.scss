@@ -113,18 +113,39 @@
 			flex-direction: row;
 			justify-content: space-between;
 
+			@media (max-width: $breakpoint-m) {
+				flex-direction: column;
+				justify-content: space-between;
+				align-items: center;
+				gap: 30px;
+			}
+
 			&Block {
-				width: 50%;
+				width: 40%;
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
 
+				@media (max-width: $breakpoint-m) {
+					width: 100%;
+				}
+
 				&:first-child {
 					align-items: flex-start;
+
+					@media (max-width: $breakpoint-m) {
+						flex-direction: row;
+						justify-content: space-between;
+						align-items: center;
+					}
 				}
 
 				&:last-child {
 					align-items: flex-end;
+
+					> button {
+						width: 100%;
+					}
 				}
 			}
 		}
