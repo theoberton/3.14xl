@@ -1,4 +1,4 @@
-import { beginCell, toNano, Address } from "ton-core";
+import { beginCell, toNano, Address, Sender } from "ton-core";
 import { NftManager, storeSetNftCollectionAddress } from "../output/manager_NftManager";
 import { NetworkProvider } from "@ton-community/blueprint";
 
@@ -8,12 +8,16 @@ export async function run(network: NetworkProvider) {
 
   const myContract = await NftManager.fromInit(owner, seed);
 
-  console.log('Address', myContract.address);
+  console.log("Address", myContract.address);
 
-  const setNftCollectionAddressCell = beginCell().store(storeSetNftCollectionAddress({
-    $$type: 'SetNftCollectionAddress',
-    nft_collection_address: Address.parse('EQDPaSy-TiGLtnYHRwXo0vlRnE5N75olpht7-X1ZOksEqaTf'),
-  })).endCell();
+  const setNftCollectionAddressCell = beginCell()
+    .store(
+      storeSetNftCollectionAddress({
+        $$type: "SetNftCollectionAddress",
+        nft_collection_address: Address.parse("EQDPaSy-TiGLtnYHRwXo0vlRnE5N75olpht7-X1ZOksEqaTf"),
+      })
+    )
+    .endCell();
 
   await network.deploy(myContract, toNano("0.05"), setNftCollectionAddressCell);
 

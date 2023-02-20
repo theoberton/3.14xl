@@ -54,7 +54,7 @@ export function encodeOffChainContent(content: string) {
   return makeSnakeCell(data);
 }
 
-export function decodeOffChainContent(content: Cell) {
+export function decodeOffChainContent(content: Cell) : string {
   let data = flattenSnakeCell(content);
 
   let prefix = data[0];

@@ -15,7 +15,7 @@ export function storeStateInit(src: StateInit) {
     };
 }
 
-export function loadStateInit(slice: Slice) {
+export function loadStateInit(slice: Slice) { 
     let sc_0 = slice;
     let _code = sc_0.loadRef();
     let _data = sc_0.loadRef();

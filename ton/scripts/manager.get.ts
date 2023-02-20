@@ -4,7 +4,7 @@ import { NetworkProvider } from "@ton-community/blueprint";
 import TonWeb from "tonweb";
 
 export async function run(network: NetworkProvider) {
-  const managerAddress = Address.parse('EQBAhJU5L3-Qjg35FX8Jbd-5WGmuEm25JUo7NeBkVM6UMjj3');
+  const managerAddress = Address.parse("EQBAhJU5L3-Qjg35FX8Jbd-5WGmuEm25JUo7NeBkVM6UMjj3");
 
   const myContract = NftManager.fromAddress(managerAddress);
 

@@ -2,7 +2,7 @@ import { Address, toNano } from "ton-core";
 import { NftManager, MintSafe } from "../output/manager_NftManager";
 import { NetworkProvider } from "@ton-community/blueprint";
 import TonWeb from "tonweb";
-import { ThirdwebStorage } from '@thirdweb-dev/storage';
+import { ThirdwebStorage } from "@thirdweb-dev/storage";
 
 const storage = new ThirdwebStorage();
 
@@ -31,9 +31,8 @@ export async function run(network: NetworkProvider) {
     $$type: "MintSafe",
     query_id: 0n,
     next_item_index: BigInt(collectionData.nextItemIndex),
-    item_owner: owner
+    item_owner: owner,
   };
-
 
   await openedContract.send(
     network.sender(),
