@@ -37,7 +37,7 @@ $font-big: 20px;
 $font-big-enlarged: 24px;
 $font-huge: 26px;
 $font-huge-enlarged: 42px;
-$font-extra-huge: 130px;
+$font-extra-huge: 120px;
 $font-mega-huge: 160px;
 
 $font-extra-bold: 700;
@@ -51,3 +51,6 @@ $breakpoint-s: 767.98px;
 $breakpoint-m: 991.98px;
 $breakpoint-l: 1199.98px;
 $breakpoint-xl: 1399.98px;
+
+$header-height: 86px;
+$page-height: calc(100vh - $header-height);

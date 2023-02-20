@@ -7,17 +7,13 @@ import styles from '@/components/Header/styles.module.scss';
 import buttonStyles from '@/components/Button/styles.module.scss';
 import { useNavigate } from 'react-router';
 
-interface IProps {
-	transparent?: boolean;
-}
-
-export function Header({ transparent }: IProps) {
+export function Header() {
 	const navigate = useNavigate();
 	const goToSourcePage = useCallback(() => navigate('/'), []);
 
 	const headerClass = classNames([
 		styles.headerContainer,
-		transparent && styles.headerContainerTransparent,
+		styles.headerContainerTransparent,
 	]);
 
 	return (

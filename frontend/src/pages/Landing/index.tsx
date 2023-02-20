@@ -9,7 +9,6 @@ export function LandingPage() {
 		<div className={styles.landingContainer}>
 			<img src={CubeLeft} className={styles.landingCubeLeft} />
 			<img src={CubeRight} className={styles.landingCubeRight} />
-			<Header transparent />
 			<PresentationSection />
 		</div>
 	);

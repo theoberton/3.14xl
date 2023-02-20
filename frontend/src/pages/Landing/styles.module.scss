@@ -2,10 +2,9 @@
 
 .landing {
 	&Container {
-		position: relative;
 		padding: 20px;
 		background-color: $black-one;
-		height: 100%;
+		height: $page-height;
 		overflow: hidden;
 	}
 
@@ -78,7 +77,6 @@
 
 				color: $white;
 				font-weight: 500;
-				text-shadow: 1px 3px $black-one;
 				z-index: 4;
 			}
 		}
@@ -87,7 +85,7 @@
 			z-index: 1;
 
 			font-size: $font-extra-huge;
-			text-shadow: 3px 3px 5px $black-one;
+			line-height: $font-extra-huge;
 			margin-bottom: 0.25em;
 
 			display: flex;
