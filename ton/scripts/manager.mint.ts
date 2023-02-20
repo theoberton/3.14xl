@@ -9,7 +9,7 @@ const storage = new ThirdwebStorage();
 export async function run(network: NetworkProvider) {
   const owner = network.sender().address!;
 
-  const managerAddress = Address.parse("EQBAhJU5L3-Qjg35FX8Jbd-5WGmuEm25JUo7NeBkVM6UMjj3");
+  const managerAddress = Address.parse("EQBCEgjp2118YnOgjKZu0nTFSYJIHAYPgb-h6BubapfDwnHV");
   const managerContract = NftManager.fromAddress(managerAddress);
   const openedContract = network.open(managerContract);
   const collectionAddress = await openedContract.getNftCollectionAddress();
@@ -38,7 +38,7 @@ export async function run(network: NetworkProvider) {
   await openedContract.send(
     network.sender(),
     {
-      value: toNano("0.1") + toNano(collectionContent.price),
+      value: toNano("0.2") + toNano(collectionContent.price),
     },
     mintMessage
   );

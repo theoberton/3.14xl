@@ -11,24 +11,6 @@ import { createEdition } from '../CreateEditionOld';
 import { useMediaQuery } from 'react-responsive';
 import EditionPreviewMobile from '@/pages/CreateEdition/PreviewMobile';
 
-const createEditionInitialValues: FormValues = {
-	name: '',
-	symbol: '',
-	description: '',
-	media: null,
-	price: '',
-	editionSize: {
-		type: EDITIONS_SIZES.FIXED,
-		amount: '',
-	},
-	validity: {
-		start: null,
-		end: null,
-	},
-	mintLimitPerAddress: '',
-	payoutAddress: '',
-};
-
 function CreateEditionForm() {
 	const address = useTonAddress();
 	const [tonConnectUI] = useTonConnectUI();
@@ -44,12 +26,30 @@ function CreateEditionForm() {
 				symbol: values.symbol,
 				price: values.price,
 				creatorAddress: address,
+				maxSupply: values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0'
 			});
 		},
 		[address, tonConnectUI]
 	);
 
 	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+
+	const createEditionInitialValues: FormValues = {
+		name: 'Warrior',
+		symbol: '$WRR',
+		description: 'The warriors',
+		media: null,
+		price: '0.1',
+		editionSize: {
+			type: EDITIONS_SIZES.OPEN_EDITION,
+			amount: '',
+		},
+		validity: {
+			start: null,
+			end: null,
+		},
+		payoutAddress: address
+	};
 
 	return (
 		<Formik
