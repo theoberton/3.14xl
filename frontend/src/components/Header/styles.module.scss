@@ -9,7 +9,7 @@
 
 		min-height: 50px;
 		width: 100%;
-		padding: 24px 30px;
+		padding-block: 24px;
 		background-color: $black-one;
 
 		z-index: 100;
@@ -21,6 +21,7 @@
 		}
 
 		&Transparent {
+			padding: 24px 30px;
 			background-color: transparent;
 
 			@media (max-width: $breakpoint-l) {

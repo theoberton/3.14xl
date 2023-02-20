@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import SampleImg from '../../assets/images/png/example.png';
+import SampleImg from '../../assets/images/png/examples/fish.png';
 
 function EditionPreview() {
 	return (

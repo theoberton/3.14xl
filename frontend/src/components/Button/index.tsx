@@ -4,6 +4,8 @@ import ArrowLeftIcon from '@/assets/images/svg/button/arrowLeft.svg';
 import ArrowRightIcon from '@/assets/images/svg/button/arrowRight.svg';
 import { ButtonKinds } from '@/components/interfaces';
 
+export * from './interfaces';
+
 type ButtonProps = {
 	onClick?: () => void;
 	type?: 'submit' | 'button' | 'reset';
@@ -39,7 +41,7 @@ export function Button(props: ButtonProps) {
 }
 
 function getButtonContent(props: ButtonProps): React.ReactNode {
-	const { children, kind, green, disabled,  mini } = props;
+	const { children, kind, green, disabled, mini } = props;
 
 	let basicButtonContent: JSX.Element | null = null;
 

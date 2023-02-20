@@ -1,15 +1,17 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
-import { Button } from '@/components/Button';
-
-import { ButtonKinds } from '@/components/Button/interfaces';
+import { Button, ButtonKinds } from '@/components/Button';
 
 import styles from '@/pages/Landing/styles.module.scss';
 
 export function PresentationSection() {
 	const navigate = useNavigate();
 	const goToCreateCollectionPage = useCallback(() => navigate('/create-edition'), []);
+
+	const goToEditionDetailsPage = useCallback(() => navigate('/edition'), []);
+
+	const goToEditionsPage = useCallback(() => navigate('/editions'), []);
 
 	return (
 		<section className={styles.landingPresentationSection}>
@@ -25,9 +27,17 @@ export function PresentationSection() {
 						easier to build something remarkable.
 					</div>
 				</div>
-				<Button kind={ButtonKinds.basic} onClick={goToCreateCollectionPage}>
-					Create new collection
-				</Button>
+				<div>
+					<Button kind={ButtonKinds.basic} onClick={goToCreateCollectionPage}>
+						Create new collection
+					</Button>
+					<Button kind={ButtonKinds.basic} onClick={goToEditionDetailsPage}>
+						Edition details page
+					</Button>
+					<Button kind={ButtonKinds.basic} onClick={goToEditionsPage}>
+						Created editions page
+					</Button>
+				</div>
 			</div>
 		</section>
 	);

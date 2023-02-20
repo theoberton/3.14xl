@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import CollectionMenu from '@/pages/CreateCollection/CollectionMenu';
-import { Button } from '@/components';
-import { ButtonKinds } from '@/components/interfaces';
+import { Button, ButtonKinds } from '@/components';
 import styles from '@/pages/CreateCollection/styles.module.scss';
 import { navigate } from '@/helpers/navigation';
 

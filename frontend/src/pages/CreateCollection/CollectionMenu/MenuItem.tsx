@@ -1,6 +1,5 @@
-import { Button } from '@/components';
+import { Button, ButtonKinds } from '@/components';
 import styles from '@/pages/CreateCollection/styles.module.scss';
-import { ButtonKinds } from '@/components/interfaces';
 
 type MenuItemProps = {
 	title: string;

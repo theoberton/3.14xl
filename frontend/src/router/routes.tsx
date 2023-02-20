@@ -8,6 +8,7 @@ import {
 	LandingPage,
 	NotFound,
 	EditionDetailsPage,
+	CreatedEditionsPage,
 } from '@/pages';
 
 function ApplicationRoutes() {
@@ -18,6 +19,7 @@ function ApplicationRoutes() {
 					<Route index path="/" element={<LandingPage />} />
 					<Route element={<WalletLayout />}>
 						<Route path="/edition" element={<EditionDetailsPage />} />
+						<Route path="/editions" element={<CreatedEditionsPage />} />
 						<Route path="/create-edition" element={<CreateEdition />} />
 					</Route>
 				</Route>

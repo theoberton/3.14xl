@@ -1,8 +1,6 @@
 import styles from './styles.module.scss';
 
-import { Button } from '@/components/Button';
-
-import { ButtonKinds } from '@/components/Button/interfaces';
+import { Button, ButtonKinds } from '@/components/Button';
 
 function EditionDetails() {
 	return (

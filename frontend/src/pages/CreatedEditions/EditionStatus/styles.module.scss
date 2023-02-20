@@ -1,0 +1,29 @@
+@import '@/assets/styles/variables.scss';
+
+.status {
+	&Container {
+		padding: 10px 16px;
+		border-radius: 6px;
+		background-color: $black-two;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+
+		> div {
+			height: 5px;
+			width: 5px;
+			border-radius: 50%;
+			background-color: $green-one;
+
+			box-shadow: 0px 0px 2px 2px $green-one;
+		}
+
+		font-size: 14px;
+	}
+
+	&Ended {
+		color: $gray-one;
+	}
+}
