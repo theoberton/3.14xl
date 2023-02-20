@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: NftManager
-BOC Size: 968 bytes
+BOC Size: 1056 bytes
 
 # Types
-Total Types: 9
+Total Types: 10
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -30,8 +30,8 @@ TLB: `deploy_ok#aff90f57 queryId:uint64 = DeployOk`
 Signature: `DeployOk{queryId:uint64}`
 
 ## Mint
-TLB: `mint#00000001 query_id:uint64 item_index:uint64 amount:coins item_content:^cell = Mint`
-Signature: `Mint{query_id:uint64,item_index:uint64,amount:coins,item_content:^cell}`
+TLB: `mint#00000001 query_id:uint64 item_index:uint64 item_value:coins item_content:^cell = Mint`
+Signature: `Mint{query_id:uint64,item_index:uint64,item_value:coins,item_content:^cell}`
 
 ## MintSafe
 TLB: `mint_safe#c6159a72 query_id:uint64 next_item_index:uint64 item_owner:address = MintSafe`
@@ -41,9 +41,15 @@ Signature: `MintSafe{query_id:uint64,next_item_index:uint64,item_owner:address}`
 TLB: `set_nft_collection_address#19fc2d44 nft_collection_address:address = SetNftCollectionAddress`
 Signature: `SetNftCollectionAddress{nft_collection_address:address}`
 
+## ManagerData
+TLB: `_ owner:address debug:uint16 nft_collection_address:address mint_price:coins max_supply:int257 = ManagerData`
+Signature: `ManagerData{owner:address,debug:uint16,nft_collection_address:address,mint_price:coins,max_supply:int257}`
+
 # Get Methods
-Total Get Methods: 2
+Total Get Methods: 3
 
 ## nft_collection_address
+
+## get_manager_data
 
 ## owner

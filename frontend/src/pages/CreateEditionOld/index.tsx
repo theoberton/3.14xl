@@ -23,6 +23,7 @@ export type Params = {
 	symbol: string;
 	creatorAddress: string;
 	price: string;
+	maxSupply: string;
 }
 
 export const createEdition = async (tonConnectUI: TonConnectUI, params: Params) => {
@@ -49,11 +50,12 @@ export const createEdition = async (tonConnectUI: TonConnectUI, params: Params) 
 
 	const nftManagerParams = {
 		owner: Address.parse(params.creatorAddress),
-		seed: BigInt(Math.floor(Math.random() * 1000000)),
-		mintPrice: toNano(params.price)
+		seed: BigInt(Math.floor(Math.random() * 10000)),
+		mintPrice: toNano(params.price),
+		maxSupply: BigInt(params.maxSupply)
 	};
 	console.log(nftManagerParams);
-	const nftManagerContract = NftManager.fromInit(nftManagerParams.owner, nftManagerParams.seed, nftManagerParams.mintPrice);
+	const nftManagerContract = NftManager.fromInit(nftManagerParams.owner, nftManagerParams.seed, nftManagerParams.mintPrice, nftManagerParams.maxSupply);
 console.log(nftManagerContract);
 	/** Generate deploy link */
 	const nftCollection = new NftCollection(tonweb.provider, {
@@ -124,7 +126,8 @@ export function CreateEditionOld() {
 					image: collectionImageUrl,
 					symbol: '$OBER',
 					price: '0.05',
-					creatorAddress: address
+					creatorAddress: address,
+					maxSupply: '0'
 				})
 			}}>Create Edition</button>
 

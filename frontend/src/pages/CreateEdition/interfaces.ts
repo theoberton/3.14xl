@@ -14,6 +14,5 @@ export interface FormValues {
 		end: string | null;
 	};
 	price: string;
-	mintLimitPerAddress: string;
 	payoutAddress: string;
 }

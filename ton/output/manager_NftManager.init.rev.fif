@@ -3,20 +3,22 @@ SETCP0
   recv_internal: 
 
   4: 
-    s2 PUSH
-    s0 s4 XCHG
+    s3 PUSH
+    s0 s5 XCHG
     NEWC
     STREF
-    s0 s4 XCHG
-    s3 s3 XCHG2
-    s4 s3 XCHG2
+    s0 s5 XCHG
+    s4 s4 s4 XCHG3
+    s5 s4 XCHG2
     STSLICER
+    s1 s2 XCHG
+    16 STU
+    s0 s1 XCHG
+    STSLICER
+    ROT
+    STGRAMS
     257 PUSHINT
     STIX
-    ROT
-    STSLICER
-    s0 s1 XCHG
-    STGRAMS
     ENDC
 
   107886: 

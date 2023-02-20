@@ -109,11 +109,11 @@ cell __gen_writecell_DeployOk((int) v) inline_ref {
 }
 
 builder __gen_write_Mint(builder build_0, (int, int, int, cell) v) inline {
-    var (v'query_id, v'item_index, v'amount, v'item_content) = v;
+    var (v'query_id, v'item_index, v'item_value, v'item_content) = v;
     build_0 = store_uint(build_0, 1, 32);
     build_0 = build_0.store_uint(v'query_id, 64);
     build_0 = build_0.store_uint(v'item_index, 64);
-    build_0 = build_0.store_coins(v'amount);
+    build_0 = build_0.store_coins(v'item_value);
     build_0 = build_0.store_ref(v'item_content);
     return build_0;
 }
@@ -136,21 +136,23 @@ cell __gen_writecell_Mint((int, int, int, cell) v) inline_ref {
     return (sc_0, (v'nft_collection_address));
 }
 
-builder __gen_write_NftManager(builder build_0, (slice, int, slice, int) v) inline {
-    var (v'owner, v'seed, v'nft_collection_address, v'mint_price) = v;
+builder __gen_write_NftManager(builder build_0, (slice, int, slice, int, int) v) inline {
+    var (v'owner, v'debug, v'nft_collection_address, v'mint_price, v'max_supply) = v;
     build_0 = __tact_store_address(build_0, v'owner);
-    build_0 = build_0.store_int(v'seed, 257);
+    build_0 = build_0.store_uint(v'debug, 16);
     build_0 = __tact_store_address(build_0, v'nft_collection_address);
     build_0 = build_0.store_coins(v'mint_price);
+    build_0 = build_0.store_int(v'max_supply, 257);
     return build_0;
 }
 
-(slice, ((slice, int, slice, int))) __gen_read_NftManager(slice sc_0) inline {
+(slice, ((slice, int, slice, int, int))) __gen_read_NftManager(slice sc_0) inline {
     var v'owner = sc_0~__tact_load_address();
-    var v'seed = sc_0~load_int(257);
+    var v'debug = sc_0~load_uint(16);
     var v'nft_collection_address = sc_0~__tact_load_address();
     var v'mint_price = sc_0~load_coins();
-    return (sc_0, (v'owner, v'seed, v'nft_collection_address, v'mint_price));
+    var v'max_supply = sc_0~load_int(257);
+    return (sc_0, (v'owner, v'debug, v'nft_collection_address, v'mint_price, v'max_supply));
 }
 
 _ __gen_Context_get_sender((int, slice, int, slice) v) inline {
@@ -158,13 +160,18 @@ _ __gen_Context_get_sender((int, slice, int, slice) v) inline {
     return v'sender;
 }
 
-(slice, int, slice, int) __gen_load_NftManager() inline {
+(slice, int, slice, int, int) __gen_ManagerData_to_external(((slice, int, slice, int, int)) v) inline {
+    var (v'owner, v'debug, v'nft_collection_address, v'mint_price, v'max_supply) = v; 
+    return (v'owner, v'debug, v'nft_collection_address, v'mint_price, v'max_supply);
+}
+
+(slice, int, slice, int, int) __gen_load_NftManager() inline {
     slice sc = get_data().begin_parse();
     __tact_context_sys = sc~load_ref();
     return sc~__gen_read_NftManager();
 }
 
-() __gen_store_NftManager((slice, int, slice, int) v) impure inline {
+() __gen_store_NftManager((slice, int, slice, int, int) v) impure inline {
     builder b = begin_cell();
     b = b.store_ref(__tact_context_sys);
     b = __gen_write_NftManager(b, v);
@@ -233,8 +240,8 @@ cell $__gen_String_asComment(slice $self) impure inline_ref {
     return __tact_string_builder_end($b);
 }
 
-slice $__gen_NftManager_nft_collection_address((slice, int, slice, int) $self) impure inline_ref {
-    var (($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price)) = $self;
+slice $__gen_NftManager_nft_collection_address((slice, int, slice, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply)) = $self;
     return $self'nft_collection_address;
 }
 
@@ -244,14 +251,25 @@ _ $__gen_get_nft_collection_address() method_id(76510) {
     return res;
 }
 
-((slice, int, slice, int), ()) $__gen_NftManager_requireOwner((slice, int, slice, int) $self) impure inline_ref {
-    var (($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price)) = $self;
-    throw_unless(132, __tact_address_eq(__gen_Context_get_sender(__tact_context_get()), $self'owner));
-    return (($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price), ());
+(slice, int, slice, int, int) $__gen_NftManager_get_manager_data((slice, int, slice, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply)) = $self;
+    return ($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply);
 }
 
-slice $__gen_NftManager_owner((slice, int, slice, int) $self) impure inline_ref {
-    var (($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price)) = $self;
+_ $__gen_get_get_manager_data() method_id(92262) {
+    var self = __gen_load_NftManager();
+    var res = $__gen_NftManager_get_manager_data(self);
+    return __gen_ManagerData_to_external(res);
+}
+
+((slice, int, slice, int, int), ()) $__gen_NftManager_requireOwner((slice, int, slice, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply)) = $self;
+    throw_unless(132, __tact_address_eq(__gen_Context_get_sender(__tact_context_get()), $self'owner));
+    return (($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply), ());
+}
+
+slice $__gen_NftManager_owner((slice, int, slice, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply)) = $self;
     return $self'owner;
 }
 
@@ -261,31 +279,34 @@ _ $__gen_get_owner() method_id(83229) {
     return res;
 }
 
-(((slice, int, slice, int)), ()) $__gen_NftManager_receive_SetNftCollectionAddress((slice, int, slice, int) $self, (slice) $msg) impure inline {
-    var ($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price) = $self;
+(((slice, int, slice, int, int)), ()) $__gen_NftManager_receive_SetNftCollectionAddress((slice, int, slice, int, int) $self, (slice) $msg) impure inline {
+    var ($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply) = $self;
     var ($msg'nft_collection_address) = $msg;
-    ($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price)~$__gen_NftManager_requireOwner();
+    ($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply)~$__gen_NftManager_requireOwner();
     throw_unless(39618, __tact_address_eq($self'owner, $self'nft_collection_address));
     $self'nft_collection_address = $msg'nft_collection_address;
-    return (($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price), ());
+    return (($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply), ());
 }
 
-(((slice, int, slice, int)), ()) $__gen_NftManager_receive_MintSafe((slice, int, slice, int) $self, (int, int, slice) $msg) impure inline {
-    var ($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price) = $self;
+(((slice, int, slice, int, int)), ()) $__gen_NftManager_receive_MintSafe((slice, int, slice, int, int) $self, (int, int, slice) $msg) impure inline {
+    var ($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply) = $self;
     var ($msg'query_id, $msg'next_item_index, $msg'item_owner) = $msg;
     var ($ctx'bounced, $ctx'sender, $ctx'value, $ctx'raw) = __tact_context_get();
     cell $item_content = end_cell(store_ref(__tact_store_address(begin_cell(), $msg'item_owner), $emptyCell()));
-    throw_unless(13674, ($ctx'value > ($self'mint_price + 50000000)));
-    $send((false, $self'owner, $self'mint_price, 2, $__gen_String_asComment(__gen_str_3884301487()), null(), null()));
-    $send((false, $self'nft_collection_address, 0, 64, __gen_writecell_Mint(($msg'query_id, $msg'next_item_index, $ctx'value, $item_content)), null(), null()));
-    return (($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price), ());
+    throw_unless(13674, ($ctx'value >= ($self'mint_price + 200000000)));
+    if (($self'max_supply > 0)) {
+        throw_unless(47714, ($msg'next_item_index < $self'max_supply));
+    }
+    $send((true, $self'owner, $self'mint_price, 1, $__gen_String_asComment(__gen_str_3884301487()), null(), null()));
+    $send((true, $self'nft_collection_address, 50000000, 1, __gen_writecell_Mint(($msg'query_id, $msg'next_item_index, 20000000, $item_content)), null(), null()));
+    return (($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply), ());
 }
 
-(((slice, int, slice, int)), ()) $__gen_NftManager_receive_Deploy((slice, int, slice, int) $self, (int) $deploy) impure inline {
-    var ($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price) = $self;
+(((slice, int, slice, int, int)), ()) $__gen_NftManager_receive_Deploy((slice, int, slice, int, int) $self, (int) $deploy) impure inline {
+    var ($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply) = $self;
     var ($deploy'queryId) = $deploy;
     $reply(__gen_writecell_DeployOk(($deploy'queryId)));
-    return (($self'owner, $self'seed, $self'nft_collection_address, $self'mint_price), ());
+    return (($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply), ());
 }
 
 
@@ -346,5 +367,5 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() {
-    return "ipfs://Qme76F1TpWNr96Y6r8AkF3zgKhdaRGL8P6oMXWK5ex8pjN";
+    return "ipfs://QmQAGPqsGgGicr3HVXRAxEu2aHuN58cgPSoMrirKotcEzA";
 }

@@ -4,7 +4,7 @@ import "@stdlib/deploy";
 message(0x1) Mint {
   query_id: Int as uint64;
   item_index: Int as uint64;
-  amount: Int as coins;
+  item_value: Int as coins;
   item_content: Cell;
 }
 
@@ -18,23 +18,30 @@ message SetNftCollectionAddress {
   nft_collection_address: Address;
 }
 
-contract NftManager with Deployable, Ownable {
+struct ManagerData {
   owner: Address;
-  seed: Int;
+  debug: Int as uint16;
   nft_collection_address: Address;
   mint_price: Int as coins;
+  max_supply: Int;
+}
 
-  // price: Int;
+contract NftManager with Deployable, Ownable {
+  owner: Address;
+  debug: Int as uint16;
+  nft_collection_address: Address;
+  mint_price: Int as coins;
+  max_supply: Int;
+
   // datetime_start: Int;
   // datetime_end: Int;
-  // total_supply: Int;
-  // max_supply: Int;
 
-  init(owner: Address, seed: Int, mint_price: Int) {
+  init(owner: Address, debug: Int, mint_price: Int, max_supply: Int) {
     self.owner = owner;
-    self.seed = seed;
+    self.debug = debug;
     self.nft_collection_address = owner;
     self.mint_price = mint_price;
+    self.max_supply = max_supply;
   }
 
   receive(msg: SetNftCollectionAddress) {
@@ -49,25 +56,27 @@ contract NftManager with Deployable, Ownable {
     let ctx: Context = context();
     let item_content: Cell = beginCell().storeAddress(msg.item_owner).storeRef(emptyCell()).endCell();
 
-    require(ctx.value > self.mint_price + ton("0.05"), "Insufficient amount sent");
+    require(ctx.value >= self.mint_price + ton("0.2"), "Insufficient amount sent");
+
+    if (self.max_supply > 0) {
+      require(msg.next_item_index < self.max_supply, "Max supply reached");
+    }
 
     send(SendParameters{
       to: self.owner,
       value: self.mint_price,
-      mode: SendIgnoreErrors,
-      bounce: false,
+      mode: SendPayGasSeparately,
       body: "NFT item minted".asComment()
     });
 
     send(SendParameters{
       to: self.nft_collection_address,
-      value: 0,
-      mode: 64,
-      bounce: false,
+      value: ton("0.05"),
+      mode: SendPayGasSeparately,
       body: Mint {
         query_id: msg.query_id,
         item_index: msg.next_item_index,
-        amount: ctx.value,
+        item_value: ton("0.02"),
         item_content: item_content
       }.toCell()
     });
@@ -75,5 +84,15 @@ contract NftManager with Deployable, Ownable {
 
   get fun nft_collection_address(): Address {
     return self.nft_collection_address;
+  }
+
+  get fun get_manager_data(): ManagerData {
+    return ManagerData{
+      owner: self.owner,
+      debug: self.debug,
+      nft_collection_address: self.nft_collection_address,
+      mint_price: self.mint_price,
+      max_supply: self.max_supply
+    };
   }
 }

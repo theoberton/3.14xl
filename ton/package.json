@@ -5,7 +5,8 @@
   "author": "Oberton",
   "license": "MIT",
   "scripts": {
-    "build": "tact --config ./tact.config.json",
+    "build": "tact --config ./tact.config.json && yarn after-build",
+    "after-build": "ts-node scripts/manager.update-test-wrapper.ts",
     "test": "jest",
     "deploy": "blueprint run"
   },

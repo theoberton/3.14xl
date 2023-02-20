@@ -295,7 +295,7 @@ export type Mint = {
     $$type: 'Mint';
     query_id: bigint;
     item_index: bigint;
-    amount: bigint;
+    item_value: bigint;
     item_content: Cell;
 }
 
@@ -305,7 +305,7 @@ export function storeMint(src: Mint) {
         b_0.storeUint(1, 32);
         b_0.storeUint(src.query_id, 64);
         b_0.storeUint(src.item_index, 64);
-        b_0.storeCoins(src.amount);
+        b_0.storeCoins(src.item_value);
         b_0.storeRef(src.item_content);
     };
 }
@@ -315,24 +315,24 @@ export function loadMint(slice: Slice) {
     if (sc_0.loadUint(32) !== 1) { throw Error('Invalid prefix'); }
     let _query_id = sc_0.loadUintBig(64);
     let _item_index = sc_0.loadUintBig(64);
-    let _amount = sc_0.loadCoins();
+    let _item_value = sc_0.loadCoins();
     let _item_content = sc_0.loadRef();
-    return { $$type: 'Mint' as const, query_id: _query_id, item_index: _item_index, amount: _amount, item_content: _item_content };
+    return { $$type: 'Mint' as const, query_id: _query_id, item_index: _item_index, item_value: _item_value, item_content: _item_content };
 }
 
 function loadTupleMint(source: TupleReader) {
     let _query_id = source.readBigNumber();
     let _item_index = source.readBigNumber();
-    let _amount = source.readBigNumber();
+    let _item_value = source.readBigNumber();
     let _item_content = source.readCell();
-    return { $$type: 'Mint' as const, query_id: _query_id, item_index: _item_index, amount: _amount, item_content: _item_content };
+    return { $$type: 'Mint' as const, query_id: _query_id, item_index: _item_index, item_value: _item_value, item_content: _item_content };
 }
 
 function storeTupleMint(source: Mint) {
     let builder = new TupleBuilder();
     builder.writeNumber(source.query_id);
     builder.writeNumber(source.item_index);
-    builder.writeNumber(source.amount);
+    builder.writeNumber(source.item_value);
     builder.writeCell(source.item_content);
     return builder.build();
 }
@@ -439,16 +439,79 @@ function dictValueParserSetNftCollectionAddress(): DictionaryValue<SetNftCollect
         }
     }
 }
-function NftManager_init(owner: Address, seed: bigint, mint_price: bigint) {
-    const __init = 'te6ccgEBBgEAOwABFP8A9KQT9LzyyAsBAgFiAgMCAs0EBQAJoUrd4AkAAdQAL9EQJkZgIoGagh54tAgIDngCxniwD9AWTA==';
-    const __code = 'te6ccgECGAEAA7wAART/APSkE/S88sgLAQIBYgIDA5bQcCHXScIflTAg1wsf3gLQ0wMBcbDAAZF/kXDiAfpAIlBmbwT4YQKRW+AgghAZ/C1EuuMCIIIQxhWacrrjAoIQlGqYtrrjAjDywIIEBQYCASASEwG2MO1E0NQB+GL6QAEBgQEB1wD6QAEB+gBVMGwUBNMfAYIQGfwtRLry4IH6QAExEDRBMFUw2zwjggCawgPHBRLy9EEwyPhCAcxVMFBDzxaBAQHPAFjPFgH6AsntVAcBqjDtRNDUAfhi+kABAYEBAdcA+kABAfoAVTBsFATTHwGCEMYVmnK68uCB0z/TP/pAAUMwMxBWEEUQNFjbPMj4QgHMVTBQQ88WgQEBzwBYzxYB+gLJ7VQIAprtRNDUAfhi+kABAYEBAdcA+kABAfoAVTBsFATTHwGCEJRqmLa68uCB0z8BMRA0QTDbPNs8yPhCAcxVMFBDzxaBAQHPAFjPFgH6AsntVA4PABz4QW8kECNfAyTHBfLghASK+EFvJDAxyDICzxbbPAHMyYE1aiWCCvrwgKBSMLzy9HByi/TkZUIGl0ZW0gbWludGVkjbPG1tLFFKRDTbPANwcFBDgEAGCQoQCwAEyMkBQshwAcsfbwABb4xtb4wB2zxvIgHJkyFus5YBbyJZzMnoMQwCFNs8JQNQRG1t2zwNEAC6INdKIddJlyDCACLCALGOSgNvIoB/Is8xqwKhBasCUVW2CCDCAJwgqgIV1xhQM88WQBTeWW8CU0GhwgCZyAFvAlBEoaoCjhIxM8IAmdQw0CDXSiHXSZJwIOLi6F8DACTIVTBxUAXLHxPLP8s/AfoCzMkAHMgBghCv+Q9XWMsfyz/JAST4QW8kECNfA38CcIBCWG1t2zwQAfbIcQHKAVAHAcoAcAHKAlAFzxZQA/oCcAHKaCNusyVus7GOTH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMyXMzMBcAHKAOIhbrMRADCcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wACASAUFQBxvd6ME4LnYerpZXPY9CdhzrJUKNs0E4TusalpWyPlmRadeW/vixHME4IGc6tPOK/OkoWA6wtxMj2UAT26re7UTQ1AH4YvpAAQGBAQHXAPpAAQH6AFUwbBTbPIFgE9uFHe1E0NQB+GL6QAEBgQEB1wD6QAEB+gBVMGwU2zyBcABhNfAwAEXwM=';
-    const __system = 'te6cckECGgEAA8YAAQHAAQEFoG0/AgEU/wD0pBP0vPLICwMCAWILBAIBIAYFAHG93owTgudh6ullc9j0J2HOslQo2zQThO6xqWlbI+WZFp15b++LEcwTggZzq084r86ShYDrC3EyPZQCASAJBwE9uFHe1E0NQB+GL6QAEBgQEB1wD6QAEB+gBVMGwU2zyAgABF8DAT26re7UTQ1AH4YvpAAQGBAQHXAPpAAQH6AFUwbBTbPICgAGE18DA5bQcCHXScIflTAg1wsf3gLQ0wMBcbDAAZF/kXDiAfpAIlBmbwT4YQKRW+AgghAZ/C1EuuMCIIIQxhWacrrjAoIQlGqYtrrjAjDywIIYDwwCmu1E0NQB+GL6QAEBgQEB1wD6QAEB+gBVMGwUBNMfAYIQlGqYtrry4IHTPwExEDRBMNs82zzI+EIBzFUwUEPPFoEBAc8AWM8WAfoCye1UDg0BJPhBbyQQI18DfwJwgEJYbW3bPBMAHMgBghCv+Q9XWMsfyz/JAaow7UTQ1AH4YvpAAQGBAQHXAPpAAQH6AFUwbBQE0x8BghDGFZpyuvLggdM/0z/6QAFDMDMQVhBFEDRY2zzI+EIBzFUwUEPPFoEBAc8AWM8WAfoCye1UEASK+EFvJDAxyDICzxbbPAHMyYE1aiWCCvrwgKBSMLzy9HByi/TkZUIGl0ZW0gbWludGVkjbPG1tLFFKRDTbPANwcFBDgEAGFxUTEQIU2zwlA1BEbW3bPBITACTIVTBxUAXLHxPLP8s/AfoCzMkB9shxAcoBUAcBygBwAcoCUAXPFlAD+gJwAcpoI26zJW6zsY5MfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzJczMwFwAcoA4iFusxQAMJx/AcoAASBu8tCAAcyVMXABygDiyQH7AAFCyHAByx9vAAFvjG1vjAHbPG8iAcmTIW6zlgFvIlnMyegxFgC6INdKIddJlyDCACLCALGOSgNvIoB/Is8xqwKhBasCUVW2CCDCAJwgqgIV1xhQM88WQBTeWW8CU0GhwgCZyAFvAlBEoaoCjhIxM8IAmdQw0CDXSiHXSZJwIOLi6F8DAATIyQG2MO1E0NQB+GL6QAEBgQEB1wD6QAEB+gBVMGwUBNMfAYIQGfwtRLry4IH6QAExEDRBMFUw2zwjggCawgPHBRLy9EEwyPhCAcxVMFBDzxaBAQHPAFjPFgH6AsntVBkAHPhBbyQQI18DJMcF8uCEHcFliQ==';
+export type ManagerData = {
+    $$type: 'ManagerData';
+    owner: Address;
+    debug: bigint;
+    nft_collection_address: Address;
+    mint_price: bigint;
+    max_supply: bigint;
+}
+
+export function storeManagerData(src: ManagerData) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeAddress(src.owner);
+        b_0.storeUint(src.debug, 16);
+        b_0.storeAddress(src.nft_collection_address);
+        b_0.storeCoins(src.mint_price);
+        b_0.storeInt(src.max_supply, 257);
+    };
+}
+
+export function loadManagerData(slice: Slice) {
+    let sc_0 = slice;
+    let _owner = sc_0.loadAddress();
+    let _debug = sc_0.loadUintBig(16);
+    let _nft_collection_address = sc_0.loadAddress();
+    let _mint_price = sc_0.loadCoins();
+    let _max_supply = sc_0.loadIntBig(257);
+    return { $$type: 'ManagerData' as const, owner: _owner, debug: _debug, nft_collection_address: _nft_collection_address, mint_price: _mint_price, max_supply: _max_supply };
+}
+
+function loadTupleManagerData(source: TupleReader) {
+    let _owner = source.readAddress();
+    let _debug = source.readBigNumber();
+    let _nft_collection_address = source.readAddress();
+    let _mint_price = source.readBigNumber();
+    let _max_supply = source.readBigNumber();
+    return { $$type: 'ManagerData' as const, owner: _owner, debug: _debug, nft_collection_address: _nft_collection_address, mint_price: _mint_price, max_supply: _max_supply };
+}
+
+function storeTupleManagerData(source: ManagerData) {
+    let builder = new TupleBuilder();
+    builder.writeAddress(source.owner);
+    builder.writeNumber(source.debug);
+    builder.writeAddress(source.nft_collection_address);
+    builder.writeNumber(source.mint_price);
+    builder.writeNumber(source.max_supply);
+    return builder.build();
+}
+
+function dictValueParserManagerData(): DictionaryValue<ManagerData> {
+    return {
+        serialize: (src, buidler) => {
+            buidler.storeRef(beginCell().store(storeManagerData(src)).endCell());
+        },
+        parse: (src) => {
+            return loadManagerData(src.loadRef().beginParse());
+        }
+    }
+}
+async function NftManager_init(owner: Address, debug: bigint, mint_price: bigint, max_supply: bigint) {
+    const __code = 'te6ccgECGgEABBQAART/APSkE/S88sgLAQIBYgIDA5bQcCHXScIflTAg1wsf3gLQ0wMBcbDAAZF/kXDiAfpAIlBmbwT4YQKRW+AgghAZ/C1EuuMCIIIQxhWacrrjAoIQlGqYtrrjAjDywIIEBQYCASASEwHIMO1E0NQB+GL6QAEB0w/6QAEB+gCBAQHXAFVAbBUF0x8BghAZ/C1EuvLggfpAATEQRRA0QTBVQNs8JIIAmsIExwUT8vQQNEMAyPhCAcxVQFBUzxYSyw8BzxZY+gKBAQHPAMntVAcBuDDtRNDUAfhi+kABAdMP+kABAfoAgQEB1wBVQGwVBdMfAYIQxhWacrry4IHTP9M/+kABQzAzEGcQVhBFEDRY2zzI+EIBzFVAUFTPFhLLDwHPFlj6AoEBAc8Aye1UCAKo7UTQ1AH4YvpAAQHTD/pAAQH6AIEBAdcAVUBsFQXTHwGCEJRqmLa68uCB0z8BMRBFEDRBMNs82zzI+EIBzFVAUFTPFhLLDwHPFlj6AoEBAc8Aye1UDg8AHPhBbyQQI18DJccF8uCEBLj4QW8kMDHIMgLPFts8AczJgTVqJoIQC+vCAKATvhLy9CPCAJmCALpiUyS58vTef3GL9ORlQgaXRlbSBtaW50ZWSNs8bW0sUUpENNs8f4IK+vCAUENxggkxLQBQBAkKEAsABMjJAULIcAHLH28AAW+MbW+MAds8byIByZMhbrOWAW8iWczJ6DEMAhLbPCZVIG1t2zwNEAC6INdKIddJlyDCACLCALGOSgNvIoB/Is8xqwKhBasCUVW2CCDCAJwgqgIV1xhQM88WQBTeWW8CU0GhwgCZyAFvAlBEoaoCjhIxM8IAmdQw0CDXSiHXSZJwIOLi6F8DACTIVTBxUAXLHxPLP8s/AfoCzMkAHMgBghCv+Q9XWMsfyz/JAST4QW8kECNfA38CcIBCWG1t2zwQAfbIcQHKAVAHAcoAcAHKAlAFzxZQA/oCcAHKaCNusyVus7GOTH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMyXMzMBcAHKAOIhbrMRADCcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wACASAUFQBxvd6ME4LnYerpZXPY9CdhzrJUKNs0E4TusalpWyPlmRadeW/vixHME4IGc6tPOK/OkoWA6wtxMj2UAUG6re7UTQ1AH4YvpAAQHTD/pAAQH6AIEBAdcAVUBsFds8gWAgEgFxgACBAkXwQBQbSjvaiaGoA/DF9IACA6Yf9IACA/QBAgIDrgCqgNgrtnkBkAPbUM3aiaGoA/DF9IACA6Yf9IACA/QBAgIDrgCqgNgrAABF8E';
+    const __system = 'te6cckECHAEABB4AAQHAAQEFoG0/AgEU/wD0pBP0vPLICwMCAWINBAIBIAYFAHG93owTgudh6ullc9j0J2HOslQo2zQThO6xqWlbI+WZFp15b++LEcwTggZzq084r86ShYDrC3EyPZQCASALBwIBIAkIAD21DN2omhqAPwxfSAAgOmH/SAAgP0AQICA64AqoDYKwAUG0o72omhqAPwxfSAAgOmH/SAAgP0AQICA64AqoDYK7Z5AKAARfBAFBuq3u1E0NQB+GL6QAEB0w/6QAEB+gCBAQHXAFVAbBXbPIDAAIECRfBAOW0HAh10nCH5UwINcLH94C0NMDAXGwwAGRf5Fw4gH6QCJQZm8E+GECkVvgIIIQGfwtRLrjAiCCEMYVmnK64wKCEJRqmLa64wIw8sCCGhEOAqjtRNDUAfhi+kABAdMP+kABAfoAgQEB1wBVQGwVBdMfAYIQlGqYtrry4IHTPwExEEUQNEEw2zzbPMj4QgHMVUBQVM8WEssPAc8WWPoCgQEBzwDJ7VQQDwEk+EFvJBAjXwN/AnCAQlhtbds8FQAcyAGCEK/5D1dYyx/LP8kBuDDtRNDUAfhi+kABAdMP+kABAfoAgQEB1wBVQGwVBdMfAYIQxhWacrry4IHTP9M/+kABQzAzEGcQVhBFEDRY2zzI+EIBzFVAUFTPFhLLDwHPFlj6AoEBAc8Aye1UEgS4+EFvJDAxyDICzxbbPAHMyYE1aiaCEAvrwgCgE74S8vQjwgCZggC6YlMkufL03n9xi/TkZUIGl0ZW0gbWludGVkjbPG1tLFFKRDTbPH+CCvrwgFBDcYIJMS0AUAQZFxUTAhLbPCZVIG1t2zwUFQAkyFUwcVAFyx8Tyz/LPwH6AszJAfbIcQHKAVAHAcoAcAHKAlAFzxZQA/oCcAHKaCNusyVus7GOTH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMyXMzMBcAHKAOIhbrMWADCcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wABQshwAcsfbwABb4xtb4wB2zxvIgHJkyFus5YBbyJZzMnoMRgAuiDXSiHXSZcgwgAiwgCxjkoDbyKAfyLPMasCoQWrAlFVtgggwgCcIKoCFdcYUDPPFkAU3llvAlNBocIAmcgBbwJQRKGqAo4SMTPCAJnUMNAg10oh10mScCDi4uhfAwAEyMkByDDtRNDUAfhi+kABAdMP+kABAfoAgQEB1wBVQGwVBdMfAYIQGfwtRLry4IH6QAExEEUQNEEwVUDbPCSCAJrCBMcFE/L0EDRDAMj4QgHMVUBQVM8WEssPAc8WWPoCgQEBzwDJ7VQbABz4QW8kECNfAyXHBfLghBdab7A=';
     let systemCell = Cell.fromBase64(__system);
-
     let codeCell = Cell.fromBoc(Buffer.from(__code, 'base64'))[0];
-
-    console.log(codeCell);
-    let data = beginCell().storeRef(systemCell).storeAddress(owner).storeInt(seed, 257).storeAddress(owner).storeCoins(mint_price).endCell();
+    
+    let data = beginCell()
+        .storeRef(systemCell)
+        .storeAddress(owner)
+        .storeInt(debug ?? Math.floor(Math.random() * 10000), 16)
+        .storeAddress(owner)
+        .storeCoins(mint_price)
+        .storeInt(max_supply ?? 0, 257)
+        .endCell();
     return { code: codeCell, data };
 }
 
@@ -478,16 +541,17 @@ const NftManager_errors: { [key: number]: { message: string } } = {
     136: { message: `Invalid address` },
     13674: { message: `Insufficient amount sent` },
     39618: { message: `NFT Manager Already Initialized` },
+    47714: { message: `Max supply reached` },
 }
 
 export class NftManager implements Contract {
     
-    static init(owner: Address, seed: bigint, mint_price: bigint) {
-        return NftManager_init(owner,seed,mint_price);
+    static async init(owner: Address, debug: bigint, mint_price: bigint, max_supply: bigint) {
+        return await NftManager_init(owner,debug,mint_price,max_supply);
     }
     
-    static fromInit(owner: Address, seed: bigint, mint_price: bigint) {
-        const init = NftManager_init(owner,seed,mint_price);
+    static async fromInit(owner: Address, debug: bigint, mint_price: bigint, max_supply: bigint) {
+        const init = await NftManager_init(owner,debug,mint_price,max_supply);
         const address = contractAddress(0, init);
         return new NftManager(address, init);
     }
@@ -529,6 +593,13 @@ export class NftManager implements Contract {
         let builder = new TupleBuilder();
         let source = (await provider.get('nft_collection_address', builder.build())).stack;
         let result = source.readAddress();
+        return result;
+    }
+    
+    async getGetManagerData(provider: ContractProvider) {
+        let builder = new TupleBuilder();
+        let source = (await provider.get('get_manager_data', builder.build())).stack;
+        const result = loadTupleManagerData(source);
         return result;
     }
     
