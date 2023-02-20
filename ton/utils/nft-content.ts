@@ -1,4 +1,4 @@
-import { Cell, beginCell } from "ton";
+import { Cell, beginCell } from "ton-core";
 
 const OFF_CHAIN_CONTENT_PREFIX = 0x01;
 
@@ -54,7 +54,7 @@ export function encodeOffChainContent(content: string) {
   return makeSnakeCell(data);
 }
 
-export function decodeOffChainContent(content: Cell) {
+export function decodeOffChainContent(content: Cell): string {
   let data = flattenSnakeCell(content);
 
   let prefix = data[0];
