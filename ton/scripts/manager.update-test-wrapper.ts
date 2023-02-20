@@ -7,7 +7,7 @@ function main() {
   const system = tactOutput.toString().match(/__system = '(.*?)';/)?.[1];
   const code = tactOutput.toString().match(/__code = '(.*?)';/)?.[1];
 
-  const outputFileName = "./ton-community-sandbox/contracts/NftManager.ts";
+  const outputFileName = "./../wrappers/NftManager";
   const output = fs.readFileSync(outputFileName).toString();
 
   const modifiedOutput = output
