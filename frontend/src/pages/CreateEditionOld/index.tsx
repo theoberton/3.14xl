@@ -109,7 +109,6 @@ export function CreateEditionOld() {
 	const [tonConnectUI] = useTonConnectUI();
 	const [file, setFile] = useState<File | null>();
 
-
 	return (
 		<div>
 			<button onClick={async () => {

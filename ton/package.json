@@ -8,7 +8,9 @@
     "build": "tact --config ./tact.config.json && yarn after-build",
     "after-build": "ts-node scripts/manager.update-test-wrapper.ts",
     "test": "jest",
-    "deploy": "blueprint run"
+    "deploy": "blueprint run",
+    "format": "prettier --write .",
+    "compile": "./contracts/nft-item.fc"
   },
   "dependencies": {
     "@jest/types": "^29.4.3",
