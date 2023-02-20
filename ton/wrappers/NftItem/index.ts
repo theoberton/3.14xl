@@ -10,7 +10,7 @@ import {
   SendMode,
 } from "ton-core";
 import { decodeOffChainContent } from "../../utils/nft-content";
-import { RoyaltyParams, BaseTransactionArgs, NftDataResponse, NftInitItemData, NftItemData } from "./../types";
+import { BaseTransactionArgs, NftDataResponse, NftItemData } from "./../types";
 import { Queries, buildNftItemInitilizedDataCell} from "./helpers";
 
 

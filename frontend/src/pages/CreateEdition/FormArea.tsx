@@ -31,9 +31,8 @@ function FormArea() {
 				<Input
 					label={'Price'}
 					name="price"
-					type="text"
-					// type="number"
-					// min={0.000000001}
+					type="number"
+					min={0.000000001}
 					placeholder="0.01"
 					units="TON"
 				/>
