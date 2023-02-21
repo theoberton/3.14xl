@@ -28,6 +28,11 @@ input[type='number'] {
 	}
 }
 
+img {
+	user-select: none;
+	-webkit-user-drag: none;
+}
+
 a {
 	text-decoration: none;
 	color: inherit;

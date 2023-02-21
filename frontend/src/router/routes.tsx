@@ -9,6 +9,7 @@ import {
 	NotFound,
 	EditionDetailsPage,
 	ExplorePage,
+	MintedEditionsPage,
 } from '@/pages';
 
 function ApplicationRoutes() {
@@ -19,6 +20,7 @@ function ApplicationRoutes() {
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/edition/:collectionAddress" element={<EditionDetailsPage />} />
 					<Route path="/explore" element={<ExplorePage />} />
+					<Route path="/minted" element={<MintedEditionsPage />} />
 					<Route path="/create-edition" element={<CreateEdition />} />
 				</Route>
 				<Route path="/create-collection" element={<CreateCollection />} />

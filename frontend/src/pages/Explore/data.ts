@@ -1,22 +1,12 @@
 import FishImg from '../../assets/images/png/examples/fish.png';
-import HelloImg from '../../assets/images/png/examples/hello.png';
 import CloudImg from '../../assets/images/png/examples/cloud.png';
 import FlowerImg from '../../assets/images/png/examples/flower.png';
 import EyesImg from '../../assets/images/png/examples/eyes.png';
 import GlitchImg from '../../assets/images/png/examples/glitch.png';
 
-export interface IExampleItem {
-	name: string;
-	minter: string;
-	img: string;
-	isActive: boolean;
-	price: number;
-	minted: number;
-	limit: number | null;
-	collectionAddress?: string;
-}
+import { IEditionExampleItem } from '@/components/EditionCard/interface';
 
-export const exampleData: IExampleItem[] = [
+export const exampleData: IEditionExampleItem[] = [
 	{
 		name: 'Hello Pixel',
 		minter: 'EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx',
@@ -25,7 +15,7 @@ export const exampleData: IExampleItem[] = [
 		price: 0.1,
 		minted: 3,
 		limit: 10,
-		collectionAddress: 'EQA8kiQ7f0yVAyuemn16UYxUCJBOR4DnzrNzVCIRuMbyXeuk'
+		collectionAddress: 'EQA8kiQ7f0yVAyuemn16UYxUCJBOR4DnzrNzVCIRuMbyXeuk',
 	},
 	{
 		name: 'Fish',

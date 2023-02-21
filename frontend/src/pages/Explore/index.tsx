@@ -1,8 +1,8 @@
 import EditionsHeader from './Header';
+import { EditionCard } from '@/components';
 import styles from './styles.module.scss';
 
 import { exampleData } from './data';
-import EditionItem from './EditionItem';
 
 export function ExplorePage() {
 	return (
@@ -10,7 +10,9 @@ export function ExplorePage() {
 			<EditionsHeader />
 			<div className={styles.editionsShowCase}>
 				{exampleData &&
-					exampleData.map(edition => <EditionItem edition={edition} key={edition.name} />)}
+					exampleData.map(edition => (
+						<EditionCard edition={edition} key={edition.name + edition.minter} />
+					))}
 			</div>
 		</div>
 	);

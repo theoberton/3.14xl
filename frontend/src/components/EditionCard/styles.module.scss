@@ -1,0 +1,39 @@
+@import '@/assets/styles/variables.scss';
+
+.editionCard {
+	padding: 20px;
+	border-radius: 8px;
+	border: 1px solid $gray-eleven;
+	font-weight: 100;
+
+	cursor: pointer;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	gap: 20px;
+
+	> div {
+		width: 100%;
+	}
+
+	&Header,
+	&Info {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&Info {
+		color: $gray-one;
+	}
+
+	&Preview {
+		img {
+			aspect-ratio: 1;
+			width: 100%;
+			max-width: 100%;
+		}
+	}
+}

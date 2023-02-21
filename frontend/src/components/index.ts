@@ -9,3 +9,4 @@ export * from './PrivateRoute';
 export * from './Loader';
 export * from './TextArea';
 export * from './Label';
+export * from './EditionCard';

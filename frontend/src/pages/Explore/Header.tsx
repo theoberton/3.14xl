@@ -6,13 +6,20 @@ import styles from './styles.module.scss';
 function EditionsHeader() {
 	const navigate = useNavigate();
 	const goToCreateEditionPage = useCallback(() => navigate('/create-edition'), []);
+	const goToMintedEditionsPage = useCallback(() => navigate('/minted'), []);
 
 	return (
 		<div className={styles.editionsHeader}>
 			<h1>Created editions</h1>
-			<Button kind={ButtonKinds.basic} onClick={goToCreateEditionPage}>
-				Create new edition
-			</Button>
+
+			<div>
+				<Button kind={ButtonKinds.basic} onClick={goToMintedEditionsPage}>
+					Minted editions
+				</Button>
+				<Button kind={ButtonKinds.basic} onClick={goToCreateEditionPage}>
+					Create new edition
+				</Button>
+			</div>
 		</div>
 	);
 }
