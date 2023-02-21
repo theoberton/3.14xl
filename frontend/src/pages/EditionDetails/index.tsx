@@ -13,7 +13,7 @@ const tonweb = new TonWeb(
 	})
 );
 
-export function EditionDetailsPage() {
+export default function EditionDetailsPage() {
 	const { collectionAddress } = useParams();
 
 	const collectionDataAsync = useAsync(async () => {

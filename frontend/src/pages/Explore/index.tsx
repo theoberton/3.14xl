@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 
 import { exampleData } from './data';
 
-export function ExplorePage() {
+export default function ExplorePage() {
 	return (
 		<div className={styles.editionsContainer}>
 			<EditionsHeader />

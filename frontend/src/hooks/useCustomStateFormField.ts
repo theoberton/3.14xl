@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import _ from 'lodash';
+import get from 'lodash/get';
+import upperFirst from 'lodash/upperFirst';
 import { useFormikContext, useField } from 'formik';
 
 export const useCustomStateFormField = (fieldName: string) => {
@@ -19,19 +20,19 @@ export const useCustomStateFormField = (fieldName: string) => {
 	const getError = (): string | null => {
 		if (!field.name) return null;
 
-		const isTouched = touched && _.get(touched, field.name);
+		const isTouched = touched && get(touched, field.name);
 
 		let error = null;
 
-		if (isTouched && errors && _.get(errors, field.name)) {
-			error = _.get(errors, field.name);
+		if (isTouched && errors && get(errors, field.name)) {
+			error = get(errors, field.name);
 
 			if (status) {
 				setStatus(null);
 			}
 		}
 
-		return _.upperFirst(error);
+		return upperFirst(error);
 	};
 
 	const onBlur = () => {
