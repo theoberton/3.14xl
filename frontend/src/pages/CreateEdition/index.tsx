@@ -7,7 +7,7 @@ import { navigate } from '@/helpers/navigation';
 
 import Form from '@/pages/CreateEdition/Form';
 
-export function CreateEdition() {
+export default function CreateEdition() {
 	const goToLandingPage = useCallback(() => navigate('/'), []);
 
 	return <Form />;

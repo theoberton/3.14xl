@@ -4,7 +4,7 @@ import { Button, ButtonKinds } from '@/components';
 import styles from '@/pages/CreateCollection/styles.module.scss';
 import { navigate } from '@/helpers/navigation';
 
-export function CreateCollection() {
+export default function CreateCollection() {
 	const goToLandingPage = useCallback(() => navigate('/'), []);
 
 	return (

@@ -8,7 +8,7 @@ import { exampleData } from './data';
 
 import styles from './styles.module.scss';
 
-export function MintedEditionsPage() {
+export default function MintedEditionsPage() {
 	const navigate = useNavigate();
 	const goToMintedEditionsPage = useCallback(() => navigate('/explore'), []);
 	const goToCreateEditionPage = useCallback(() => navigate('/create-edition'), []);

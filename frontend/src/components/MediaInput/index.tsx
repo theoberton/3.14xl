@@ -1,6 +1,5 @@
 import { useField, useFormikContext } from 'formik';
 import { useRef, useCallback, ChangeEvent, useState } from 'react';
-import _ from 'lodash';
 import classNames from 'classnames';
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 import crossIcon from '@/assets/images/svg/common/crossIcon.svg';
