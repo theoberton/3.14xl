@@ -1,15 +1,25 @@
+import { ThirdwebStorage } from '@thirdweb-dev/storage';
+import { CollectionData } from 'tonweb';
 import styles from './styles.module.scss';
-import SampleImg from '../../assets/images/png/examples/fish.png';
+import { addressFilter } from '@/helpers';
+import { CollectionContent } from '../CreateEditionOld/index';
 
-function EditionPreview() {
+const thirdwebStorage = new ThirdwebStorage();
+
+function EditionPreview({
+	content,
+}: {
+	collectionData: CollectionData;
+	content: CollectionContent;
+}) {
 	return (
 		<div className={styles.editionDetailsPreview}>
 			<div className={styles.editionDetailsPreviewImage}>
-				<img src={SampleImg} />
+				<img src={thirdwebStorage.resolveScheme(content.image)} />
 			</div>
 			<div className={styles.editionDetailsPreviewInfo}>
-				<p>MINTER: </p>
-				<div>sample text</div>
+				<p>Creator: </p>
+				<div>{addressFilter(content.feeRecipient)}</div>
 			</div>
 		</div>
 	);

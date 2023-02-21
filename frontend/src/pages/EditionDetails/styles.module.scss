@@ -83,13 +83,12 @@
 			font-weight: lighter;
 		}
 
-		&MintData {
+		&MintData {	
 			border: 1px solid $gray-eleven;
-			border-radius: 2px;
+			border-radius: 4px;
 
 			display: flex;
 			flex-direction: row;
-			justify-content: center;
 
 			&Block {
 				&:first-child {

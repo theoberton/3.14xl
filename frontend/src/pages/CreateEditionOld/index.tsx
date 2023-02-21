@@ -26,9 +26,19 @@ export type Params = {
 	maxSupply: string;
 }
 
+export type CollectionContent = {
+	name: string;
+	description: string;
+	image: string;
+	price: string;
+	maxSupply: string;
+	symbol: string;
+	feeRecipient: string;
+}
+
 export const createEdition = async (tonConnectUI: TonConnectUI, params: Params) => {
 	/** Upload collection metadata */
-	const content = {
+	const content: CollectionContent = {
 		name: params.name,
 		description: params.description,
 		image: params.image,
@@ -36,11 +46,12 @@ export const createEdition = async (tonConnectUI: TonConnectUI, params: Params) 
 		// seller_fee_basis_points: 100,
 		// fee_recipient: address,
 		price: params.price,
+		maxSupply: params.maxSupply,
 		symbol: params.symbol,
 		feeRecipient: params.creatorAddress,
 	};
 
-	const collectionContentUri = await storage.upload(content);
+	const collectionContentUri = await storage.upload(content, { uploadWithGatewayUrl: true });
 	const collectionContentUrl = storage.resolveScheme(collectionContentUri);
 
 	console.log(collectionContentUrl)
@@ -69,8 +80,8 @@ console.log(nftManagerContract);
 
 	console.log(nftCollection);
 
-	const nftCollectionAddress = await nftCollection.getAddress();
-	console.log('collection address=', nftCollectionAddress.toString(true, true, true));
+	const collectionAddress = (await nftCollection.getAddress()).toString(true, true, true);
+	console.log('collection address=', collectionAddress);
 
 	const stateInit = (await nftCollection.createStateInit()).stateInit;
 	const stateInitBoc = await stateInit.toBoc(false);
@@ -79,7 +90,7 @@ console.log(nftManagerContract);
 	const transaction = {
 		validUntil: Date.now() + 1000000,
 		messages: [{
-			address: nftCollectionAddress.toString(true, true, true),
+			address: collectionAddress,
 			amount: toNano('0.05').toString(),
 			stateInit: stateInitBase64,
 		}, {
@@ -87,21 +98,19 @@ console.log(nftManagerContract);
 			amount: toNano('0.05').toString(),
 			payload: beginCell().store(storeSetNftCollectionAddress({
 				$$type: 'SetNftCollectionAddress',
-				nft_collection_address: Address.parse(nftCollectionAddress.toString(true, true, true)),
+				nft_collection_address: Address.parse(collectionAddress),
 			})).endCell().toBoc().toString('base64'),
 			stateInit: beginCell().storeWritable(storeStateInit(nftManagerContract.init!)).endCell().toBoc().toString('base64'),
 		}]
 	};
 
-	try {
-		const result = await tonConnectUI.sendTransaction(transaction);
-		console.log(result)
-		// you can use signed boc to find the transaction 
-		// const someTxData = await myAppExplorerService.getTransaction(result.boc);
-		// alert('Transaction was sent successfully', someTxData);
-	} catch (e) {
-			console.error(e);
-	}
+	const result = await tonConnectUI.sendTransaction(transaction);
+	console.log(result)
+	// you can use signed boc to find the transaction 
+	// const someTxData = await myAppExplorerService.getTransaction(result.boc);
+	// alert('Transaction was sent successfully', someTxData);
+
+	return { collectionAddress }
 };
 
 export function CreateEditionOld() {

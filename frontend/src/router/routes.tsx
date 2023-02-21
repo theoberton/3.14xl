@@ -1,6 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
-import { PageContainer, WalletLayout } from '@/layouts';
+import { PageContainer } from '@/layouts';
 
 import {
 	CreateEdition,
@@ -17,7 +17,7 @@ function ApplicationRoutes() {
 			<Routes>
 				<Route element={<PageContainer />}>
 					<Route path="/" element={<LandingPage />} />
-					<Route path="/edition" element={<EditionDetailsPage />} />
+					<Route path="/edition/:collectionAddress" element={<EditionDetailsPage />} />
 					<Route path="/editions" element={<CreatedEditionsPage />} />
 					<Route path="/create-edition" element={<CreateEdition />} />
 				</Route>
