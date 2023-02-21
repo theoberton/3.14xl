@@ -8,10 +8,7 @@ import styles from '@/pages/Landing/styles.module.scss';
 export function PresentationSection() {
 	const navigate = useNavigate();
 	const goToCreateCollectionPage = useCallback(() => navigate('/create-edition'), []);
-
-	const goToEditionDetailsPage = useCallback(() => navigate('/edition'), []);
-
-	const goToEditionsPage = useCallback(() => navigate('/editions'), []);
+	const goToExplorePage = useCallback(() => navigate('/explore'), []);
 
 	return (
 		<section className={styles.landingPresentationSection}>
@@ -31,11 +28,8 @@ export function PresentationSection() {
 					<Button kind={ButtonKinds.basic} onClick={goToCreateCollectionPage}>
 						Create new collection
 					</Button>
-					<Button kind={ButtonKinds.basic} onClick={goToEditionDetailsPage}>
-						Edition details page
-					</Button>
-					<Button kind={ButtonKinds.basic} onClick={goToEditionsPage}>
-						Created editions page
+					<Button kind={ButtonKinds.basic} onClick={goToExplorePage}>
+						Explore
 					</Button>
 				</div>
 			</div>

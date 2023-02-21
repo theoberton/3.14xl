@@ -13,9 +13,20 @@ export interface IExampleItem {
 	price: number;
 	minted: number;
 	limit: number | null;
+	collectionAddress?: string;
 }
 
 export const exampleData: IExampleItem[] = [
+	{
+		name: 'Hello Pixel',
+		minter: 'EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx',
+		img: 'https://gateway.ipfscdn.io/ipfs/QmdEPjAppgeNfN9K2RkPNA5S55ipw9y6qmoe17291zk9hM/hello.png',
+		isActive: true,
+		price: 0.1,
+		minted: 3,
+		limit: 10,
+		collectionAddress: 'EQA8kiQ7f0yVAyuemn16UYxUCJBOR4DnzrNzVCIRuMbyXeuk'
+	},
 	{
 		name: 'Fish',
 		minter: 'sample minter',
@@ -24,15 +35,6 @@ export const exampleData: IExampleItem[] = [
 		price: 0.07,
 		minted: 54321,
 		limit: null,
-	},
-	{
-		name: 'Hello',
-		minter: 'sample minter',
-		img: HelloImg,
-		isActive: true,
-		price: 0,
-		minted: 4321,
-		limit: 10000,
 	},
 	{
 		name: 'Cloud in the desert',

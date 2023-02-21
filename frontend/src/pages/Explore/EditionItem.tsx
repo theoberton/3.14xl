@@ -1,6 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import { IExampleItem } from './data';
 import EditionStatus from './EditionStatus/EditionStatus';
-
+import { addressFilter } from '@/helpers';
 import styles from './styles.module.scss';
 
 interface IProps {
@@ -8,12 +9,16 @@ interface IProps {
 }
 
 function EditionItem({ edition }: IProps) {
-	const { name, minter, img, isActive, limit, minted, price } = edition;
+	const navigate = useNavigate();
+	const { name, minter, img, isActive, limit, minted, price, collectionAddress } = edition;
 
 	return (
-		<div className={styles.editionsItem}>
+		<div className={styles.editionsItem} onClick={() => {
+			if (!collectionAddress) return alert('This is fake item 😋');
+			navigate(`/edition/${collectionAddress}`)
+		}}>
 			<div className={styles.editionsItemHeader}>
-				<p>{minter}</p>
+				<p>by {addressFilter(minter)}</p>
 				<EditionStatus isActive={isActive} />
 			</div>
 			<div className={styles.editionsItemPreview}>

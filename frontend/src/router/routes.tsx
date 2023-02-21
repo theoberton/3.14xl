@@ -8,7 +8,7 @@ import {
 	LandingPage,
 	NotFound,
 	EditionDetailsPage,
-	CreatedEditionsPage,
+	ExplorePage,
 } from '@/pages';
 
 function ApplicationRoutes() {
@@ -18,7 +18,7 @@ function ApplicationRoutes() {
 				<Route element={<PageContainer />}>
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/edition/:collectionAddress" element={<EditionDetailsPage />} />
-					<Route path="/editions" element={<CreatedEditionsPage />} />
+					<Route path="/explore" element={<ExplorePage />} />
 					<Route path="/create-edition" element={<CreateEdition />} />
 				</Route>
 				<Route path="/create-collection" element={<CreateCollection />} />
