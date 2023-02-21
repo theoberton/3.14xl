@@ -12,10 +12,8 @@
     "host": "vite --host"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/material": "^5.10.13",
-    "@mui/system": "^5.11.8",
     "@mui/x-date-pickers": "^5.0.18",
     "@orbs-network/ton-access": "^2.2.2",
     "@thirdweb-dev/storage": "^1.0.8",
