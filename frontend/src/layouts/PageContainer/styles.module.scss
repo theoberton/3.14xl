@@ -6,6 +6,8 @@
 	min-height: 100vh;
 	width: 100%;
 	background-color: $black-one;
+	position: relative;
+	overflow: hidden;
 
 	> * {
 		width: 100%;
