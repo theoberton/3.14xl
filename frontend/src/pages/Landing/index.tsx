@@ -1,7 +1,7 @@
 import { PresentationSection } from '@/pages/Landing/PresentationSection';
 import { Header } from '@/components';
-import CubeLeft from '@/assets/images/png/landing/CubeLeft.png';
-import CubeRight from '@/assets/images/png/landing/CubeRight.png';
+import CubeLeft from '@/assets/images/png/landing/CubeLeft-min.png';
+import CubeRight from '@/assets/images/png/landing/CubeRight-min.png';
 import styles from '@/pages/Landing/styles.module.scss';
 
 export function LandingPage() {
