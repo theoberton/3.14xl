@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { IEditionExampleItem } from './interface';
 import EditionStatus from './EditionStatus/EditionStatus';
 import { addressFilter } from '@/helpers';
@@ -9,15 +9,13 @@ interface IProps {
 }
 
 export function EditionCard({ edition }: IProps) {
-	const navigate = useNavigate();
 	const { name, minter, img, isActive, limit, minted, price, collectionAddress } = edition;
 
-	return (
+	const Card = (
 		<div
 			className={styles.editionCard}
 			onClick={() => {
-				if (!collectionAddress) return alert('This is fake item 😋');
-				navigate(`/edition/${collectionAddress}`);
+				if (!collectionAddress) return alert('This is a fake item 😋');
 			}}
 		>
 			<div className={styles.editionCardHeader}>
@@ -34,4 +32,6 @@ export function EditionCard({ edition }: IProps) {
 			</div>
 		</div>
 	);
+
+	return collectionAddress ? <Link to={`/edition/${collectionAddress}`}>{Card}</Link> : Card;
 }

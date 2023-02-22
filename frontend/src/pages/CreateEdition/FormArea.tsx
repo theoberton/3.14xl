@@ -14,7 +14,13 @@ function FormArea() {
 		<Form className={styles.createEdition}>
 			<div className={styles.createEditionActionTitleWrapper}>
 				<div className={styles.createEditionActionTitle}>Collection details</div>
-				<Button kind={ButtonKinds.basic} basicInverted mini type="reset">
+				<Button
+					componentType="button"
+					kind={ButtonKinds.basic}
+					basicInverted
+					mini
+					buttonType="reset"
+				>
 					Clear fields
 				</Button>
 			</div>
@@ -40,7 +46,13 @@ function FormArea() {
 				<ValidityPeriod />
 				<Input label={'Payout address'} name="payoutAddress" type="text" placeholder="Address" />
 				<div className={styles.createEditionSubmitButton}>
-					<Button type="submit" disabled={!isFormValid} expanded kind={ButtonKinds.basic}>
+					<Button
+						componentType="button"
+						buttonType="submit"
+						disabled={!isFormValid}
+						expanded
+						kind={ButtonKinds.basic}
+					>
 						Create edition
 					</Button>
 				</div>

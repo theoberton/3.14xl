@@ -3,24 +3,36 @@ import styles from '@/components/Button/styles.module.scss';
 import ArrowLeftIcon from '@/assets/images/svg/button/arrowLeft.svg';
 import ArrowRightIcon from '@/assets/images/svg/button/arrowRight.svg';
 import { ButtonKinds } from '@/components/interfaces';
+import { Link } from 'react-router-dom';
 
 export * from './interfaces';
 
-type ButtonProps = {
-	onClick?: () => void;
-	type?: 'submit' | 'button' | 'reset';
-	disabled?: boolean;
-	children?: React.ReactNode;
+interface CommonProps {
 	kind: ButtonKinds;
+	children?: React.ReactNode;
 	icon?: string;
 	green?: boolean;
 	expanded?: boolean;
 	basicInverted?: boolean;
 	mini?: boolean;
-};
+	disabled?: boolean;
+}
 
-export function Button(props: ButtonProps) {
-	const { type = 'button', onClick, disabled, expanded = false, basicInverted, kind, mini } = props;
+interface ButtonProps extends CommonProps {
+	componentType: 'button';
+	buttonType?: 'submit' | 'button' | 'reset';
+	onClick?: () => void;
+}
+
+interface LinkProps extends CommonProps {
+	componentType: 'link';
+	to: string;
+}
+
+type IProps = ButtonProps | LinkProps;
+
+export function Button(props: IProps) {
+	const { componentType, expanded = false, basicInverted, kind, mini } = props;
 
 	const buttonContent = getButtonContent(props);
 
@@ -33,14 +45,30 @@ export function Button(props: ButtonProps) {
 		[styles.buttonExpanded]: expanded,
 	});
 
-	return (
-		<button type={type} className={btnClass} onClick={!disabled ? onClick : () => {}}>
-			{buttonContent}
-		</button>
-	);
+	if (componentType === 'button') {
+		const { buttonType = 'button', onClick, disabled } = props;
+
+		return (
+			<button type={buttonType} className={btnClass} onClick={!disabled ? onClick : () => {}}>
+				{buttonContent}
+			</button>
+		);
+	}
+
+	if (componentType === 'link') {
+		const { to } = props;
+
+		return (
+			<div className={btnClass}>
+				<Link to={to}>{buttonContent}</Link>
+			</div>
+		);
+	}
+
+	return null;
 }
 
-function getButtonContent(props: ButtonProps): React.ReactNode {
+function getButtonContent(props: IProps): React.ReactNode {
 	const { children, kind, green, disabled, mini } = props;
 
 	let basicButtonContent: JSX.Element | null = null;

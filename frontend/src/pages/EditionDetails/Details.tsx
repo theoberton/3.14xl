@@ -28,29 +28,35 @@ function EditionDetails({
 
 	const mint = async () => {
 		const nftManagerAddress = collectionData.ownerAddress;
-		const mintCell = beginCell().store(storeMintSafe({
-			$$type: "MintSafe",
-			query_id: 0n,
-			next_item_index: BigInt(collectionData.nextItemIndex),
-			item_owner: Address.parse(address)
-		})).endCell();
+		const mintCell = beginCell()
+			.store(
+				storeMintSafe({
+					$$type: 'MintSafe',
+					query_id: 0n,
+					next_item_index: BigInt(collectionData.nextItemIndex),
+					item_owner: Address.parse(address),
+				})
+			)
+			.endCell();
 		const transaction = {
 			validUntil: Date.now() + 1000000,
-			messages: [{
-				address: nftManagerAddress.toString(),
-				amount: (toNano('0.2') + toNano(content.price)).toString(),
-				payload: mintCell.toBoc().toString('base64'),
-			}]
+			messages: [
+				{
+					address: nftManagerAddress.toString(),
+					amount: (toNano('0.2') + toNano(content.price)).toString(),
+					payload: mintCell.toBoc().toString('base64'),
+				},
+			],
 		};
 
 		try {
 			const result = await tonConnectUI.sendTransaction(transaction);
-			console.log(result)
-			// you can use signed boc to find the transaction 
+			console.log(result);
+			// you can use signed boc to find the transaction
 			// const someTxData = await myAppExplorerService.getTransaction(result.boc);
 			// alert('Transaction was sent successfully', someTxData);
 		} catch (e) {
-				console.error(e);
+			console.error(e);
 		}
 	};
 
@@ -63,7 +69,9 @@ function EditionDetails({
 				</div> */}
 				<div className={styles.editionDetailsInfoMintDataBlock}>
 					<p>TOTAL MINTED</p>
-					<span>{collectionData.nextItemIndex} / {content.maxSupply || '∞'}</span>
+					<span>
+						{collectionData.nextItemIndex} / {content.maxSupply || '∞'}
+					</span>
 				</div>
 			</div>
 			<div className={styles.editionDetailsInfoPrice}>
@@ -72,7 +80,7 @@ function EditionDetails({
 					<span>{content.price} TON</span>
 				</div>
 				<div className={styles.editionDetailsInfoPriceBlock}>
-					<Button kind={ButtonKinds.basic} onClick={mint}>
+					<Button componentType="button" kind={ButtonKinds.basic} onClick={mint}>
 						Mint
 					</Button>
 				</div>
@@ -98,11 +106,15 @@ function EditionDetails({
 				</div>
 				<div>
 					<p>IPFS</p>
-					<a href={content.image} target="_blank">→</a>
+					<a href={content.image} target="_blank">
+						→
+					</a>
 				</div>
 				<div>
 					<p>IPFS Metadata</p>
-					<a href={collectionData.collectionContentUri} target="_blank">→</a>
+					<a href={collectionData.collectionContentUri} target="_blank">
+						→
+					</a>
 				</div>
 			</div>
 		</div>

@@ -17,7 +17,7 @@ function MenuItem(props: MenuItemProps) {
 				<div className={styles.collectionMenuItemCaption}>{caption}</div>
 			</div>
 			<div className={styles.collectionMenuButtonWrapper}>
-				<Button green kind={ButtonKinds.arrowRight} onClick={onClick} />
+				<Button componentType="button" green kind={ButtonKinds.arrowRight} onClick={onClick} />
 			</div>
 		</div>
 	);

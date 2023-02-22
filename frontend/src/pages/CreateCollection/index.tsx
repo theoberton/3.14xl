@@ -11,7 +11,7 @@ export default function CreateCollection() {
 		<div className={styles.collection}>
 			<div className={styles.collectionLeftSide}>
 				<div className={styles.collectionLeftSideNavigation}>
-					<Button kind={ButtonKinds.arrowLeft} onClick={goToLandingPage} />
+					<Button componentType="link" to={'/'} kind={ButtonKinds.arrowLeft} />
 				</div>
 				<div className={styles.collectionLeftSideContent}>
 					<CollectionMenu />

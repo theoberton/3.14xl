@@ -1,15 +1,8 @@
-import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import { Button, ButtonKinds } from '@/components/Button';
 
 import styles from '@/pages/Landing/styles.module.scss';
 
 export function PresentationSection() {
-	const navigate = useNavigate();
-	const goToCreateCollectionPage = useCallback(() => navigate('/create-edition'), []);
-	const goToExplorePage = useCallback(() => navigate('/explore'), []);
-
 	return (
 		<section className={styles.landingPresentationSection}>
 			<div className={styles.landingPresentationSlogan}>
@@ -25,10 +18,10 @@ export function PresentationSection() {
 					</div>
 				</div>
 				<div>
-					<Button kind={ButtonKinds.basic} onClick={goToCreateCollectionPage}>
+					<Button componentType="link" kind={ButtonKinds.basic} to="/create-edition">
 						Create new collection
 					</Button>
-					<Button kind={ButtonKinds.basic} onClick={goToExplorePage}>
+					<Button componentType="link" kind={ButtonKinds.basic} to="/explore">
 						Explore
 					</Button>
 				</div>

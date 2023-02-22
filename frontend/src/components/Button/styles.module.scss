@@ -12,6 +12,8 @@
 	cursor: pointer;
 	white-space: nowrap;
 	font-weight: $font-semi-bold;
+	background-color: $white;
+	display: inline-block;
 
 	&Disabled {
 		background-color: $gray-ten;
@@ -93,7 +95,6 @@
 			align-items: center;
 			justify-content: center;
 
-
 			&Mini {
 				@extend .buttonContentBasic;
 				font-size: $font-base;
@@ -112,16 +113,21 @@
 	}
 }
 
-
 .wallet {
-	>div> button {
+	> div > button {
 		@extend .button;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		background-color: transparent;
 		border: 1px solid $white;
 	}
 
-	>div> div> button {
+	> div > div > button {
 		@extend .button;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		background-color: transparent;
 		border: 1px solid $white;
 	}
