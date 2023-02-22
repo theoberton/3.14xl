@@ -4,7 +4,7 @@ import { Cell, toNano } from "ton-core";
 import { Blockchain, OpenedContract, TreasuryContract } from "@ton-community/sandbox";
 import { compile } from "@ton-community/blueprint";
 import { NftItem } from ".";
-import { randomAddress } from "../../utils/randomAddress";
+import { randomAddress } from "./../utils";
 import { NftItemData } from "../types";
 import { getDefaultNftItemData } from "../utils";
 

@@ -8,7 +8,6 @@ import {
   ContractProvider,
   Sender,
   toNano,
-  SendMode,
 } from "ton-core";
 
 export type NftManagerData = {
@@ -59,12 +58,12 @@ export class NftManager implements Contract {
     provider: ContractProvider,
     via: Sender,
     params: {
-      value?: bigint;
       collectionAddress: Address;
-    }
+    },
+    value?: bigint,
   ) {
     await provider.internal(via, {
-      value: params.value ?? toNano("1"),
+      value: value ?? toNano("1"),
       body: beginCell()
         .storeUint(435957060, 32) // op
         .storeAddress(params.collectionAddress)
@@ -76,18 +75,18 @@ export class NftManager implements Contract {
     provider: ContractProvider,
     via: Sender,
     params: {
-      mintPrice: bigint;
       queryId?: number;
-      nextItemId: number;
+      nextItemIndex: number;
       itemOwner: Address;
-    }
+    },
+    value: bigint,
   ) {
     await provider.internal(via, {
-      value: params.mintPrice + toNano("0.2"),
+      value: value + toNano("0.2"),
       body: beginCell()
         .storeUint(3323304562, 32) // op
         .storeUint(params.queryId ?? 0, 64)
-        .storeUint(params.nextItemId, 64)
+        .storeUint(params.nextItemIndex, 64)
         .storeAddress(params.itemOwner)
         .endCell(),
     });

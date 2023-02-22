@@ -1,6 +1,6 @@
 import { NftItemOpcodes } from "../constants";
 import { Address, beginCell, contractAddress } from "ton-core";
-import { encodeOffChainContent } from "../../utils/nft-content";
+import { encodeOffChainContent } from "./../utils/nft-content";
 import { compile } from "@ton-community/blueprint";
 
 import { GetStaticDataParams, NftItemData, NftInitItemData } from "./../types";

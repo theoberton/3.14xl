@@ -414,22 +414,6 @@ function dictValueParserMint(): DictionaryValue<Mint> {
     },
   };
 }
-export type MintSafe = {
-  $$type: "MintSafe";
-  query_id: bigint;
-  next_item_index: bigint;
-  item_owner: Address;
-};
-
-export function storeMintSafe(src: MintSafe) {
-  return (builder: Builder) => {
-    let b_0 = builder;
-    b_0.storeUint(3323304562, 32);
-    b_0.storeUint(src.query_id, 64);
-    b_0.storeUint(src.next_item_index, 64);
-    b_0.storeAddress(src.item_owner);
-  };
-}
 
 export function loadMintSafe(slice: Slice) {
   let sc_0 = slice;
@@ -477,6 +461,7 @@ function dictValueParserMintSafe(): DictionaryValue<MintSafe> {
     },
   };
 }
+
 export type SetNftCollectionAddress = {
   $$type: "SetNftCollectionAddress";
   nft_collection_address: Address;

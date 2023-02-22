@@ -36,14 +36,14 @@ function FormArea() {
 				<Input
 					label={'Price'}
 					name="price"
-					type="text"
-					// type="number"
-					// min={0.000000001}
+					type="number"
+					min={0.000000001}
 					placeholder="0.01"
 					units="TON"
 				/>
 				<EditionSize />
 				<ValidityPeriod />
+				<Input label={'Royalty'} name="royalty" type="number" placeholder="5%" />
 				<Input label={'Payout address'} name="payoutAddress" type="text" placeholder="Address" />
 				<div className={styles.createEditionSubmitButton}>
 					<Button

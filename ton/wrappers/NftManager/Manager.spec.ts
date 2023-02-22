@@ -2,7 +2,7 @@ import { toNano, Cell } from "ton-core";
 import { Blockchain, OpenedContract, SendMessageResult, TreasuryContract } from "@ton-community/sandbox";
 import { NftCollection } from "./../NftCollection";
 import { NftManager } from ".";
-import { getDefaultNftCollectionData } from "./../utils";
+import { getDefaultNftCollectionData } from "../utils";
 import { compile } from "@ton-community/blueprint";
 
 import "@ton-community/test-utils"; // register matchers
@@ -37,11 +37,16 @@ async function mint(
 ) {
   const collectionData = await collection.getCollectionData();
 
-  const result = await manager.sendMintSafe(buyer.getSender(), {
-    mintPrice: manager.mintPrice,
-    nextItemId: collectionData.nextItemId,
-    itemOwner: buyer.address,
-  });
+  const { mintPrice } = await manager.getManagerData();
+
+  const result = await manager.sendMintSafe(
+    buyer.getSender(),
+    {
+      nextItemIndex: collectionData.nextItemIndex,
+      itemOwner: buyer.address,
+    },
+    mintPrice
+  );
 
   return result;
 }
@@ -71,7 +76,6 @@ function expectFailedMint(
   manager: OpenedContract<NftManager>,
   collection: OpenedContract<NftCollection>
 ) {
-
   expect(mintResult.transactions).not.toHaveTransaction({
     from: manager.address,
     to: creator.address,
@@ -145,7 +149,6 @@ describe("Collection", () => {
       ownerAddress: manager.address,
     });
     const collection = blkch.openContract(NftCollection.createFromConfig(nftCollectionConfig, nftCollectionCode));
-
 
     await deployNftCollection(creator, manager, collection);
 

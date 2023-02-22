@@ -1,8 +1,9 @@
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
-import { CollectionData } from 'tonweb';
-import styles from './styles.module.scss';
+
 import { addressFilter } from '@/helpers';
-import { CollectionContent } from '../CreateEditionOld/index';
+import { CollectionData, CollectionContent } from '@/wrappers/types';
+
+import styles from './styles.module.scss';
 
 const thirdwebStorage = new ThirdwebStorage();
 

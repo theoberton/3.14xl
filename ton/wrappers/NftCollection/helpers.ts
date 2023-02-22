@@ -1,6 +1,6 @@
 import { StateInit, beginCell, contractAddress } from "ton-core";
 import { NftCollectionCodeCell } from "./NftCollection.source";
-import { encodeOffChainContent } from "../../utils/nft-content";
+import { encodeOffChainContent } from "./../utils/nft-content";
 import {
   NftCollectionData,
   MintBodyParams,

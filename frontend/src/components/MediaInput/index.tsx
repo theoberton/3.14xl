@@ -54,7 +54,7 @@ export function MediaInput(props: Props) {
 				setIsMediaUploadingStatus(true);
 
 				const ipfsLink = await storage.upload(file);
-				const fileLink =  storage.resolveScheme(ipfsLink);
+				const fileLink = storage.resolveScheme(ipfsLink);
 				console.log('fileLink', fileLink);
 
 				setFieldValue(name, fileLink);

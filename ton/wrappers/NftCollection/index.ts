@@ -22,7 +22,7 @@ import {
 } from "../types";
 
 import { Queries, buildNftCollectionDataCell } from "./helpers";
-import { decodeOffChainContent } from "../../utils/nft-content";
+import { decodeOffChainContent } from "./../utils/nft-content";
 
 const defaultCommandArgs: BaseTransactionArgs = {
   value: toNano("0.2"),
@@ -124,19 +124,19 @@ export class NftCollection implements Contract {
   /* Queries */
 
   async getCollectionData(provider: ContractProvider): Promise<{
-    nextItemId: number;
+    nextItemIndex: number;
     ownerAddress: Address;
     content: string;
   }> {
     const { stack } = await provider.get("get_collection_data", []);
 
-    const nextItemId = stack.readNumber();
+    const nextItemIndex = stack.readNumber();
     const collectionContent = stack.readCell();
     const content = decodeOffChainContent(collectionContent);
     const ownerAddress = stack.readAddress();
 
     return {
-      nextItemId,
+      nextItemIndex,
       content,
       ownerAddress,
     };

@@ -6,14 +6,13 @@ import { Blockchain, OpenedContract } from "@ton-community/sandbox";
 import { compile } from "@ton-community/blueprint";
 import { buildNftItemStateInit } from "./../NftItem/helpers";
 import { NftCollection } from ".";
-import { getDefaultNftCollectionData } from "./../utils";
+import { getDefaultNftCollectionData } from "../utils";
 
 describe("nft collection smc", () => {
   let code: Cell;
 
   beforeAll(async () => {
     code = await compile("NftCollection/NftCollection");
-
   });
 
   describe("nft collection getters", () => {
@@ -47,7 +46,7 @@ describe("nft collection smc", () => {
     it("should return collection data", async () => {
       let res = await contract!.getCollectionData();
 
-      expect(res.nextItemId).toEqual(defaultNftCollectionConfig.nextItemIndex);
+      expect(res.nextItemIndex).toEqual(defaultNftCollectionConfig.nextItemIndex);
       expect(res.content).toEqual(defaultNftCollectionConfig.collectionContent);
       expect(res.ownerAddress.toString()).toEqual(defaultNftCollectionConfig.ownerAddress.toString());
     });
@@ -89,11 +88,7 @@ describe("nft collection smc", () => {
 
   it("should deploy new nft", async () => {
     const blockchain = await Blockchain.create();
-    blockchain.verbosity = {
-      blockchainLogs: true,
-      vmLogs: 'none',
-      debugLogs: false,
-  }
+
     const ownerOfNftItemContract = await blockchain.treasury("nft_item_owner");
     const ownerOfNftItemAddress = ownerOfNftItemContract.address;
 
@@ -156,6 +151,7 @@ describe("nft collection smc", () => {
 
     const nftCollectionConfig = getDefaultNftCollectionData({ ownerAddress });
     const nftCollection = NftCollection.createFromConfig(nftCollectionConfig, code);
+
     const nftContract = blockchain.openContract(nftCollection);
 
     const deployer = await blockchain.treasury("deployer");
@@ -318,7 +314,7 @@ describe("nft collection smc", () => {
 
     let res = await nftContract!.getCollectionData();
 
-    expect(res.nextItemId).toEqual(nftCollectionConfig.nextItemIndex);
+    expect(res.nextItemIndex).toEqual(nftCollectionConfig.nextItemIndex);
     expect(res.content).toEqual(params.collectionContent);
     expect(res.ownerAddress.toString()).toEqual(ownerAddress.toString());
   });

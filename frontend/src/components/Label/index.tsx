@@ -9,7 +9,7 @@ type LabelProps = {
 };
 
 export function Label(props: LabelProps) {
-	const { black = true, text, grey, mini} = props;
+	const { black = true, text, grey, mini } = props;
 
 	const labelClass = classNames({
 		[styles.label]: true,

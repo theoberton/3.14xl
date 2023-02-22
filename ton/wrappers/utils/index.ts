@@ -1,13 +1,21 @@
-import { NftCollectionData, NftCollectionDataOptional, NftItemData, NftItemDataOptional } from "./types";
-import { NftItemCodeCell } from "./NftItem/NftItem.source";
-import { randomAddress } from "../utils/randomAddress";
+import { NftCollectionData, NftCollectionDataOptional, NftItemData, NftItemDataOptional } from "../types";
+import { NftItemCodeCell } from "../NftItem/NftItem.source";
+
+import { Address } from "ton-core";
+import { pseudoRandomBytes } from "crypto";
+
 import _ from "lodash";
 
-const OWNER_ADDRESS = randomAddress();
-const ROYALTY_ADDRESS = randomAddress();
-const COLLECTION_ADDRESS = randomAddress();
+
+export function randomAddress() {
+  return new Address(0, pseudoRandomBytes(256 / 8));
+}
 
 export const getDefaultNftCollectionData = (source: NftCollectionDataOptional = {}): NftCollectionData => {
+
+  const OWNER_ADDRESS = randomAddress();
+  const ROYALTY_ADDRESS = randomAddress();
+
   const defaultValue = {
     ownerAddress: OWNER_ADDRESS,
     nextItemIndex: 0,
@@ -27,6 +35,9 @@ export const getDefaultNftCollectionData = (source: NftCollectionDataOptional = 
 };
 
 export const getDefaultNftItemData = (source: NftItemDataOptional = {}): NftItemData => {
+  const COLLECTION_ADDRESS = randomAddress();
+  const OWNER_ADDRESS = randomAddress();
+
   const defaultValue = {
     itemIndex: 0,
     collectionAddress: COLLECTION_ADDRESS,

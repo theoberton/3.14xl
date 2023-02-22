@@ -9,6 +9,7 @@ export interface FormValues {
 		type: EDITIONS_SIZES;
 		amount: string;
 	};
+	royalty: string;
 	validity: {
 		start: string | null;
 		end: string | null;
@@ -16,3 +17,25 @@ export interface FormValues {
 	price: string;
 	payoutAddress: string;
 }
+
+export interface CreateEditionParams {
+	name: string;
+	description: string;
+	image: string;
+	symbol: string;
+	creatorAddress: string;
+	price: string;
+	royalty: string;
+	maxSupply: string;
+}
+
+export type CreateEditionCollectionContent = {
+	name: string;
+	description: string;
+	image: string;
+	price: string;
+	maxSupply: string;
+	royalty: string;
+	symbol: string;
+	feeRecipient: string;
+};

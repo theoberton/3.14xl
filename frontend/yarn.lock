@@ -3021,10 +3021,10 @@ toggle-selection@^1.0.6:
   resolved "https://registry.yarnpkg.com/toggle-selection/-/toggle-selection-1.0.6.tgz#6e45b1263f2017fa0acc7d89d78b15b8bf77da32"
   integrity sha512-BiZS+C1OS8g/q2RRbJmy59xpyghNBqrr6k5L/uKBGRsTfxmu3ffiRnd8mlGPUVayg8pvfi5urfnu8TU7DVOkLQ==
 
-ton-core@^0.46.0:
-  version "0.46.0"
-  resolved "https://registry.yarnpkg.com/ton-core/-/ton-core-0.46.0.tgz#4138606fccf7fa45dc5c6cd6dcf1d1f17b2d4215"
-  integrity sha512-QUOlL98652rsOPTIvB01+MsAgLI1ehvpsngYzNWr7pxHOk4xk64Adq0StTmqGEchkzjhNowIo3gzwGGPrxo3zw==
+ton-core@^0.47.1:
+  version "0.47.1"
+  resolved "https://registry.yarnpkg.com/ton-core/-/ton-core-0.47.1.tgz#22298d79e345ea1a34825b4044dda5a7c5995474"
+  integrity sha512-XxcgLYH+Ngo3uh7O7jkzA0/O8nfG3WC3fgUmdvY9/IkGKpkO3Y/KHtrZgAOHYAkxJCmaXpi4aPf4JEnZEiPrWQ==
   dependencies:
     symbol.inspect "1.0.1"
 

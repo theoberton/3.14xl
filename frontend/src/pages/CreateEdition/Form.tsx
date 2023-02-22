@@ -9,27 +9,45 @@ import { formSchema } from '@/pages/CreateEdition/validation';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
 import EditionPreview from '@/pages/CreateEdition/Preview';
 import { EDITIONS_SIZES } from '@/constants/common';
-import { createEdition } from '../CreateEditionOld';
 import EditionPreviewMobile from '@/pages/CreateEdition/PreviewMobile';
+import { useTonClient } from '@/hooks/useTonClient';
+import { createEdition } from '@/pages/CreateEdition/helpers';
 
 function CreateEditionForm() {
 	const address = useTonAddress();
+	const tonClient = useTonClient();
+
 	const [tonConnectUI] = useTonConnectUI();
 	const navigate = useNavigate();
 
 	const handleSubmit = useCallback(
 		async (values: FormValues) => {
+			if (!tonClient) return;
+
 			try {
+				if (!tonConnectUI.connected) {
+					let res;
+					try {
+						res = await tonConnectUI.connectWallet();
+					} catch (error) {
+						console.error('Error occured when connecting to wallet', error);
+
+						throw error;
+					}
+				}
+
 				if (!values.media) throw new Error('No media');
 
-				const { collectionAddress } = await createEdition(tonConnectUI, {
+				const { collectionAddress } = await createEdition(tonClient, tonConnectUI, {
 					name: values.name,
 					description: values.description,
 					image: values.media,
 					symbol: values.symbol,
 					price: values.price,
-					creatorAddress: address,
-					maxSupply: values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0'
+					royalty: values.royalty,
+					creatorAddress: values.payoutAddress,
+					maxSupply:
+						values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0',
 				});
 
 				navigate(`/edition/${collectionAddress}`);
@@ -37,7 +55,7 @@ function CreateEditionForm() {
 				console.error(error);
 			}
 		},
-		[address, tonConnectUI]
+		[address, tonConnectUI.connected, tonClient]
 	);
 
 	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
@@ -52,11 +70,12 @@ function CreateEditionForm() {
 			type: EDITIONS_SIZES.OPEN_EDITION,
 			amount: '',
 		},
+		royalty: '5',
 		validity: {
 			start: null,
 			end: null,
 		},
-		payoutAddress: address
+		payoutAddress: address,
 	};
 
 	return (
