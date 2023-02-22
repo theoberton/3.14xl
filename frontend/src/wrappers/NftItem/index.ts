@@ -26,11 +26,13 @@ export class NftItem extends BaseLocalContract {
 		return new NftItem(address, stateInit);
 	}
 
-	async sendDeploy(provider: ContractProvider, via: Sender, value: bigint) {
+	async sendDeploy(provider: ContractProvider, via: Sender, params: NftItemData, value: bigint) {
+		let msgBody = Queries.composeInitMessage(params);
+
 		await provider.internal(via, {
 			value,
 			sendMode: SendMode.PAY_GAS_SEPARATLY,
-			body: beginCell().endCell(),
+			body: msgBody,
 		});
 	}
 
@@ -42,7 +44,6 @@ export class NftItem extends BaseLocalContract {
 		const index = stack.readNumber();
 		const collectionAddress = stack.readAddress();
 		const ownerAddress = stack.readAddress();
-		const content = stack.readCell();
 
 		const isInitialized = initializedStatus === -1;
 
@@ -53,6 +54,8 @@ export class NftItem extends BaseLocalContract {
 				collectionAddress,
 			};
 		}
+
+		const content = stack.readCell();
 
 		return {
 			isInitialized: true,

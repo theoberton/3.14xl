@@ -15,12 +15,13 @@
 		"isolatedModules": true,
 		"noEmit": true,
 		"baseUrl": ".",
-		"types": ["node"],
+		"types": ["node", "jest"],
 		"paths": {
 			"@/*": ["src/*"]
+			
 		},
 		"jsx": "react-jsx"
 	},
-	"include": ["./src"],
+  "include": ["./src/**/*.ts","./src/**/*.tsx",],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -39,7 +39,7 @@ export interface RoyaltyParams {
 
 export interface EditContentParams {
 	queryId?: number;
-	collectionContent: string;
+	collectionContentUri: string;
 	commonContent: string;
 	royaltyParams: RoyaltyParams;
 }
@@ -47,7 +47,7 @@ export interface EditContentParams {
 export interface NftCollectionData {
 	ownerAddress: Address;
 	nextItemIndex: number | bigint;
-	collectionContent: string;
+	collectionContentUri: string;
 	commonContent: string;
 	nftItemCode: Cell;
 	royaltyParams: RoyaltyParams;

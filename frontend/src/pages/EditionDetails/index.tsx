@@ -16,12 +16,20 @@ export default function EditionDetailsPage() {
 
 	const collectionDataAsync = useAsync(async () => {
 		if (!collectionAddress || !tonClient) {
-			throw new Error();
+			return null;
 		}
 
 		const nftCollection = NftCollection.createFromAddress(Address.parse(collectionAddress));
 		const nftColelctionContract = tonClient.open(nftCollection);
-		const collectionData = await nftColelctionContract.getCollectionData();
+		let collectionData;
+		try {
+			collectionData = await nftColelctionContract.getCollectionData();
+			
+		} catch (error) {
+			console.log('error', error);
+			collectionData = await nftColelctionContract.getCollectionData();
+
+		}
 		const content: CollectionContent = await fetch(collectionData.collectionContentUri).then(res =>
 			res.json()
 		);

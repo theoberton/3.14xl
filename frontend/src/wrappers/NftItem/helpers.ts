@@ -4,6 +4,8 @@ import { NftItemOpcodes } from '../constants';
 import { Address, beginCell, contractAddress, Cell } from 'ton-core';
 import { encodeOffChainContent } from './../utils/nft-content';
 import { randomAddress } from './../utils';
+import { defaultsDeep } from 'lodash';
+import { Buffer } from 'buffer';
 
 import { GetStaticDataParams, NftItemDataOptional, NftItemData, NftInitItemData } from './../types';
 import { NftItemCodeCell } from './NftItem.source';
@@ -29,23 +31,12 @@ export const getDefaultNftItemData = (source: NftItemDataOptional = {}): NftItem
 		content: 'test',
 	};
 
-	const value = _.defaultsDeep(source, defaultValue);
+	const value = defaultsDeep(source, defaultValue);
 
 	return value;
 };
 
-export function buildNftItemInitilizedDataCell(data: NftItemData) {
-	let dataCell = beginCell();
-
-	const contentCell = encodeOffChainContent(data.content);
-
-	dataCell.storeUint(data.itemIndex, 64);
-	dataCell.storeAddress(data.collectionAddress);
-	dataCell.storeAddress(data.ownerAddress);
-	dataCell.storeRef(contentCell);
-
-	return dataCell.endCell();
-}
+export function buildNftItemInitilizedDataCell(data: NftItemData) {}
 
 export function buildNftItemStateInit(conf: NftItemDataOptional, code: Cell = NftItemCodeCell) {
 	const nftItemData = getDefaultNftItemData(conf);
@@ -83,10 +74,15 @@ export const Queries = {
 
 		return msgBody.endCell();
 	},
-	composeInitContent: (content: string) => {
-		const contentCell = beginCell().storeBuffer(Buffer.from(content)).endCell();
+	composeInitMessage: (params: NftItemData) => {
+		let dataCell = beginCell();
 
-		return contentCell;
+		const contentCell = encodeOffChainContent(params.content);
+
+		dataCell.storeAddress(params.ownerAddress);
+		dataCell.storeRef(contentCell);
+
+		return dataCell.endCell();
 	},
 	getStaticData: (params: GetStaticDataParams) => {
 		let msgBody = beginCell();

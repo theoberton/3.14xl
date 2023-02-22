@@ -10,6 +10,9 @@ export class NftManager extends BaseLocalContract {
 		super(address, init);
 	}
 
+	static createFromAddress(address: Address) {
+		return new NftManager(address);
+	}
 	static createFromConfig(configData: NftManagerInitData, code?: Cell) {
 		const initData = buildNftManagerStateInit(configData, code);
 

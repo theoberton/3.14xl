@@ -46,7 +46,7 @@ export function storeMintSafe(src: MintSafe) {
 	return (builder: Builder) => {
 		let b_0 = builder;
 		b_0.storeUint(NftManagerOpcodes.MintSafe, 32);
-		b_0.storeUint(src.queryId, 64);
+		b_0.storeUint(src.queryId ?? 0, 64);
 		b_0.storeUint(src.nextItemIndex, 64);
 		b_0.storeAddress(src.itemOwner);
 	};

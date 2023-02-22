@@ -6,6 +6,11 @@ export interface NftInitItemData {
 	collectionAddress: Address | null;
 }
 
+export interface NftItemInitMessageParams {
+	ownerAddress: Address;
+	content: string;
+}
+
 export interface NftItemData {
 	itemIndex: number;
 	collectionAddress: Address | null;

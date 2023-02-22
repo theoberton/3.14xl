@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
-
+import {Address} from 'ton-core';
 import { addressFilter } from '@/helpers';
 import { Button, ButtonKinds } from '@/components/Button';
 import styles from './styles.module.scss';
@@ -21,7 +21,7 @@ function EditionDetails({
 	const [tonConnectUI] = useTonConnectUI();
 
 	const mint = useCallback(async () => {
-		const transaction = composeMintTransaction(collectionData, content, address);
+		const transaction = composeMintTransaction(collectionData, content, Address.parse(address));
 
 		try {
 			const result = await tonConnectUI.sendTransaction(transaction);
@@ -44,7 +44,7 @@ function EditionDetails({
 				<div className={styles.editionDetailsInfoMintDataBlock}>
 					<p>TOTAL MINTED</p>
 					<span>
-						{collectionData.nextItemIndex} / {content.maxSupply || '∞'}
+						{collectionData.nextItemIndex} / {Number(content.maxSupply) || '∞'}
 					</span>
 				</div>
 			</div>

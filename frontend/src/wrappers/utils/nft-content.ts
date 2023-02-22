@@ -1,4 +1,5 @@
 import { Cell, beginCell } from 'ton-core';
+import { Buffer } from 'buffer';
 
 const OFF_CHAIN_CONTENT_PREFIX = 0x01;
 

@@ -1,5 +1,6 @@
-import { beginCell, contractAddress, Cell, Address } from 'ton-core';
-import _ from 'lodash';
+import { beginCell, contractAddress, Cell } from 'ton-core';
+import { Buffer } from 'buffer';
+import { defaultsDeep } from 'lodash';
 
 import { NftCollectionCodeCell } from './NftCollection.source';
 import { NftItemCodeCell } from './../NftItem/NftItem.source';
@@ -24,7 +25,7 @@ export function buildNftCollectionDataCell(data: NftCollectionData) {
 
 	let contentCell = beginCell();
 
-	let collectionContent = encodeOffChainContent(data.collectionContent);
+	let collectionContent = encodeOffChainContent(data.collectionContentUri);
 
 	let commonContent = beginCell();
 	commonContent.storeBuffer(Buffer.from(data.commonContent));
@@ -54,7 +55,7 @@ export const getDefaultNftCollectionData = (
 	const defaultValue = {
 		ownerAddress: OWNER_ADDRESS,
 		nextItemIndex: 0,
-		collectionContent: 'collection_content',
+		collectionContentUri: 'collection_content',
 		commonContent: 'common_content',
 		nftItemCode: NftItemCodeCell,
 		royaltyParams: {
@@ -64,7 +65,7 @@ export const getDefaultNftCollectionData = (
 		},
 	};
 
-	const value = _.defaultsDeep(source, defaultValue);
+	const value = defaultsDeep(source, defaultValue);
 
 	return value;
 };
@@ -135,7 +136,7 @@ export const Queries = {
 
 		let contentCell = beginCell();
 
-		let collectionContent = encodeOffChainContent(params.collectionContent);
+		let collectionContent = encodeOffChainContent(params.collectionContentUri);
 
 		let commonContent = beginCell();
 		commonContent.storeBuffer(Buffer.from(params.commonContent));

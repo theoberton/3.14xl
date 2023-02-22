@@ -1,11 +1,11 @@
 import { CollectionContent, CollectionData } from '@/wrappers/types';
-import { toNano } from 'ton-core';
+import { toNano, Address } from 'ton-core';
 import { Queries } from '@/wrappers/NftManager/helpers';
 
 export function composeMintTransaction(
 	collectionData: CollectionData,
 	content: CollectionContent,
-	address: string
+	address: Address
 ) {
 	const nftManagerAddress = collectionData.ownerAddress;
 

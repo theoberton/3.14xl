@@ -24,7 +24,7 @@ export const createEdition = async (
 		// external_link: 'https://matketplacecreatures.io',
 		// seller_fee_basis_points: 100,
 		// fee_recipient: address,
-		royalty: params.royalty,
+		royalty: String(Number(params.royalty)/100),
 		price: params.price,
 		maxSupply: params.maxSupply,
 		symbol: params.symbol,
@@ -36,17 +36,11 @@ export const createEdition = async (
 
 	const ownerAddress = Address.parse(params.creatorAddress);
 
-	const nftManagerParams = {
+	const managerInitData = {
 		owner: ownerAddress,
-		seed: BigInt(Math.floor(Math.random() * 10000)),
+		debug: BigInt(Math.floor(Math.random() * 10000)),
 		mintPrice: toNano(params.price),
 		maxSupply: BigInt(params.maxSupply),
-	};
-	const managerInitData = {
-		owner: nftManagerParams.owner,
-		debug: nftManagerParams.seed,
-		mintPrice: nftManagerParams.mintPrice,
-		maxSupply: nftManagerParams.maxSupply,
 	};
 
 	const nftManager = NftManager.createFromConfig(managerInitData);
@@ -54,7 +48,7 @@ export const createEdition = async (
 
 	const nftCollectionInitData: NftCollectionDataOptional = {
 		ownerAddress: nftManagerContract.address, // Check if it works again
-		collectionContent: collectionContentUrl,
+		collectionContentUri: collectionContentUrl,
 		commonContent: collectionContentUrl,
 		royaltyParams: {
 			royaltyBase: 100,
