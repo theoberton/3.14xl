@@ -1,63 +1,65 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
-import React, {Suspense} from 'react';
+import React, {Suspense, useEffect} from 'react';
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 
-const PageContainer = React.lazy(() => import('@/layouts/PageContainer'));
-const CreateEdition = React.lazy(() => import('@/pages/CreateEdition'));
-const CreateCollection = React.lazy(() => import('@/pages/CreateCollection'));
-const LandingPage = React.lazy(() => import('@/pages/Landing'));
-const NotFound = React.lazy(() => import('@/pages/NotFound'));
-const EditionDetailsPage = React.lazy(() => import('@/pages/EditionDetails'));
-const ExplorePage = React.lazy(() => import('@/pages/Explore'));
-const MintedEditionsPage = React.lazy(() => import('@/pages/MintedEditions'));
+const PageContainer = withSuspense(React.lazy(() => import('@/layouts/PageContainer')));
+const CreateEdition = withSuspense(React.lazy(() => import('@/pages/CreateEdition')));
+const CreateCollection = withSuspense(React.lazy(() => import('@/pages/CreateCollection')));
+const LandingPage = withSuspense(React.lazy(() => import('@/pages/Landing')));
+const NotFound = withSuspense(React.lazy(() => import('@/pages/NotFound')));
+const EditionDetailsPage = withSuspense(React.lazy(() => import('@/pages/EditionDetails')));
+const ExplorePage = withSuspense(React.lazy(() => import('@/pages/Explore')));
+const MintedEditionsPage =withSuspense( React.lazy(() => import('@/pages/MintedEditions')));
 
 function ApplicationRoutes() {
 	return (
 		<HashRouter window={window}>
 			<Routes>
-				<Route element={
-					<Suspense>
-						<PageContainer />
-					</Suspense>
-				}>
-					<Route path="/" element={
-						<Suspense>
-							<LandingPage />
-						</Suspense>
-					} />
-					<Route path="/edition/:collectionAddress" element={
-						<Suspense>
-							<EditionDetailsPage />
-						</Suspense>
-					}/>
-					<Route path="/minted" element={
-						<Suspense>
-							<MintedEditionsPage />
-						</Suspense>
-					} />
-					<Route path="/explore" element={
-						<Suspense>
-							<ExplorePage />
-						</Suspense>
-					} />
-					<Route path="/create-edition" element={
-						<Suspense>
-							<CreateEdition />
-						</Suspense>
-					} />
+				<Route element={<PageContainer />}>
+					<Route path="/" element={<LandingPage />} />
+					<Route path="/edition/:collectionAddress" element={<EditionDetailsPage />}/>
+					<Route path="/minted" element={<MintedEditionsPage />} />
+					<Route path="/explore" element={<ExplorePage />} />
+					<Route path="/create-edition" element={<CreateEdition />} />
 				</Route>
-				<Route path="/create-collection" element={
-					<Suspense>
-						<CreateCollection />
-					</Suspense>
-				} />
-				<Route path="*" element={
-					<Suspense>
-						<NotFound />
-					</Suspense>
-				} />
+				<Route path="/create-collection" element={<CreateCollection />} />
+				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</HashRouter>
 	);
 }
+
+interface Props {
+  children?: React.ReactNode;
+}
+
+
+function withSuspense<P extends Props> (Component: React.ComponentType<P>) {
+	return (props: P) => {
+			return  (
+				<Suspense fallback={<LazyLoad />}>
+					<Component {...props} />
+				</Suspense>)
+	}
+}
+
+const LazyLoad = () => {
+	useEffect(() => {
+			NProgress.configure({ 
+				showSpinner: false,
+				trickleSpeed: 50
+			});
+			
+			NProgress.start();
+
+			return () => {
+					NProgress.done();
+			};
+	});
+
+	return <></>;
+};
+
 export default ApplicationRoutes;
