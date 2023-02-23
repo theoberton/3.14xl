@@ -5,7 +5,7 @@ import {
 	SendMessageResult,
 	TreasuryContract,
 } from '@ton-community/sandbox';
-import { dateToUnix } from '@/helpers';
+import { dateToUnix } from '../../helpers/date';
 import { NftCollection } from '../NftCollection';
 import { NftManager } from '.';
 import { getDefaultNftCollectionData } from '../NftCollection/helpers';
