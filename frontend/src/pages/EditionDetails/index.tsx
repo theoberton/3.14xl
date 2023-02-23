@@ -1,5 +1,5 @@
 import { useAsync } from 'react-use';
-
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import EditionDetails from './Details';
@@ -13,6 +13,16 @@ import { useTonClient } from '@/hooks/useTonClient';
 export default function EditionDetailsPage() {
 	const { collectionAddress } = useParams();
 	const tonClient = useTonClient();
+	const [isError, setError] = useState(false);
+
+	useEffect(() => {
+
+		if(isError) {
+			setTimeout(() => {
+				window.location.reload()
+			}, 5000);
+		}
+	}, [isError]);
 
 	const collectionDataAsync = useAsync(async () => {
 		if (!collectionAddress || !tonClient) {
@@ -27,6 +37,7 @@ export default function EditionDetailsPage() {
 			
 		} catch (error) {
 			console.log('error', error);
+			setError(true)
 			collectionData = await nftColelctionContract.getCollectionData();
 
 		}
