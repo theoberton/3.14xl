@@ -30,7 +30,7 @@ function Block({ text, label }: { label: string; text: string }) {
 }
 
 function getFirstBlockProps(collectionData: CollectionData, content: CollectionContent, now: Date) {
-	const dateStart = new Date(content.dateStart ?? 0 * 1000);
+	const dateStart = new Date((content.dateStart ?? 0) * 1000);
 
 	if (dateStart < now) {
 		return {
