@@ -8,8 +8,9 @@ import { toNano, Address } from 'ton-core';
 import { NftManager, NftCollection } from '@/wrappers';
 import { NftCollectionDataOptional } from '@/wrappers/types';
 import { TonClient } from 'ton';
-import { CreateEditionParams, CreateEditionCollectionContent } from './interfaces';
+import { CreateEditionParams } from './interfaces';
 import { Queries } from '@/wrappers/NftManager/helpers';
+import { CollectionContent } from '@/wrappers/types';
 
 export const createEdition = async (
 	tonClient: TonClient,
@@ -17,7 +18,7 @@ export const createEdition = async (
 	params: CreateEditionParams
 ) => {
 	/** Upload collection metadata */
-	const content: CreateEditionCollectionContent = {
+	const content: CollectionContent = {
 		name: params.name,
 		description: params.description,
 		image: params.image,
@@ -27,6 +28,8 @@ export const createEdition = async (
 		royalty: String(Number(params.royalty)/100),
 		price: params.price,
 		maxSupply: params.maxSupply,
+		dateStart: params.dateStart,
+		dateEnd: params.dateEnd,
 		symbol: params.symbol,
 		feeRecipient: params.creatorAddress,
 	};
@@ -41,6 +44,8 @@ export const createEdition = async (
 		debug: BigInt(Math.floor(Math.random() * 10000)),
 		mintPrice: toNano(params.price),
 		maxSupply: BigInt(params.maxSupply),
+		mintDateStart: BigInt(params.dateStart),
+		mintDateEnd: BigInt(params.dateEnd)
 	};
 
 	const nftManager = NftManager.createFromConfig(managerInitData);

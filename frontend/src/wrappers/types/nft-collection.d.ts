@@ -26,9 +26,12 @@ export type CollectionContent = {
 	description: string;
 	image: string;
 	price: string;
+	royalty: string;
 	maxSupply: string;
 	symbol: string;
 	feeRecipient: string;
+	dateStart?: number;
+	dateEnd?: number;
 };
 
 export interface RoyaltyParams {

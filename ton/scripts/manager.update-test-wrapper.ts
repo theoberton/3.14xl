@@ -7,19 +7,14 @@ function main() {
   const system = tactOutput.toString().match(/__system = '(.*?)';/)?.[1];
   const code = tactOutput.toString().match(/__code = '(.*?)';/)?.[1];
 
-  const outputFileName = "./../wrappers/NftManager";
+  const outputFileName = "../frontend/src/wrappers/NftManager/NftManager.source.ts";
   const output = fs.readFileSync(outputFileName).toString();
 
   const modifiedOutput = output
-    .replace(/static readonly code = Cell\.fromBase64\('.*'\);/, `static readonly code = Cell.fromBase64('${code}');`)
-    .replace(
-      /static readonly system = Cell\.fromBase64\('.*'\);/,
-      `static readonly system = Cell.fromBase64('${system}');`
-    );
+    .replace(/const NftManagerCodeBoc = '.*';/, `const NftManagerCodeBoc = '${code}';`)
+    .replace(/const NftManagerSystemBoc = '.*';/, `const NftManagerSystemBoc = '${system}';`);
 
   fs.writeFileSync(outputFileName, modifiedOutput);
-
-  // @todo: Also need to update frontend/src/pages/CreateEditionOld/pixel_NFTManager.ts
 }
 
 main();

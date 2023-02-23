@@ -23,7 +23,9 @@ struct ManagerData {
   debug: Int as uint16;
   nft_collection_address: Address;
   mint_price: Int as coins;
-  max_supply: Int;
+  max_supply: Int as uint32;
+  mint_date_start: Int as uint32;
+  mint_date_end: Int as uint32;
 }
 
 contract NftManager with Deployable, Ownable {
@@ -31,17 +33,18 @@ contract NftManager with Deployable, Ownable {
   debug: Int as uint16;
   nft_collection_address: Address;
   mint_price: Int as coins;
-  max_supply: Int;
+  max_supply: Int as uint32;
+  mint_date_start: Int as uint32;
+  mint_date_end: Int as uint32;
 
-  // datetime_start: Int;
-  // datetime_end: Int;
-
-  init(owner: Address, debug: Int, mint_price: Int, max_supply: Int) {
+  init(owner: Address, debug: Int, mint_price: Int, max_supply: Int, mint_date_start: Int, mint_date_end: Int) {
     self.owner = owner;
     self.debug = debug;
     self.nft_collection_address = owner;
     self.mint_price = mint_price;
     self.max_supply = max_supply;
+    self.mint_date_start = mint_date_start;
+    self.mint_date_end = mint_date_end;
   }
 
   receive(msg: SetNftCollectionAddress) {
@@ -61,6 +64,10 @@ contract NftManager with Deployable, Ownable {
     if (self.max_supply > 0) {
       require(msg.next_item_index < self.max_supply, "Max supply reached");
     }
+
+
+    require(self.mint_date_start < now(), "Minting has not started yet");
+    require(self.mint_date_end == 0 || self.mint_date_end > now(), "Minting has finished");
 
     send(SendParameters{
       to: self.owner,
@@ -92,7 +99,9 @@ contract NftManager with Deployable, Ownable {
       debug: self.debug,
       nft_collection_address: self.nft_collection_address,
       mint_price: self.mint_price,
-      max_supply: self.max_supply
+      max_supply: self.max_supply,
+      mint_date_start: self.mint_date_start,
+      mint_date_end: self.mint_date_end
     };
   }
 }

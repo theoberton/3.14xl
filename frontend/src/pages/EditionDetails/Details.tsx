@@ -3,11 +3,17 @@ import { useParams } from 'react-router-dom';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import {Address} from 'ton-core';
 import { addressFilter } from '@/helpers';
+import { useTime } from '@/hooks';
 import { Button, ButtonKinds } from '@/components/Button';
 import styles from './styles.module.scss';
 
 import { CollectionData, CollectionContent } from '@/wrappers/types';
 import { composeMintTransaction } from '@/pages/EditionDetails/helper';
+import MintDateSection from './MintTime';
+
+function isMintAllowed(now: Date, start?: number, end?: number) {
+	return (!start || new Date(start * 1000) < now) && (!end || now < new Date(end * 1000));
+}
 
 function EditionDetails({
 	collectionData,
@@ -16,6 +22,7 @@ function EditionDetails({
 	collectionData: CollectionData;
 	content: CollectionContent;
 }) {
+	const now = useTime();
 	const { collectionAddress } = useParams();
 	const address = useTonAddress();
 	const [tonConnectUI] = useTonConnectUI();
@@ -36,28 +43,19 @@ function EditionDetails({
 
 	return (
 		<div className={styles.editionDetailsInfo}>
-			<div className={styles.editionDetailsInfoMintData}>
-				{/* <div className={styles.editionDetailsInfoMintDataBlock}>
-					<p>MINT ENDS</p>
-					<span>10h 45min</span>
-				</div> */}
-				<div className={styles.editionDetailsInfoMintDataBlock}>
-					<p>TOTAL MINTED</p>
-					<span>
-						{collectionData.nextItemIndex} / {Number(content.maxSupply) || '∞'}
-					</span>
-				</div>
-			</div>
+			<MintDateSection now={now} content={content} collectionData={collectionData} />
 			<div className={styles.editionDetailsInfoPrice}>
 				<div className={styles.editionDetailsInfoPriceBlock}>
 					<h3>PRICE</h3>
 					<span>{content.price} TON</span>
 				</div>
-				<div className={styles.editionDetailsInfoPriceBlock}>
-					<Button componentType="button" kind={ButtonKinds.basic} onClick={mint}>
-						Mint
-					</Button>
-				</div>
+				{isMintAllowed(now, content.dateStart, content.dateEnd) &&
+					<div className={styles.editionDetailsInfoPriceBlock}>
+						<Button componentType="button" kind={ButtonKinds.basic} onClick={mint}>
+							Mint
+						</Button>
+					</div>
+				}			
 			</div>
 			<div className={styles.editionDetailsInfoAbout}>
 				<h3>ABOUT</h3>

@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "jest",
     "format": "prettier --write .",
-    "host": "vite --host"
+    "host": "vite --host",
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
     "@emotion/styled": "^11.10.5",

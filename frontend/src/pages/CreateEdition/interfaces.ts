@@ -11,8 +11,8 @@ export interface FormValues {
 	};
 	royalty: string;
 	validity: {
-		start: string | null;
-		end: string | null;
+		start: Date | null;
+		end: Date | null;
 	};
 	price: string;
 	payoutAddress: string;
@@ -27,15 +27,6 @@ export interface CreateEditionParams {
 	price: string;
 	royalty: string;
 	maxSupply: string;
+	dateStart: number;
+	dateEnd: number;
 }
-
-export type CreateEditionCollectionContent = {
-	name: string;
-	description: string;
-	image: string;
-	price: string;
-	maxSupply: string;
-	royalty: string;
-	symbol: string;
-	feeRecipient: string;
-};

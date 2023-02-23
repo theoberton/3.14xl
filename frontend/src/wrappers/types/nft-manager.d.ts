@@ -3,6 +3,8 @@ export type NftManagerInitData = {
 	debug: bigint;
 	mintPrice: bigint;
 	maxSupply: bigint;
+	mintDateStart: bigint;
+	mintDateEnd: bigint;
 };
 
 export type SetNftCollectionAddress = {
@@ -22,6 +24,8 @@ export type NftManagerData = {
 	nftCollectionAddress: Address;
 	mintPrice: bigint;
 	maxSupply: number;
+	mintDateStart: number;
+	mintDateEnd: number;
 };
 
 export type MintSafe = {

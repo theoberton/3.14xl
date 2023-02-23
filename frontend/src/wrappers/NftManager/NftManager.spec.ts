@@ -5,12 +5,12 @@ import {
 	SendMessageResult,
 	TreasuryContract,
 } from '@ton-community/sandbox';
-import { NftCollection } from './../NftCollection';
+import { dateToUnix } from '@/helpers';
+import { NftCollection } from '../NftCollection';
 import { NftManager } from '.';
 import { getDefaultNftCollectionData } from '../NftCollection/helpers';
 
-import { NftCollectionCodeCell } from './../NftCollection/NftCollection.source';
-
+import { NftCollectionCodeCell } from '../NftCollection/NftCollection.source';
 import '@ton-community/test-utils'; // register matchers
 
 /** Helpers */
@@ -95,7 +95,7 @@ function expectFailedMint(
 	});
 }
 
-describe('Collection', () => {
+describe('NftManager', () => {
 	it('should deploy manager and collection contracts', async () => {
 		const blkch = await Blockchain.create();
 
@@ -105,6 +105,8 @@ describe('Collection', () => {
 			debug: BigInt(Math.floor(Math.random() * 10000)),
 			mintPrice: toNano('1'),
 			maxSupply: 0n,
+			mintDateStart: 0n,
+			mintDateEnd: 0n
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -151,6 +153,8 @@ describe('Collection', () => {
 			debug: BigInt(Math.floor(Math.random() * 10000)),
 			mintPrice: toNano('1'),
 			maxSupply: 1n,
+			mintDateStart: 0n,
+			mintDateEnd: 0n
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -177,5 +181,107 @@ describe('Collection', () => {
 		const failedMintResult = await mint(buyer2, manager, collection, mintPrice);
 
 		expectFailedMint(failedMintResult, creator, manager, collection, mintPrice);
+	});
+
+	it('should restrict minting by start rule', async () => {
+		const blkch = await Blockchain.create();
+		const creator = await blkch.treasury('creator');
+
+		const managerInitData = {
+			owner: creator.address,
+			debug: BigInt(Math.floor(Math.random() * 10000)),
+			mintPrice: toNano('1'),
+			maxSupply: 0n,
+			mintDateStart: BigInt(dateToUnix(new Date()) + 1000),
+			mintDateEnd: 0n
+		};
+
+		const nftManager = NftManager.createFromConfig(managerInitData);
+
+		const manager = blkch.openContract(nftManager);
+
+		const nftCollectionConfig = getDefaultNftCollectionData({
+			ownerAddress: manager.address,
+		});
+		const collection = blkch.openContract(
+			NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell)
+		);
+
+		await deployNftCollection(creator, manager, collection);
+
+		const buyer = await blkch.treasury('buyer');
+		const { mintPrice } = await manager.getManagerData();
+
+		const mintResult = await mint(buyer, manager, collection, mintPrice);
+
+		expectFailedMint(mintResult, creator, manager, collection, mintPrice);
+	});
+
+	it('should restrict minting by end rule', async () => {
+		const blkch = await Blockchain.create();
+		const creator = await blkch.treasury('creator');
+
+		const managerInitData = {
+			owner: creator.address,
+			debug: BigInt(Math.floor(Math.random() * 10000)),
+			mintPrice: toNano('1'),
+			maxSupply: 0n,
+			mintDateStart: 0n,
+			mintDateEnd: BigInt(dateToUnix(new Date()) - 1000)
+		};
+
+		const nftManager = NftManager.createFromConfig(managerInitData);
+
+		const manager = blkch.openContract(nftManager);
+
+		const nftCollectionConfig = getDefaultNftCollectionData({
+			ownerAddress: manager.address,
+		});
+		const collection = blkch.openContract(
+			NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell)
+		);
+
+		await deployNftCollection(creator, manager, collection);
+
+		const buyer = await blkch.treasury('buyer');
+		const { mintPrice } = await manager.getManagerData();
+
+		const mintResult = await mint(buyer, manager, collection, mintPrice);
+
+		expectFailedMint(mintResult, creator, manager, collection, mintPrice);
+	});
+
+	it('should allow mint just in time', async () => {
+		const blkch = await Blockchain.create();
+		const creator = await blkch.treasury('creator');
+
+		const managerInitData = {
+			owner: creator.address,
+			debug: BigInt(Math.floor(Math.random() * 10000)),
+			mintPrice: toNano('1'),
+			maxSupply: 0n,
+			mintDateStart: BigInt(dateToUnix(new Date()) - 1000),
+			mintDateEnd: BigInt(dateToUnix(new Date()) + 1000)
+		};
+
+		const nftManager = NftManager.createFromConfig(managerInitData);
+
+		const manager = blkch.openContract(nftManager);
+
+		const nftCollectionConfig = getDefaultNftCollectionData({
+			ownerAddress: manager.address,
+		});
+		const collection = blkch.openContract(
+			NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell)
+		);
+
+		await deployNftCollection(creator, manager, collection);
+
+		const buyer = await blkch.treasury('buyer');
+		const { mintPrice } = await manager.getManagerData();
+
+		const mintResult = await mint(buyer, manager, collection, mintPrice);
+
+		expectSuccessfullMint(mintResult, creator, manager, collection, mintPrice);
 	});
 });

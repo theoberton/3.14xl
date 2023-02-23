@@ -5,7 +5,7 @@
 	padding-right: 20%;
 	border-right: 1px solid $gray-two;
 	order: 1;
-	overflow: auto;
+	overflow-y: auto;
 
 	@media (max-width: $breakpoint-l) {
 		border-right: 0;

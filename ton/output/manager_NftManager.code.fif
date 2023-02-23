@@ -226,16 +226,18 @@ PROGRAM{
     __tact_load_address INLINECALLDICT
   }>
   __gen_write_NftManager PROCINLINE:<{
-    s5 s4 XCHG2
+    s7 s6 XCHG2
     __tact_store_address INLINECALLDICT
-    s1 s2 XCHG
+    s1 s4 XCHG
     16 STU
-    SWAP
-    __tact_store_address INLINECALLDICT
     ROT
+    __tact_store_address INLINECALLDICT
+    SWAP
     STGRAMS
-    257 PUSHINT
-    STIX
+    32 STU
+    s1 s2 XCHG
+    32 STU
+    32 STU
   }>
   __gen_read_NftManager PROCINLINE:<{
     __tact_load_address INLINECALLDICT
@@ -244,9 +246,10 @@ PROGRAM{
     __tact_load_address INLINECALLDICT
     SWAP
     LDGRAMS
-    257 PUSHINT
-    LDIX
-    5 -ROLL
+    32 LDU
+    32 LDU
+    32 LDU
+    7 -ROLL
   }>
   __gen_Context_get_sender PROCINLINE:<{
     s2 s3 XCHG
@@ -261,14 +264,14 @@ PROGRAM{
     SWAP
     __tact_context_sys SETGLOB
     __gen_read_NftManager INLINECALLDICT
-    1 5 BLKDROP2
+    1 7 BLKDROP2
   }>
   __gen_store_NftManager PROCINLINE:<{
     NEWC
     __tact_context_sys GETGLOB
     SWAP
     STREF
-    5 -ROLL
+    7 -ROLL
     __gen_write_NftManager INLINECALLDICT
     ENDC
     c4 POP
@@ -396,8 +399,8 @@ PROGRAM{
     __tact_string_builder_end INLINECALLDICT
   }>
   $__gen_NftManager_nft_collection_address PROCREF:<{
-    s2 s4 XCHG
-    4 BLKDROP
+    s4 s6 XCHG
+    6 BLKDROP
   }>
   $__gen_get_nft_collection_address PROC:<{
     __gen_load_NftManager INLINECALLDICT
@@ -413,28 +416,29 @@ PROGRAM{
   $__gen_NftManager_requireOwner PROCREF:<{
     __tact_context_get INLINECALLDICT
     __gen_Context_get_sender INLINECALLDICT
-    s5 PUSH
+    s7 PUSH
     __tact_address_eq INLINECALLDICT
     132 THROWIFNOT
   }>
   $__gen_NftManager_owner PROCREF:<{
-    4 BLKDROP
+    6 BLKDROP
   }>
   $__gen_get_owner PROC:<{
     __gen_load_NftManager INLINECALLDICT
     $__gen_NftManager_owner INLINECALLDICT
   }>
   $__gen_NftManager_receive_SetNftCollectionAddress PROCINLINE:<{
-    5 -ROLL
+    7 -ROLL
     $__gen_NftManager_requireOwner INLINECALLDICT
-    s4 PUSH
+    s6 PUSH
     39618 PUSHINT
-    s0 s4 XCHG
+    s0 s6 XCHG
     __tact_address_eq INLINECALLDICT
-    s1 s3 XCHG
+    s1 s5 XCHG
     THROWANYIFNOT
-    s3 s4 XCHG
-    s3 s0 s0 XCHG3
+    s5 s6 XCHG
+    s4 s5 XCHG
+    3 ROLL
   }>
   $__gen_NftManager_receive_MintSafe PROCINLINE:<{
     __tact_context_get INLINECALLDICT
@@ -449,29 +453,42 @@ PROGRAM{
     STREF
     ENDC
     13674 PUSHINT
-    s6 PUSH
+    s8 PUSH
     200000000 PUSHINT
     ADD
     s1 s3 XCHG
     GEQ
     s1 s2 XCHG
     THROWANYIFNOT
-    s3 PUSH
+    s5 PUSH
     0 GTINT
     IF:<{
       47714 PUSHINT
-      s2 s4 PUSH2
+      s2 s6 PUSH2
       LESS
       THROWANYIFNOT
     }>
+    23716 PUSHINT
+    s5 PUSH
+    NOW
+    LESS
+    THROWANYIFNOT
+    36032 PUSHINT
+    s4 PUSH
+    0 EQINT
+    s5 PUSH
+    NOW
+    GREATER
+    OR
+    THROWANYIFNOT
     TRUE
     1 PUSHINT
     B{b5ee9c7241010101001100001e4e4654206974656d206d696e746564af01325a} B>boc <s PUSHSLICE
     $__gen_String_asComment INLINECALLDICT
     PUSHNULL
     PUSHNULL
-    s12 PUSH
-    s4 s10 XCPU
+    s14 PUSH
+    s4 s12 XCPU
     s4 s3 s4 XCHG3
     $send INLINECALLDICT
     TRUE
@@ -481,7 +498,7 @@ PROGRAM{
     20000000 PUSHINT
     s0 s4 XCHG2
     __gen_writecell_Mint INLINECALLDICT
-    s6 PUSH
+    s8 PUSH
     3 -ROLL
     PUSHNULL
     PUSHNULL
@@ -529,9 +546,11 @@ PROGRAM{
     IFJMP:<{
       DROP
       __gen_load_NftManager INLINECALLDICT
-      s0 s5 XCHG
+      s0 s7 XCHG
       __gen_read_SetNftCollectionAddress INLINECALLDICT
       NIP
+      s6 s7 XCHG
+      s5 s6 XCHG
       s4 s5 XCHG
       s3 s4 XCHG
       s1 s3 s0 XCHG3
@@ -544,9 +563,11 @@ PROGRAM{
     IFJMP:<{
       DROP
       __gen_load_NftManager INLINECALLDICT
-      s0 s5 XCHG
+      s0 s7 XCHG
       __gen_read_MintSafe INLINECALLDICT
       s3 POP
+      s8 s9 XCHG
+      s7 s8 XCHG
       s6 s7 XCHG
       s5 s6 XCHG
       s4 s5 XCHG
@@ -559,9 +580,11 @@ PROGRAM{
     EQUAL
     IFJMP:<{
       __gen_load_NftManager INLINECALLDICT
-      s0 s5 XCHG
+      s0 s7 XCHG
       __gen_read_Deploy INLINECALLDICT
       NIP
+      s6 s7 XCHG
+      s5 s6 XCHG
       s4 s5 XCHG
       s3 s4 XCHG
       s1 s3 s0 XCHG3
@@ -577,6 +600,6 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d514147507173476747696372334856585241784575326148754e3538636750536f4d7269724b6f7463457a41} PUSHSLICE
+    x{697066733a2f2f516d654253545a735773447a6f7a705775754b6d3652365562704e6a7750656f597a6d50447953747a4a7838534e} PUSHSLICE
   }>
 }END>c

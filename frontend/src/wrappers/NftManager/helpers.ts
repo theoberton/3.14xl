@@ -13,7 +13,9 @@ export function buildNftManagerDataCell(managerData: NftManagerInitData, systemC
 		.storeInt(managerData.debug ?? Math.floor(Math.random() * 10000), 16)
 		.storeAddress(managerData.owner)
 		.storeCoins(managerData.mintPrice)
-		.storeInt(managerData.maxSupply ?? 0, 257)
+		.storeInt(managerData.maxSupply ?? 0n, 32)
+		.storeInt(managerData.mintDateStart ?? 0n, 32)
+		.storeInt(managerData.mintDateEnd ?? 0n, 32)
 		.endCell();
 	return data;
 }

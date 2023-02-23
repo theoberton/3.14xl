@@ -54,11 +54,12 @@ SETCP0
       s0 s1 XCHG
       s0 s1 XCHG
       LDGRAMS
-      257 PUSHINT
-      LDI
-      5 1 BLKSWAP
-      1 5 BLKDROP2
-      s0 s5 XCHG
+      32 LDU
+      32 LDU
+      32 LDU
+      7 1 BLKSWAP
+      1 7 BLKDROP2
+      s0 s7 XCHG
       32 LDU
       s0 s1 XCHG
       435957060 PUSHINT
@@ -67,42 +68,47 @@ SETCP0
       LDMSGADDR
       s0 s1 XCHG
       s1 POP
+      s6 s7 XCHG
+      s5 s6 XCHG
       s4 s5 XCHG
       s3 s4 XCHG
       s1 s3 s0 XCHG3
-      5 1 BLKSWAP
+      7 1 BLKSWAP
       <{
         1 GETGLOBVAR
         4 UNTUPLE
         s2 s3 XCHG
         3 BLKDROP
-        s5 PUSH
+        s7 PUSH
         SDEQ
         132 THROWIFNOT
       }> CALLREF
-      s4 PUSH
+      s6 PUSH
       39618 PUSHINT
-      s0 s4 XCHG
+      s0 s6 XCHG
       SDEQ
-      s1 s3 XCHG
+      s1 s5 XCHG
       THROWANYIFNOT
-      s3 s4 XCHG
-      s3 s0 s0 XCHG3
+      s5 s6 XCHG
+      s4 s5 XCHG
+      1 3 BLKSWAP
       NEWC
       2 GETGLOBVAR
       s0 s1 XCHG
       STREF
-      5 1 BLKSWAP
-      s5 s4 XCHG2
+      7 1 BLKSWAP
+      s7 s6 XCHG2
       STSLICER
-      s1 s2 XCHG
+      s1 s4 XCHG
       16 STU
-      s0 s1 XCHG
-      STSLICER
       ROT
+      STSLICER
+      s0 s1 XCHG
       STGRAMS
-      257 PUSHINT
-      STIX
+      32 STU
+      s1 s2 XCHG
+      32 STU
+      32 STU
       ENDC
       c4 POP
     }> IFJMPREF
@@ -124,11 +130,12 @@ SETCP0
       s0 s1 XCHG
       s0 s1 XCHG
       LDGRAMS
-      257 PUSHINT
-      LDI
-      5 1 BLKSWAP
-      1 5 BLKDROP2
-      s0 s5 XCHG
+      32 LDU
+      32 LDU
+      32 LDU
+      7 1 BLKSWAP
+      1 7 BLKDROP2
+      s0 s7 XCHG
       32 LDU
       s0 s1 XCHG
       3323304562 PUSHINT
@@ -140,6 +147,8 @@ SETCP0
       s0 s1 XCHG
       s3 s3 s0 XCHG3
       s3 POP
+      s8 s9 XCHG
+      s7 s8 XCHG
       s6 s7 XCHG
       s5 s6 XCHG
       s4 s5 XCHG
@@ -162,22 +171,35 @@ SETCP0
         STREF
         ENDC
         13674 PUSHINT
-        s6 PUSH
+        s8 PUSH
         200000000 PUSHINT
         ADD
         s1 s3 XCHG
         GEQ
         s1 s2 XCHG
         THROWANYIFNOT
-        s3 PUSH
+        s5 PUSH
         0 GTINT
         <{
           47714 PUSHINT
-          s2 s4 PUSH2
+          s2 s6 PUSH2
           LESS
           THROWANYIFNOT
         }> PUSHCONT
         IF
+        23716 PUSHINT
+        s5 PUSH
+        NOW
+        LESS
+        THROWANYIFNOT
+        36032 PUSHINT
+        s4 PUSH
+        0 EQINT
+        s5 PUSH
+        NOW
+        GREATER
+        OR
+        THROWANYIFNOT
         -1 PUSHINT
         1 PUSHINT
         PUSHSLICE
@@ -285,8 +307,8 @@ SETCP0
         }> CALLREF
         PUSHNULL
         PUSHNULL
-        s12 PUSH
-        s4 s10 XCPU
+        s14 PUSH
+        s4 s12 XCPU
         s4 s3 s4 XCHG3
         <{
           NEWC
@@ -434,7 +456,7 @@ SETCP0
           STREF
           ENDC
         }> CALLREF
-        s6 PUSH
+        s8 PUSH
         3 1 BLKSWAP
         PUSHNULL
         PUSHNULL
@@ -569,17 +591,19 @@ SETCP0
       2 GETGLOBVAR
       s0 s1 XCHG
       STREF
-      5 1 BLKSWAP
-      s5 s4 XCHG2
+      7 1 BLKSWAP
+      s7 s6 XCHG2
       STSLICER
-      s1 s2 XCHG
+      s1 s4 XCHG
       16 STU
-      s0 s1 XCHG
-      STSLICER
       ROT
+      STSLICER
+      s0 s1 XCHG
       STGRAMS
-      257 PUSHINT
-      STIX
+      32 STU
+      s1 s2 XCHG
+      32 STU
+      32 STU
       ENDC
       c4 POP
     }> IFJMPREF
@@ -599,11 +623,12 @@ SETCP0
       s0 s1 XCHG
       s0 s1 XCHG
       LDGRAMS
-      257 PUSHINT
-      LDI
-      5 1 BLKSWAP
-      1 5 BLKDROP2
-      s0 s5 XCHG
+      32 LDU
+      32 LDU
+      32 LDU
+      7 1 BLKSWAP
+      1 7 BLKDROP2
+      s0 s7 XCHG
       32 LDU
       s0 s1 XCHG
       2490013878 PUSHINT
@@ -612,6 +637,8 @@ SETCP0
       64 LDU
       s0 s1 XCHG
       s1 POP
+      s6 s7 XCHG
+      s5 s6 XCHG
       s4 s5 XCHG
       s3 s4 XCHG
       s1 s3 s0 XCHG3
@@ -767,17 +794,19 @@ SETCP0
       2 GETGLOBVAR
       s0 s1 XCHG
       STREF
-      5 1 BLKSWAP
-      s5 s4 XCHG2
+      7 1 BLKSWAP
+      s7 s6 XCHG2
       STSLICER
-      s1 s2 XCHG
+      s1 s4 XCHG
       16 STU
-      s0 s1 XCHG
-      STSLICER
       ROT
+      STSLICER
+      s0 s1 XCHG
       STGRAMS
-      257 PUSHINT
-      STIX
+      32 STU
+      s1 s2 XCHG
+      32 STU
+      32 STU
       ENDC
       c4 POP
     }> IFJMPREF
@@ -798,13 +827,14 @@ SETCP0
     s0 s1 XCHG
     s0 s1 XCHG
     LDGRAMS
-    257 PUSHINT
-    LDI
-    5 1 BLKSWAP
-    1 5 BLKDROP2
+    32 LDU
+    32 LDU
+    32 LDU
+    7 1 BLKSWAP
+    1 7 BLKDROP2
     <{
-      s2 s4 XCHG
-      4 BLKDROP
+      s4 s6 XCHG
+      6 BLKDROP
     }> CALLREF
 
   owner: 
@@ -821,12 +851,13 @@ SETCP0
     s0 s1 XCHG
     s0 s1 XCHG
     LDGRAMS
-    257 PUSHINT
-    LDI
-    5 1 BLKSWAP
-    1 5 BLKDROP2
+    32 LDU
+    32 LDU
+    32 LDU
+    7 1 BLKSWAP
+    1 7 BLKDROP2
     <{
-      4 BLKDROP
+      6 BLKDROP
     }> CALLREF
 
   92262: 
@@ -843,10 +874,11 @@ SETCP0
     s0 s1 XCHG
     s0 s1 XCHG
     LDGRAMS
-    257 PUSHINT
-    LDI
-    5 1 BLKSWAP
-    1 5 BLKDROP2
+    32 LDU
+    32 LDU
+    32 LDU
+    7 1 BLKSWAP
+    1 7 BLKDROP2
 
   113617: 
     123515602279859691144772641439386770278 PUSHINT
