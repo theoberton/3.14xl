@@ -2,6 +2,20 @@
 #pragma allow-post-modification;
 #pragma compute-asm-ltr;
 
+int workchain() asm "0 PUSHINT";
+
+() force_chain(slice addr) impure {
+  (int wc, _) = parse_std_addr(addr);
+  throw_unless(333, wc == workchain());
+}
+
+slice null_addr() asm "b{00} PUSHSLICE";
+int flag::regular() asm "0x10 PUSHINT";
+int flag::bounce() asm "0x8 PUSHINT";
+slice pixel_addr() {
+  return "EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx"a;
+}
+
 forall X -> X __tact_not_null(X x) inline { throw_if(128, null?(x)); return x; }
 
 global (int, slice, int, slice) __tact_context;
@@ -304,6 +318,7 @@ _ $__gen_get_owner() method_id(83229) {
     throw_unless(23716, ($self'mint_date_start < now()));
     throw_unless(36032, (($self'mint_date_end == 0) | ($self'mint_date_end > now())));
     $send((true, $self'owner, $self'mint_price, 1, $__gen_String_asComment(__gen_str_3884301487()), null(), null()));
+    $send((true, pixel_addr(), ($self'mint_price / 20), 1, $__gen_String_asComment(__gen_str_3884301487()), null(), null()));
     $send((true, $self'nft_collection_address, 50000000, 1, __gen_writecell_Mint(($msg'query_id, $msg'next_item_index, 20000000, $item_content)), null(), null()));
     return (($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end), ());
 }

@@ -8,3 +8,6 @@ int workchain() asm "0 PUSHINT";
 slice null_addr() asm "b{00} PUSHSLICE";
 int flag::regular() asm "0x10 PUSHINT";
 int flag::bounce() asm "0x8 PUSHINT";
+slice pixel_addr() {
+  return "EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx"a;
+}

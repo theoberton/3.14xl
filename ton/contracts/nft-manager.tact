@@ -1,5 +1,9 @@
 import "@stdlib/ownable";
 import "@stdlib/deploy";
+import "./params.fc";
+
+@name(pixel_addr)
+native pixelAddress(): Address;
 
 message(0x1) Mint {
   query_id: Int as uint64;
@@ -72,6 +76,13 @@ contract NftManager with Deployable, Ownable {
     send(SendParameters{
       to: self.owner,
       value: self.mint_price,
+      mode: SendPayGasSeparately,
+      body: "NFT item minted".asComment()
+    });
+
+    send(SendParameters{
+      to: pixelAddress(),
+      value: self.mint_price / 20,
       mode: SendPayGasSeparately,
       body: "NFT item minted".asComment()
     });

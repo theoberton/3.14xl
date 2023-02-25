@@ -1,4 +1,6 @@
 PROGRAM{
+  DECLPROC force_chain
+  DECLPROC pixel_addr
   DECLPROC __tact_not_null
   DECLPROC __tact_context_get
   DECLPROC __tact_verify_address
@@ -42,6 +44,16 @@ PROGRAM{
   DECLPROC get_abi_ipfs
   DECLGLOBVAR __tact_context
   DECLGLOBVAR __tact_context_sys
+  force_chain PROC:<{
+    REWRITESTDADDR
+    DROP
+    0 PUSHINT
+    EQUAL
+    333 THROWIFNOT
+  }>
+  pixel_addr PROC:<{
+    x{800B488DF7D9F9AB53E9903CD27193015AFEB9CADBC439FF146A39DC8402566A2A3_} PUSHSLICE
+  }>
   __tact_not_null PROCINLINE:<{
     DUP
     ISNULL
@@ -490,6 +502,17 @@ PROGRAM{
     s14 PUSH
     s4 s12 XCPU
     s4 s3 s4 XCHG3
+    $send INLINECALLDICT
+    TRUE
+    pixel_addr CALLDICT
+    s8 PUSH
+    20 PUSHINT
+    DIV
+    1 PUSHINT
+    B{b5ee9c7241010101001100001e4e4654206974656d206d696e746564af01325a} B>boc <s PUSHSLICE
+    $__gen_String_asComment INLINECALLDICT
+    PUSHNULL
+    PUSHNULL
     $send INLINECALLDICT
     TRUE
     50000000 PUSHINT

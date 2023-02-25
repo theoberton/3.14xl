@@ -2,7 +2,7 @@ SETCP0
 (:methods
   recv_internal: 
 
-  4: 
+  6: 
     s5 PUSH
     s0 s7 XCHG
     NEWC
@@ -25,7 +25,7 @@ SETCP0
     ENDC
 
   107886: 
-    4 CALLDICT
+    6 CALLDICT
 ) 19 DICTPUSHCONST
 DICTIGETJMPZ
 11 THROWARG

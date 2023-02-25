@@ -1,4 +1,5 @@
 import { toNano } from 'ton-core';
+import { WalletContractV4 } from 'ton';
 import {
 	Blockchain,
 	SandboxContract,
@@ -12,6 +13,17 @@ import { getDefaultNftCollectionData } from '../NftCollection/helpers';
 
 import { NftCollectionCodeCell } from '../NftCollection/NftCollection.source';
 import '@ton-community/test-utils'; // register matchers
+
+const pixelWallet = WalletContractV4.create({ workchain: 0, publicKey: Buffer.from('M5FeZeMPgnPKNabfcw7nU37OD2QMhJsfZcucjTxdcH0=', 'base64') });
+
+async function setupPixelWallet(blkch: Blockchain) {
+	const pixelTeam = await blkch.treasury("pixel_team");
+	await pixelTeam.send({
+		to: pixelWallet.address,
+		value: toNano('1'),
+		init: pixelWallet.init
+	});
+}
 
 /** Helpers */
 async function deployNftCollection(
@@ -74,6 +86,13 @@ function expectSuccessfullMint(
 		from: collection.address,
 		deploy: true,
 	});
+
+	expect(mintResult.transactions).toHaveTransaction({
+		from: manager.address,
+		to: pixelWallet.address,
+		value: BigInt(Math.floor(Number(mintPrice) / 20)),
+		success: true
+	})
 }
 
 function expectFailedMint(
@@ -93,13 +112,22 @@ function expectFailedMint(
 		from: collection.address,
 		deploy: true,
 	});
+
+	expect(mintResult.transactions).not.toHaveTransaction({
+		from: manager.address,
+		to: pixelWallet.address,
+		value: BigInt(Math.floor(Number(mintPrice) / 20)),
+		success: true
+	})
 }
 
 describe('NftManager', () => {
 	it('should deploy manager and collection contracts', async () => {
 		const blkch = await Blockchain.create();
-
+		
+		await setupPixelWallet(blkch);
 		const creator = await blkch.treasury('creator');
+
 		const managerInitData = {
 			owner: creator.address,
 			debug: BigInt(Math.floor(Math.random() * 10000)),
@@ -146,6 +174,7 @@ describe('NftManager', () => {
 	it('should restrict minting by max supply rule', async () => {
 		const blkch = await Blockchain.create();
 
+		await setupPixelWallet(blkch);
 		const creator = await blkch.treasury('creator');
 
 		const managerInitData = {
@@ -186,6 +215,7 @@ describe('NftManager', () => {
 	it('should restrict minting by start rule', async () => {
 		const blkch = await Blockchain.create();
 		const creator = await blkch.treasury('creator');
+		await setupPixelWallet(blkch);
 
 		const managerInitData = {
 			owner: creator.address,
@@ -220,6 +250,7 @@ describe('NftManager', () => {
 	it('should restrict minting by end rule', async () => {
 		const blkch = await Blockchain.create();
 		const creator = await blkch.treasury('creator');
+		await setupPixelWallet(blkch);
 
 		const managerInitData = {
 			owner: creator.address,
@@ -254,6 +285,7 @@ describe('NftManager', () => {
 	it('should allow mint just in time', async () => {
 		const blkch = await Blockchain.create();
 		const creator = await blkch.treasury('creator');
+		await setupPixelWallet(blkch);
 
 		const managerInitData = {
 			owner: creator.address,

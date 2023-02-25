@@ -1,10 +1,22 @@
 PROGRAM{
+  DECLPROC force_chain
+  DECLPROC pixel_addr
   DECLPROC __tact_verify_address
   DECLPROC __tact_store_address
   DECLPROC __gen_write_NftManager
   DECLPROC $__gen_NftManager_init
   107886 DECLMETHOD init
   DECLPROC main
+  force_chain PROC:<{
+    REWRITESTDADDR
+    DROP
+    0 PUSHINT
+    EQUAL
+    333 THROWIFNOT
+  }>
+  pixel_addr PROC:<{
+    x{800B488DF7D9F9AB53E9903CD27193015AFEB9CADBC439FF146A39DC8402566A2A3_} PUSHSLICE
+  }>
   __tact_verify_address PROCINLINE:<{
     SBITS
     267 PUSHINT
