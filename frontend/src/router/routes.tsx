@@ -6,7 +6,6 @@ import "nprogress/nprogress.css";
 
 const PageContainer = withSuspense(React.lazy(() => import('@/layouts/PageContainer')));
 const CreateEdition = withSuspense(React.lazy(() => import('@/pages/CreateEdition')));
-const CreateCollection = withSuspense(React.lazy(() => import('@/pages/CreateCollection')));
 const LandingPage = withSuspense(React.lazy(() => import('@/pages/Landing')));
 const NotFound = withSuspense(React.lazy(() => import('@/pages/NotFound')));
 const EditionDetailsPage = withSuspense(React.lazy(() => import('@/pages/EditionDetails')));
@@ -24,7 +23,6 @@ function ApplicationRoutes() {
 					<Route path="/explore" element={<ExplorePage />} />
 					<Route path="/create-edition" element={<CreateEdition />} />
 				</Route>
-				<Route path="/create-collection" element={<CreateCollection />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</HashRouter>
