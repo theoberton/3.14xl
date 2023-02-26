@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: NftManager
-BOC Size: 1188 bytes
+BOC Size: 1241 bytes
 
 # Types
-Total Types: 10
+Total Types: 11
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -44,6 +44,10 @@ Signature: `SetNftCollectionAddress{nft_collection_address:address}`
 ## ManagerData
 TLB: `_ owner:address debug:uint16 nft_collection_address:address mint_price:coins max_supply:uint32 mint_date_start:uint32 mint_date_end:uint32 = ManagerData`
 Signature: `ManagerData{owner:address,debug:uint16,nft_collection_address:address,mint_price:coins,max_supply:uint32,mint_date_start:uint32,mint_date_end:uint32}`
+
+## Excesses
+TLB: `excesses#d53276db query_id:uint64 = Excesses`
+Signature: `Excesses{query_id:uint64}`
 
 # Get Methods
 Total Get Methods: 3

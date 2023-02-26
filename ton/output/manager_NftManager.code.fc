@@ -15,6 +15,11 @@ int flag::bounce() asm "0x8 PUSHINT";
 slice pixel_addr() {
   return "EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx"a;
 }
+int min_tons_for_storage() asm "50000000 PUSHINT"; ;; 0.05 TON
+
+int __tact_my_balance() inline {
+    return pair_first(get_balance());
+}
 
 forall X -> X __tact_not_null(X x) inline { throw_if(128, null?(x)); return x; }
 
@@ -148,6 +153,17 @@ cell __gen_writecell_Mint((int, int, int, cell) v) inline_ref {
     throw_unless(129, sc_0~load_uint(32) == 435957060);
     var v'nft_collection_address = sc_0~__tact_load_address();
     return (sc_0, (v'nft_collection_address));
+}
+
+builder __gen_write_Excesses(builder build_0, (int) v) inline {
+    var (v'query_id) = v;
+    build_0 = store_uint(build_0, 3576854235, 32);
+    build_0 = build_0.store_uint(v'query_id, 64);
+    return build_0;
+}
+
+cell __gen_writecell_Excesses((int) v) inline_ref {
+    return __gen_write_Excesses(begin_cell(), v).end_cell();
 }
 
 builder __gen_write_NftManager(builder build_0, (slice, int, slice, int, int, int, int) v) inline {
@@ -311,15 +327,16 @@ _ $__gen_get_owner() method_id(83229) {
     var ($msg'query_id, $msg'next_item_index, $msg'item_owner) = $msg;
     var ($ctx'bounced, $ctx'sender, $ctx'value, $ctx'raw) = __tact_context_get();
     cell $item_content = end_cell(store_ref(__tact_store_address(begin_cell(), $msg'item_owner), $emptyCell()));
-    throw_unless(13674, ($ctx'value >= ($self'mint_price + 200000000)));
-    if (($self'max_supply > 0)) {
-        throw_unless(47714, ($msg'next_item_index < $self'max_supply));
-    }
+    int $pixelReward = ($self'mint_price / 20);
+    int $restAmount = (((((__tact_my_balance() - min_tons_for_storage()) - $self'mint_price) - $pixelReward) - 50000000) - 30000000);
+    throw_unless(13674, ($restAmount >= 0));
+    throw_unless(47714, (($self'max_supply == 0) | ($msg'next_item_index < $self'max_supply)));
     throw_unless(23716, ($self'mint_date_start < now()));
     throw_unless(36032, (($self'mint_date_end == 0) | ($self'mint_date_end > now())));
     $send((true, $self'owner, $self'mint_price, 1, $__gen_String_asComment(__gen_str_3884301487()), null(), null()));
-    $send((true, pixel_addr(), ($self'mint_price / 20), 1, $__gen_String_asComment(__gen_str_3884301487()), null(), null()));
-    $send((true, $self'nft_collection_address, 50000000, 1, __gen_writecell_Mint(($msg'query_id, $msg'next_item_index, 20000000, $item_content)), null(), null()));
+    $send((true, pixel_addr(), $pixelReward, 1, $__gen_String_asComment(__gen_str_3884301487()), null(), null()));
+    $send((true, $self'nft_collection_address, 50000000, 0, __gen_writecell_Mint(($msg'query_id, $msg'next_item_index, 20000000, $item_content)), null(), null()));
+    $send((true, $ctx'sender, $restAmount, 1, __gen_writecell_Excesses(($msg'query_id)), null(), null()));
     return (($self'owner, $self'debug, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end), ());
 }
 
@@ -388,5 +405,5 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() {
-    return "ipfs://QmeBSTZsWsDzozpWuuKm6R6UbpNjwPeoYzmPDyStzJx8SN";
+    return "ipfs://QmPsMMBZhAhexf5FkhpUHfPLJJhzJeGKUyEkyLP645626k";
 }

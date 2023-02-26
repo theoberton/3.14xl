@@ -7,6 +7,7 @@ import {
 	TreasuryContract,
 } from '@ton-community/sandbox';
 import { dateToUnix } from '../../helpers/date';
+import { calcPercent } from '../../helpers/math';
 import { NftCollection } from '../NftCollection';
 import { NftManager } from '.';
 import { getDefaultNftCollectionData } from '../NftCollection/helpers';
@@ -71,6 +72,7 @@ async function mint(
 function expectSuccessfullMint(
 	mintResult: SendMessageResult & { result: void },
 	creator: SandboxContract<TreasuryContract>,
+	buyer: SandboxContract<TreasuryContract>,
 	manager: SandboxContract<NftManager>,
 	collection: SandboxContract<NftCollection>,
 	mintPrice: bigint
@@ -90,7 +92,14 @@ function expectSuccessfullMint(
 	expect(mintResult.transactions).toHaveTransaction({
 		from: manager.address,
 		to: pixelWallet.address,
-		value: BigInt(Math.floor(Number(mintPrice) / 20)),
+		value: calcPercent(mintPrice, 0.05),
+		success: true
+	});
+
+	expect(mintResult.transactions).toHaveTransaction({
+		from: manager.address,
+		to: buyer.address,
+		value: value => (value ?? 0) > toNano("0.01"),
 		success: true
 	})
 }
@@ -98,6 +107,7 @@ function expectSuccessfullMint(
 function expectFailedMint(
 	mintResult: SendMessageResult & { result: void },
 	creator: SandboxContract<TreasuryContract>,
+	buyer: SandboxContract<TreasuryContract>,
 	manager: SandboxContract<NftManager>,
 	collection: SandboxContract<NftCollection>,
 	mintPrice: bigint
@@ -115,8 +125,13 @@ function expectFailedMint(
 
 	expect(mintResult.transactions).not.toHaveTransaction({
 		from: manager.address,
-		to: pixelWallet.address,
-		value: BigInt(Math.floor(Number(mintPrice) / 20)),
+		to: pixelWallet.address
+	});
+
+	expect(mintResult.transactions).toHaveTransaction({
+		from: manager.address,
+		to: buyer.address,
+		value: value => (value ?? 0) > mintPrice + calcPercent(mintPrice, 0.05) + toNano('0.1'),
 		success: true
 	})
 }
@@ -161,14 +176,11 @@ describe('NftManager', () => {
 
 		const firstMintResult = await mint(buyer, manager, collection, mintPrice);
 
-		expectSuccessfullMint(firstMintResult, creator, manager, collection, mintPrice);
+		expectSuccessfullMint(firstMintResult, creator, buyer, manager, collection, mintPrice);
 
 		const secondMintResult = await mint(buyer, manager, collection, mintPrice);
 
-		expect(secondMintResult.transactions).toHaveTransaction({
-			from: collection.address,
-			deploy: true,
-		});
+		expectSuccessfullMint(secondMintResult, creator, buyer, manager, collection, mintPrice);
 	});
 
 	it('should restrict minting by max supply rule', async () => {
@@ -205,11 +217,11 @@ describe('NftManager', () => {
 
 		const successfullMintResult = await mint(buyer1, manager, collection, mintPrice);
 
-		expectSuccessfullMint(successfullMintResult, creator, manager, collection, mintPrice);
+		expectSuccessfullMint(successfullMintResult, creator, buyer1, manager, collection, mintPrice);
 
 		const failedMintResult = await mint(buyer2, manager, collection, mintPrice);
 
-		expectFailedMint(failedMintResult, creator, manager, collection, mintPrice);
+		expectFailedMint(failedMintResult, creator, buyer2, manager, collection, mintPrice);
 	});
 
 	it('should restrict minting by start rule', async () => {
@@ -244,7 +256,7 @@ describe('NftManager', () => {
 
 		const mintResult = await mint(buyer, manager, collection, mintPrice);
 
-		expectFailedMint(mintResult, creator, manager, collection, mintPrice);
+		expectFailedMint(mintResult, creator, buyer, manager, collection, mintPrice);
 	});
 
 	it('should restrict minting by end rule', async () => {
@@ -279,7 +291,7 @@ describe('NftManager', () => {
 
 		const mintResult = await mint(buyer, manager, collection, mintPrice);
 
-		expectFailedMint(mintResult, creator, manager, collection, mintPrice);
+		expectFailedMint(mintResult, creator, buyer, manager, collection, mintPrice);
 	});
 
 	it('should allow mint just in time', async () => {
@@ -314,6 +326,6 @@ describe('NftManager', () => {
 
 		const mintResult = await mint(buyer, manager, collection, mintPrice);
 
-		expectSuccessfullMint(mintResult, creator, manager, collection, mintPrice);
+		expectSuccessfullMint(mintResult, creator, buyer, manager, collection, mintPrice);
 	});
 });

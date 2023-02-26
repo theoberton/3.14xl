@@ -15,6 +15,7 @@ int flag::bounce() asm "0x8 PUSHINT";
 slice pixel_addr() {
   return "EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx"a;
 }
+int min_tons_for_storage() asm "50000000 PUSHINT"; ;; 0.05 TON
 
 () __tact_verify_address(slice address) inline {
     throw_unless(136, address.slice_bits() != 267);

@@ -1,6 +1,7 @@
 PROGRAM{
   DECLPROC force_chain
   DECLPROC pixel_addr
+  DECLPROC __tact_my_balance
   DECLPROC __tact_not_null
   DECLPROC __tact_context_get
   DECLPROC __tact_verify_address
@@ -19,6 +20,8 @@ PROGRAM{
   DECLPROC __gen_writecell_Mint
   DECLPROC __gen_read_MintSafe
   DECLPROC __gen_read_SetNftCollectionAddress
+  DECLPROC __gen_write_Excesses
+  DECLPROC __gen_writecell_Excesses
   DECLPROC __gen_write_NftManager
   DECLPROC __gen_read_NftManager
   DECLPROC __gen_Context_get_sender
@@ -53,6 +56,10 @@ PROGRAM{
   }>
   pixel_addr PROC:<{
     x{800B488DF7D9F9AB53E9903CD27193015AFEB9CADBC439FF146A39DC8402566A2A3_} PUSHSLICE
+  }>
+  __tact_my_balance PROCINLINE:<{
+    BALANCE
+    FIRST
   }>
   __tact_not_null PROCINLINE:<{
     DUP
@@ -236,6 +243,18 @@ PROGRAM{
     EQUAL
     129 THROWIFNOT
     __tact_load_address INLINECALLDICT
+  }>
+  __gen_write_Excesses PROCINLINE:<{
+    3576854235 PUSHINT
+    ROT
+    32 STU
+    64 STU
+  }>
+  __gen_writecell_Excesses PROCREF:<{
+    NEWC
+    SWAP
+    __gen_write_Excesses INLINECALLDICT
+    ENDC
   }>
   __gen_write_NftManager PROCINLINE:<{
     s7 s6 XCHG2
@@ -454,8 +473,7 @@ PROGRAM{
   }>
   $__gen_NftManager_receive_MintSafe PROCINLINE:<{
     __tact_context_get INLINECALLDICT
-    DROP
-    NIP
+    2DROP
     NEWC
     s2 POP
     s0 s2 XCHG
@@ -464,31 +482,40 @@ PROGRAM{
     SWAP
     STREF
     ENDC
+    s7 PUSH
+    20 PUSHINT
+    DIV
+    __tact_my_balance INLINECALLDICT
+    50000000 PUSHINT
+    SUB
+    s9 PUSH
+    SUB
+    OVER
+    SUB
+    50000000 PUSHINT
+    SUB
+    30000000 PUSHINT
+    SUB
     13674 PUSHINT
-    s8 PUSH
-    200000000 PUSHINT
-    ADD
-    s1 s3 XCHG
-    GEQ
-    s1 s2 XCHG
+    OVER
+    -1 GTINT
     THROWANYIFNOT
-    s5 PUSH
-    0 GTINT
-    IF:<{
-      47714 PUSHINT
-      s2 s6 PUSH2
-      LESS
-      THROWANYIFNOT
-    }>
+    47714 PUSHINT
+    s9 PUSH
+    0 EQINT
+    s6 s10 PUSH2
+    LESS
+    OR
+    THROWANYIFNOT
     23716 PUSHINT
-    s5 PUSH
+    s8 PUSH
     NOW
     LESS
     THROWANYIFNOT
     36032 PUSHINT
-    s4 PUSH
+    s7 PUSH
     0 EQINT
-    s5 PUSH
+    s8 PUSH
     NOW
     GREATER
     OR
@@ -499,30 +526,40 @@ PROGRAM{
     $__gen_String_asComment INLINECALLDICT
     PUSHNULL
     PUSHNULL
-    s14 PUSH
-    s4 s12 XCPU
+    17 s() PUSH
+    s4 s15 XCPU
     s4 s3 s4 XCHG3
     $send INLINECALLDICT
     TRUE
     pixel_addr CALLDICT
-    s8 PUSH
-    20 PUSHINT
-    DIV
     1 PUSHINT
     B{b5ee9c7241010101001100001e4e4654206974656d206d696e746564af01325a} B>boc <s PUSHSLICE
     $__gen_String_asComment INLINECALLDICT
+    s3 s4 XCHG
+    s2 s3 XCHG
+    s2 s5 XCHG
     PUSHNULL
     PUSHNULL
     $send INLINECALLDICT
     TRUE
     50000000 PUSHINT
-    s4 s3 XCHG2
-    1 PUSHINT
+    0 PUSHINT
     20000000 PUSHINT
-    s0 s4 XCHG2
-    __gen_writecell_Mint INLINECALLDICT
     s8 PUSH
-    3 -ROLL
+    s8 s1 s3 XCHG3
+    s0 s6 XCHG
+    __gen_writecell_Mint INLINECALLDICT
+    s3 s0 s11 XC2PU
+    s0 s3 XCHG
+    s6 s6 XCHG2
+    PUSHNULL
+    PUSHNULL
+    $send INLINECALLDICT
+    TRUE
+    1 PUSHINT
+    s0 s4 XCHG
+    __gen_writecell_Excesses INLINECALLDICT
+    4 1 REVERSE
     PUSHNULL
     PUSHNULL
     $send INLINECALLDICT
@@ -623,6 +660,6 @@ PROGRAM{
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d654253545a735773447a6f7a705775754b6d3652365562704e6a7750656f597a6d50447953747a4a7838534e} PUSHSLICE
+    x{697066733a2f2f516d50734d4d425a68416865786635466b6870554866504c4a4a687a4a65474b5579456b794c503634353632366b} PUSHSLICE
   }>
 }END>c

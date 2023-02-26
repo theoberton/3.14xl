@@ -5,6 +5,9 @@ import "./params.fc";
 @name(pixel_addr)
 native pixelAddress(): Address;
 
+@name(min_tons_for_storage)
+native minTonsForStorage(): Int;
+
 message(0x1) Mint {
   query_id: Int as uint64;
   item_index: Int as uint64;
@@ -30,6 +33,10 @@ struct ManagerData {
   max_supply: Int as uint32;
   mint_date_start: Int as uint32;
   mint_date_end: Int as uint32;
+}
+
+message(0xd53276db) Excesses {
+  query_id: Int as uint64;
 }
 
 contract NftManager with Deployable, Ownable {
@@ -63,13 +70,12 @@ contract NftManager with Deployable, Ownable {
     let ctx: Context = context();
     let item_content: Cell = beginCell().storeAddress(msg.item_owner).storeRef(emptyCell()).endCell();
 
-    require(ctx.value >= self.mint_price + ton("0.2"), "Insufficient amount sent");
+    let pixelReward: Int = self.mint_price / 20;
+    let restAmount: Int = myBalance() - minTonsForStorage() - self.mint_price - pixelReward - ton("0.05") - ton("0.03");
 
-    if (self.max_supply > 0) {
-      require(msg.next_item_index < self.max_supply, "Max supply reached");
-    }
+    require(restAmount >= 0, "Insufficient amount sent");
 
-
+    require(self.max_supply == 0 || msg.next_item_index < self.max_supply, "Max supply reached");
     require(self.mint_date_start < now(), "Minting has not started yet");
     require(self.mint_date_end == 0 || self.mint_date_end > now(), "Minting has finished");
 
@@ -82,7 +88,7 @@ contract NftManager with Deployable, Ownable {
 
     send(SendParameters{
       to: pixelAddress(),
-      value: self.mint_price / 20,
+      value: pixelReward,
       mode: SendPayGasSeparately,
       body: "NFT item minted".asComment()
     });
@@ -90,13 +96,21 @@ contract NftManager with Deployable, Ownable {
     send(SendParameters{
       to: self.nft_collection_address,
       value: ton("0.05"),
-      mode: SendPayGasSeparately,
       body: Mint {
         query_id: msg.query_id,
         item_index: msg.next_item_index,
         item_value: ton("0.02"),
         item_content: item_content
       }.toCell()
+    });
+
+    send(SendParameters{
+      to: ctx.sender,
+      value: restAmount,
+      mode: SendPayGasSeparately,
+      body: Excesses {
+        query_id: msg.query_id
+      }.toCell()      
     });
   }
 

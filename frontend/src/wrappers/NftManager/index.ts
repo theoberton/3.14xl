@@ -1,5 +1,6 @@
 import { TupleBuilder, Address, beginCell, Cell, ContractProvider, Sender, toNano } from 'ton-core';
 import { BaseLocalContract } from '../core/BaseLocalContract';
+import { calcPercent } from '../../helpers/math';
 
 import { NftManagerInitData, NftManagerData, SendMintParams } from './../types';
 
@@ -40,11 +41,11 @@ export class NftManager extends BaseLocalContract {
 		provider: ContractProvider,
 		via: Sender,
 		params: SendMintParams,
-		value: bigint
+		mintPrice: bigint
 	) {
 		const msgBody = Queries.safeMint(params);
 		await provider.internal(via, {
-			value: value + toNano('0.2'),
+			value: mintPrice + calcPercent(mintPrice, 0.01) + toNano('0.2'),
 			body: msgBody,
 		});
 	}
