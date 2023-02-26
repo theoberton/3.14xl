@@ -1,13 +1,13 @@
 import { useTonConnectUI, ConnectedWallet } from '@tonconnect/ui-react';
 import { Sender, SenderArguments } from 'ton-core';
 
-type tonConenctReturn = {
+type TonConnectReturn = {
 	sender: Sender;
 	connected: boolean;
 	connectWallet: () => Promise<ConnectedWallet>;
 };
 
-export function useTonConnect(): tonConenctReturn {
+export function useTonConnect(): TonConnectReturn {
 	const [tonConnectUI] = useTonConnectUI();
 
 	return {
