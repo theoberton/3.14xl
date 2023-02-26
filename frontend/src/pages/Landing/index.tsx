@@ -1,15 +1,15 @@
 import { PresentationSection } from '@/pages/Landing/PresentationSection';
-import { Header } from '@/components';
-import CubeLeft from '@/assets/images/png/landing/CubeLeft.png';
-import CubeRight from '@/assets/images/png/landing/CubeRight.png';
+import ShowcaseSection from './ShowcaseSection';
+
 import styles from '@/pages/Landing/styles.module.scss';
 
 export default function LandingPage() {
 	return (
-		<div className={styles.landingContainer}>
-			<img src={CubeLeft} className={styles.landingCubeLeft} />
-			<img src={CubeRight} className={styles.landingCubeRight} />
-			<PresentationSection />
-		</div>
+		<>
+			<div className={styles.landingContainer}>
+				<PresentationSection />
+			</div>
+			<ShowcaseSection />
+		</>
 	);
 }

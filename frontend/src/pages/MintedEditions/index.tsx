@@ -1,7 +1,7 @@
 import { EditionCard } from '@/components';
 import { Button, ButtonKinds } from '@/components/Button';
 
-import { exampleData } from './data';
+import { exampleData } from '@/helpers';
 
 import styles from './styles.module.scss';
 

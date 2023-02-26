@@ -54,7 +54,6 @@ export function TextArea({
 
 	return (
 		<div className={inputContainerClass}>
-			<div />
 			{label && (
 				<label htmlFor={fieldName} className={inputLabelClass}>
 					{label}

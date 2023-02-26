@@ -2,7 +2,7 @@ import EditionsHeader from './Header';
 import { EditionCard } from '@/components';
 import styles from './styles.module.scss';
 
-import { exampleData } from './data';
+import { exampleData } from '@/helpers';
 
 export default function ExplorePage() {
 	return (

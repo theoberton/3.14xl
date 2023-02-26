@@ -60,7 +60,7 @@ function CreateEditionForm() {
 		[address, tonConnectUI.connected, tonClient]
 	);
 
-	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	const createEditionInitialValues: FormValues = {
 		name: 'Warrior',

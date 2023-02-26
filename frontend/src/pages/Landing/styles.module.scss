@@ -4,8 +4,9 @@
 	&Container {
 		padding: 20px;
 		background-color: $black-one;
-		height: $page-height;
-		overflow: hidden;
+		min-height: $page-height;
+
+		position: relative;
 	}
 
 	&Cube {
@@ -16,18 +17,46 @@
 
 		&Left {
 			z-index: 1;
-			width: 50vw;
-			top: 0;
-			left: 0;
+			width: 65vw;
+			top: -40%;
+			left: -15%;
 			@extend .landingCube;
+
+			@media (max-width: $breakpoint-l) {
+				width: 65vw;
+				top: 2%;
+				left: -13%;
+			}
+
+			@media (max-width: $breakpoint-s) {
+				width: 65vw;
+				top: 3%;
+				left: -10%;
+			}
+
+			@media (max-width: $breakpoint-xs) {
+				top: 7%;
+			}
 		}
 
 		&Right {
 			z-index: 3;
-			width: 45vw;
-			right: 0;
-			top: 0;
+			width: 55vw;
+			right: -10%;
+			top: -10%;
 			@extend .landingCube;
+
+			@media (max-width: $breakpoint-l) {
+				width: 55vw;
+				right: -10%;
+				top: 20%;
+			}
+
+			@media (max-width: $breakpoint-s) {
+				width: 60vw;
+				right: -10%;
+				top: 25%;
+			}
 		}
 	}
 
@@ -35,67 +64,64 @@
 		&Section {
 			display: flex;
 			flex-direction: column;
-			color: $white;
-		}
-
-		&Details {
-			font-size: $font-medium;
-			display: flex;
-			flex-direction: column;
-			gap: 90px;
+			justify-content: center;
 			align-items: center;
-
-			button {
-				z-index: 4;
-			}
-		}
-
-		&Examples {
-			display: flex;
-
-			:nth-child(1) {
-				margin-left: -20px;
-			}
-		}
-
-		&Example {
-			&Wrapper {
-				border-radius: 100%;
-				background-color: $white;
-			}
-			height: 160px;
-		}
-
-		&Explanation {
-			display: flex;
-			flex-direction: column;
-			gap: 20px;
-
-			&Section {
-				text-align: center;
-				max-width: 375px;
-
-				color: $white;
-				font-weight: 500;
-				z-index: 4;
-			}
+			gap: 40px;
+			color: $white;
 		}
 
 		&Slogan {
 			z-index: 1;
-
-			font-size: $font-extra-huge;
-			line-height: $font-extra-huge;
-			margin-bottom: 0.25em;
 
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
 
-			&Item {
-				text-align: center;
+			text-align: center;
+
+			font-size: $font-extra-huge;
+			line-height: $font-extra-huge;
+
+			@media (max-width: $breakpoint-xs) {
+				font-size: $font-super-huge;
+				line-height: $font-super-huge;
 			}
 		}
+
+		&Explanation {
+			text-align: center;
+			max-width: 375px;
+
+			color: $white;
+			font-weight: 500;
+			z-index: 4;
+		}
+
+		&Links {
+			display: flex;
+			flex-flow: row wrap;
+			gap: 30px;
+			justify-content: center;
+			align-items: center;
+
+			@media (max-width: $breakpoint-xs) {
+				> :first-child {
+					width: 100%;
+				}
+			}
+		}
+	}
+}
+
+.ShowcaseSection {
+	padding-block: 40px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+	gap: 25px;
+
+	> * {
+		z-index: 10;
+		background-color: $black-one;
 	}
 }

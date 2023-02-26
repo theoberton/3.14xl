@@ -1,8 +1,11 @@
-import FishImg from '../../assets/images/png/examples/fish.png';
-import CloudImg from '../../assets/images/png/examples/cloud.png';
-import FlowerImg from '../../assets/images/png/examples/flower.png';
-import EyesImg from '../../assets/images/png/examples/eyes.png';
-import GlitchImg from '../../assets/images/png/examples/glitch.png';
+import FishImg from '../assets/images/png/examples/fish.png';
+import CloudImg from '../assets/images/png/examples/cloud.png';
+import FlowerImg from '../assets/images/png/examples/flower.png';
+import EyesImg from '../assets/images/png/examples/eyes.png';
+import GlitchImg from '../assets/images/png/examples/glitch.png';
+import PlanetImg from '../assets/images/png/examples/planet.png';
+import SpringImg from '../assets/images/png/examples/spring.png';
+import PaperArtImg from '../assets/images/png/examples/paper_art.png';
 
 import { IEditionExampleItem } from '@/components/EditionCard/interface';
 
@@ -61,5 +64,32 @@ export const exampleData: IEditionExampleItem[] = [
 		price: 0.07,
 		minted: 321,
 		limit: 1000,
+	},
+	{
+		name: 'Planet',
+		minter: 'sample minter',
+		img: PlanetImg,
+		isActive: true,
+		price: 0,
+		minted: 54321,
+		limit: null,
+	},
+	{
+		name: 'Spring',
+		minter: 'sample minter',
+		img: SpringImg,
+		isActive: true,
+		price: 0.007,
+		minted: 4321,
+		limit: 10000,
+	},
+	{
+		name: 'Paper art',
+		minter: 'sample minter',
+		img: PaperArtImg,
+		isActive: false,
+		price: 0.07,
+		minted: 996,
+		limit: null,
 	},
 ];
