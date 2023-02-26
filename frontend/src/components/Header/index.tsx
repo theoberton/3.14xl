@@ -5,6 +5,7 @@ import { TonConnectButton } from '@tonconnect/ui-react';
 import Logo from '@/assets/images/svg/common/logo.svg';
 import styles from '@/components/Header/styles.module.scss';
 import buttonStyles from '@/components/Button/styles.module.scss';
+import { isTestnet } from '@/helpers/location';
 
 export function Header() {
 	const headerClass = classNames([styles.headerContainer, styles.headerContainerTransparent]);
@@ -13,6 +14,7 @@ export function Header() {
 		<header className={headerClass}>
 			<Link to="/">
 				<img src={Logo} className={styles.headerLogo} />
+				{isTestnet() ? "Testnet" : null}
 			</Link>
 			<TonConnectButton className={buttonStyles.wallet} />
 		</header>
