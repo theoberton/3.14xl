@@ -124,4 +124,8 @@
 		z-index: 10;
 		background-color: $black-one;
 	}
+
+	@media (max-width: $breakpoint-xs) {
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	}
 }
