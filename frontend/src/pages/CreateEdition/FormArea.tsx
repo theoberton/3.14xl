@@ -25,18 +25,19 @@ function FormArea() {
 				</Button>
 			</div>
 
-			<Input label={'Name'} name="name" placeholder="The Project" max={80} type="text" />
+			<Input label={'Name'} name="name" placeholder="The Project" max={30} type="text" />
 			<Input label={'Symbol'} name="symbol" type="text" max={15} placeholder="$SYMBOL" />
 			<TextArea
 				label={'Description'}
 				placeholder={"I'd like to share my project. It's about..."}
 				name={'description'}
+				maxLength={260}
 			/>
 			<MediaInput label={'Media'} name="media" placeholder="None selected" />
-			<Input label={'Price'} name="price" type="text" placeholder="0.01" units="TON" />
+			<Input label={'Price'} name="price" type="text" placeholder="0.01" units="TON" max={8} />
 			<EditionSize />
 			<ValidityPeriod />
-			<Input label={'Royalty'} name="royalty" type="text" placeholder="5" units="%" />
+			<Input label={'Royalty'} name="royalty" type="text" placeholder="5" units="%" max={8} />
 			<Input label={'Payout address'} name="payoutAddress" type="text" placeholder="Address" />
 			<div className={styles.createEditionSubmitButton}>
 				<Button

@@ -15,6 +15,7 @@ type TextAreaProps = {
 	disabled?: boolean;
 	isSubmitting?: boolean;
 	rows?: number;
+	maxLength?: number;
 };
 
 export function TextArea({
@@ -25,6 +26,7 @@ export function TextArea({
 	disabled,
 	isSubmitting,
 	rows = 3,
+	maxLength,
 }: TextAreaProps) {
 	const [field] = useField(name);
 	const { value, name: fieldName, onChange } = field;
@@ -70,6 +72,7 @@ export function TextArea({
 					placeholder={placeholder}
 					value={value}
 					className={className || inputDefaultClass}
+					maxLength={maxLength}
 				/>
 			</div>
 			{error && <div className={styles.inputError}>{error}</div>}

@@ -7,6 +7,12 @@
 		min-height: $page-height;
 
 		position: relative;
+
+		@media (max-width: $breakpoint-l) {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 	}
 
 	&Cube {
@@ -87,6 +93,11 @@
 				font-size: $font-super-huge;
 				line-height: $font-super-huge;
 			}
+
+			@media (max-width: $breakpoint-xxs) {
+				font-size: $font-huge-m;
+				line-height: $font-huge-m;
+			}
 		}
 
 		&Explanation {
@@ -101,7 +112,7 @@
 		&Links {
 			display: flex;
 			flex-flow: row wrap;
-			gap: 30px;
+			gap: 15px;
 			justify-content: center;
 			align-items: center;
 
@@ -117,7 +128,7 @@
 .ShowcaseSection {
 	padding-block: 40px;
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 	gap: 25px;
 
 	> * {
@@ -126,6 +137,6 @@
 	}
 
 	@media (max-width: $breakpoint-xs) {
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		grid-template-columns: 1fr;
 	}
 }

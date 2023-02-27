@@ -10,6 +10,10 @@
 		@extend .datePickerWrapper;
 		margin-top: 0;
 	}
+
+	button {
+		color: $white;
+	}
 }
 
 .datePickerItem {

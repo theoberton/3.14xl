@@ -63,9 +63,9 @@ function CreateEditionForm() {
 	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	const createEditionInitialValues: FormValues = {
-		name: 'Warrior',
-		symbol: '$WRR',
-		description: 'The warriors',
+		name: '',
+		symbol: '',
+		description: '',
 		media: null,
 		price: '0.1',
 		editionSize: {

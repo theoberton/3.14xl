@@ -1,5 +1,5 @@
+import { useCallback, HTMLInputTypeAttribute } from 'react';
 import { useField } from 'formik';
-import { HTMLInputTypeAttribute } from 'react';
 import classNames from 'classnames';
 import styles from '@/components/Input/styles.module.scss';
 

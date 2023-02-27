@@ -21,7 +21,7 @@ export function PresentationSection() {
 				easier to build something remarkable.
 			</p>
 
-			<div className={styles.landingPresentationDetailsLinks}>
+			<div className={styles.landingPresentationLinks}>
 				<Button componentType="link" kind={ButtonKinds.basic} to="/create-edition">
 					Create new collection
 				</Button>

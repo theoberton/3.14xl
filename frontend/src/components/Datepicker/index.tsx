@@ -15,6 +15,17 @@ import styles from '@/components/Datepicker/styles.module.scss';
 
 const INVALID_DATE = new Date('');
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: '#444444',
+			contrastText: '#fff',
+		},
+	},
+});
+
 interface DatepickerProps {
 	name: string;
 	label?: string;
@@ -89,41 +100,44 @@ export function Datepicker({
 	);
 
 	return (
-		<LocalizationProvider dateAdapter={AdapterDateFns}>
-			<DateTimePicker
-				inputFormat={inputFormat}
-				value={value}
-				disableFuture={disableFuture}
-				disablePast={disablePast}
-				PopperProps={popperProps}
-				maxDate={maxDate}
-				minDate={minDate}
-				defaultCalendarMonth={defaultCalendarMonth}
-				onChange={(popperInputValue, keyBoardInputValue) =>
-					handleChangeDate(popperInputValue, keyBoardInputValue)
-				}
-				renderInput={({ inputRef, inputProps, InputProps }) => (
-					<div className={inputContainerClass}>
-						{label && (
-							<label htmlFor={name} className={inputLabelClass}>
-								{label}
-							</label>
-						)}
-						<div className={datePickerWrapperClass}>
-							<input
-								{...inputProps}
-								onBlur={onBlur}
-								onFocus={onFocus}
-								ref={inputRef}
-								className={inputDefaultClass}
-								placeholder={placeholder}
-							/>
-							<i className={styles.datePickerItem}>{InputProps?.endAdornment}</i>
+		<ThemeProvider theme={theme}>
+			<LocalizationProvider dateAdapter={AdapterDateFns}>
+				<DateTimePicker
+					disableMaskedInput
+					inputFormat={inputFormat}
+					value={value}
+					disableFuture={disableFuture}
+					disablePast={disablePast}
+					PopperProps={popperProps}
+					maxDate={maxDate}
+					minDate={minDate}
+					defaultCalendarMonth={defaultCalendarMonth}
+					onChange={(popperInputValue, keyBoardInputValue) =>
+						handleChangeDate(popperInputValue, keyBoardInputValue)
+					}
+					renderInput={({ inputRef, inputProps, InputProps }) => (
+						<div className={inputContainerClass}>
+							{label && (
+								<label htmlFor={name} className={inputLabelClass}>
+									{label}
+								</label>
+							)}
+							<div className={datePickerWrapperClass}>
+								<input
+									{...inputProps}
+									onBlur={onBlur}
+									onFocus={onFocus}
+									ref={inputRef}
+									className={inputDefaultClass}
+									placeholder={placeholder}
+								/>
+								<i className={styles.datePickerItem}>{InputProps?.endAdornment}</i>
+							</div>
+							{error && <div className={inputStyles.inputError}>{error}</div>}
 						</div>
-						{error && <div className={inputStyles.inputError}>{error}</div>}
-					</div>
-				)}
-			/>
-		</LocalizationProvider>
+					)}
+				/>
+			</LocalizationProvider>
+		</ThemeProvider>
 	);
 }
