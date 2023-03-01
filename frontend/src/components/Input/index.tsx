@@ -1,5 +1,7 @@
-import { useCallback, HTMLInputTypeAttribute } from 'react';
+import { HTMLInputTypeAttribute } from 'react';
 import { useField } from 'formik';
+import { useMediaQuery } from 'react-responsive';
+
 import classNames from 'classnames';
 import styles from '@/components/Input/styles.module.scss';
 
@@ -7,11 +9,11 @@ import { useCustomStateFormField } from '@/hooks/useCustomStateFormField';
 
 interface Props {
 	placeholder?: string;
+	subCaption?: string;
 	name: string;
 	type: string;
 	className?: string;
 	label?: string;
-	caption?: string;
 	isInfoType?: boolean;
 	isSubmitting?: boolean;
 	disabled?: boolean;
@@ -21,6 +23,7 @@ interface Props {
 	units?: string | null;
 	marginless?: boolean;
 	noEdit?: boolean;
+	inputSupplementaryComponent?: React.ReactNode;
 }
 
 export function Input(props: Props) {
@@ -30,16 +33,18 @@ export function Input(props: Props) {
 		type,
 		label,
 		disabled,
+		subCaption,
 		isSubmitting,
 		noEdit,
 		min,
 		max,
-		caption,
 		optional,
 		units,
+		inputSupplementaryComponent,
 		marginless = false,
 	} = props;
 	const [field] = useField(name);
+	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	const { value, name: fieldName, onChange } = field;
 
@@ -55,6 +60,7 @@ export function Input(props: Props) {
 
 	const inputWrapperClass = classNames({
 		[styles.inputWrapper]: true,
+		[styles.inputWrapperMobile]: isTabletOrMobile,
 	});
 
 	const inputContainerClass = classNames({
@@ -65,6 +71,10 @@ export function Input(props: Props) {
 	const inputClass = classNames({
 		[styles.input]: true,
 		[styles.inputNoEdit]: noEdit,
+	});
+	const inputSupplementaryClass = classNames({
+		[styles.inputContentSupplementary]: !isTabletOrMobile,
+		[styles.inputContentSupplementaryMobile]: isTabletOrMobile,
 	});
 
 	const isInputOfNumberType = fieldType == 'number';
@@ -90,21 +100,26 @@ export function Input(props: Props) {
 					</label>
 				</>
 			)}
+			{subCaption && <div className={styles.inputSubCaption}>{subCaption}</div>}
 			<div className={inputWrapperClass}>
-				<input
-					onChange={onChange(fieldName)}
-					disabled={isInputDisabled}
-					className={inputClass}
-					onFocus={onFocus}
-					onBlur={onBlur}
-					type={fieldType}
-					placeholder={placeholder}
-					value={value || ''}
-					{...(isInputOfNumberType && inputOfTypeNumberProps)}
-					{...(isInputOfTextType && isInputOfTextTypeProps)}
-				/>
-				{units && <div className={styles.inputUnits}>{units}</div>}
-				<div className={styles.inputCaption}>{caption}</div>
+				<div className={styles.inputContentMain}>
+					<input
+						onChange={onChange(fieldName)}
+						disabled={isInputDisabled}
+						className={inputClass}
+						onFocus={onFocus}
+						onBlur={onBlur}
+						type={fieldType}
+						placeholder={placeholder}
+						value={value || ''}
+						{...(isInputOfNumberType && inputOfTypeNumberProps)}
+						{...(isInputOfTextType && isInputOfTextTypeProps)}
+					/>
+					{units && <div className={styles.inputUnits}>{units}</div>}
+				</div>
+				{Boolean(inputSupplementaryComponent) && (
+					<div className={inputSupplementaryClass}>{inputSupplementaryComponent}</div>
+				)}
 			</div>
 			{error && <div className={styles.inputError}>{error}</div>}
 		</div>

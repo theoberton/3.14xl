@@ -3,14 +3,18 @@ import { Label } from '@/components';
 import styles from '@/pages/CreateEdition/styles.module.scss';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
 
-function EditionPreview() {
+type Props = {
+	openPreviewImage: () => void;
+};
+
+function EditionPreview({ openPreviewImage }: Props) {
 	const { values } = useFormikContext<FormValues>();
 
 	return (
 		<div className={styles.previewSection}>
 			<div className={styles.preview}>
 				{
-					<div className={styles.previewImageWrapper}>
+					<div className={styles.previewImageWrapper} onClick={openPreviewImage}>
 						{values.media ? (
 							<img className={styles.previewImage} src={values.media} />
 						) : (
@@ -35,7 +39,6 @@ function EditionPreview() {
 						{values.name ? values.name : 'Collection name'}
 					</div>
 					<Label text={values.symbol ? values.symbol : '$SYMBOL'} />
-					{/* <Label text={values.symbol} /> */}
 				</div>
 				<div className={styles.previewMainAttributesDescription}>
 					{values.description ? values.description : 'Description'}

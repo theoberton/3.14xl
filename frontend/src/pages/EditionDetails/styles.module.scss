@@ -22,13 +22,28 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 
 		@media (max-width: $breakpoint-m) {
 			max-width: 100%;
 		}
 
+		&FooterItem {
+			display: flex;
+			justify-content: space-between;
+
+			&Image {
+				cursor: pointer;
+			}
+		}
+
 		&Image {
-			max-width: 50vw;
+			max-width: 30vw;
+
+			@media (max-width: $breakpoint-m) {
+				max-width: 58vw;
+			}
+
 			flex: 1;
 
 			> img {
@@ -41,7 +56,8 @@
 			padding-block: 30px;
 
 			display: flex;
-			justify-content: flex-end;
+			justify-content: space-between;
+			padding: 20px 30px;
 			align-items: center;
 
 			> p {

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useFormikContext, useField } from 'formik';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -37,12 +37,14 @@ interface DatepickerProps {
 	maxDate?: Date;
 	minDate?: Date;
 	defaultCalendarMonth?: Date;
+	disabled?: boolean;
 }
 
 export function Datepicker({
 	name,
 	label,
 	inputFormat,
+	disabled,
 	disableFuture,
 	disablePast,
 	popperProps,
@@ -52,10 +54,11 @@ export function Datepicker({
 	defaultCalendarMonth,
 }: DatepickerProps) {
 	const [field] = useField(name);
+	const [isOpen, setOpenStatus] = useState(false);
 
 	const { value } = field;
 
-	const { setFieldValue } = useFormikContext();
+	const { setFieldValue, isSubmitting } = useFormikContext();
 
 	const convert = (date: Date, applidFormat: string) => format(new Date(date), applidFormat);
 
@@ -99,11 +102,22 @@ export function Datepicker({
 		[name, setFieldValue]
 	);
 
+	const handleCalendarClick = useCallback(
+		(isOpen: boolean) => () => {
+			setOpenStatus(isOpen);
+		},
+		[]
+	);
+
 	return (
 		<ThemeProvider theme={theme}>
 			<LocalizationProvider dateAdapter={AdapterDateFns}>
 				<DateTimePicker
+					open={isOpen}
+					disabled={disabled || isSubmitting}
 					disableMaskedInput
+					onOpen={handleCalendarClick(true)}
+					onClose={handleCalendarClick(false)}
 					inputFormat={inputFormat}
 					value={value}
 					disableFuture={disableFuture}
@@ -128,6 +142,7 @@ export function Datepicker({
 									onBlur={onBlur}
 									onFocus={onFocus}
 									ref={inputRef}
+									onClick={handleCalendarClick(true)}
 									className={inputDefaultClass}
 									placeholder={placeholder}
 								/>

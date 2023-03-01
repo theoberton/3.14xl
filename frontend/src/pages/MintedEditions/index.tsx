@@ -1,5 +1,6 @@
 import { EditionCard } from '@/components';
 import { Button, ButtonKinds } from '@/components/Button';
+import { Helmet } from 'react-helmet-async';
 
 import { exampleData } from '@/helpers';
 
@@ -8,9 +9,9 @@ import styles from './styles.module.scss';
 export default function MintedEditionsPage() {
 	return (
 		<div className={styles.mintedEditionsContainer}>
+			<Helmet title="3.14XL - Minted editions" />
 			<div className={styles.mintedEditionsHeader}>
 				<h1>Minted editions</h1>
-
 				<div>
 					<Button componentType="link" kind={ButtonKinds.basic} to="/explore">
 						Explore

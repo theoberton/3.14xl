@@ -4,8 +4,9 @@ import classNames from 'classnames';
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 import crossIcon from '@/assets/images/svg/common/crossIcon.svg';
 import uploadIcon from '@/assets/images/svg/common/uploadIcon.svg';
+import { useMediaQuery } from 'react-responsive';
 
-import { LoaderSizes } from '@/components/interfaces';
+import { LoaderSizes, LoaderColors } from '@/components/interfaces';
 import { Loader } from '@/components';
 
 import styles from '@/components/MediaInput/styles.module.scss';
@@ -19,7 +20,6 @@ interface Props {
 	name: string;
 	className?: string;
 	label?: string;
-	isSubmitting?: boolean;
 	disabled?: boolean;
 }
 
@@ -32,7 +32,7 @@ export function MediaInput(props: Props) {
 	const minifiedImageRef = useRef<HTMLImageElement>(null);
 
 	const { value, name: fieldName, onChange } = field;
-	const { setFieldValue, status } = useFormikContext();
+	const { setFieldValue, isSubmitting } = useFormikContext();
 
 	const { onFocus, onBlur, getError } = useCustomStateFormField(fieldName);
 
@@ -55,7 +55,6 @@ export function MediaInput(props: Props) {
 
 				const ipfsLink = await storage.upload(file);
 				const fileLink = storage.resolveScheme(ipfsLink);
-				console.log('fileLink', fileLink);
 
 				setFieldValue(name, fileLink);
 			} catch (e) {
@@ -66,6 +65,8 @@ export function MediaInput(props: Props) {
 		},
 		[minifiedImageRef.current]
 	);
+
+	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	const inputLabelClass = classNames({
 		[styles.inputLabel]: true,
@@ -104,11 +105,23 @@ export function MediaInput(props: Props) {
 		[value, disabled]
 	);
 
+	const inputClass = classNames({
+		[styles.input]: true,
+		[styles.inputFilled]: Boolean(value),
+	});
+
 	return (
 		<div className={inputContainerClass}>
 			{label && (
 				<label htmlFor={fieldName} className={inputLabelClass}>
 					{label}
+					{isTabletOrMobile && (
+						<div className={styles.inputLoaderLabel}>
+							{isMediaUploading && (
+								<Loader size={LoaderSizes.subSmall} color={LoaderColors.white} />
+							)}
+						</div>
+					)}
 				</label>
 			)}
 			<input
@@ -116,25 +129,28 @@ export function MediaInput(props: Props) {
 				onChange={onSelectFile}
 				accept="image/jpeg,image/png,image/gif,image/jpg"
 				type="file"
+				disabled={isSubmitting}
 				hidden
 			/>
 			<div className={inputWrapperClass} onClick={handleAddMediaFileClick}>
 				{value && <img ref={minifiedImageRef} className={styles.inputMinifiedImage} src={value} />}
 				<input
 					disabled
-					className={styles.input}
+					className={inputClass}
 					onFocus={onFocus}
 					onBlur={onBlur}
 					type={fieldType}
 					placeholder={placeholder}
 					value={field.value || ''}
 				/>
-				<img src={inputIcon} className={inputIconClass} onClick={handleInputClick} />
-				{
+				{!isSubmitting && (
+					<img src={inputIcon} className={inputIconClass} onClick={handleInputClick} />
+				)}
+				{!isTabletOrMobile && (
 					<div className={styles.inputLoader}>
-						{isMediaUploading && <Loader size={LoaderSizes.small} />}
+						{isMediaUploading && <Loader size={LoaderSizes.small} color={LoaderColors.white} />}
 					</div>
-				}
+				)}
 			</div>
 			{error && <div className={styles.inputError}>{error}</div>}
 		</div>

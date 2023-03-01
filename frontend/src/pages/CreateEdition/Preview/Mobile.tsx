@@ -3,19 +3,14 @@ import { Label } from '@/components';
 import styles from '@/pages/CreateEdition/styles.module.scss';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
 import tonLogo from '@/assets/images/svg/common/tonLogo.svg';
-import PreviewImageMobileModal from '@/pages/CreateEdition/PreviewImageMobileModal';
 import { useState, useCallback } from 'react';
 
-function PreviewMobile() {
-	const { values } = useFormikContext<FormValues>();
-	const [isImagePreviewOpened, setImagePreviewOpenedStatus] = useState(false);
+type Props = {
+	openPreviewImage: () => void;
+};
 
-	const closePreviewImageModal = useCallback(() => {
-		setImagePreviewOpenedStatus(false);
-	}, []);
-	const openPreviewImage = useCallback(() => {
-		setImagePreviewOpenedStatus(true);
-	}, []);
+function PreviewMobile({ openPreviewImage }: Props) {
+	const { values } = useFormikContext<FormValues>();
 
 	return (
 		<div className={styles.previewSectionMobile}>
@@ -40,13 +35,6 @@ function PreviewMobile() {
 					{`${values.price ? values.price : '0.00'} TON`}
 				</div>
 			</div>
-			{values.media && (
-				<PreviewImageMobileModal
-					isOpen={isImagePreviewOpened}
-					closeModal={closePreviewImageModal}
-					media={values.media}
-				/>
-			)}
 		</div>
 	);
 }

@@ -3,12 +3,12 @@ import { Formik } from 'formik';
 import { useNavigate } from 'react-router';
 import { useMediaQuery } from 'react-responsive';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
+import { Helmet } from 'react-helmet-async';
 
 import { useTonClient } from '@/hooks/useTonClient';
 
 import FormArea from './FormArea';
-import EditionPreview from '@/pages/CreateEdition/Preview';
-import EditionPreviewMobile from '@/pages/CreateEdition/PreviewMobile';
+import { Preview } from '@/pages/CreateEdition/Preview';
 import OwnershipSection from './OwnershipSection';
 
 import { formSchema } from './validation';
@@ -46,11 +46,12 @@ function EditionEdit() {
 			onSubmit={handleSubmit}
 		>
 			<section className={styles.editEditionContainer}>
+				<Helmet title={'3.14XL - Edit edition'} />
 				<div className={styles.editEditionControls}>
 					<FormArea />
 					<OwnershipSection />
 				</div>
-				{isTabletOrMobile ? <EditionPreviewMobile /> : <EditionPreview />}
+				<Preview />
 			</section>
 		</Formik>
 	);

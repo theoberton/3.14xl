@@ -21,7 +21,11 @@ export function composeMintTransaction(
 		messages: [
 			{
 				address: nftManagerAddress.toString(),
-				amount: (toNano(content.price) + calcPercent(toNano(content.price), 0.05) + toNano('1')).toString(),
+				amount: (
+					toNano(content.price) +
+					calcPercent(toNano(content.price), 0.05) +
+					toNano('1')
+				).toString(),
 				payload: payload.toBoc().toString('base64'),
 			},
 		],

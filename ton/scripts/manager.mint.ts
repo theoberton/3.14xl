@@ -24,8 +24,6 @@ export async function run(network: NetworkProvider) {
   });
   const collectionData = await collectionContract.getCollectionData();
   const collectionContent = await storage.downloadJSON(collectionData.collectionContentUri);
-  console.log("Collection owner", collectionData.ownerAddress.toString());
-  console.log("Collection content", collectionContent);
 
   const mintMessage: MintSafe = {
     $$type: "MintSafe",

@@ -14,7 +14,7 @@ export function Header() {
 		<header className={headerClass}>
 			<Link to="/">
 				<img src={Logo} className={styles.headerLogo} />
-				{isTestnet() ? "Testnet" : null}
+				{isTestnet() ? 'Testnet' : null}
 			</Link>
 			<TonConnectButton className={buttonStyles.wallet} />
 		</header>

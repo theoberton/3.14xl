@@ -1,0 +1,14 @@
+@import '@/assets/styles/variables.scss';
+
+.modal {
+	&Modal {
+		background-color: $gray-seven;
+		border-radius: 16px;
+		padding: 60px;
+
+		&FullSpace {
+			padding: 0px;
+			background: transparent;
+		}
+	}
+}

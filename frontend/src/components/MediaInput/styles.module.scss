@@ -2,12 +2,22 @@
 
 .input {
 	border: 0px;
+	border-radius: 8px;
 	background-color: $gray-seven;
 	padding: 8px 15px;
 	color: $white;
 	width: 100%;
+	height: 42px;
 	font-size: inherit;
 	cursor: pointer;
+
+	:hover {
+		cursor: pointer;
+	}
+
+	&Filled {
+		padding-left: 37px;
+	}
 
 	&Loader {
 		position: absolute;
@@ -17,6 +27,13 @@
 		bottom: 0;
 		margin: auto;
 		align-items: center;
+
+		&Label {
+			display: flex;
+			margin-top: -2px;
+			margin-left: 10px;
+			align-items: center;
+		}
 	}
 
 	&:active {
@@ -24,8 +41,8 @@
 	}
 
 	&MinifiedImage {
-		max-width: 17px;
-		max-height: 17px;
+		max-width: 25px;
+		max-height: 25px;
 		position: absolute;
 		left: 5px;
 		margin: auto;
@@ -38,6 +55,7 @@
 	}
 
 	&Icon {
+		background-color: $gray-seven;
 		position: absolute;
 		height: 15px;
 		width: 15px;
@@ -56,6 +74,7 @@
 
 	&Label {
 		line-height: 1.4rem;
+		display: flex;
 	}
 }
 

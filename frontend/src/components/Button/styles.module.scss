@@ -8,7 +8,7 @@
 	color: $black-one;
 	border-radius: 8px;
 	font-size: $font-medium;
-	margin: 0 5px;
+	margin: 0;
 	cursor: pointer;
 	white-space: nowrap;
 	font-weight: $font-semi-bold;
@@ -80,8 +80,8 @@
 	}
 
 	&Content {
-		padding-top: 15px;
-		padding-bottom: 15px;
+		padding-top: 10px;
+		padding-bottom: 10px;
 		border-radius: 8px;
 
 		&WithArrow {
@@ -103,7 +103,6 @@
 			&Mini {
 				@extend .buttonContentBasic;
 				font-size: $font-base;
-				padding: 5px;
 			}
 		}
 		&Main {

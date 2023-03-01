@@ -72,7 +72,7 @@ export class NftManager extends BaseLocalContract {
 			mintPrice: stack.readBigNumber(),
 			maxSupply: stack.readNumber(),
 			mintDateStart: stack.readNumber(),
-			mintDateEnd: stack.readNumber()
+			mintDateEnd: stack.readNumber(),
 		};
 	}
 }

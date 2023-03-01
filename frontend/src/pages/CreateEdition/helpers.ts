@@ -15,7 +15,8 @@ import { CollectionContent } from '@/wrappers/types';
 export const createEdition = async (
 	tonClient: TonClient,
 	tonConnectUI: TonConnectUI,
-	params: CreateEditionParams
+	params: CreateEditionParams,
+	turnOffFormSubmitting: () => void
 ) => {
 	/** Upload collection metadata */
 	const content: CollectionContent = {
@@ -25,7 +26,7 @@ export const createEdition = async (
 		// external_link: 'https://matketplacecreatures.io',
 		// seller_fee_basis_points: 100,
 		// fee_recipient: address,
-		royalty: String(Number(params.royalty)/100),
+		royalty: String(Number(params.royalty) / 100),
 		price: params.price,
 		maxSupply: params.maxSupply,
 		dateStart: params.dateStart,
@@ -45,14 +46,14 @@ export const createEdition = async (
 		mintPrice: toNano(params.price),
 		maxSupply: BigInt(params.maxSupply),
 		mintDateStart: BigInt(params.dateStart),
-		mintDateEnd: BigInt(params.dateEnd)
+		mintDateEnd: BigInt(params.dateEnd),
 	};
 
 	const nftManager = NftManager.createFromConfig(managerInitData);
 	const nftManagerContract = tonClient.open(nftManager);
 
 	const nftCollectionInitData: NftCollectionDataOptional = {
-		ownerAddress: nftManagerContract.address, // Check if it works again
+		ownerAddress: nftManagerContract.address,
 		collectionContentUri: collectionContentUrl,
 		commonContent: collectionContentUrl,
 		royaltyParams: {
@@ -88,8 +89,9 @@ export const createEdition = async (
 		],
 	};
 
-	const result = await tonConnectUI.sendTransaction(transaction);
-	console.log(result);
+	turnOffFormSubmitting();
+	await tonConnectUI.sendTransaction(transaction);
+
 	// you can use signed boc to find the transaction
 	// const someTxData = await myAppExplorerService.getTransaction(result.boc);
 	// alert('Transaction was sent successfully', someTxData);

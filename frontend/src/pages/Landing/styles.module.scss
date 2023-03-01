@@ -112,12 +112,15 @@
 		&Links {
 			display: flex;
 			flex-flow: row wrap;
-			gap: 15px;
+			gap: 20px;
 			justify-content: center;
 			align-items: center;
 
 			@media (max-width: $breakpoint-xs) {
-				> :first-child {
+				> :nth-child(1) {
+					width: 100%;
+				}
+				> :nth-child(2) {
 					width: 100%;
 				}
 			}
