@@ -8,6 +8,7 @@ const CreateEdition = withSuspense(React.lazy(() => import('@/pages/CreateEditio
 const LandingPage = withSuspense(React.lazy(() => import('@/pages/Landing')));
 const NotFound = withSuspense(React.lazy(() => import('@/pages/NotFound')));
 const EditionDetailsPage = withSuspense(React.lazy(() => import('@/pages/EditionDetails')));
+const EditionEditPage = withSuspense(React.lazy(() => import('@/pages/EditionEdit')));
 const ExplorePage = withSuspense(React.lazy(() => import('@/pages/Explore')));
 const MintedEditionsPage = withSuspense(React.lazy(() => import('@/pages/MintedEditions')));
 
@@ -18,6 +19,7 @@ function ApplicationRoutes() {
 				<Route element={<PageContainer />}>
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/edition/:collectionAddress" element={<EditionDetailsPage />} />
+					<Route path="/edition/:collectionAddress/edit" element={<EditionEditPage />} />
 					<Route path="/minted" element={<MintedEditionsPage />} />
 					<Route path="/explore" element={<ExplorePage />} />
 					<Route path="/create-edition" element={<CreateEdition />} />

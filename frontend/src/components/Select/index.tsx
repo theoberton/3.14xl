@@ -77,6 +77,7 @@ export function Select(props: SelectProps) {
 			...baseStyles,
 			color: 'white',
 			backgroundColor: '#212121',
+			padding: '8px 13px',
 		}),
 	};
 

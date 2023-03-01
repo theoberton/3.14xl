@@ -16,6 +16,7 @@ interface CommonProps {
 	basicInverted?: boolean;
 	mini?: boolean;
 	disabled?: boolean;
+	danger?: boolean;
 }
 
 interface ButtonProps extends CommonProps {
@@ -32,7 +33,7 @@ interface LinkProps extends CommonProps {
 type IProps = ButtonProps | LinkProps;
 
 export function Button(props: IProps) {
-	const { componentType, expanded = false, basicInverted, kind, mini } = props;
+	const { componentType, expanded = false, basicInverted, kind, mini, danger = false } = props;
 
 	const buttonContent = getButtonContent(props);
 
@@ -43,6 +44,7 @@ export function Button(props: IProps) {
 		[styles.buttonBasicInverted]: basicInverted,
 		[styles.buttonWithIcon]: isWithIconType,
 		[styles.buttonExpanded]: expanded,
+		[styles.buttonDanger]: danger,
 	});
 
 	if (componentType === 'button') {
