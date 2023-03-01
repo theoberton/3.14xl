@@ -53,7 +53,7 @@ export const createEdition = async (
 	const nftManagerContract = tonClient.open(nftManager);
 
 	const nftCollectionInitData: NftCollectionDataOptional = {
-		ownerAddress: nftManagerContract.address, // Check if it works again
+		ownerAddress: nftManagerContract.address,
 		collectionContentUri: collectionContentUrl,
 		commonContent: collectionContentUrl,
 		royaltyParams: {

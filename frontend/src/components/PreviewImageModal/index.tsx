@@ -1,9 +1,7 @@
 import { useCallback } from 'react';
 import { Modal } from '@/components';
-import { useFormikContext } from 'formik';
-import { FormValues } from '@/pages/CreateEdition/interfaces';
 
-import styles from '@/pages/CreateEdition/styles.module.scss';
+import styles from '@/components/PreviewImageModal/styles.module.scss';
 
 type PreviewImageProps = {
 	isOpen: boolean;
@@ -11,7 +9,7 @@ type PreviewImageProps = {
 	media: string | null;
 };
 
-function PreviewImageModal(props: PreviewImageProps) {
+export function PreviewImageModal(props: PreviewImageProps) {
 	const { isOpen, closeModal, media } = props;
 
 	const close = useCallback(() => {
@@ -28,5 +26,3 @@ function PreviewImageModal(props: PreviewImageProps) {
 		</Modal>
 	);
 }
-
-export default PreviewImageModal;

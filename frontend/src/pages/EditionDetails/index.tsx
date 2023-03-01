@@ -1,6 +1,6 @@
-
 import { Address } from 'ton-core';
-import { useAsync } from 'react-use';
+import { useCallback, useState } from 'react';
+import { useAsyncRetry } from 'react-use';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { PageLoader } from '@/components';
@@ -14,8 +14,9 @@ import { useTonClient } from '@/hooks/useTonClient';
 export default function EditionDetailsPage() {
 	const { collectionAddress } = useParams();
 	const tonClient = useTonClient();
+	const [currentNextNftItemIndex, setCurrentNftItemIndex] = useState(0);
 
-	const collectionDataAsync = useAsync(async () => {
+	const collectionDataAsync = useAsyncRetry(async () => {
 		if (!collectionAddress || !tonClient) {
 			return null;
 		}
@@ -27,8 +28,9 @@ export default function EditionDetailsPage() {
 			res.json()
 		);
 
+		setCurrentNftItemIndex(collectionData.nextItemIndex);
 		return { collectionData, content };
-	}, [tonClient]);
+	}, [tonClient, collectionAddress, currentNextNftItemIndex]);
 
 	if (collectionDataAsync.error && !collectionDataAsync.value) {
 		return <div>Something went wrong</div>;
@@ -46,6 +48,8 @@ export default function EditionDetailsPage() {
 				content={collectionDataAsync.value.content}
 			/>
 			<EditionDetails
+				setCurrentNftItemIndex={setCurrentNftItemIndex}
+				currentNextNftItemIndex={currentNextNftItemIndex}
 				collectionData={collectionDataAsync.value.collectionData}
 				content={collectionDataAsync.value.content}
 			/>

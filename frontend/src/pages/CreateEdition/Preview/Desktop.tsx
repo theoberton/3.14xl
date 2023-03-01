@@ -5,9 +5,9 @@ import { FormValues } from '@/pages/CreateEdition/interfaces';
 
 type Props = {
 	openPreviewImage: () => void;
-}
+};
 
-function EditionPreview({openPreviewImage}: Props) {
+function EditionPreview({ openPreviewImage }: Props) {
 	const { values } = useFormikContext<FormValues>();
 
 	return (
@@ -39,7 +39,6 @@ function EditionPreview({openPreviewImage}: Props) {
 						{values.name ? values.name : 'Collection name'}
 					</div>
 					<Label text={values.symbol ? values.symbol : '$SYMBOL'} />
-					{/* <Label text={values.symbol} /> */}
 				</div>
 				<div className={styles.previewMainAttributesDescription}>
 					{values.description ? values.description : 'Description'}

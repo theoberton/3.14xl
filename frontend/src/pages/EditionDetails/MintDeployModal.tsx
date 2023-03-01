@@ -17,35 +17,20 @@ import FailureIcon from '@/assets/images/svg/common/failure.svg';
 
 const renderDeployInProgressComponent = () => (
 	<div className={styles.deploymentModalTitle}>
-		Edition is being created
+		Minting your NFT
 		<div className={styles.deploymentModalSpinner}>
 			<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
 		</div>
 	</div>
 );
 
-const renderDeploySuccessComponent = (
-	createNewEditionHandler: () => void,
-	viewCreatedEdition: () => void,
-	editionName: string | null
-) => (
+const renderDeploySuccessComponent = (onClose: () => void, editionName: string | null) => (
 	<div className={styles.deploymentModal}>
 		<img src={SuccessIcon} className={styles.deploymentModalImage} />
-		<div className={styles.deploymentModalTitle}>Edition has been created</div>
-		<div className={styles.deploymentModalTitleCaption}>
-			{editionName} has successfully been deployed
-		</div>
+		<div className={styles.deploymentModalTitle}>Your {editionName} NFT has been minted!</div>
 		<div className={styles.deploymentModalActions}>
-			<Button
-				basicInverted
-				componentType="button"
-				kind={ButtonKinds.basic}
-				onClick={createNewEditionHandler}
-			>
-				Create new edition
-			</Button>
-			<Button componentType="button" kind={ButtonKinds.basic} onClick={viewCreatedEdition}>
-				View created edition
+			<Button componentType="button" kind={ButtonKinds.basic} onClick={onClose}>
+				Ok
 			</Button>
 		</div>
 	</div>
@@ -56,7 +41,7 @@ const renderDeployFailureComponent = (goBack: () => void, retryCreateEdition: ()
 		<img src={FailureIcon} className={styles.deploymentModalImage} />
 		<div className={styles.deploymentModalTitle}>Something went wrong</div>
 		<div className={styles.deploymentModalTitleCaption}>
-			Edition hasn't been created, an error occurred while trying to deploy
+			NFT hasn't been minted, an error occurred
 		</div>
 		<div className={styles.deploymentModalActions}>
 			<Button componentType="button" kind={ButtonKinds.basic} onClick={goBack}>
@@ -77,10 +62,11 @@ enum DeploymentStatus {
 
 type Props = {
 	onClose: () => void;
-	address: string | null;
+	address: string | undefined;
 	deploy: () => void;
 	editionName: string | null;
-	createNewEditionHandler: () => void;
+	currentNextNftItemIndex: number;
+	setCurrentNftItemIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const deployExpirationTime = 40 * 1000; // 40 seconds
@@ -90,14 +76,14 @@ export function MintDeployModal({
 	address,
 	onClose,
 	deploy,
+	currentNextNftItemIndex,
+	setCurrentNftItemIndex,
 	editionName,
-	createNewEditionHandler,
 }: Props) {
 	const navigate = useNavigate();
 	const [status, setStatus] = useState(DeploymentStatus.inProgress);
 	let retryTimeoutId: ReturnType<typeof setTimeout>;
 	const tonClient = useTonClient();
-	// const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	useEffect(() => {
 		const failiureTimeoutId = setTimeout(() => {
@@ -123,6 +109,9 @@ export function MintDeployModal({
 		let collectionData;
 		try {
 			collectionData = await nftColelctionContract.getCollectionData();
+			if (collectionData.nextItemIndex === currentNextNftItemIndex) {
+				throw new Error();
+			}
 			setStatus(DeploymentStatus.success);
 		} catch (error) {
 			setStatus(DeploymentStatus.inProgress);
@@ -130,21 +119,21 @@ export function MintDeployModal({
 		}
 
 		return { collectionData };
-	}, [tonClient, address]);
+	}, [tonClient, address, currentNextNftItemIndex]);
 
-	const viewCreatedEdition = useCallback(() => {
-		navigate(`/edition/${address}`);
-	}, [address]);
-
-	const retryCreateEdition = useCallback(() => {
+	const retryMint = useCallback(() => {
 		setStatus(DeploymentStatus.inProgress);
 		onClose();
 		deploy();
 	}, []);
 
 	const goBack = useCallback(() => {
-		onClose();
-	}, []);
+		if (collectionDataAsync.value) {
+			setCurrentNftItemIndex(collectionDataAsync.value.collectionData.nextItemIndex);
+		}
+
+		// onClose();
+	}, [collectionDataAsync.value]);
 
 	useEffect(() => {
 		if (collectionDataAsync.value?.collectionData) {
@@ -160,28 +149,19 @@ export function MintDeployModal({
 		};
 	}, [collectionDataAsync.value, collectionDataAsync.error, status]);
 
-	const onOverlayClick = useCallback(() => {
-		if (status == DeploymentStatus.success) {
-			createNewEditionHandler();
-		}
-	}, [status]);
-
 	const closeOnOverlayClick = status !== DeploymentStatus.inProgress;
 
 	return (
 		<Modal
 			closeOnOverlayClick={closeOnOverlayClick}
-			onOverlayClick={onOverlayClick}
 			isCentered
 			isOpen
 			showCloseIcon={false}
 			onClose={onClose}
 		>
-			{status == DeploymentStatus.success &&
-				renderDeploySuccessComponent(createNewEditionHandler, viewCreatedEdition, editionName)}
+			{status == DeploymentStatus.success && renderDeploySuccessComponent(goBack, editionName)}
 			{status == DeploymentStatus.inProgress && renderDeployInProgressComponent()}
-			{status == DeploymentStatus.failiure &&
-				renderDeployFailureComponent(goBack, retryCreateEdition)}
+			{status == DeploymentStatus.failiure && renderDeployFailureComponent(goBack, retryMint)}
 		</Modal>
 	);
 }

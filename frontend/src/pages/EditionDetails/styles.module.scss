@@ -16,7 +16,6 @@
 		}
 	}
 
-	
 	&Preview {
 		max-width: 50%;
 		height: fit-content;
@@ -32,7 +31,7 @@
 		&FooterItem {
 			display: flex;
 			justify-content: space-between;
-			
+
 			&Image {
 				cursor: pointer;
 			}
@@ -44,7 +43,7 @@
 			@media (max-width: $breakpoint-m) {
 				max-width: 58vw;
 			}
-	
+
 			flex: 1;
 
 			> img {

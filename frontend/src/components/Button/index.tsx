@@ -36,7 +36,14 @@ interface LinkProps extends CommonProps {
 type IProps = ButtonProps | LinkProps;
 
 export function Button(props: IProps) {
-	const { componentType, expanded = false, basicInverted, kind, danger = false } = props;
+	const {
+		componentType,
+		expanded = false,
+		basicInverted,
+		kind,
+		danger = false,
+		isSubmitting,
+	} = props;
 
 	const buttonContent = getButtonContent(props);
 

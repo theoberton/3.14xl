@@ -115,11 +115,13 @@ export function MediaInput(props: Props) {
 			{label && (
 				<label htmlFor={fieldName} className={inputLabelClass}>
 					{label}
-					{ isTabletOrMobile &&  
+					{isTabletOrMobile && (
 						<div className={styles.inputLoaderLabel}>
-							{isMediaUploading && <Loader size={LoaderSizes.subSmall} color={LoaderColors.white} />}
+							{isMediaUploading && (
+								<Loader size={LoaderSizes.subSmall} color={LoaderColors.white} />
+							)}
 						</div>
-					}
+					)}
 				</label>
 			)}
 			<input
@@ -144,11 +146,11 @@ export function MediaInput(props: Props) {
 				{!isSubmitting && (
 					<img src={inputIcon} className={inputIconClass} onClick={handleInputClick} />
 				)}
-				{ !isTabletOrMobile &&  
+				{!isTabletOrMobile && (
 					<div className={styles.inputLoader}>
 						{isMediaUploading && <Loader size={LoaderSizes.small} color={LoaderColors.white} />}
 					</div>
-				}
+				)}
 			</div>
 			{error && <div className={styles.inputError}>{error}</div>}
 		</div>

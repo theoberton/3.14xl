@@ -93,7 +93,6 @@ function CreateEditionForm() {
 		[address, tonConnectUI.connected, tonClient]
 	);
 
-
 	const createEditionInitialValues: FormValues = {
 		name: '',
 		symbol: '',

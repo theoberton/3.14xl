@@ -13,3 +13,4 @@ export * from './EditionCard';
 export * from './ChangeLocationDialog';
 export * from './PageLoader';
 export * from './Modal';
+export * from './PreviewImageModal';

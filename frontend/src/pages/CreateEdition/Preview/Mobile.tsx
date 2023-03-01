@@ -7,9 +7,9 @@ import { useState, useCallback } from 'react';
 
 type Props = {
 	openPreviewImage: () => void;
-}
+};
 
-function PreviewMobile({openPreviewImage} : Props) {
+function PreviewMobile({ openPreviewImage }: Props) {
 	const { values } = useFormikContext<FormValues>();
 
 	return (

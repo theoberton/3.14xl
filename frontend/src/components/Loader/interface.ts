@@ -3,7 +3,7 @@ export enum LoaderSizes {
 	big = 'big',
 	medium = 'medium',
 	small = 'small',
-	subSmall = 'subSmall'
+	subSmall = 'subSmall',
 }
 
 export enum LoaderTypes {
