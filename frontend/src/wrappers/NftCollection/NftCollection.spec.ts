@@ -8,7 +8,7 @@ import { buildNftItemStateInit } from './../NftItem/helpers';
 import { NftCollection } from '.';
 import { getDefaultNftCollectionData } from './helpers';
 import { NftCollectionCodeCell } from './NftCollection.source';
-import { NftItemCodeCell } from './../NftItem/NftItem.source'
+import { NftItemCodeCell } from './../NftItem/NftItem.source';
 
 describe('nft collection smc', () => {
 	describe('nft collection getters', () => {
@@ -19,7 +19,10 @@ describe('nft collection smc', () => {
 
 		beforeEach(async () => {
 			blockchain = await Blockchain.create();
-			nftCollection = NftCollection.createFromConfig(defaultNftCollectionConfig, NftCollectionCodeCell);
+			nftCollection = NftCollection.createFromConfig(
+				defaultNftCollectionConfig,
+				NftCollectionCodeCell
+			);
 			contract = blockchain.openContract(nftCollection);
 
 			const deployer = await blockchain.treasury('deployer');
@@ -100,7 +103,10 @@ describe('nft collection smc', () => {
 			ownerAddress: ownerOfCollectionAddress,
 		});
 
-		const nftCollection = NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell);
+		const nftCollection = NftCollection.createFromConfig(
+			nftCollectionConfig,
+			NftCollectionCodeCell
+		);
 		const NftCollectionAddress = nftCollection.address;
 
 		const nftContract = blockchain.openContract(nftCollection);
@@ -153,7 +159,10 @@ describe('nft collection smc', () => {
 		const newOwnerAddress = newOwnerOfCollectionContract.address;
 
 		const nftCollectionConfig = getDefaultNftCollectionData({ ownerAddress });
-		const nftCollection = NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell);
+		const nftCollection = NftCollection.createFromConfig(
+			nftCollectionConfig,
+			NftCollectionCodeCell
+		);
 
 		const nftContract = blockchain.openContract(nftCollection);
 
@@ -199,7 +208,10 @@ describe('nft collection smc', () => {
 		const nftItemOwnerAddress = nftItemOwnerContract.address;
 		const nftCollectionConfig = getDefaultNftCollectionData({ ownerAddress });
 
-		const nftCollection = NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell);
+		const nftCollection = NftCollection.createFromConfig(
+			nftCollectionConfig,
+			NftCollectionCodeCell
+		);
 
 		const nftContract = blockchain.openContract(nftCollection);
 		const deployer = await blockchain.treasury('deployer');
@@ -238,7 +250,10 @@ describe('nft collection smc', () => {
 		const randomAddress = randomContract.address;
 		const nftCollectionConfig = getDefaultNftCollectionData({ ownerAddress });
 
-		const nftCollection = NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell);
+		const nftCollection = NftCollection.createFromConfig(
+			nftCollectionConfig,
+			NftCollectionCodeCell
+		);
 
 		const nftContract = blockchain.openContract(nftCollection);
 		const deployer = await blockchain.treasury('deployer');
@@ -284,7 +299,10 @@ describe('nft collection smc', () => {
 		const randomAddress = randomContract.address;
 		const nftCollectionConfig = getDefaultNftCollectionData({ ownerAddress });
 
-		const nftCollection = NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell);
+		const nftCollection = NftCollection.createFromConfig(
+			nftCollectionConfig,
+			NftCollectionCodeCell
+		);
 
 		const nftContract = blockchain.openContract(nftCollection);
 		const deployer = await blockchain.treasury('deployer');

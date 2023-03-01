@@ -15,14 +15,17 @@ import { getDefaultNftCollectionData } from '../NftCollection/helpers';
 import { NftCollectionCodeCell } from '../NftCollection/NftCollection.source';
 import '@ton-community/test-utils'; // register matchers
 
-const pixelWallet = WalletContractV4.create({ workchain: 0, publicKey: Buffer.from('M5FeZeMPgnPKNabfcw7nU37OD2QMhJsfZcucjTxdcH0=', 'base64') });
+const pixelWallet = WalletContractV4.create({
+	workchain: 0,
+	publicKey: Buffer.from('M5FeZeMPgnPKNabfcw7nU37OD2QMhJsfZcucjTxdcH0=', 'base64'),
+});
 
 async function setupPixelWallet(blkch: Blockchain) {
-	const pixelTeam = await blkch.treasury("pixel_team");
+	const pixelTeam = await blkch.treasury('pixel_team');
 	await pixelTeam.send({
 		to: pixelWallet.address,
 		value: toNano('1'),
-		init: pixelWallet.init
+		init: pixelWallet.init,
 	});
 }
 
@@ -93,15 +96,15 @@ function expectSuccessfullMint(
 		from: manager.address,
 		to: pixelWallet.address,
 		value: calcPercent(mintPrice, 0.05),
-		success: true
+		success: true,
 	});
 
 	expect(mintResult.transactions).toHaveTransaction({
 		from: manager.address,
 		to: buyer.address,
-		value: value => (value ?? 0) > toNano("0.01"),
-		success: true
-	})
+		value: value => (value ?? 0) > toNano('0.01'),
+		success: true,
+	});
 }
 
 function expectFailedMint(
@@ -125,21 +128,21 @@ function expectFailedMint(
 
 	expect(mintResult.transactions).not.toHaveTransaction({
 		from: manager.address,
-		to: pixelWallet.address
+		to: pixelWallet.address,
 	});
 
 	expect(mintResult.transactions).toHaveTransaction({
 		from: manager.address,
 		to: buyer.address,
 		value: value => (value ?? 0) > mintPrice + calcPercent(mintPrice, 0.05) + toNano('0.1'),
-		success: true
-	})
+		success: true,
+	});
 }
 
 describe('NftManager', () => {
 	it('should deploy manager and collection contracts', async () => {
 		const blkch = await Blockchain.create();
-		
+
 		await setupPixelWallet(blkch);
 		const creator = await blkch.treasury('creator');
 
@@ -149,7 +152,7 @@ describe('NftManager', () => {
 			mintPrice: toNano('1'),
 			maxSupply: 0n,
 			mintDateStart: 0n,
-			mintDateEnd: 0n
+			mintDateEnd: 0n,
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -195,7 +198,7 @@ describe('NftManager', () => {
 			mintPrice: toNano('1'),
 			maxSupply: 1n,
 			mintDateStart: 0n,
-			mintDateEnd: 0n
+			mintDateEnd: 0n,
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -235,7 +238,7 @@ describe('NftManager', () => {
 			mintPrice: toNano('1'),
 			maxSupply: 0n,
 			mintDateStart: BigInt(dateToUnix(new Date()) + 1000),
-			mintDateEnd: 0n
+			mintDateEnd: 0n,
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -270,7 +273,7 @@ describe('NftManager', () => {
 			mintPrice: toNano('1'),
 			maxSupply: 0n,
 			mintDateStart: 0n,
-			mintDateEnd: BigInt(dateToUnix(new Date()) - 1000)
+			mintDateEnd: BigInt(dateToUnix(new Date()) - 1000),
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -305,7 +308,7 @@ describe('NftManager', () => {
 			mintPrice: toNano('1'),
 			maxSupply: 0n,
 			mintDateStart: BigInt(dateToUnix(new Date()) - 1000),
-			mintDateEnd: BigInt(dateToUnix(new Date()) + 1000)
+			mintDateEnd: BigInt(dateToUnix(new Date()) + 1000),
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);

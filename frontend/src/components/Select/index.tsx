@@ -26,7 +26,7 @@ export function Select(props: SelectProps) {
 	const { name, label, options, disabled, className, isSearchable } = props;
 
 	const [field] = useField(name);
-	const { setFieldValue } = useFormikContext();
+	const { setFieldValue, isSubmitting } = useFormikContext();
 
 	const customStyles = {
 		control: (controlStyles: any) => ({
@@ -103,7 +103,7 @@ export function Select(props: SelectProps) {
 			<div>
 				<ReactSelect
 					isSearchable={isSearchable}
-					isDisabled={disabled}
+					isDisabled={disabled || isSubmitting}
 					styles={customStyles}
 					value={selectValue}
 					onChange={onSelectChange}

@@ -1,29 +1,52 @@
 import { useCallback } from 'react';
+import { useGetSetState } from 'react-use';
 import { Formik } from 'formik';
-import { useNavigate } from 'react-router';
-import { useMediaQuery } from 'react-responsive';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import styles from '@/pages/CreateEdition/styles.module.scss';
+
 import FormArea from '@/pages/CreateEdition/FormArea';
 import { formSchema } from '@/pages/CreateEdition/validation';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
-import EditionPreview from '@/pages/CreateEdition/Preview';
+import { Preview } from '@/pages/CreateEdition/Preview';
 import { EDITIONS_SIZES } from '@/constants/common';
-import EditionPreviewMobile from '@/pages/CreateEdition/PreviewMobile';
-import { useTonClient } from '@/hooks/useTonClient';
+import { useTonClient } from '@/hooks';
 import { createEdition } from '@/pages/CreateEdition/helpers';
 import { dateToUnix } from '@/helpers';
+
+const initialDeploymentState = {
+	isModalOpened: false,
+	address: '',
+	editionName: '',
+};
 
 function CreateEditionForm() {
 	const address = useTonAddress();
 	const tonClient = useTonClient();
-
 	const [tonConnectUI] = useTonConnectUI();
-	const navigate = useNavigate();
+	const [getDepoymentState, setDeploymentState] = useGetSetState(initialDeploymentState);
+
+	const handleDeploymentModalClose = useCallback(() => {
+		setDeploymentState(initialDeploymentState);
+	}, []);
+
+	const handleConnectWalletClick = useCallback(async () => {
+		if (!tonConnectUI.connected) {
+			try {
+				await tonConnectUI.connectWallet();
+			} catch (error) {
+				console.error('Error occured when connecting to wallet', error);
+
+				throw error;
+			}
+		}
+	}, [tonConnectUI.connected]);
 
 	const handleSubmit = useCallback(
-		async (values: FormValues) => {
+		async (values: FormValues, bag: { setSubmitting: (arg0: boolean) => void }) => {
 			if (!tonClient) return;
+			const turnOffSubmition = () => bag.setSubmitting(false);
+
+			bag.setSubmitting(true);
 
 			try {
 				if (!tonConnectUI.connected) {
@@ -35,44 +58,53 @@ function CreateEditionForm() {
 						throw error;
 					}
 				}
-
 				if (!values.media) throw new Error('No media');
 
-				const { collectionAddress } = await createEdition(tonClient, tonConnectUI, {
-					name: values.name,
-					description: values.description,
-					image: values.media,
-					symbol: values.symbol,
-					price: values.price,
-					royalty: values.royalty,
-					creatorAddress: values.payoutAddress,
-					maxSupply:
-						values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0',
-					dateStart: values.validity.start ? dateToUnix(values.validity.start) : 0,
-					dateEnd: values.validity.end ? dateToUnix(values.validity.end) : 0,
-				});
+				const { collectionAddress } = await createEdition(
+					tonClient,
+					tonConnectUI,
+					{
+						name: values.name,
+						description: values.description,
+						image: values.media,
+						symbol: values.symbol,
+						price: values.price,
+						royalty: values.royalty,
+						creatorAddress: values.payoutAddress,
+						maxSupply:
+							values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0',
+						dateStart: values.validity.start ? dateToUnix(values.validity.start) : 0,
+						dateEnd: values.validity.end ? dateToUnix(values.validity.end) : 0,
+					},
+					turnOffSubmition
+				);
 
-				navigate(`/edition/${collectionAddress}`);
+				setDeploymentState({
+					isModalOpened: true,
+					address: collectionAddress,
+					editionName: values.name,
+				});
 			} catch (error) {
 				console.error(error);
+			} finally {
+				turnOffSubmition();
 			}
 		},
 		[address, tonConnectUI.connected, tonClient]
 	);
 
-	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	const createEditionInitialValues: FormValues = {
 		name: '',
 		symbol: '',
 		description: '',
 		media: null,
-		price: '0.1',
+		price: '',
 		editionSize: {
 			type: EDITIONS_SIZES.OPEN_EDITION,
 			amount: '',
 		},
-		royalty: '5',
+		royalty: '',
 		validity: {
 			start: null,
 			end: null,
@@ -84,12 +116,18 @@ function CreateEditionForm() {
 		<Formik
 			initialValues={createEditionInitialValues}
 			validationSchema={formSchema}
-			enableReinitialize
+			enableReinitialize={false}
 			onSubmit={handleSubmit}
 		>
 			<section className={styles.createEditionContainer}>
-				<FormArea />
-				{isTabletOrMobile ? <EditionPreviewMobile /> : <EditionPreview />}
+				<Preview />
+				<FormArea
+					address={address}
+					handleDeploymentModalClose={handleDeploymentModalClose}
+					deploymentState={getDepoymentState()}
+					isWalletConnected={tonConnectUI.connected}
+					handleConnectWalletClick={handleConnectWalletClick}
+				/>
 			</section>
 		</Formik>
 	);

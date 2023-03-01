@@ -1,6 +1,18 @@
 @import '@/assets/styles/variables.scss';
 
 .input {
+	color: $white;
+	border: 0px;
+	background-color: $gray-seven;
+	padding: 8px 15px;
+	width: 100%;
+	font-size: $font-medium;
+	font-family: $open-sans-font;
+	resize: none;
+	padding: 8px 15px;
+	border-radius: 8px;
+	font-size: inherit;
+
 	&Error {
 		color: $error-one;
 		font-size: $font-small-enlarged;
@@ -40,17 +52,6 @@
 	&WithIcon {
 		padding-left: 40px;
 	}
-
-	color: $white;
-	border: 0px;
-	background-color: $gray-seven;
-	padding: 8px 15px;
-	width: 100%;
-	font-size: $font-medium;
-	font-family: $open-sans-font;
-	resize: none;
-	padding: 0.3em 1em;
-	font-size: inherit;
 
 	&Gray {
 		@extend .input;

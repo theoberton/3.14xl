@@ -1,10 +1,11 @@
 import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
-import {Address} from 'ton-core';
+import { Address } from 'ton-core';
 import { addressFilter } from '@/helpers';
 import { useTime } from '@/hooks';
 import { Button, ButtonKinds } from '@/components/Button';
+
 import styles from './styles.module.scss';
 
 import { CollectionData, CollectionContent } from '@/wrappers/types';
@@ -32,14 +33,16 @@ function EditionDetails({
 
 		try {
 			const result = await tonConnectUI.sendTransaction(transaction);
-			console.log(result);
 			// you can use signed boc to find the transaction
 			// const someTxData = await myAppExplorerService.getTransaction(result.boc);
 			// alert('Transaction was sent successfully', someTxData);
 		} catch (e) {
 			console.error(e);
 		}
-	}, []);
+	}, []);	 
+
+	const maxSupply = Number(content.maxSupply);
+	const isEndOfMinting = collectionData.nextItemIndex == maxSupply && Boolean(maxSupply);
 
 	return (
 		<div className={styles.editionDetailsInfo}>
@@ -49,13 +52,13 @@ function EditionDetails({
 					<h3>PRICE</h3>
 					<span>{content.price} TON</span>
 				</div>
-				{isMintAllowed(now, content.dateStart, content.dateEnd) &&
+				{isMintAllowed(now, content.dateStart, content.dateEnd) && (
 					<div className={styles.editionDetailsInfoPriceBlock}>
-						<Button componentType="button" kind={ButtonKinds.basic} onClick={mint}>
-							Mint
+						<Button componentType="button" kind={ButtonKinds.basic} basicInverted={isEndOfMinting} onClick={mint}>
+							{!isEndOfMinting ? "Mint" : `No tokens left  ¯\\_(ツ)_/¯`}
 						</Button>
 					</div>
-				}			
+				)}
 			</div>
 			<div className={styles.editionDetailsInfoAbout}>
 				<h3>ABOUT</h3>

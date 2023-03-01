@@ -6,9 +6,30 @@
 	background-color: $gray-seven;
 	padding: 8px 15px;
 	width: 100%;
+	border-radius: 8px;
 	color: $white;
-
 	font-size: inherit;
+
+	&Content {
+		&Main {
+			display: flex;
+			position: relative;
+			flex-grow: 1;
+		}
+		&Supplementary {
+			&Mobile {
+				> * {
+					width: 100%;
+				}
+			}
+			// margin-left: 10px;
+		}
+	}
+
+	&SubCaption {
+		font-size: $font-base;
+		color: $gray-one;
+	}
 
 	&NoEdit {
 		cursor: not-allowed;
@@ -16,6 +37,12 @@
 
 	&Wrapper {
 		position: relative;
+		display: flex;
+		gap: 15px;
+
+		&Mobile {
+			flex-direction: column;
+		}
 	}
 
 	&Units {
@@ -25,7 +52,7 @@
 		align-items: center;
 		position: absolute;
 		color: $gray-one;
-		font-weight: $font-light;
+		font-weight: $font-bold;
 		right: 10px;
 		top: 0;
 		bottom: 0;

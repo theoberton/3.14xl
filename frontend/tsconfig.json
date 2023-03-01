@@ -18,10 +18,9 @@
 		"types": ["node", "jest"],
 		"paths": {
 			"@/*": ["src/*"]
-			
 		},
 		"jsx": "react-jsx"
 	},
-  "include": ["./src/**/*.ts","./src/**/*.tsx",],
+	"include": ["./src/**/*.ts", "./src/**/*.tsx"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

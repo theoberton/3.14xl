@@ -28,12 +28,16 @@ describe('nft item smc', () => {
 
 			nftItemConfig = getDefaultNftItemData({
 				ownerAddress: ownerOfItemAddress,
-				collectionAddress: nftCollection.address
+				collectionAddress: nftCollection.address,
 			});
 
 			nftItem = NftItem.createFromConfig(nftItemConfig, NftItemCodeCell);
 			contract = blockchain.openContract(nftItem);
-			const deployResult = await contract.sendDeploy(nftCollection.getSender(), nftItemConfig, toNano('1'));
+			const deployResult = await contract.sendDeploy(
+				nftCollection.getSender(),
+				nftItemConfig,
+				toNano('1')
+			);
 
 			expect(deployResult.transactions).toHaveTransaction({
 				from: nftCollection.address,

@@ -36,7 +36,6 @@
 
 			button {
 				border: 1px solid $gray-eleven;
-				padding: 0.5em 1em;
 			}
 		}
 	}
@@ -86,9 +85,12 @@
 
 	&Modal {
 		max-width: 80vw;
+		max-height: 70vh;
 	}
 
 	&Image {
+		cursor: pointer;
+
 		max-width: 50vw;
 		max-height: 50vh;
 
@@ -261,6 +263,43 @@
 
 	&Label {
 		@extend .inputLabel;
+	}
+}
+
+.deploymentModal {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	flex-direction: column;
+
+	&Image {
+		justify-content: center;
+		max-width: 100px;
+	}
+
+	&Spinner {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		padding-bottom: 2px;
+		padding-left: 2px;
+	}
+
+	&Actions {
+		display: flex;
+		gap: 20px;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	&Title {
+		font-size: $font-medium-enlarged;
+		display: flex;
+
+		&Caption {
+			text-align: center;
+			font-weight: $font-normal;
+		}
 	}
 }
 

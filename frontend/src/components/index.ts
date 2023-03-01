@@ -10,3 +10,6 @@ export * from './Loader';
 export * from './TextArea';
 export * from './Label';
 export * from './EditionCard';
+export * from './ChangeLocationDialog';
+export * from './PageLoader';
+export * from './Modal';

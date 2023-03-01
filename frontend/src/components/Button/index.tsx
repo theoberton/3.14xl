@@ -2,8 +2,10 @@ import cn from 'classnames';
 import styles from '@/components/Button/styles.module.scss';
 import ArrowLeftIcon from '@/assets/images/svg/button/arrowLeft.svg';
 import ArrowRightIcon from '@/assets/images/svg/button/arrowRight.svg';
-import { ButtonKinds } from '@/components/interfaces';
+import { ButtonKinds, LoaderColors } from '@/components/interfaces';
 import { Link } from 'react-router-dom';
+import { Loader } from '@/components';
+import { LoaderSizes } from '@/components/interfaces';
 
 export * from './interfaces';
 
@@ -13,6 +15,7 @@ interface CommonProps {
 	icon?: string;
 	green?: boolean;
 	expanded?: boolean;
+	isSubmitting?: boolean;
 	basicInverted?: boolean;
 	mini?: boolean;
 	disabled?: boolean;
@@ -33,7 +36,7 @@ interface LinkProps extends CommonProps {
 type IProps = ButtonProps | LinkProps;
 
 export function Button(props: IProps) {
-	const { componentType, expanded = false, basicInverted, kind, mini, danger = false } = props;
+	const { componentType, expanded = false, basicInverted, kind, danger = false } = props;
 
 	const buttonContent = getButtonContent(props);
 
@@ -51,7 +54,12 @@ export function Button(props: IProps) {
 		const { buttonType = 'button', onClick, disabled } = props;
 
 		return (
-			<button type={buttonType} className={btnClass} onClick={!disabled ? onClick : () => {}}>
+			<button
+				disabled={disabled || isSubmitting}
+				type={buttonType}
+				className={btnClass}
+				onClick={!disabled ? onClick : () => {}}
+			>
 				{buttonContent}
 			</button>
 		);
@@ -71,7 +79,7 @@ export function Button(props: IProps) {
 }
 
 function getButtonContent(props: IProps): React.ReactNode {
-	const { children, kind, green, disabled, mini } = props;
+	const { children, kind, green, disabled, mini, isSubmitting } = props;
 
 	let basicButtonContent: JSX.Element | null = null;
 
@@ -80,21 +88,23 @@ function getButtonContent(props: IProps): React.ReactNode {
 		[styles.buttonIconImageSalad]: green,
 	});
 	const commonContentClassnames = cn({
-		[styles.buttonDisabled]: disabled,
+		[styles.buttonDisabled]: disabled || isSubmitting,
 		[styles.buttonMini]: mini,
 	});
+
+	const LoaderComponent = <Loader size={LoaderSizes.small} color={LoaderColors.black} />;
 
 	if (kind == ButtonKinds.basic) {
 		const resultClassname = cn({
 			[commonContentClassnames]: true,
 			[styles.buttonContentBasic]: !mini,
-			[styles.buttonDisabled]: disabled,
+			[styles.buttonDisabled]: disabled || isSubmitting,
 			[styles.buttonContentBasicMini]: mini,
 		});
 
 		basicButtonContent = (
 			<div className={resultClassname}>
-				<div className={styles.buttonContentMain}>{children}</div>
+				<div className={styles.buttonContentMain}>{isSubmitting ? LoaderComponent : children}</div>
 			</div>
 		);
 	} else if (kind == ButtonKinds.arrowLeft) {

@@ -1,28 +1,19 @@
-import { useAsync } from 'react-use';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
+import { Address } from 'ton-core';
+import { useAsync } from 'react-use';
+import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { PageLoader } from '@/components';
 import EditionDetails from './Details';
 import EditionPreview from './Preview';
-import styles from './styles.module.scss';
+import styles from '@/pages/EditionDetails/styles.module.scss';
 import { CollectionContent } from '@/wrappers/types';
 import { NftCollection } from '@/wrappers/NftCollection';
-import { Address } from 'ton-core';
 import { useTonClient } from '@/hooks/useTonClient';
 
 export default function EditionDetailsPage() {
 	const { collectionAddress } = useParams();
 	const tonClient = useTonClient();
-	const [isError, setError] = useState(false);
-
-	useEffect(() => {
-
-		if(isError) {
-			setTimeout(() => {
-				window.location.reload()
-			}, 5000);
-		}
-	}, [isError]);
 
 	const collectionDataAsync = useAsync(async () => {
 		if (!collectionAddress || !tonClient) {
@@ -31,16 +22,7 @@ export default function EditionDetailsPage() {
 
 		const nftCollection = NftCollection.createFromAddress(Address.parse(collectionAddress));
 		const nftColelctionContract = tonClient.open(nftCollection);
-		let collectionData;
-		try {
-			collectionData = await nftColelctionContract.getCollectionData();
-			
-		} catch (error) {
-			console.log('error', error);
-			setError(true)
-			collectionData = await nftColelctionContract.getCollectionData();
-
-		}
+		let collectionData = await nftColelctionContract.getCollectionData();
 		const content: CollectionContent = await fetch(collectionData.collectionContentUri).then(res =>
 			res.json()
 		);
@@ -48,22 +30,17 @@ export default function EditionDetailsPage() {
 		return { collectionData, content };
 	}, [tonClient]);
 
-	if (collectionDataAsync.loading) {
-		return <div>loading...</div>;
-	}
-
-	if (collectionDataAsync.error) {
-		console.error(collectionDataAsync.error);
-		return <div>Waiting for deploy...</div>;
-	}
-
-	if (!collectionDataAsync.value) {
-		console.error('No value');
+	if (collectionDataAsync.error && !collectionDataAsync.value) {
 		return <div>Something went wrong</div>;
+	}
+
+	if (collectionDataAsync.loading || !collectionDataAsync.value) {
+		return <PageLoader />;
 	}
 
 	return (
 		<div className={styles.editionDetailsContainer}>
+			<Helmet title="3.14XL - Edition details" />
 			<EditionPreview
 				collectionData={collectionDataAsync.value.collectionData}
 				content={collectionDataAsync.value.content}
