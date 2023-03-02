@@ -6,7 +6,6 @@ import { NftCollection } from '@/wrappers';
 import { useAsyncRetry } from 'react-use';
 import { Loader } from '@/components';
 import { Button, ButtonKinds } from '@/components/Button';
-// import { useMediaQuery } from 'react-responsive';
 
 import { LoaderSizes, LoaderColors, LoaderTypes } from '@/components/interfaces';
 import { useNavigate } from 'react-router';

@@ -7,6 +7,7 @@ import MobilePreivew from '@/pages/CreateEdition/Preview/Mobile';
 import DesktopPreivew from '@/pages/CreateEdition/Preview/Desktop';
 
 import { useMediaQuery } from 'react-responsive';
+console.log('useMediaQuery', useMediaQuery);
 
 export function Preview() {
 	const [isImagePreviewOpened, setImagePreviewOpenedStatus] = useState(false);

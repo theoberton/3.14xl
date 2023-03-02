@@ -14,6 +14,9 @@ import OwnershipSection from './OwnershipSection';
 import { formSchema } from './validation';
 import { FormValues } from './interfaces';
 
+// Hotfix for https://github.com/yocontra/react-responsive/issues/306, remove when resolved
+console.log(useMediaQuery)
+
 import styles from './styles.module.scss';
 
 function EditionEdit() {
