@@ -12,7 +12,7 @@ export default function MintedEditionsPage() {
 			<Helmet title="3.14XL - Minted editions" />
 			<div className={styles.mintedEditionsHeader}>
 				<h1>Minted editions</h1>
-				<div>
+				<div className={styles.mintedEditionsHeaderButtons}>
 					<Button componentType="link" kind={ButtonKinds.basic} to="/explore">
 						Explore
 					</Button>

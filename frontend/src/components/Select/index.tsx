@@ -44,12 +44,24 @@ export function Select(props: SelectProps) {
 				borderColor: '#212121',
 			},
 		}),
-		option: (optionStyles: any, { isSelected }: any) => ({
-			...optionStyles,
-			fontSize: '14px',
-			color: 'white',
-			backgroundColor: isSelected ? '#212121' : '#212121',
-		}),
+		option: (optionStyles: any, { isSelected, isFocused, isActive }: any) => {
+			let backgroundColor;
+			if (isSelected) {
+				backgroundColor = isFocused ? '#4e4e4e' : '#4e4e4e';
+			} else {
+				backgroundColor = isFocused ? '#7e7e7e' : '#212121';
+			}
+
+			return {
+				...optionStyles,
+				fontSize: '14px',
+				color: 'white',
+				backgroundColor,
+				':active': {
+					backgroundColor,
+				},
+			};
+		},
 		container: (constainerStyles: any) => ({
 			...constainerStyles,
 			'&:focus': {

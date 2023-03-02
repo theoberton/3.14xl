@@ -1,0 +1,56 @@
+#tc-wallets-modal {
+	padding: 10px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	h2 {
+		width: 100%;
+		text-align: center;
+		max-width: 400px;
+	}
+
+	&-container {
+		padding: 10px;
+		width: unset;
+	}
+
+	// wallets buttons list
+	ul {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+
+		li {
+			flex: 1 1 0px;
+
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			button {
+				margin: 0;
+
+				width: fit-content;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-around;
+				align-items: center;
+
+				// wallets buttons text
+				div {
+					word-wrap: unset;
+					width: max-content;
+					overflow: unset;
+					text-overflow: unset;
+					display: block;
+					max-width: none;
+				}
+			}
+		}
+	}
+}

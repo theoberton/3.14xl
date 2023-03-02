@@ -6,7 +6,7 @@ function EditionsHeader() {
 		<div className={styles.editionsHeader}>
 			<h1>Created editions</h1>
 
-			<div>
+			<div className={styles.editionsHeaderButtons}>
 				<Button componentType="link" kind={ButtonKinds.basic} to="/minted">
 					Minted editions
 				</Button>

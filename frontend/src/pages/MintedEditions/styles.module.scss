@@ -17,6 +17,19 @@
 			align-items: center;
 			gap: 30px;
 		}
+
+		&Buttons {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			gap: 20px;
+
+			@media (max-width: $breakpoint-xs) {
+				flex-direction: column;
+				justify-content: center;
+			}
+		}
 	}
 
 	&ShowCase {
