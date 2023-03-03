@@ -83,8 +83,20 @@ slice calculate_nft_item_address(int wc, cell state_init) {
     }
     slice sender_address = cs~load_msg_addr();
 
+    int senderVal = sender_address.slice_bits();
+    ~strdump("senderVal");
+    ~dump(senderVal);
+
+    int isEmpty = in_msg_body.slice_data_empty?();
+    ~strdump("isEmpty");
+    ~dump(isEmpty);
+
     int op = in_msg_body~load_uint(32);
+    ~strdump("op");
+    ~dump(senderVal);
     int query_id = in_msg_body~load_uint(64);
+    ~strdump("query_id");
+    ~dump(query_id);
 
     var (owner_address, next_item_index, content, nft_item_code, royalty_params) = load_data();
 
@@ -136,19 +148,15 @@ slice calculate_nft_item_address(int wc, cell state_init) {
     }
     if (op == 4) { ;; change content
       var new_content = in_msg_body~load_ref();
-      ~strdump("new_content");
-      ~strdump(new_content);
 
-      cell new_royalty_params = in_msg_body~load_ref();
-      ~strdump("new_royalty_params");
-      ~strdump(new_royalty_params);
-      slice royalty_params_slice = new_royalty_params.begin_parse();
-      ~strdump("royalty_params_slice");
-      ~strdump(royalty_params_slice);
+      if(slice_refs_empty?(in_msg_body)) {
+        ~strdump("THIS CHAIN 1");
 
-      if(royalty_params_slice.slice_data_empty?()) {
         save_data(owner_address, next_item_index, new_content, nft_item_code, royalty_params);
       } else {
+        ~strdump("THIS CHAIN 2");
+        cell new_royalty_params = in_msg_body~load_ref();
+
         save_data(owner_address, next_item_index, new_content, nft_item_code, new_royalty_params);
       }
       return ();

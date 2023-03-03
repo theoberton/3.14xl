@@ -11,6 +11,16 @@ export interface FormValues {
 	payoutAddress: string;
 }
 
+export interface EditValues {
+	description: string;
+	symbol?: string;
+	image: string | null;
+	dateEnd: number | null;
+	dateStart: number | null;
+	price: string;
+	payoutAddress: string;
+}
+
 export interface UpdateEditionParams {
 	image: string;
 	description: string;

@@ -1,21 +1,30 @@
-import { beginCell, Cell, Builder, contractAddress } from 'ton-core';
+import { beginCell, Cell, Builder, contractAddress, Address } from 'ton-core';
 
-import { MintSafe, NftManagerInitData, SetNftCollectionAddress, SendMintParams } from './../types';
+import {
+	MintSafe,
+	NftManagerInitData,
+	SetNftCollectionAddress,
+	SendMintParams,
+	EditData,
+	EditDataParams,
+	ChangeOwnerOfCollection,
+	ChangeOwnerOfCollectionParams,
+} from './../types';
 import { NftManagerOpcodes } from '../constants';
+import { encodeOffChainContent } from './../utils/nft-content';
 
 import { NftManagerCodeCell, NftManagerSystemCell } from './NftManager.source';
-import { Address } from 'ton-core';
 
 export function buildNftManagerDataCell(managerData: NftManagerInitData, systemCell: Cell) {
 	let data = beginCell()
 		.storeRef(systemCell)
 		.storeAddress(managerData.owner)
-		.storeInt(managerData.debug ?? Math.floor(Math.random() * 10000), 16)
 		.storeAddress(managerData.owner)
 		.storeCoins(managerData.mintPrice)
 		.storeInt(managerData.maxSupply ?? 0n, 32)
 		.storeInt(managerData.mintDateStart ?? 0n, 32)
 		.storeInt(managerData.mintDateEnd ?? 0n, 32)
+		.storeAddress(managerData.payoutAddress)
 		.endCell();
 	return data;
 }
@@ -39,7 +48,7 @@ export function buildNftManagerStateInit(
 export function storeSetNftCollectionAddress(src: SetNftCollectionAddress) {
 	return (builder: Builder) => {
 		let b_0 = builder;
-		b_0.storeUint(435957060, 32);
+		b_0.storeUint(NftManagerOpcodes.SetNftCollectionAddress, 32);
 		b_0.storeAddress(src.nftCollectionAddress);
 	};
 }
@@ -51,6 +60,34 @@ export function storeMintSafe(src: MintSafe) {
 		b_0.storeUint(src.queryId ?? 0, 64);
 		b_0.storeUint(src.nextItemIndex, 64);
 		b_0.storeAddress(src.itemOwner);
+	};
+}
+
+export function storeChangeOwnerOfCollection(src: ChangeOwnerOfCollection) {
+	return (builder: Builder) => {
+		let b_0 = builder;
+		b_0.storeUint(NftManagerOpcodes.ChangeOwnerOfCollection, 32);
+		b_0.storeAddress(src.newOwner);
+	};
+}
+
+export function storeEditData(src: EditData) {
+	let collectionContent = encodeOffChainContent(src.content);
+	let commonContent = encodeOffChainContent(src.commonContent);
+	let contentCell = beginCell();
+
+	contentCell.storeRef(collectionContent);
+	contentCell.storeRef(commonContent);
+
+	return (builder: Builder) => {
+		let b_0 = builder;
+		b_0.storeUint(NftManagerOpcodes.EditData, 32);
+		b_0.storeUint(src.queryId ?? 0, 64);
+		b_0.storeRef(contentCell);
+		b_0.storeUint(src.mintPrice, 64);
+		b_0.storeUint(src.mintDateStart ?? 0n, 32);
+		b_0.storeUint(src.mintDateEnd ?? 0n, 32);
+		b_0.storeAddress(src.payoutAddress);
 	};
 }
 
@@ -75,6 +112,32 @@ export const Queries = {
 				storeSetNftCollectionAddress({
 					$$type: 'SetNftCollectionAddress',
 					nftCollectionAddress: nftCollectionAddress,
+				})
+			)
+			.endCell();
+	},
+	editData: (params: EditDataParams): Cell => {
+		return beginCell()
+			.store(
+				storeEditData({
+					$$type: 'EditData',
+					content: params.content,
+					commonContent: params.commonContent,
+					queryId: params.queryId,
+					mintPrice: params.mintPrice,
+					mintDateStart: params.mintDateStart,
+					mintDateEnd: params.mintDateEnd,
+					payoutAddress: params.payoutAddress,
+				})
+			)
+			.endCell();
+	},
+	changeOwner: (params: ChangeOwnerOfCollectionParams): Cell => {
+		return beginCell()
+			.store(
+				storeChangeOwnerOfCollection({
+					$$type: 'ChangeOwnerOfCollection',
+					newOwner: params.newOwner,
 				})
 			)
 			.endCell();

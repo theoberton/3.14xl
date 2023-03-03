@@ -8,6 +8,7 @@ import { randomAddress } from './../utils';
 import { NftItemData } from '../types';
 import { getDefaultNftItemData } from './helpers';
 import { NftItemCodeCell } from './NftItem.source';
+import { compile } from '@ton-community/blueprint';
 
 describe('nft item smc', () => {
 	describe('nft item getters', () => {

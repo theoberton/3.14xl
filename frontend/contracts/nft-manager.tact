@@ -16,7 +16,6 @@ message(0x1) Mint {
 }
 
 message(0x4) UpdateContent {
-  query_id: Int as uint64;
   collection_content: Cell;
 }
 
@@ -104,15 +103,11 @@ contract NftManager with Deployable, Ownable {
     self.mint_price = msg.mint_price;
     self.mint_date_start = msg.mint_date_start;
     self.mint_date_end = msg.mint_date_end;
-    self.payout_address = msg.payout_address;
-
-    // let collection_content: Cell = beginCell().storeRef().storeRef(emptyCell()).endCell();
 
     send(SendParameters {
       to: self.nft_collection_address,
       value: ton("0.05"),
       body: UpdateContent {
-        query_id: msg.query_id,
         collection_content: msg.content
       }.toCell()
     });

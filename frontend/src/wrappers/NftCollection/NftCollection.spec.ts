@@ -10,6 +10,9 @@ import { getDefaultNftCollectionData } from './helpers';
 import { NftCollectionCodeCell } from './NftCollection.source';
 import { NftItemCodeCell } from './../NftItem/NftItem.source';
 
+// TO get updated sources of contracts use code.toBoc().toString('base64')
+
+// describe.skip('nft collection smc', () => {
 describe('nft collection smc', () => {
 	describe('nft collection getters', () => {
 		let blockchain: Blockchain | null;
@@ -23,6 +26,11 @@ describe('nft collection smc', () => {
 				defaultNftCollectionConfig,
 				NftCollectionCodeCell
 			);
+			// const code = await compile('../../frontend/src/wrappers/NftCollection/NftCollection');
+			// console.log('_______')
+			// console.log(code.toBoc().toString('base64'));
+			// console.log('_______')
+
 			contract = blockchain.openContract(nftCollection);
 
 			const deployer = await blockchain.treasury('deployer');
@@ -316,7 +324,7 @@ describe('nft collection smc', () => {
 		});
 
 		const params = {
-			collectionContentUri: 'new_content',
+			collectionContentUri: 'new_contenttttttt',
 			commonContent: 'new_common_content',
 			royaltyParams: {
 				royaltyFactor: 150,
@@ -324,6 +332,9 @@ describe('nft collection smc', () => {
 				royaltyAddress: randomAddress,
 			},
 		};
+
+		let resBefore = await nftContract!.getCollectionData();
+		console.log('resBefore', resBefore);
 
 		let result = await nftContract!.sendEditContent(ownerOfCollectionContract.getSender(), params);
 

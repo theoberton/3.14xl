@@ -11,15 +11,15 @@ function OwnershipSection() {
 				privileges. This cannot be undone!
 			</p>
 			<Input
-				label={' Wallet address'}
-				name="address"
+				label={'Wallet address'}
+				name="managerAddress"
 				type="text"
 				placeholder="Enter wallet address"
 				max={20}
 			/>
 			<Button
 				componentType="button"
-				buttonType="submit"
+				// buttonType="submit"
 				disabled={true}
 				expanded
 				kind={ButtonKinds.basic}

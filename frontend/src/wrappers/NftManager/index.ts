@@ -2,7 +2,13 @@ import { TupleBuilder, Address, beginCell, Cell, ContractProvider, Sender, toNan
 import { BaseLocalContract } from '../core/BaseLocalContract';
 import { calcPercent } from '../../helpers/math';
 
-import { NftManagerInitData, NftManagerData, SendMintParams } from './../types';
+import {
+	NftManagerInitData,
+	NftManagerData,
+	SendMintParams,
+	EditDataParams,
+	ChangeOwnerOfCollectionParams,
+} from './../types';
 
 import { buildNftManagerStateInit, Queries } from './helpers';
 
@@ -50,6 +56,34 @@ export class NftManager extends BaseLocalContract {
 		});
 	}
 
+	async sendManagerEdit(
+		provider: ContractProvider,
+		via: Sender,
+		params: EditDataParams,
+		editPrice: bigint
+	) {
+		const msgBody = Queries.editData(params);
+
+		await provider.internal(via, {
+			value: editPrice,
+			body: msgBody,
+		});
+	}
+
+	async sendChangeOwner(
+		provider: ContractProvider,
+		via: Sender,
+		params: ChangeOwnerOfCollectionParams,
+		value: bigint
+	) {
+		const msgBody = Queries.changeOwner(params);
+
+		await provider.internal(via, {
+			value,
+			body: msgBody,
+		});
+	}
+
 	async getCollectionAddress(provider: ContractProvider): Promise<Address> {
 		const { stack } = await provider.get('nft_collection_address', new TupleBuilder().build());
 
@@ -67,12 +101,12 @@ export class NftManager extends BaseLocalContract {
 
 		return {
 			owner: stack.readAddress(),
-			debug: stack.readNumber(),
 			nftCollectionAddress: stack.readAddress(),
 			mintPrice: stack.readBigNumber(),
 			maxSupply: stack.readNumber(),
 			mintDateStart: stack.readNumber(),
 			mintDateEnd: stack.readNumber(),
+			payoutAddress: stack.readAddress(),
 		};
 	}
 }

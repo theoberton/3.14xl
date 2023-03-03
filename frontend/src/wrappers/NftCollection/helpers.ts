@@ -138,8 +138,7 @@ export const Queries = {
 
 		let collectionContent = encodeOffChainContent(params.collectionContentUri);
 
-		let commonContent = beginCell();
-		commonContent.storeBuffer(Buffer.from(params.commonContent));
+		let commonContent = encodeOffChainContent(params.commonContent);
 
 		contentCell.storeRef(collectionContent);
 		contentCell.storeRef(commonContent);

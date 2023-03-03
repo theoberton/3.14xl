@@ -7,7 +7,7 @@ import { PreviewImageModal } from '@/components';
 import { useMediaQuery } from 'react-responsive';
 
 // Hotfix for https://github.com/yocontra/react-responsive/issues/306, remove when resolved
-console.log(useMediaQuery)
+console.log(useMediaQuery);
 
 import styles from './styles.module.scss';
 

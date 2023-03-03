@@ -23,7 +23,7 @@ function CreateEditionForm() {
 	const address = useTonAddress();
 	const tonClient = useTonClient();
 	const [tonConnectUI] = useTonConnectUI();
-	const [getDepoymentState, setDeploymentState] = useGetSetState(initialDeploymentState);
+	const [getdeploymentState, setDeploymentState] = useGetSetState(initialDeploymentState);
 
 	const handleDeploymentModalClose = useCallback(() => {
 		setDeploymentState(initialDeploymentState);
@@ -70,7 +70,8 @@ function CreateEditionForm() {
 						symbol: values.symbol,
 						price: values.price,
 						royalty: values.royalty,
-						creatorAddress: values.payoutAddress,
+						payoutAddress: values.payoutAddress,
+						creatorAddress: address,
 						maxSupply:
 							values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0',
 						dateStart: values.validity.start ? dateToUnix(values.validity.start) : 0,
@@ -123,7 +124,7 @@ function CreateEditionForm() {
 				<FormArea
 					address={address}
 					handleDeploymentModalClose={handleDeploymentModalClose}
-					deploymentState={getDepoymentState()}
+					deploymentState={getdeploymentState()}
 					isWalletConnected={tonConnectUI.connected}
 					handleConnectWalletClick={handleConnectWalletClick}
 				/>

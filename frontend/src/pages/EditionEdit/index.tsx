@@ -1,62 +1,79 @@
-import { useCallback } from 'react';
-import { Formik } from 'formik';
-import { useNavigate } from 'react-router';
-import { useMediaQuery } from 'react-responsive';
-import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
-import { Helmet } from 'react-helmet-async';
-
+import { useCallback, useState } from 'react';
+import { useAsync, useGetSetState } from 'react-use';
+import { Address } from 'ton-core';
 import { useTonClient } from '@/hooks/useTonClient';
+import { NftCollection, NftManager } from '@/wrappers';
+import { CollectionContent } from '@/wrappers/types';
+import { useNavigate, useParams } from 'react-router';
+import { useMediaQuery } from 'react-responsive';
+import { Helmet } from 'react-helmet-async';
+import { PageLoader } from '@/components';
 
-import FormArea from './FormArea';
-import { Preview } from '@/pages/CreateEdition/Preview';
-import OwnershipSection from './OwnershipSection';
-
-import { formSchema } from './validation';
-import { FormValues } from './interfaces';
-
+import { Content } from '@/pages/EditionEdit/Content';
 // Hotfix for https://github.com/yocontra/react-responsive/issues/306, remove when resolved
-console.log(useMediaQuery)
+console.log(useMediaQuery);
 
-import styles from './styles.module.scss';
+const initialDeploymentState = {
+	isModalOpened: false,
+	address: '',
+	editionName: '',
+};
 
 function EditionEdit() {
-	const address = useTonAddress();
+	const { collectionAddress } = useParams();
+	const [editionName, setName] = useState<string>('');
+	const [getContentdeploymentState, setContentDeploymentState] =
+		useGetSetState(initialDeploymentState);
+	const [getOwnerdeploymentState, setOwnerContentDeploymentState] =
+		useGetSetState(initialDeploymentState);
+
+	const setEditionName = useCallback(
+		(name: string) => {
+			setName(name);
+		},
+		[setName]
+	);
+
 	const tonClient = useTonClient();
 
-	const [tonConnectUI] = useTonConnectUI();
-	const navigate = useNavigate();
+	const collectionDataAsync = useAsync(async () => {
+		if (!collectionAddress || !tonClient) {
+			return null;
+		}
 
-	const handleSubmit = useCallback(async (values: FormValues) => {}, []);
+		const nftCollection = NftCollection.createFromAddress(Address.parse(collectionAddress));
+		const nftColelctionContract = tonClient.open(nftCollection);
+		let collectionData = await nftColelctionContract.getCollectionData();
+		const content: CollectionContent = await fetch(collectionData.collectionContentUri).then(res =>
+			res.json()
+		);
 
-	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
+		setEditionName(content.name);
 
-	const createEditionInitialValues: FormValues = {
-		description: '',
-		media: null,
-		price: '0.1',
-		validity: {
-			start: null,
-			end: null,
-		},
-		payoutAddress: address,
-	};
+		const nftManager = NftManager.createFromAddress(collectionData.ownerAddress);
+		const nftManagerContract = tonClient.open(nftManager);
+		const managerData = await nftManagerContract.getManagerData();
+
+		return { collectionData, content, managerAddress: managerData.owner };
+	}, [tonClient, collectionAddress]);
+
+	if (collectionDataAsync.error && !collectionDataAsync.value) {
+		return <div>Something went wrong</div>;
+	}
+
+	if (collectionDataAsync.loading || !collectionDataAsync.value) {
+		return <PageLoader />;
+	}
 
 	return (
-		<Formik
-			initialValues={createEditionInitialValues}
-			validationSchema={formSchema}
-			enableReinitialize
-			onSubmit={handleSubmit}
-		>
-			<section className={styles.editEditionContainer}>
-				<Helmet title={'3.14XL - Edit edition'} />
-				<div className={styles.editEditionControls}>
-					<FormArea />
-					<OwnershipSection />
-				</div>
-				<Preview />
-			</section>
-		</Formik>
+		<>
+			<Helmet title={'3.14XL - Edit edition'} />
+			<Content
+				deploymentState={getContentdeploymentState()}
+				setDeploymentState={setContentDeploymentState}
+				editionData={collectionDataAsync.value}
+			/>
+		</>
 	);
 }
 

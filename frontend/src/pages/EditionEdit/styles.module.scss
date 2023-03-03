@@ -8,6 +8,13 @@
 		padding-block: 20px;
 		position: relative;
 		overflow: auto;
+		padding-top: 0;
+		padding-bottom: 0;
+
+		&Wrapper {
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
 
 		@media (max-width: $breakpoint-l) {
 			grid-template-columns: 1fr;
@@ -24,6 +31,12 @@
 		justify-content: flex-start;
 		align-items: flex-start;
 		gap: 60px;
+
+		&Owner {
+			@extend .editEditionControls;
+			border-right: 0;
+			padding: 0;
+		}
 
 		@media (max-width: $breakpoint-l) {
 			border-right: 0;

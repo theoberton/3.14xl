@@ -6,6 +6,7 @@ import {
 	SendMessageResult,
 	TreasuryContract,
 } from '@ton-community/sandbox';
+
 import { dateToUnix } from '../../helpers/date';
 import { calcPercent } from '../../helpers/math';
 import { NftCollection } from '../NftCollection';
@@ -74,7 +75,7 @@ async function mint(
 
 function expectSuccessfullMint(
 	mintResult: SendMessageResult & { result: void },
-	creator: SandboxContract<TreasuryContract>,
+	payoutWallet: SandboxContract<TreasuryContract>,
 	buyer: SandboxContract<TreasuryContract>,
 	manager: SandboxContract<NftManager>,
 	collection: SandboxContract<NftCollection>,
@@ -82,7 +83,7 @@ function expectSuccessfullMint(
 ) {
 	expect(mintResult.transactions).toHaveTransaction({
 		from: manager.address,
-		to: creator.address,
+		to: payoutWallet.address,
 		value: mintPrice,
 		success: true,
 	});
@@ -145,10 +146,11 @@ describe('NftManager', () => {
 
 		await setupPixelWallet(blkch);
 		const creator = await blkch.treasury('creator');
+		const payoutWallet = await blkch.treasury('payout');
 
 		const managerInitData = {
 			owner: creator.address,
-			debug: BigInt(Math.floor(Math.random() * 10000)),
+			payoutAddress: payoutWallet.address,
 			mintPrice: toNano('1'),
 			maxSupply: 0n,
 			mintDateStart: 0n,
@@ -179,11 +181,11 @@ describe('NftManager', () => {
 
 		const firstMintResult = await mint(buyer, manager, collection, mintPrice);
 
-		expectSuccessfullMint(firstMintResult, creator, buyer, manager, collection, mintPrice);
+		expectSuccessfullMint(firstMintResult, payoutWallet, buyer, manager, collection, mintPrice);
 
 		const secondMintResult = await mint(buyer, manager, collection, mintPrice);
 
-		expectSuccessfullMint(secondMintResult, creator, buyer, manager, collection, mintPrice);
+		expectSuccessfullMint(secondMintResult, payoutWallet, buyer, manager, collection, mintPrice);
 	});
 
 	it('should restrict minting by max supply rule', async () => {
@@ -191,10 +193,10 @@ describe('NftManager', () => {
 
 		await setupPixelWallet(blkch);
 		const creator = await blkch.treasury('creator');
-
+		const payoutWallet = await blkch.treasury('payout');
 		const managerInitData = {
 			owner: creator.address,
-			debug: BigInt(Math.floor(Math.random() * 10000)),
+			payoutAddress: payoutWallet.address,
 			mintPrice: toNano('1'),
 			maxSupply: 1n,
 			mintDateStart: 0n,
@@ -220,21 +222,30 @@ describe('NftManager', () => {
 
 		const successfullMintResult = await mint(buyer1, manager, collection, mintPrice);
 
-		expectSuccessfullMint(successfullMintResult, creator, buyer1, manager, collection, mintPrice);
+		expectSuccessfullMint(
+			successfullMintResult,
+			payoutWallet,
+			buyer1,
+			manager,
+			collection,
+			mintPrice
+		);
 
 		const failedMintResult = await mint(buyer2, manager, collection, mintPrice);
 
-		expectFailedMint(failedMintResult, creator, buyer2, manager, collection, mintPrice);
+		expectFailedMint(failedMintResult, payoutWallet, buyer2, manager, collection, mintPrice);
 	});
 
 	it('should restrict minting by start rule', async () => {
 		const blkch = await Blockchain.create();
 		const creator = await blkch.treasury('creator');
+		const payoutWallet = await blkch.treasury('payout');
+
 		await setupPixelWallet(blkch);
 
 		const managerInitData = {
 			owner: creator.address,
-			debug: BigInt(Math.floor(Math.random() * 10000)),
+			payoutAddress: payoutWallet.address,
 			mintPrice: toNano('1'),
 			maxSupply: 0n,
 			mintDateStart: BigInt(dateToUnix(new Date()) + 1000),
@@ -259,17 +270,19 @@ describe('NftManager', () => {
 
 		const mintResult = await mint(buyer, manager, collection, mintPrice);
 
-		expectFailedMint(mintResult, creator, buyer, manager, collection, mintPrice);
+		expectFailedMint(mintResult, payoutWallet, buyer, manager, collection, mintPrice);
 	});
 
 	it('should restrict minting by end rule', async () => {
 		const blkch = await Blockchain.create();
 		const creator = await blkch.treasury('creator');
+		const payoutWallet = await blkch.treasury('payout');
+
 		await setupPixelWallet(blkch);
 
 		const managerInitData = {
 			owner: creator.address,
-			debug: BigInt(Math.floor(Math.random() * 10000)),
+			payoutAddress: payoutWallet.address,
 			mintPrice: toNano('1'),
 			maxSupply: 0n,
 			mintDateStart: 0n,
@@ -290,21 +303,24 @@ describe('NftManager', () => {
 		await deployNftCollection(creator, manager, collection);
 
 		const buyer = await blkch.treasury('buyer');
-		const { mintPrice } = await manager.getManagerData();
+		const { mintPrice, mintDateEnd } = await manager.getManagerData();
 
+		expect(mintDateEnd).toEqual(Number(managerInitData.mintDateEnd));
 		const mintResult = await mint(buyer, manager, collection, mintPrice);
 
-		expectFailedMint(mintResult, creator, buyer, manager, collection, mintPrice);
+		expectFailedMint(mintResult, payoutWallet, buyer, manager, collection, mintPrice);
 	});
 
 	it('should allow mint just in time', async () => {
 		const blkch = await Blockchain.create();
 		const creator = await blkch.treasury('creator');
+		const payoutWallet = await blkch.treasury('payout');
+
 		await setupPixelWallet(blkch);
 
 		const managerInitData = {
 			owner: creator.address,
-			debug: BigInt(Math.floor(Math.random() * 10000)),
+			payoutAddress: payoutWallet.address,
 			mintPrice: toNano('1'),
 			maxSupply: 0n,
 			mintDateStart: BigInt(dateToUnix(new Date()) - 1000),
@@ -329,6 +345,181 @@ describe('NftManager', () => {
 
 		const mintResult = await mint(buyer, manager, collection, mintPrice);
 
-		expectSuccessfullMint(mintResult, creator, buyer, manager, collection, mintPrice);
+		expectSuccessfullMint(mintResult, payoutWallet, buyer, manager, collection, mintPrice);
+	});
+
+	it('should update manager contract data', async () => {
+		const blkch = await Blockchain.create();
+		const creator = await blkch.treasury('creator');
+		const payoutWallet = await blkch.treasury('payout');
+
+		await setupPixelWallet(blkch);
+
+		const managerInitData = {
+			owner: creator.address,
+			payoutAddress: payoutWallet.address,
+			mintPrice: toNano('1'),
+			maxSupply: 0n,
+			mintDateStart: 0n,
+			mintDateEnd: 0n,
+		};
+
+		const nftManager = NftManager.createFromConfig(managerInitData);
+
+		const manager = blkch.openContract(nftManager);
+
+		const nftCollectionConfig = getDefaultNftCollectionData({
+			ownerAddress: manager.address,
+		});
+		const collection = blkch.openContract(
+			NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell)
+		);
+
+		await deployNftCollection(creator, manager, collection);
+
+		const payoutWalletUpdated = await blkch.treasury('payoutUpdated');
+		const mintPriceUpdated = toNano('3');
+		console.log('mintPriceUpdated', mintPriceUpdated);
+
+		const mintDateStart = BigInt(dateToUnix(new Date()) - 1000);
+		const mintDateEnd = BigInt(dateToUnix(new Date()) + 3000);
+
+		const collectionContentUri = 'https://google.com';
+
+		const managerEditData = {
+			payoutAddress: payoutWalletUpdated.address,
+			mintPrice: mintPriceUpdated,
+			mintDateStart: mintDateStart,
+			mintDateEnd: mintDateEnd,
+			content: collectionContentUri,
+			commonContent: collectionContentUri,
+		};
+		const data = await manager.getManagerData();
+
+		const result = await manager.sendManagerEdit(
+			creator.getSender(),
+			managerEditData,
+			toNano('0.05')
+		);
+
+		expect(result.transactions).toHaveTransaction({
+			from: manager.address,
+			to: collection.address,
+			success: true,
+		});
+
+		const updatedManagerData = await manager.getManagerData();
+
+		const collectionDataAfterEdit = await collection.getCollectionData();
+
+		expect(collectionDataAfterEdit.collectionContentUri).toEqual(managerEditData.content);
+		expect(updatedManagerData.payoutAddress.toString()).toEqual(
+			managerEditData.payoutAddress.toString()
+		);
+		expect(updatedManagerData.mintDateStart).toEqual(Number(managerEditData.mintDateStart));
+		expect(updatedManagerData.mintDateEnd).toEqual(Number(managerEditData.mintDateEnd));
+		expect(updatedManagerData.mintPrice).toEqual(managerEditData.mintPrice);
+	});
+
+	it('should allow to change owner of contract to owner', async () => {
+		const blkch = await Blockchain.create();
+		const creator = await blkch.treasury('creator');
+		const payoutWallet = await blkch.treasury('payout');
+
+		await setupPixelWallet(blkch);
+
+		const managerInitData = {
+			owner: creator.address,
+			payoutAddress: payoutWallet.address,
+			mintPrice: toNano('1'),
+			maxSupply: 0n,
+			mintDateStart: 0n,
+			mintDateEnd: 0n,
+		};
+
+		const nftManager = NftManager.createFromConfig(managerInitData);
+
+		const manager = blkch.openContract(nftManager);
+
+		const nftCollectionConfig = getDefaultNftCollectionData({
+			ownerAddress: manager.address,
+		});
+		const collection = blkch.openContract(
+			NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell)
+		);
+
+		await deployNftCollection(creator, manager, collection);
+
+		const owner = await blkch.treasury('newOwner');
+
+		const changeOwnerData = {
+			newOwner: owner.address,
+		};
+
+		const result = await manager.sendChangeOwner(
+			creator.getSender(),
+			changeOwnerData,
+			toNano('0.05')
+		);
+
+		expect(result.transactions).toHaveTransaction({
+			from: creator.address,
+			to: manager.address,
+			success: true,
+		});
+
+		const updatedManagerData = await manager.getManagerData();
+
+		expect(updatedManagerData.owner.toString()).toEqual(changeOwnerData.newOwner.toString());
+	});
+
+	it('should now allow to change owner of contract to anyone else other than owner', async () => {
+		const blkch = await Blockchain.create();
+		const creator = await blkch.treasury('creator');
+		const payoutWallet = await blkch.treasury('payout');
+
+		await setupPixelWallet(blkch);
+
+		const managerInitData = {
+			owner: creator.address,
+			payoutAddress: payoutWallet.address,
+			mintPrice: toNano('1'),
+			maxSupply: 0n,
+			mintDateStart: 0n,
+			mintDateEnd: 0n,
+		};
+
+		const nftManager = NftManager.createFromConfig(managerInitData);
+
+		const manager = blkch.openContract(nftManager);
+
+		const nftCollectionConfig = getDefaultNftCollectionData({
+			ownerAddress: manager.address,
+		});
+		const collection = blkch.openContract(
+			NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell)
+		);
+
+		await deployNftCollection(creator, manager, collection);
+
+		const owner = await blkch.treasury('newOwner');
+		const randomContract = await blkch.treasury('randomContract');
+
+		const changeOwnerData = {
+			newOwner: owner.address,
+		};
+
+		const result = await manager.sendChangeOwner(
+			randomContract.getSender(),
+			changeOwnerData,
+			toNano('0.05')
+		);
+
+		expect(result.transactions).toHaveTransaction({
+			from: randomContract.address,
+			to: manager.address,
+			success: false,
+			exitCode: 132,
+		});
 	});
 });

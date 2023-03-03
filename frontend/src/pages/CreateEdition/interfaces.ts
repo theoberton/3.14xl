@@ -29,4 +29,5 @@ export interface CreateEditionParams {
 	maxSupply: string;
 	dateStart: number;
 	dateEnd: number;
+	payoutAddress: string;
 }

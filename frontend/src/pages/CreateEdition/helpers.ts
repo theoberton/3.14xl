@@ -32,7 +32,8 @@ export const createEdition = async (
 		dateStart: params.dateStart,
 		dateEnd: params.dateEnd,
 		symbol: params.symbol,
-		feeRecipient: params.creatorAddress,
+		payoutAddress: params.payoutAddress,
+		feeRecipient: params.payoutAddress,
 	};
 
 	const collectionContentUri = await storage.upload(content, { uploadWithGatewayUrl: true });
@@ -42,11 +43,11 @@ export const createEdition = async (
 
 	const managerInitData = {
 		owner: ownerAddress,
-		debug: BigInt(Math.floor(Math.random() * 10000)),
 		mintPrice: toNano(params.price),
 		maxSupply: BigInt(params.maxSupply),
 		mintDateStart: BigInt(params.dateStart),
 		mintDateEnd: BigInt(params.dateEnd),
+		payoutAddress: Address.parse(params.payoutAddress),
 	};
 
 	const nftManager = NftManager.createFromConfig(managerInitData);
