@@ -23,8 +23,8 @@ function ApplicationRoutes() {
 					<Route path="/minted" element={<MintedEditionsPage />} />
 					<Route path="/explore" element={<ExplorePage />} />
 					<Route path="/create-edition" element={<CreateEdition />} />
+					<Route path="*" element={<NotFound />} />
 				</Route>
-				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</HashRouter>
 	);
