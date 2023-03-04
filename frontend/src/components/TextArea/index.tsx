@@ -1,7 +1,7 @@
 import TextareaAutosize from 'react-textarea-autosize';
 import { useCustomStateFormField } from '@/hooks/useCustomStateFormField';
 
-import { useField } from 'formik';
+import { useField, useFormikContext } from 'formik';
 
 import classNames from 'classnames';
 
@@ -13,7 +13,6 @@ type TextAreaProps = {
 	label: string;
 	className?: string;
 	disabled?: boolean;
-	isSubmitting?: boolean;
 	rows?: number;
 	maxLength?: number;
 };
@@ -24,12 +23,12 @@ export function TextArea({
 	label,
 	className,
 	disabled,
-	isSubmitting,
 	rows = 3,
 	maxLength,
 }: TextAreaProps) {
 	const [field] = useField(name);
 	const { value, name: fieldName, onChange } = field;
+	const { isSubmitting } = useFormikContext();
 
 	const { onFocus, onBlur, getError } = useCustomStateFormField(name);
 

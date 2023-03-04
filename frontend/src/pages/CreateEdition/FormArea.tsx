@@ -1,7 +1,7 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { Form, useFormikContext } from 'formik';
-import { ChangeLocationDialog } from '@/components/ChangeLocationDialog';
 import { DeploymentModal } from '@/pages/CreateEdition/DeploymentModal';
+import { getConsonants } from '@/helpers';
 
 import styles from '@/pages/CreateEdition/styles.module.scss';
 
@@ -18,7 +18,7 @@ type Props = {
 	handleDeploymentModalClose: () => void;
 };
 
-function FormArea({
+export function FormArea({
 	isWalletConnected,
 	handleDeploymentModalClose,
 	handleConnectWalletClick,
@@ -42,11 +42,16 @@ function FormArea({
 	}, [address, isWalletConnected, values.payoutAddress]);
 
 	useEffect(() => {
-		if ((touched.symbol && values.symbol) || isSubmitting) {
+		if ((touched.symbol && values.symbol && !values.name) || isSubmitting) {
 			return;
 		}
+
 		if (values.name) {
-			setFieldValue('symbol', `$${values.name.toUpperCase()}`);
+			const nameValue = values.name.replaceAll(' ', '');
+			const consonants = getConsonants(nameValue);
+			const symbolVersion = consonants.slice(0, 4);
+
+			setFieldValue('symbol', `$${symbolVersion.toUpperCase()}`);
 		}
 	}, [values.name, touched.symbol, isSubmitting]);
 

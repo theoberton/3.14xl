@@ -31,7 +31,7 @@ export const formSchema = () => {
 			.string()
 			.test(
 				'Is Valid address',
-				'Payout address should be a valid TON user-friendly address',
+				'Payout address should be a valid TON address',
 				(value: string | undefined) => {
 					if (!value) {
 						return false;

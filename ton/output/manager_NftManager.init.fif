@@ -29,25 +29,23 @@ PROGRAM{
   __gen_write_NftManager PROCINLINE:<{
     s7 s6 XCHG2
     __tact_store_address INLINECALLDICT
-    s1 s4 XCHG
-    16 STU
-    ROT
+    s0 s4 XCHG2
     __tact_store_address INLINECALLDICT
-    SWAP
+    ROT
     STGRAMS
+    32 STU
     32 STU
     s1 s2 XCHG
     32 STU
-    32 STU
+    SWAP
+    __tact_store_address INLINECALLDICT
   }>
   $__gen_NftManager_init PROC:<{
     s5 PUSH
     s0 s7 XCHG
     NEWC
     STREF
-    s0 s7 XCHG
-    s0 s6 XCHG
-    4 -ROLL
+    7 -ROLL
     __gen_write_NftManager INLINECALLDICT
     ENDC
   }>

@@ -68,11 +68,6 @@
 	max-width: 40vw;
 	width: 100%;
 
-	&ImageContainer {
-		display: flex;
-		align-items: center;
-	}
-
 	&Mobile {
 		&ContentWrapper {
 			margin: 0 5px;
@@ -91,7 +86,12 @@
 	&Image {
 		cursor: pointer;
 
-		max-width: 50vw;
+		&Container {
+			display: flex;
+			align-items: center;
+		}
+
+		max-width: 100%;
 		max-height: 50vh;
 
 		&Mobile {
@@ -108,7 +108,7 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				padding: 15px;
+				padding: 5px 15px 15px 15px;
 				text-align: center;
 				border: none;
 			}
@@ -170,7 +170,7 @@
 
 		&Mobile {
 			order: 1;
-			padding: 0 20px;
+			padding: 0 20px 0 0;
 
 			width: 100%;
 
@@ -228,8 +228,25 @@
 }
 
 .customField {
+	&Reset {
+		color: $gray-one;
+		position: absolute;
+		right: -55px;
+		display: flex;
+		top: 37px;
+		margin: auto;
+		cursor: pointer;
+		font-weight: $font-normal;
+		&Mobile {
+			color: $gray-one;
+			margin-left: 10px;
+			font-weight: $font-normal;
+		}
+	}
+
 	&Container {
 		@extend .inputContainer;
+		position: relative;
 	}
 
 	&Controls {
@@ -263,6 +280,10 @@
 
 	&Label {
 		@extend .inputLabel;
+		&Date {
+			display: flex;
+			justify-content: space-between;
+		}
 	}
 }
 
@@ -293,6 +314,7 @@
 	}
 
 	&Title {
+		text-align: center;
 		font-size: $font-medium-enlarged;
 		display: flex;
 

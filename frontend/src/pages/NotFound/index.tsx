@@ -39,7 +39,7 @@ export default function NotFound() {
 
 	return (
 		<>
-			<Helmet title="404 Not Found" />
+			<Helmet title="3.14XL - 404 Not Found" />
 			<div className={styles.notFoundContainer}>
 				<Background />
 				<h1>Page not found</h1>

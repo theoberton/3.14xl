@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useFormikContext, useField } from 'formik';
+import { isAfter, isBefore, subDays } from 'date-fns';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers';
@@ -38,6 +39,7 @@ interface DatepickerProps {
 	minDate?: Date;
 	defaultCalendarMonth?: Date;
 	disabled?: boolean;
+	disableFrom?: Date | null;
 }
 
 export function Datepicker({
@@ -51,6 +53,7 @@ export function Datepicker({
 	placeholder,
 	maxDate,
 	minDate,
+	disableFrom,
 	defaultCalendarMonth,
 }: DatepickerProps) {
 	const [field] = useField(name);
@@ -109,11 +112,17 @@ export function Datepicker({
 		[]
 	);
 
+	let shouldDisableDate;
+	if(disableFrom) {
+		shouldDisableDate = (date: Date) => isBefore(date, subDays(disableFrom, 1));
+	}
+
 	return (
 		<ThemeProvider theme={theme}>
 			<LocalizationProvider dateAdapter={AdapterDateFns}>
 				<DateTimePicker
 					open={isOpen}
+					shouldDisableDate={shouldDisableDate}
 					disabled={disabled || isSubmitting}
 					disableMaskedInput
 					onOpen={handleCalendarClick(true)}

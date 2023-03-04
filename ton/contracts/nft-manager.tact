@@ -15,10 +15,28 @@ message(0x1) Mint {
   item_content: Cell;
 }
 
+message(0x4) UpdateContent {
+  query_id: Int as uint64;
+  collection_content: Cell;
+}
+
 message MintSafe {
   query_id: Int as uint64;
   next_item_index: Int as uint64;
   item_owner: Address;
+}
+
+message EditData {
+  query_id: Int as uint64;
+  content: Cell;
+  mint_price: Int as uint64;
+  mint_date_start: Int as uint32;
+  mint_date_end: Int as uint32;
+  payout_address: Address;
+}
+
+message ChangeOwnerOfCollection {
+  new_owner: Address;
 }
 
 message SetNftCollectionAddress {
@@ -27,12 +45,12 @@ message SetNftCollectionAddress {
 
 struct ManagerData {
   owner: Address;
-  debug: Int as uint16;
   nft_collection_address: Address;
   mint_price: Int as coins;
   max_supply: Int as uint32;
   mint_date_start: Int as uint32;
   mint_date_end: Int as uint32;
+  payout_address: Address;
 }
 
 message(0xd53276db) Excesses {
@@ -41,21 +59,21 @@ message(0xd53276db) Excesses {
 
 contract NftManager with Deployable, Ownable {
   owner: Address;
-  debug: Int as uint16;
   nft_collection_address: Address;
   mint_price: Int as coins;
   max_supply: Int as uint32;
   mint_date_start: Int as uint32;
   mint_date_end: Int as uint32;
+  payout_address: Address;
 
-  init(owner: Address, debug: Int, mint_price: Int, max_supply: Int, mint_date_start: Int, mint_date_end: Int) {
+  init(owner: Address, mint_price: Int, max_supply: Int, mint_date_start: Int, mint_date_end: Int, payout_address: Address) {
     self.owner = owner;
-    self.debug = debug;
     self.nft_collection_address = owner;
     self.mint_price = mint_price;
     self.max_supply = max_supply;
     self.mint_date_start = mint_date_start;
     self.mint_date_end = mint_date_end;
+    self.payout_address = payout_address;
   }
 
   receive(msg: SetNftCollectionAddress) {
@@ -64,6 +82,40 @@ contract NftManager with Deployable, Ownable {
     require(self.owner == self.nft_collection_address, "NFT Manager Already Initialized");
 
     self.nft_collection_address = msg.nft_collection_address;
+  }
+
+  receive(msg: ChangeOwnerOfCollection) {
+    self.requireOwner();
+
+    let restAmount: Int = myBalance() - minTonsForStorage();
+
+    require(restAmount >= 0, "Insufficient amount sent");
+
+    self.owner = msg.new_owner;
+  }
+
+  receive(msg: EditData) {
+    self.requireOwner();
+
+    let restAmount: Int = myBalance() - minTonsForStorage() - ton("0.05");
+
+    require(restAmount >= 0, "Insufficient amount sent");
+
+    self.mint_price = msg.mint_price;
+    self.mint_date_start = msg.mint_date_start;
+    self.mint_date_end = msg.mint_date_end;
+    self.payout_address = msg.payout_address;
+
+    // let collection_content: Cell = beginCell().storeRef().storeRef(emptyCell()).endCell();
+
+    send(SendParameters {
+      to: self.nft_collection_address,
+      value: ton("0.05"),
+      body: UpdateContent {
+        query_id: msg.query_id,
+        collection_content: msg.content
+      }.toCell()
+    });
   }
 
   receive(msg: MintSafe) {
@@ -80,7 +132,7 @@ contract NftManager with Deployable, Ownable {
     require(self.mint_date_end == 0 || self.mint_date_end > now(), "Minting has finished");
 
     send(SendParameters{
-      to: self.owner,
+      to: self.payout_address,
       value: self.mint_price,
       mode: SendPayGasSeparately,
       body: "NFT item minted".asComment()
@@ -121,12 +173,12 @@ contract NftManager with Deployable, Ownable {
   get fun get_manager_data(): ManagerData {
     return ManagerData{
       owner: self.owner,
-      debug: self.debug,
       nft_collection_address: self.nft_collection_address,
       mint_price: self.mint_price,
       max_supply: self.max_supply,
       mint_date_start: self.mint_date_start,
-      mint_date_end: self.mint_date_end
+      mint_date_end: self.mint_date_end,
+      payout_address: self.payout_address
     };
   }
 }

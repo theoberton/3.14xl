@@ -1,5 +1,5 @@
 import { HTMLInputTypeAttribute } from 'react';
-import { useField } from 'formik';
+import { useFormikContext, useField } from 'formik';
 import { useMediaQuery } from 'react-responsive';
 
 import classNames from 'classnames';
@@ -34,7 +34,6 @@ export function Input(props: Props) {
 		label,
 		disabled,
 		subCaption,
-		isSubmitting,
 		noEdit,
 		min,
 		max,
@@ -44,6 +43,8 @@ export function Input(props: Props) {
 		marginless = false,
 	} = props;
 	const [field] = useField(name);
+	const { isSubmitting } = useFormikContext();
+
 	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	const { value, name: fieldName, onChange } = field;

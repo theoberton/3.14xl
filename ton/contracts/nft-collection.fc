@@ -83,6 +83,8 @@ slice calculate_nft_item_address(int wc, cell state_init) {
     }
     slice sender_address = cs~load_msg_addr();
 
+    int senderVal = sender_address.slice_bits();
+    int isEmpty = in_msg_body.slice_data_empty?();
     int op = in_msg_body~load_uint(32);
     int query_id = in_msg_body~load_uint(64);
 
@@ -135,7 +137,15 @@ slice calculate_nft_item_address(int wc, cell state_init) {
       return ();
     }
     if (op == 4) { ;; change content
-      save_data(owner_address, next_item_index, in_msg_body~load_ref(), nft_item_code, in_msg_body~load_ref());
+      var new_content = in_msg_body~load_ref();
+
+      if(slice_refs_empty?(in_msg_body)) {
+        save_data(owner_address, next_item_index, new_content, nft_item_code, royalty_params);
+      } else {
+        cell new_royalty_params = in_msg_body~load_ref();
+
+        save_data(owner_address, next_item_index, new_content, nft_item_code, new_royalty_params);
+      }
       return ();
     }
     throw(0xffff);

@@ -31,6 +31,7 @@ export type CollectionContent = {
 	symbol: string;
 	feeRecipient: string;
 	dateStart?: number;
+	payoutAddress: string;
 	dateEnd?: number;
 };
 
