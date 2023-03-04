@@ -26,7 +26,6 @@ export function FormArea() {
 					deploy={submitForm}
 					editionName={editionName}
 					address={ownerDeploymentState.address}
-					onClose={handleDeploymentModalClose}
 				/>
 			)}
 			<div className={styles.editEditionOwnership}>
