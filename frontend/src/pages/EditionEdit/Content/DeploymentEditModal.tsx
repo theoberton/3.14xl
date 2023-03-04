@@ -166,7 +166,6 @@ export function DeploymentModal({ address, deploy, values }: Props) {
 	}, [values, collectionDataAsync.value, collectionDataAsync.error, status]);
 
 	const closeOnOverlayClick = status !== DeploymentStatus.inProgress;
-	console.log('status', status);
 
 	return (
 		<Modal

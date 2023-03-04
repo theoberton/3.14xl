@@ -76,11 +76,9 @@ function EditionEdit() {
 
 	useEffect(() => {
 		if(ownerDeploymentState.deployCount || contentDeploymentState.deployCount) {
-			console.log('Retrying')
 			collectionDataAsync.retry();
 		}
 	}, [ownerDeploymentState.deployCount, contentDeploymentState.deployCount]);
-	console.log('collectionDataAsync', collectionDataAsync)
 
 	if (collectionDataAsync.error && !collectionDataAsync.value) {
 		return <div>Something went wrong</div>;

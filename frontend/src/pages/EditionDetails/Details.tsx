@@ -77,8 +77,6 @@ function EditionDetails({
 	}, [tonConnectUI.connected, address]);
 
 	const goToEdititingPage = useCallback(() => {
-		console.log('location.pathname', location.pathname)
-
 		let editPage = `${location.pathname}edit`;
 		if(location.pathname[location.pathname.length-1] !== '/') {
 			editPage = `${editPage}/`

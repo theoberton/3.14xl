@@ -379,7 +379,6 @@ describe('NftManager', () => {
 
 		const payoutWalletUpdated = await blkch.treasury('payoutUpdated');
 		const mintPriceUpdated = toNano('3');
-		console.log('mintPriceUpdated', mintPriceUpdated);
 
 		const mintDateStart = BigInt(dateToUnix(new Date()) - 1000);
 		const mintDateEnd = BigInt(dateToUnix(new Date()) + 3000);
