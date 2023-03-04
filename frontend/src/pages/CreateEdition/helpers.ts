@@ -49,9 +49,11 @@ export const createEdition = async (
 		mintDateEnd: BigInt(params.dateEnd),
 		payoutAddress: Address.parse(params.payoutAddress),
 	};
+	console.log('managerInitData', managerInitData);
 
 	const nftManager = NftManager.createFromConfig(managerInitData);
 	const nftManagerContract = tonClient.open(nftManager);
+	console.log('nftManagerContract', nftManagerContract.address.toString());
 
 	const nftCollectionInitData: NftCollectionDataOptional = {
 		ownerAddress: nftManagerContract.address,

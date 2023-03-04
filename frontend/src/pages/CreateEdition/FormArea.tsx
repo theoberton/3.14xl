@@ -42,11 +42,12 @@ export function FormArea({
 	}, [address, isWalletConnected, values.payoutAddress]);
 
 	useEffect(() => {
-		if ((touched.symbol && values.symbol) || isSubmitting) {
+		if ((touched.symbol && values.symbol && !values.name) || isSubmitting) {
 			return;
 		}
+
 		if (values.name) {
-			const nameValue = values.name.replaceAll(" ", "");
+			const nameValue = values.name.replaceAll(' ', '');
 			const consonants = getConsonants(nameValue);
 			const symbolVersion = consonants.slice(0, 4);
 

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from 'ton-core';
 import { addressFilter } from '@/helpers';
@@ -13,23 +13,26 @@ import { CollectionData, CollectionContent } from '@/wrappers/types';
 import { composeMintTransaction } from '@/pages/EditionDetails/helper';
 import MintDateSection from './MintTime';
 import { CopyToClipboard } from '@/components';
+import { EditionData } from '../EditionEdit/interfaces';
 
 function isMintAllowed(now: Date, start?: number, end?: number) {
 	return (!start || new Date(start * 1000) < now) && (!end || now < new Date(end * 1000));
 }
 
 function EditionDetails({
-	collectionData,
-	content,
+	editionData: { content, collectionData, managerAddress},
 	currentNextNftItemIndex,
 	setCurrentNftItemIndex,
 }: {
 	setCurrentNftItemIndex: React.Dispatch<React.SetStateAction<number>>;
 	currentNextNftItemIndex: number;
-	collectionData: CollectionData;
-	content: CollectionContent;
+	editionData: EditionData;
 }) {
+
 	const now = useTime();
+	const navigate = useNavigate();
+	const location = useLocation();
+
 	const [isDeploymentModalOpened, setDeploymentStatus] = useState(false);
 
 	const { collectionAddress } = useParams();
@@ -73,7 +76,37 @@ function EditionDetails({
 		}
 	}, [tonConnectUI.connected, address]);
 
+	const goToEdititingPage = useCallback(() => {
+		console.log('location.pathname', location.pathname)
+
+		let editPage = `${location.pathname}edit`;
+		if(location.pathname[location.pathname.length-1] !== '/') {
+			editPage = `${editPage}/`
+		}
+
+		navigate(editPage);
+	}, [location.pathname]);
+
 	const mintButtonHandler = isEndOfMinting ? () => {} : mint;
+	const mintAllowed = isMintAllowed(now, content.dateStart, content.dateEnd);
+	const isAuthorized = tonConnectUI.connected;
+
+	const handleConnectWalletClick = useCallback(async () => {
+		if (!tonConnectUI.connected) {
+			try {
+				await tonConnectUI.connectWallet();
+			} catch (error) {
+				console.error('Error occured when connecting to wallet', error);
+
+				throw error;
+			}
+		}
+	}, [tonConnectUI.connected]);
+	const addresFriendly = Address.parseFriendly(address)
+
+	const loginWalletAddress = addresFriendly.address.toString();
+
+	const isMyEdition = managerAddress.toString() === loginWalletAddress;
 
 	return (
 		<div className={styles.editionDetailsInfo}>
@@ -93,7 +126,7 @@ function EditionDetails({
 					<h3>PRICE</h3>
 					<span>{content.price} TON</span>
 				</div>
-				{isMintAllowed(now, content.dateStart, content.dateEnd) && (
+				{mintAllowed && isAuthorized && (
 					<div className={styles.editionDetailsInfoPriceBlock}>
 						<Button
 							componentType="button"
@@ -104,24 +137,56 @@ function EditionDetails({
 							{!isEndOfMinting ? 'Mint' : `No tokens left  ¯\\_(ツ)_/¯`}
 						</Button>
 					</div>
-				)}
+				)
+				}
+				{mintAllowed && !isAuthorized && (
+					<div className={styles.editionDetailsInfoPriceBlock}>
+						<Button
+							componentType="button"
+							kind={ButtonKinds.basic}
+							basicInverted={isEndOfMinting}
+							onClick={handleConnectWalletClick}
+						>
+							Connect wallet
+						</Button>
+					</div>
+				)
+				}
 			</div>
-			<div className={styles.editionDetailsInfoAbout}>
-				<h3>ABOUT</h3>
-				<h1>{content.name}</h1>
-				<p>{content.description}</p>
+			<div className={styles.editionDetailsInfoAboutWrapper}>
+				<div className={styles.editionDetailsInfoAbout}>
+					<h3>ABOUT</h3>
+					<h1>{content.name}</h1>
+					<p>{content.description}</p>
+				</div>
+				{
+					isMyEdition &&
+						<div className={styles.editionDetailsInfoAboutEdit}>
+								<Button
+									componentType="button"
+									basicInverted
+									kind={ButtonKinds.basic}
+									onClick={goToEdititingPage}
+								>
+									Edit
+								</Button>
+						</div>
+				}
 			</div>
 			<div className={styles.editionDetailsInfoData}>
 				<h3>DETAILS</h3>
 				<div>
 					<p>Contract Address</p>
-					<CopyToClipboard textValue={collectionAddress!} message="Contract address has been copied!" >
-						<span>{addressFilter(collectionAddress!)}</span>				
+					<CopyToClipboard
+						textValue={collectionAddress!}
+						message="Contract address has been copied!"
+					>
+						<span>{addressFilter(collectionAddress!)}</span>
 					</CopyToClipboard>
 				</div>
 				<div>
 					<p>Symbol</p>
-					<CopyToClipboard textValue={collectionAddress!} message="Edition symbol has been copied!" >
+					<CopyToClipboard textValue={collectionAddress!} message="Edition symbol has been copied!">
 						<span>{content.symbol}</span>
 					</CopyToClipboard>
 				</div>

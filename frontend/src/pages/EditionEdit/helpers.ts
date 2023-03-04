@@ -43,8 +43,10 @@ export const updateEdition = async (
 
 	const nftCollection = NftCollection.createFromAddress(Address.parse(collectionAddress));
 	const nftCollectionContract = tonClient.open(nftCollection);
+	console.log('nftCollectionContract', nftCollectionContract.address);
 
 	const { ownerAddress } = await nftCollectionContract.getCollectionData();
+	console.log('ownerAddress', ownerAddress.toString());
 
 	const transaction = {
 		validUntil: Date.now() + 1000000,

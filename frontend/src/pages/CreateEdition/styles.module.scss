@@ -91,7 +91,7 @@
 			align-items: center;
 		}
 
-		max-width: 50vw;
+		max-width: 100%;
 		max-height: 50vh;
 
 		&Mobile {
@@ -229,12 +229,12 @@
 
 .customField {
 	&Reset {
-    color: $gray-one;
-    position: absolute;
-    right: -55px;
-    display: flex;
-    top: 37px;
-    margin: auto;
+		color: $gray-one;
+		position: absolute;
+		right: -55px;
+		display: flex;
+		top: 37px;
+		margin: auto;
 		cursor: pointer;
 		font-weight: $font-normal;
 		&Mobile {
@@ -314,6 +314,7 @@
 	}
 
 	&Title {
+		text-align: center;
 		font-size: $font-medium-enlarged;
 		display: flex;
 

@@ -10,6 +10,7 @@ import styles from '@/pages/EditionDetails/styles.module.scss';
 import { CollectionContent } from '@/wrappers/types';
 import { NftCollection } from '@/wrappers/NftCollection';
 import { useTonClient } from '@/hooks/useTonClient';
+import { NftManager } from '@/wrappers';
 
 export default function EditionDetailsPage() {
 	const { collectionAddress } = useParams();
@@ -27,9 +28,13 @@ export default function EditionDetailsPage() {
 		const content: CollectionContent = await fetch(collectionData.collectionContentUri).then(res =>
 			res.json()
 		);
+		const nftManager = NftManager.createFromAddress(collectionData.ownerAddress);
+		const nftManagerContract = tonClient.open(nftManager);
+		const managerData = await nftManagerContract.getManagerData();
+
 
 		setCurrentNftItemIndex(collectionData.nextItemIndex);
-		return { collectionData, content };
+		return { collectionData, content, managerAddress: managerData.owner };
 	}, [tonClient, collectionAddress, currentNextNftItemIndex]);
 
 	if (collectionDataAsync.error && !collectionDataAsync.value) {
@@ -50,8 +55,7 @@ export default function EditionDetailsPage() {
 			<EditionDetails
 				setCurrentNftItemIndex={setCurrentNftItemIndex}
 				currentNextNftItemIndex={currentNextNftItemIndex}
-				collectionData={collectionDataAsync.value.collectionData}
-				content={collectionDataAsync.value.content}
+				editionData={collectionDataAsync.value}
 			/>
 		</div>
 	);

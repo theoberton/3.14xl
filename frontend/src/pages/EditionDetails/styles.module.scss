@@ -166,6 +166,24 @@
 		}
 
 		&About {
+			flex: 1;
+
+			&Wrapper {
+				display: flex;
+				@media (max-width: $breakpoint-xs) {
+					gap: 20px;
+					flex-direction: column;
+				}
+			}
+			
+			&Edit {
+				display: flex;
+				align-items: center;
+
+				> button {
+					width: 100%;
+				}
+			}
 			h1 {
 				font-size: $font-huge;
 				margin: 0.3em 0;

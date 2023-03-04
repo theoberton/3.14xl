@@ -1,6 +1,6 @@
 import { Modal } from '@/components';
 import { useTonClient } from '@/hooks';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useContext } from 'react';
 import { Address } from 'ton-core';
 import { NftCollection } from '@/wrappers';
 import { useAsyncRetry } from 'react-use';
@@ -8,7 +8,9 @@ import { Loader } from '@/components';
 import { Button, ButtonKinds } from '@/components/Button';
 
 import { LoaderSizes, LoaderColors, LoaderTypes } from '@/components/interfaces';
-import { useNavigate } from 'react-router';
+
+import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
+
 import styles from '@/pages/CreateEdition/styles.module.scss';
 
 import SuccessIcon from '@/assets/images/svg/common/success.svg';
@@ -17,6 +19,7 @@ import FailureIcon from '@/assets/images/svg/common/failure.svg';
 const renderDeployInProgressComponent = () => (
 	<div className={styles.deploymentModalTitle}>
 		Edition owner is being updated
+		<div className={styles.deploymentModalTitleCaption}>This may take up to 30 seconds</div>
 		<div className={styles.deploymentModalSpinner}>
 			<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
 		</div>
@@ -28,7 +31,7 @@ const renderDeploySuccessComponent = (goBack: () => void, editionName: string | 
 		<img src={SuccessIcon} className={styles.deploymentModalImage} />
 		<div className={styles.deploymentModalTitle}>{editionName}'s owner has been updated</div>
 		<div className={styles.deploymentModalActions}>
-			<Button basicInverted componentType="button" kind={ButtonKinds.basic} onClick={goBack}>
+			<Button componentType="button" kind={ButtonKinds.basic} onClick={goBack}>
 				Ok
 			</Button>
 		</div>
@@ -63,18 +66,18 @@ type Props = {
 	onClose: () => void;
 	address: string | null;
 	deploy: () => void;
-	editionName: string | null;
 };
 
 const deployExpirationTime = 40 * 1000; // 40 seconds
 const retryContractDeployedCheck = 2 * 1000; // every 2 seconds check whether contract is deployed or not
 
-export function DeploymentModal({ address, onClose, deploy, editionName }: Props) {
-	const navigate = useNavigate();
+export function DeploymentModal({ address, onClose, deploy }: Props) {
 	const [status, setStatus] = useState(DeploymentStatus.inProgress);
+	const { ownerDeploymentState, setOwnerDeploymentState, editionName } =
+		useContext(DeploymentContext);
+
 	let retryTimeoutId: ReturnType<typeof setTimeout>;
 	const tonClient = useTonClient();
-	// const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	useEffect(() => {
 		const failiureTimeoutId = setTimeout(() => {
@@ -111,12 +114,28 @@ export function DeploymentModal({ address, onClose, deploy, editionName }: Props
 
 	const retry = useCallback(() => {
 		setStatus(DeploymentStatus.inProgress);
-		onClose();
+		setOwnerDeploymentState({
+			isModalOpened: false,
+		});
+
 		deploy();
 	}, []);
 
 	const goBack = useCallback(() => {
 		onClose();
+	}, []);
+
+	const goBackSuccess = useCallback(() => {
+		setOwnerDeploymentState({
+			isModalOpened: false,
+			deployCount: ownerDeploymentState.deployCount + 1,
+		});
+	}, [ownerDeploymentState]);
+
+	const goBackFailiure = useCallback(() => {
+		setOwnerDeploymentState({
+			isModalOpened: false,
+		});
 	}, []);
 
 	useEffect(() => {
@@ -133,24 +152,19 @@ export function DeploymentModal({ address, onClose, deploy, editionName }: Props
 		};
 	}, [collectionDataAsync.value, collectionDataAsync.error, status]);
 
-	const onOverlayClick = useCallback(() => {
-		if (status == DeploymentStatus.success) {
-			// createNewEditionHandler();
-		}
-	}, [status]);
-
 	const closeOnOverlayClick = status !== DeploymentStatus.inProgress;
 
 	return (
 		<Modal
 			closeOnOverlayClick={closeOnOverlayClick}
-			onOverlayClick={onOverlayClick}
+			onOverlayClick={goBackFailiure}
 			isCentered
 			isOpen
 			showCloseIcon={false}
-			onClose={onClose}
+			onClose={goBackFailiure}
 		>
-			{status == DeploymentStatus.success && renderDeploySuccessComponent(goBack, editionName)}
+			{status == DeploymentStatus.success &&
+				renderDeploySuccessComponent(goBackSuccess, editionName)}
 			{status == DeploymentStatus.inProgress && renderDeployInProgressComponent()}
 			{status == DeploymentStatus.failiure && renderDeployFailureComponent(goBack, retry)}
 		</Modal>

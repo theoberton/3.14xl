@@ -16,8 +16,7 @@ function ValidityPeriod() {
 	}, []);
 
 	const isResetButtonShown = values.validity.start || values.validity.end;
-	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
-	
+	// const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	return (
 		<div className={styles.customFieldContainer}>
@@ -26,12 +25,11 @@ function ValidityPeriod() {
 					Start & end time
 					<span className={styles.inputCaptionOptional}>{' (Optional)'}</span>
 				</span>
-				{
-					isTabletOrMobile && isResetButtonShown && 
-						<span className={styles.customFieldResetMobile} onClick={resetDates}>
-							Reset
-						</span>
-				}
+				{isResetButtonShown && (
+					<span className={styles.customFieldResetMobile} onClick={resetDates}>
+						Reset
+					</span>
+				)}
 			</label>
 			<div className={styles.customFieldControlsValidityDate}>
 				<Datepicker
@@ -50,12 +48,11 @@ function ValidityPeriod() {
 					placeholder={'Forever'}
 				/>
 			</div>
-			{
-				!isTabletOrMobile && isResetButtonShown && 
-					<div className={styles.customFieldReset} onClick={resetDates}>
-						Reset
-					</div>
-			}
+			{/* {!isTabletOrMobile && isResetButtonShown && (
+				<div className={styles.customFieldReset} onClick={resetDates}>
+					Reset
+				</div>
+			)} */}
 		</div>
 	);
 }

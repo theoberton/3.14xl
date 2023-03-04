@@ -25,15 +25,16 @@
 	&Controls {
 		padding-right: 20%;
 		border-right: 1px solid $gray-eleven;
-
+		margin-bottom: 10px;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: flex-start;
-		gap: 60px;
+		gap: 40px;
 
 		&Owner {
 			@extend .editEditionControls;
+			width: 100%;
 			border-right: 0;
 			padding: 0;
 		}

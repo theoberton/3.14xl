@@ -1,10 +1,9 @@
 import { HTMLInputTypeAttribute } from 'react';
-import {useFormikContext, useField } from 'formik';
+import { useFormikContext, useField } from 'formik';
 import { useMediaQuery } from 'react-responsive';
 
 import classNames from 'classnames';
 import styles from '@/components/Input/styles.module.scss';
-
 
 import { useCustomStateFormField } from '@/hooks/useCustomStateFormField';
 

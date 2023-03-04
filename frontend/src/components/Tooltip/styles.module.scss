@@ -1,10 +1,10 @@
 .tooltip {
-  &Content {
-      display: flex;
-      align-items: center;
-  }
+	&Content {
+		display: flex;
+		align-items: center;
+	}
 
-  &Wrapper {
-    cursor: pointer;
-  }
+	&Wrapper {
+		cursor: pointer;
+	}
 }

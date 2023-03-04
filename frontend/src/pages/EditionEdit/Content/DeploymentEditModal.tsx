@@ -1,6 +1,6 @@
 import { Modal } from '@/components';
 import { useTonClient } from '@/hooks';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useContext } from 'react';
 import { Address } from 'ton-core';
 import { NftCollection } from '@/wrappers';
 import { useAsyncRetry } from 'react-use';
@@ -10,8 +10,8 @@ import _ from 'lodash';
 import { composeEditObject } from './utils';
 
 import { LoaderSizes, LoaderColors, LoaderTypes } from '@/components/interfaces';
-import { useNavigate } from 'react-router';
 import styles from '@/pages/CreateEdition/styles.module.scss';
+import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
 
 import SuccessIcon from '@/assets/images/svg/common/success.svg';
 import FailureIcon from '@/assets/images/svg/common/failure.svg';
@@ -19,11 +19,14 @@ import { FormValues } from '../interfaces';
 import { CollectionContent } from '@/wrappers/types';
 
 const renderDeployInProgressComponent = () => (
-	<div className={styles.deploymentModalTitle}>
-		Edition is being updated
-		<div className={styles.deploymentModalSpinner}>
-			<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
+	<div className={styles.deploymentModal}>
+		<div className={styles.deploymentModalTitle}>
+			Edition is being updated
+			<div className={styles.deploymentModalSpinner}>
+				<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
+			</div>
 		</div>
+		<div className={styles.deploymentModalTitleCaption}>This may take up to 30 seconds</div>
 	</div>
 );
 
@@ -32,7 +35,7 @@ const renderDeploySuccessComponent = (goBack: () => void, editionName: string | 
 		<img src={SuccessIcon} className={styles.deploymentModalImage} />
 		<div className={styles.deploymentModalTitle}>{editionName} has been successfully updated</div>
 		<div className={styles.deploymentModalActions}>
-			<Button basicInverted componentType="button" kind={ButtonKinds.basic} onClick={goBack}>
+			<Button componentType="button" kind={ButtonKinds.basic} onClick={goBack}>
 				Ok
 			</Button>
 		</div>
@@ -65,7 +68,6 @@ enum DeploymentStatus {
 
 type Props = {
 	values: FormValues;
-	onClose: () => void;
 	address: string | null;
 	deploy: () => void;
 	editionName: string | null;
@@ -74,11 +76,12 @@ type Props = {
 const deployExpirationTime = 40 * 1000; // 40 seconds
 const retryContractDeployedCheck = 2 * 1000; // every 2 seconds check whether contract is deployed or not
 
-export function DeploymentModal({ address, onClose, deploy, editionName, values }: Props) {
+export function DeploymentModal({ address, deploy, values }: Props) {
 	const [status, setStatus] = useState(DeploymentStatus.inProgress);
 	let retryTimeoutId: ReturnType<typeof setTimeout>;
 	const tonClient = useTonClient();
-	// const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
+	const { contentDeploymentState, setContentDeploymentState, editionName } =
+		useContext(DeploymentContext);
 
 	useEffect(() => {
 		const failiureTimeoutId = setTimeout(() => {
@@ -104,7 +107,6 @@ export function DeploymentModal({ address, onClose, deploy, editionName, values 
 		let collectionData;
 		try {
 			collectionData = await nftColelctionContract.getCollectionData();
-			setStatus(DeploymentStatus.success);
 		} catch (error) {
 			setStatus(DeploymentStatus.inProgress);
 			throw error;
@@ -112,19 +114,31 @@ export function DeploymentModal({ address, onClose, deploy, editionName, values 
 		const content: CollectionContent = await fetch(collectionData.collectionContentUri).then(res =>
 			res.json()
 		);
-		console.log('contenteeeee', content);
 
 		return { collectionData, content };
 	}, [tonClient, address]);
 
 	const retryCreateEdition = useCallback(() => {
 		setStatus(DeploymentStatus.inProgress);
-		onClose();
+
+		setContentDeploymentState({
+			isModalOpened: false,
+		});
+
 		deploy();
 	}, []);
 
-	const goBack = useCallback(() => {
-		onClose();
+	const goBackSuccess = useCallback(() => {
+		setContentDeploymentState({
+			isModalOpened: false,
+			deployCount: contentDeploymentState.deployCount + 1,
+		});
+	}, [contentDeploymentState]);
+
+	const goBackFailiure = useCallback(() => {
+		setContentDeploymentState({
+			isModalOpened: false,
+		});
 	}, []);
 
 	useEffect(() => {
@@ -151,28 +165,23 @@ export function DeploymentModal({ address, onClose, deploy, editionName, values 
 		};
 	}, [values, collectionDataAsync.value, collectionDataAsync.error, status]);
 
-	const onOverlayClick = useCallback(() => {
-		if (status == DeploymentStatus.success) {
-			// createNewEditionHandler();
-		}
-	}, [status]);
-
 	const closeOnOverlayClick = status !== DeploymentStatus.inProgress;
 	console.log('status', status);
 
 	return (
 		<Modal
 			closeOnOverlayClick={closeOnOverlayClick}
-			onOverlayClick={onOverlayClick}
+			onOverlayClick={goBackFailiure}
 			isCentered
 			isOpen
 			showCloseIcon={false}
-			onClose={onClose}
+			onClose={goBackFailiure}
 		>
-			{status == DeploymentStatus.success && renderDeploySuccessComponent(goBack, editionName)}
+			{status == DeploymentStatus.success &&
+				renderDeploySuccessComponent(goBackSuccess, editionName)}
 			{status == DeploymentStatus.inProgress && renderDeployInProgressComponent()}
 			{status == DeploymentStatus.failiure &&
-				renderDeployFailureComponent(goBack, retryCreateEdition)}
+				renderDeployFailureComponent(goBackFailiure, retryCreateEdition)}
 		</Modal>
 	);
 }

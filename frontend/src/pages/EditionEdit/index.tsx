@@ -1,5 +1,5 @@
-import { useCallback, useState, Context, Provider, useMemo } from 'react';
-import { useAsync, useGetSetState } from 'react-use';
+import { useCallback, useState, Context, Provider, useMemo, useEffect } from 'react';
+import { useAsync, useGetSetState, useAsyncRetry } from 'react-use';
 import { Address } from 'ton-core';
 import { useTonClient } from '@/hooks/useTonClient';
 import { NftCollection, NftManager } from '@/wrappers';
@@ -30,7 +30,7 @@ function EditionEdit() {
 
 	const tonClient = useTonClient();
 
-	const collectionDataAsync = useAsync(async () => {
+	const collectionDataAsync = useAsyncRetry(async () => {
 		if (!collectionAddress || !tonClient) {
 			return null;
 		}
@@ -38,6 +38,7 @@ function EditionEdit() {
 		const nftCollection = NftCollection.createFromAddress(Address.parse(collectionAddress));
 		const nftColelctionContract = tonClient.open(nftCollection);
 		let collectionData = await nftColelctionContract.getCollectionData();
+
 		const content: CollectionContent = await fetch(collectionData.collectionContentUri).then(res =>
 			res.json()
 		);
@@ -72,6 +73,14 @@ function EditionEdit() {
 			setOwnerDeploymentState,
 		]
 	);
+
+	useEffect(() => {
+		if(ownerDeploymentState.deployCount || contentDeploymentState.deployCount) {
+			console.log('Retrying')
+			collectionDataAsync.retry();
+		}
+	}, [ownerDeploymentState.deployCount, contentDeploymentState.deployCount]);
+	console.log('collectionDataAsync', collectionDataAsync)
 
 	if (collectionDataAsync.error && !collectionDataAsync.value) {
 		return <div>Something went wrong</div>;

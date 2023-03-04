@@ -7,16 +7,21 @@ import ValidityPeriod from '@/pages/CreateEdition/ValidityPeriod';
 import { DeploymentModal } from '@/pages/EditionEdit/Content/DeploymentEditModal';
 import { useCallback, useContext } from 'react';
 import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
-import { initialDeploymentState } from '@/pages/EditionEdit/constants';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function FormArea() {
 	const { dirty, submitForm, values, isSubmitting } = useFormikContext<FormValues>();
 	const { contentDeploymentState, setContentDeploymentState, editionName } =
 		useContext(DeploymentContext);
 
-	const handleDeploymentModalClose = useCallback(() => {
-		setContentDeploymentState(initialDeploymentState);
-	}, []);
+	let location = useLocation();
+	const navigate = useNavigate();
+
+
+	const hanelCancelClick = useCallback(() => {
+		const editionSourcePathname = location.pathname.substring(0, location.pathname.length - 4); // Remove edit word
+		navigate(editionSourcePathname)
+	}, [isSubmitting, location.pathname]);
 
 	return (
 		<Form className={styles.editEditionForm}>
@@ -26,7 +31,6 @@ function FormArea() {
 					deploy={submitForm}
 					editionName={editionName}
 					address={contentDeploymentState.address}
-					onClose={handleDeploymentModalClose}
 				/>
 			)}
 			<div className={styles.editEditionFormTitle}>
@@ -47,6 +51,8 @@ function FormArea() {
 					componentType="button"
 					buttonType="reset"
 					expanded
+					isSubmitting={isSubmitting}
+					onClick={hanelCancelClick}
 					kind={ButtonKinds.basic}
 					basicInverted
 				>

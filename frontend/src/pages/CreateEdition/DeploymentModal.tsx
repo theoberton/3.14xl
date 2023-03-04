@@ -15,11 +15,14 @@ import SuccessIcon from '@/assets/images/svg/common/success.svg';
 import FailureIcon from '@/assets/images/svg/common/failure.svg';
 
 const renderDeployInProgressComponent = () => (
-	<div className={styles.deploymentModalTitle}>
-		Edition is being created
-		<div className={styles.deploymentModalSpinner}>
-			<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
+	<div className={styles.deploymentModal}>
+		<div className={styles.deploymentModalTitle}>
+			Edition is being created
+			<div className={styles.deploymentModalSpinner}>
+				<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
+			</div>
 		</div>
+		<div className={styles.deploymentModalTitleCaption}>This may take up to 30 seconds</div>
 	</div>
 );
 

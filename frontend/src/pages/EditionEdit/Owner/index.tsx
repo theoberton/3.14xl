@@ -22,11 +22,6 @@ console.log(useMediaQuery);
 import styles from './../styles.module.scss';
 import { EditionData } from '../interfaces';
 
-const initialDeploymentState = {
-	isModalOpened: false,
-	address: '',
-	editionName: '',
-};
 
 type Props = {
 	editionData: EditionData;
@@ -72,7 +67,13 @@ export function Owner({ editionData }: Props) {
 				turnOffSubmition();
 			}
 		},
-		[tonClient, editionData?.content, collectionAddress, accountAddress, editionData?.managerAddress]
+		[
+			tonClient,
+			editionData?.content,
+			collectionAddress,
+			accountAddress,
+			editionData?.managerAddress,
+		]
 	);
 
 	const editManagerInitialValues: FormValues = {
@@ -95,5 +96,3 @@ export function Owner({ editionData }: Props) {
 		</Formik>
 	);
 }
-
-export default Owner;
