@@ -1,6 +1,5 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { Form, useFormikContext } from 'formik';
-import { ChangeLocationDialog } from '@/components/ChangeLocationDialog';
 import { DeploymentModal } from '@/pages/CreateEdition/DeploymentModal';
 
 import styles from '@/pages/CreateEdition/styles.module.scss';
@@ -18,7 +17,7 @@ type Props = {
 	handleDeploymentModalClose: () => void;
 };
 
-function FormArea({
+export function FormArea({
 	isWalletConnected,
 	handleDeploymentModalClose,
 	handleConnectWalletClick,

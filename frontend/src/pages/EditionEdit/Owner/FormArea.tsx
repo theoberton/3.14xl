@@ -1,30 +1,31 @@
 import { Form, useFormikContext } from 'formik';
+import { useCallback, useContext } from 'react';
 import styles from './../styles.module.scss';
 
 import { Button, ButtonKinds, Input } from '@/components';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
 import { DeploymentModal } from '@/pages/EditionEdit/Content/DeploymentEditModal';
+import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
+import { initialDeploymentState } from '@/pages/EditionEdit/constants';
 
-type Props = {
-	deploymentState: {
-		isModalOpened: boolean;
-		address: string;
-		editionName: string;
-	};
-	handleDeploymentModalClose: () => void;
-};
+export function FormArea() {
+	const { submitForm, values, dirty } = useFormikContext<FormValues>();
 
-export function FormArea({ deploymentState, handleDeploymentModalClose }: Props) {
-	const { submitForm, values} = useFormikContext<FormValues>();
+	const { ownerDeploymentState, editionName, setOwnerDeploymentState } =
+		useContext(DeploymentContext);
+
+	const handleDeploymentModalClose = useCallback(() => {
+		setOwnerDeploymentState(initialDeploymentState);
+	}, []);
 
 	return (
 		<Form className={styles.editEditionForm}>
-			{deploymentState.isModalOpened && (
+			{ownerDeploymentState.isModalOpened && (
 				<DeploymentModal
 					values={values}
 					deploy={submitForm}
-					editionName={deploymentState.editionName}
-					address={deploymentState.address}
+					editionName={editionName}
+					address={ownerDeploymentState.address}
 					onClose={handleDeploymentModalClose}
 				/>
 			)}
@@ -43,8 +44,8 @@ export function FormArea({ deploymentState, handleDeploymentModalClose }: Props)
 				/>
 				<Button
 					componentType="button"
-					// buttonType="submit"
-					disabled={true}
+					buttonType="submit"
+					disabled={!dirty}
 					expanded
 					kind={ButtonKinds.basic}
 					danger

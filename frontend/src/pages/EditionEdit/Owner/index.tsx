@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useContext } from 'react';
 import { Address } from 'ton-core';
 
 import { Formik } from 'formik';
@@ -6,21 +6,21 @@ import { useParams } from 'react-router';
 import { useMediaQuery } from 'react-responsive';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Helmet } from 'react-helmet-async';
-import { CollectionContent } from '@/wrappers/types';
 
 import { useTonClient } from '@/hooks/useTonClient';
 import { updateOwner } from './helper';
 import { FormArea } from './FormArea';
 // import { updateEdition } from '@/pages/EditionEdit/Owner/helper';
-import { useGetSetState } from 'react-use';
 
 import { formSchema } from './validation';
 import { FormValues } from './interfaces';
+import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
 
 // Hotfix for https://github.com/yocontra/react-responsive/issues/306, remove when resolved
 console.log(useMediaQuery);
 
 import styles from './../styles.module.scss';
+import { EditionData } from '../interfaces';
 
 const initialDeploymentState = {
 	isModalOpened: false,
@@ -29,35 +29,13 @@ const initialDeploymentState = {
 };
 
 type Props = {
-	editionData: {
-		collectionData: {
-			nextItemIndex: number;
-			ownerAddress: Address;
-			collectionContentUri: string;
-		};
-		content: CollectionContent;
-		managerAddress: Address;
-	};
-	setDeploymentState: (
-		patch: Partial<{
-			isModalOpened: boolean;
-			address: string;
-			editionName: string;
-		}>
-	) => void;
-	deploymentState: {
-		isModalOpened: boolean;
-		address: string;
-		editionName: string;
-	};
+	editionData: EditionData;
 };
 
-export function Owner({ editionData, setDeploymentState, deploymentState }: Props) {
+export function Owner({ editionData }: Props) {
 	const { collectionAddress } = useParams();
 
-	const handleDeploymentModalClose = useCallback(() => {
-		setDeploymentState(initialDeploymentState);
-	}, []);
+	const { setOwnerDeploymentState } = useContext(DeploymentContext);
 
 	const accountAddress = useTonAddress();
 	const tonClient = useTonClient();
@@ -65,9 +43,8 @@ export function Owner({ editionData, setDeploymentState, deploymentState }: Prop
 
 	const handleSubmit = useCallback(
 		async (values: FormValues, bag: any) => {
-			const sourceEditionData = editionData?.content;
+			if (!tonClient) return;
 
-			if (!tonClient || !sourceEditionData) return;
 			const turnOffSubmition = () => bag.setSubmitting(false);
 
 			bag.setSubmitting(true);
@@ -85,7 +62,7 @@ export function Owner({ editionData, setDeploymentState, deploymentState }: Prop
 					turnOffSubmition
 				);
 
-				setDeploymentState({
+				setOwnerDeploymentState({
 					isModalOpened: true,
 					address: collectionAddress,
 				});
@@ -95,7 +72,7 @@ export function Owner({ editionData, setDeploymentState, deploymentState }: Prop
 				turnOffSubmition();
 			}
 		},
-		[editionData?.content, collectionAddress, accountAddress, editionData?.managerAddress]
+		[tonClient, editionData?.content, collectionAddress, accountAddress, editionData?.managerAddress]
 	);
 
 	const editManagerInitialValues: FormValues = {
@@ -109,17 +86,11 @@ export function Owner({ editionData, setDeploymentState, deploymentState }: Prop
 			enableReinitialize
 			onSubmit={handleSubmit}
 		>
-			{/* <section className={styles.editEditionContainer}> */}
 			<>
 				<Helmet title={'3.14XL - Edit edition'} />
 				<div className={styles.editEditionControlsOwner}>
-					<FormArea
-						deploymentState={deploymentState}
-						handleDeploymentModalClose={handleDeploymentModalClose}
-					/>
+					<FormArea />
 				</div>
-				{/* </div> */}
-				{/* </section> */}
 			</>
 		</Formik>
 	);

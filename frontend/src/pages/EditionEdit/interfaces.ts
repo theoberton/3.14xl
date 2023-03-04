@@ -1,3 +1,6 @@
+import { CollectionContent } from '@/wrappers/types';
+import { Address } from 'ton-core';
+
 export interface FormValues {
 	name?: string;
 	symbol?: string;
@@ -18,4 +21,20 @@ export interface UpdateEditionParams {
 	price: string;
 	dateStart: number;
 	dateEnd: number;
+}
+
+export interface EditionData {
+	collectionData: {
+		nextItemIndex: number;
+		ownerAddress: Address;
+		collectionContentUri: string;
+	};
+	content: CollectionContent;
+	managerAddress: Address;
+}
+
+export interface DeploymentState {
+	isModalOpened: boolean;
+	address: string;
+	editionName: string;
 }

@@ -68,11 +68,6 @@
 	max-width: 40vw;
 	width: 100%;
 
-	&ImageContainer {
-		display: flex;
-		align-items: center;
-	}
-
 	&Mobile {
 		&ContentWrapper {
 			margin: 0 5px;
@@ -91,6 +86,11 @@
 	&Image {
 		cursor: pointer;
 
+		&Container {
+			display: flex;
+			align-items: center;
+		}
+
 		max-width: 50vw;
 		max-height: 50vh;
 
@@ -108,7 +108,7 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				padding: 15px;
+				padding: 5px 15px 15px 15px;
 				text-align: center;
 				border: none;
 			}
@@ -170,7 +170,7 @@
 
 		&Mobile {
 			order: 1;
-			padding: 0 20px;
+			padding: 0 20px 0 0;
 
 			width: 100%;
 

@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useContext } from 'react';
 import { useAsync } from 'react-use';
 import { Address } from 'ton-core';
 
@@ -8,18 +8,16 @@ import { useMediaQuery } from 'react-responsive';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Helmet } from 'react-helmet-async';
 import { CollectionContent } from '@/wrappers/types';
-import { NftCollection, NftManager } from '@/wrappers';
 import { fromUnixToDate } from '@/utils';
 import { dateToUnix } from '@/helpers';
 import { Owner } from '@/pages/EditionEdit/Owner';
+import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
 
 import { useTonClient } from '@/hooks/useTonClient';
-import { PageLoader } from '@/components';
 
 import FormArea from './FormArea';
 import { Preview } from '@/pages/CreateEdition/Preview';
 import { updateEdition } from '@/pages/EditionEdit/helpers';
-import { useGetSetState } from 'react-use';
 
 import { formSchema } from './validation';
 import { FormValues } from './interfaces';
@@ -28,12 +26,6 @@ import { FormValues } from './interfaces';
 console.log(useMediaQuery);
 
 import styles from './../styles.module.scss';
-
-const initialDeploymentState = {
-	isModalOpened: false,
-	address: '',
-	editionName: '',
-};
 
 type Props = {
 	editionData: {
@@ -45,25 +37,11 @@ type Props = {
 		content: CollectionContent;
 		managerAddress: Address;
 	};
-	setDeploymentState: (
-		patch: Partial<{
-			isModalOpened: boolean;
-			address: string;
-			editionName: string;
-		}>
-	) => void;
-	deploymentState: {
-		isModalOpened: boolean;
-		address: string;
-		editionName: string;
-	};
 };
 
-export function Content({ editionData, setDeploymentState, deploymentState }: Props) {
+export function Content({ editionData }: Props) {
 	const { collectionAddress } = useParams();
-	const handleDeploymentModalClose = useCallback(() => {
-		setDeploymentState(initialDeploymentState);
-	}, []);
+	const { setContentDeploymentState } = useContext(DeploymentContext);
 
 	const accountAddress = useTonAddress();
 	const tonClient = useTonClient();
@@ -98,7 +76,7 @@ export function Content({ editionData, setDeploymentState, deploymentState }: Pr
 					turnOffSubmition
 				);
 
-				setDeploymentState({
+				setContentDeploymentState({
 					isModalOpened: true,
 					address: collectionAddress,
 				});
@@ -142,16 +120,8 @@ export function Content({ editionData, setDeploymentState, deploymentState }: Pr
 				{/* <div className={styles.editEditionContainerWrapper}> */}
 				<Helmet title={'3.14XL - Edit edition'} />
 				<div className={styles.editEditionControls}>
-					<FormArea
-						handleDeploymentModalClose={handleDeploymentModalClose}
-						deploymentState={deploymentState}
-					/>
-					{/* </div> */}
-					<Owner
-						setDeploymentState={setDeploymentState}
-						editionData={editionData}
-						deploymentState={deploymentState}
-					/>
+					<FormArea />
+					<Owner editionData={editionData} />
 				</div>
 				<Preview />
 			</section>

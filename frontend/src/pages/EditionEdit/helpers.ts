@@ -30,6 +30,7 @@ export const updateEdition = async (
 	const collectionContentUrl = storage.resolveScheme(collectionContentUri);
 
 	const managerEditData = {
+		description: params.description,
 		payoutAddress: Address.parse(params.payoutAddress),
 		mintPrice: toNano(params.price),
 		mintDateStart: BigInt(params.dateStart),

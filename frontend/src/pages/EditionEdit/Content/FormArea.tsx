@@ -5,23 +5,27 @@ import { Button, ButtonKinds, MediaInput, TextArea, Input } from '@/components';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
 import ValidityPeriod from '@/pages/CreateEdition/ValidityPeriod';
 import { DeploymentModal } from '@/pages/EditionEdit/Content/DeploymentEditModal';
+import { useCallback, useContext } from 'react';
+import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
+import { initialDeploymentState } from '@/pages/EditionEdit/constants';
 
-type Props = {
-	deploymentState: { isModalOpened: boolean; address: string; editionName: string };
-	handleDeploymentModalClose: () => void;
-};
-
-function FormArea({ deploymentState, handleDeploymentModalClose }: Props) {
+function FormArea() {
 	const { dirty, submitForm, values, isSubmitting } = useFormikContext<FormValues>();
+	const { contentDeploymentState, setContentDeploymentState, editionName } =
+		useContext(DeploymentContext);
+
+	const handleDeploymentModalClose = useCallback(() => {
+		setContentDeploymentState(initialDeploymentState);
+	}, []);
 
 	return (
 		<Form className={styles.editEditionForm}>
-			{deploymentState.isModalOpened && (
+			{contentDeploymentState.isModalOpened && (
 				<DeploymentModal
 					values={values}
 					deploy={submitForm}
-					editionName={values.name}
-					address={deploymentState.address}
+					editionName={editionName}
+					address={contentDeploymentState.address}
 					onClose={handleDeploymentModalClose}
 				/>
 			)}

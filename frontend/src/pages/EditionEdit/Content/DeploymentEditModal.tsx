@@ -75,7 +75,6 @@ const deployExpirationTime = 40 * 1000; // 40 seconds
 const retryContractDeployedCheck = 2 * 1000; // every 2 seconds check whether contract is deployed or not
 
 export function DeploymentModal({ address, onClose, deploy, editionName, values }: Props) {
-	const navigate = useNavigate();
 	const [status, setStatus] = useState(DeploymentStatus.inProgress);
 	let retryTimeoutId: ReturnType<typeof setTimeout>;
 	const tonClient = useTonClient();
@@ -159,7 +158,7 @@ export function DeploymentModal({ address, onClose, deploy, editionName, values 
 	}, [status]);
 
 	const closeOnOverlayClick = status !== DeploymentStatus.inProgress;
-	console.log('status', status)
+	console.log('status', status);
 
 	return (
 		<Modal

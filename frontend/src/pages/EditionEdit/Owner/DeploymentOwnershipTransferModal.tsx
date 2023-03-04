@@ -120,7 +120,7 @@ export function DeploymentModal({ address, onClose, deploy, editionName }: Props
 	}, []);
 
 	useEffect(() => {
-		if (collectionDataAsync.value?.collectionData &&) {
+		if (collectionDataAsync.value?.collectionData) {
 			setStatus(DeploymentStatus.success);
 		} else if (collectionDataAsync.error && status == DeploymentStatus.inProgress) {
 			retryTimeoutId = setTimeout(collectionDataAsync.retry, retryContractDeployedCheck);
