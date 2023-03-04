@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { Form, useFormikContext } from 'formik';
 import { DeploymentModal } from '@/pages/CreateEdition/DeploymentModal';
+import { getConsonants } from '@/helpers';
 
 import styles from '@/pages/CreateEdition/styles.module.scss';
 
@@ -45,7 +46,11 @@ export function FormArea({
 			return;
 		}
 		if (values.name) {
-			setFieldValue('symbol', `$${values.name.toUpperCase()}`);
+			const nameValue = values.name.replaceAll(" ", "");
+			const consonants = getConsonants(nameValue);
+			const symbolVersion = consonants.slice(0, 4);
+
+			setFieldValue('symbol', `$${symbolVersion.toUpperCase()}`);
 		}
 	}, [values.name, touched.symbol, isSubmitting]);
 

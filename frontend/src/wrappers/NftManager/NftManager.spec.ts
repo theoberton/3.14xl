@@ -394,7 +394,6 @@ describe('NftManager', () => {
 			content: collectionContentUri,
 			commonContent: collectionContentUri,
 		};
-		const data = await manager.getManagerData();
 
 		const result = await manager.sendManagerEdit(
 			creator.getSender(),

@@ -228,8 +228,25 @@
 }
 
 .customField {
+	&Reset {
+    color: $gray-one;
+    position: absolute;
+    right: -55px;
+    display: flex;
+    top: 37px;
+    margin: auto;
+		cursor: pointer;
+		font-weight: $font-normal;
+		&Mobile {
+			color: $gray-one;
+			margin-left: 10px;
+			font-weight: $font-normal;
+		}
+	}
+
 	&Container {
 		@extend .inputContainer;
+		position: relative;
 	}
 
 	&Controls {
@@ -263,6 +280,10 @@
 
 	&Label {
 		@extend .inputLabel;
+		&Date {
+			display: flex;
+			justify-content: space-between;
+		}
 	}
 }
 

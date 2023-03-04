@@ -12,7 +12,7 @@ import styles from './styles.module.scss';
 import { CollectionData, CollectionContent } from '@/wrappers/types';
 import { composeMintTransaction } from '@/pages/EditionDetails/helper';
 import MintDateSection from './MintTime';
-import { useGetSetState } from 'react-use';
+import { CopyToClipboard } from '@/components';
 
 function isMintAllowed(now: Date, start?: number, end?: number) {
 	return (!start || new Date(start * 1000) < now) && (!end || now < new Date(end * 1000));
@@ -115,11 +115,15 @@ function EditionDetails({
 				<h3>DETAILS</h3>
 				<div>
 					<p>Contract Address</p>
-					<span>{addressFilter(collectionAddress!)}</span>
+					<CopyToClipboard textValue={collectionAddress!} message="Contract address has been copied!" >
+						<span>{addressFilter(collectionAddress!)}</span>				
+					</CopyToClipboard>
 				</div>
 				<div>
 					<p>Symbol</p>
-					<span>{content.symbol}</span>
+					<CopyToClipboard textValue={collectionAddress!} message="Edition symbol has been copied!" >
+						<span>{content.symbol}</span>
+					</CopyToClipboard>
 				</div>
 				<div>
 					<p>Blockchain</p>
