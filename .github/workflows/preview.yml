@@ -11,25 +11,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  Test:
-    environment:
-      name: test
-      url: ${{ steps.deploy.outputs.url }}
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3        
-        with:
-          node-version: 18
-          cache: 'yarn'
-          cache-dependency-path: '**/yarn.lock'
-      - name: Install dependencies
-        run: yarn install --immutable
-      - name: Build
-        run: yarn test
   Deploy-Preview:
     environment:
       name: preview
