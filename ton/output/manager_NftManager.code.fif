@@ -301,11 +301,13 @@ PROGRAM{
     ENDC
   }>
   __gen_write_NftManager PROCINLINE:<{
-    s7 s6 XCHG2
+    s8 s7 XCHG2
     __tact_store_address INLINECALLDICT
-    s0 s4 XCHG2
+    s1 s5 XCHG
+    STREF
+    s0 s3 XCHG2
     __tact_store_address INLINECALLDICT
-    ROT
+    SWAP
     STGRAMS
     32 STU
     32 STU
@@ -317,6 +319,7 @@ PROGRAM{
   __gen_read_NftManager PROCINLINE:<{
     __tact_load_address INLINECALLDICT
     SWAP
+    LDREF
     __tact_load_address INLINECALLDICT
     SWAP
     LDGRAMS
@@ -324,6 +327,7 @@ PROGRAM{
     32 LDU
     32 LDU
     __tact_load_address INLINECALLDICT
+    s1 s8 XCHG
     s1 s7 XCHG
     s1 s6 XCHG
     s1 s5 XCHG
@@ -343,14 +347,14 @@ PROGRAM{
     SWAP
     __tact_context_sys SETGLOB
     __gen_read_NftManager INLINECALLDICT
-    1 7 BLKDROP2
+    1 8 BLKDROP2
   }>
   __gen_store_NftManager PROCINLINE:<{
     NEWC
     __tact_context_sys GETGLOB
     SWAP
     STREF
-    7 -ROLL
+    8 -ROLL
     __gen_write_NftManager INLINECALLDICT
     ENDC
     c4 POP
@@ -478,14 +482,15 @@ PROGRAM{
     __tact_string_builder_end INLINECALLDICT
   }>
   $__gen_NftManager_nft_collection_address PROCREF:<{
-    s5 s6 XCHG
-    6 BLKDROP
+    s5 s7 XCHG
+    7 BLKDROP
   }>
   $__gen_get_nft_collection_address PROC:<{
     __gen_load_NftManager INLINECALLDICT
     $__gen_NftManager_nft_collection_address INLINECALLDICT
   }>
   $__gen_NftManager_get_manager_data PROCREF:<{
+    1 6 BLKDROP2
   }>
   $__gen_get_get_manager_data PROC:<{
     __gen_load_NftManager INLINECALLDICT
@@ -495,33 +500,34 @@ PROGRAM{
   $__gen_NftManager_requireOwner PROCREF:<{
     __tact_context_get INLINECALLDICT
     __gen_Context_get_sender INLINECALLDICT
-    s7 PUSH
+    s8 PUSH
     __tact_address_eq INLINECALLDICT
     132 THROWIFNOT
   }>
   $__gen_NftManager_owner PROCREF:<{
-    6 BLKDROP
+    7 BLKDROP
   }>
   $__gen_get_owner PROC:<{
     __gen_load_NftManager INLINECALLDICT
     $__gen_NftManager_owner INLINECALLDICT
   }>
   $__gen_NftManager_receive_SetNftCollectionAddress PROCINLINE:<{
-    7 -ROLL
+    8 -ROLL
     $__gen_NftManager_requireOwner INLINECALLDICT
-    s6 PUSH
+    s7 PUSH
     39618 PUSHINT
     s0 s7 XCHG
     __tact_address_eq INLINECALLDICT
     s1 s6 XCHG
     THROWANYIFNOT
+    s6 s7 XCHG
     s5 s6 XCHG
     4 ROLL
   }>
   $__gen_NftManager_receive_ChangeOwnerOfCollection PROCINLINE:<{
-    7 -ROLL
+    8 -ROLL
     $__gen_NftManager_requireOwner INLINECALLDICT
-    s6 POP
+    s7 POP
     __tact_my_balance INLINECALLDICT
     50000000 PUSHINT
     SUB
@@ -529,14 +535,15 @@ PROGRAM{
     SWAP
     -1 GTINT
     THROWANYIFNOT
-    5 ROLL
+    6 ROLL
   }>
   $__gen_NftManager_receive_EditData PROCINLINE:<{
+    s7 s13 XCHG
     s6 s12 XCHG
     s5 s11 XCHG
     s4 s10 XCHG
     s3 s9 XCHG
-    s8 s7 s12 XCHG3
+    s8 s13 s12 XCHG3
     $__gen_NftManager_requireOwner INLINECALLDICT
     s3 s4 XCHG
     4 BLKDROP
@@ -561,7 +568,7 @@ PROGRAM{
     PUSHNULL
     PUSHNULL
     $send INLINECALLDICT
-    s0 s6 XCHG
+    s7 s6 XCHG2
     s3 s4 XCHG
   }>
   $__gen_NftManager_receive_MintSafe PROCINLINE:<{
@@ -700,9 +707,10 @@ PROGRAM{
     IFJMP:<{
       DROP
       __gen_load_NftManager INLINECALLDICT
-      s0 s7 XCHG
+      s0 s8 XCHG
       __gen_read_SetNftCollectionAddress INLINECALLDICT
       NIP
+      s7 s8 XCHG
       s6 s7 XCHG
       s5 s6 XCHG
       s4 s5 XCHG
@@ -717,9 +725,10 @@ PROGRAM{
     IFJMP:<{
       DROP
       __gen_load_NftManager INLINECALLDICT
-      s0 s7 XCHG
+      s0 s8 XCHG
       __gen_read_ChangeOwnerOfCollection INLINECALLDICT
       NIP
+      s7 s8 XCHG
       s6 s7 XCHG
       s5 s6 XCHG
       s4 s5 XCHG
@@ -734,9 +743,10 @@ PROGRAM{
     IFJMP:<{
       DROP
       __gen_load_NftManager INLINECALLDICT
-      s0 s7 XCHG
+      s0 s8 XCHG
       __gen_read_EditData INLINECALLDICT
       s6 POP
+      s12 s13 XCHG
       s11 s12 XCHG
       s10 s11 XCHG
       s9 s10 XCHG
@@ -753,9 +763,10 @@ PROGRAM{
     IFJMP:<{
       DROP
       __gen_load_NftManager INLINECALLDICT
-      s0 s7 XCHG
+      s0 s8 XCHG
       __gen_read_MintSafe INLINECALLDICT
       s3 POP
+      s9 s10 XCHG
       s8 s9 XCHG
       s7 s8 XCHG
       s6 s7 XCHG
@@ -770,9 +781,10 @@ PROGRAM{
     EQUAL
     IFJMP:<{
       __gen_load_NftManager INLINECALLDICT
-      s0 s7 XCHG
+      s0 s8 XCHG
       __gen_read_Deploy INLINECALLDICT
       NIP
+      s7 s8 XCHG
       s6 s7 XCHG
       s5 s6 XCHG
       s4 s5 XCHG

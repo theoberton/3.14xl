@@ -8,15 +8,21 @@ import { useParams } from 'react-router';
 import { useMediaQuery } from 'react-responsive';
 import { Helmet } from 'react-helmet-async';
 import { PageLoader } from '@/components';
+import {convertToBounceableAddress} from '@/helpers'
+
 import { initialDeploymentState } from '@/pages/EditionEdit/constants';
 import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
 import { Content } from '@/pages/EditionEdit/Content';
+import { useTonAddress } from '@tonconnect/ui-react';
 // Hotfix for https://github.com/yocontra/react-responsive/issues/306, remove when resolved
 console.log(useMediaQuery);
 
 function EditionEdit() {
 	const { collectionAddress } = useParams();
 	const [editionName, setName] = useState<string>('');
+	const accountAddress = useTonAddress();
+	// const navigate = useNavigate();
+
 	const [getContentDeploymentState, setContentDeploymentState] =
 		useGetSetState(initialDeploymentState);
 	const [getOwnerDeploymentState, setOwnerDeploymentState] = useGetSetState(initialDeploymentState);
@@ -52,6 +58,12 @@ function EditionEdit() {
 		return { collectionData, content, managerAddress: managerData.owner };
 	}, [tonClient, collectionAddress]);
 
+	const mangerAddress = convertToBounceableAddress(collectionDataAsync.value?.managerAddress.toString());
+	const loggedAccountAddress = convertToBounceableAddress(accountAddress);
+
+	const isUserCollection = mangerAddress == loggedAccountAddress;
+	const isFormDisabled = Boolean(mangerAddress && !isUserCollection);
+
 	const contentDeploymentState = getContentDeploymentState();
 	const ownerDeploymentState = getOwnerDeploymentState();
 
@@ -61,11 +73,13 @@ function EditionEdit() {
 			setEditionName,
 			ownerDeploymentState,
 			contentDeploymentState,
+			isFormDisabled,
 			setContentDeploymentState,
 			setOwnerDeploymentState,
 		}),
 		[
 			editionName,
+			isFormDisabled,
 			setEditionName,
 			ownerDeploymentState,
 			contentDeploymentState,

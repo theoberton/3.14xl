@@ -59,6 +59,7 @@ message(0xd53276db) Excesses {
 
 contract NftManager with Deployable, Ownable {
   owner: Address;
+  content_init: Cell;
   nft_collection_address: Address;
   mint_price: Int as coins;
   max_supply: Int as uint32;
@@ -66,7 +67,11 @@ contract NftManager with Deployable, Ownable {
   mint_date_end: Int as uint32;
   payout_address: Address;
 
-  init(owner: Address, mint_price: Int, max_supply: Int, mint_date_start: Int, mint_date_end: Int, payout_address: Address) {
+  init(
+    owner: Address, mint_price: Int,
+    max_supply: Int, mint_date_start: Int, mint_date_end: Int,
+    payout_address: Address, content_init: Cell
+  ) {
     self.owner = owner;
     self.nft_collection_address = owner;
     self.mint_price = mint_price;
@@ -74,6 +79,7 @@ contract NftManager with Deployable, Ownable {
     self.mint_date_start = mint_date_start;
     self.mint_date_end = mint_date_end;
     self.payout_address = payout_address;
+    self.content_init = content_init;
   }
 
   receive(msg: SetNftCollectionAddress) {

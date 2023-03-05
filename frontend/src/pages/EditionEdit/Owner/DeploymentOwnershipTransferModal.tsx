@@ -2,12 +2,14 @@ import { Modal } from '@/components';
 import { useTonClient } from '@/hooks';
 import { useEffect, useState, useCallback, useContext } from 'react';
 import { Address } from 'ton-core';
-import { NftCollection } from '@/wrappers';
+import { NftCollection, NftManager } from '@/wrappers';
 import { useAsyncRetry } from 'react-use';
 import { Loader } from '@/components';
 import { Button, ButtonKinds } from '@/components/Button';
-
 import { LoaderSizes, LoaderColors, LoaderTypes } from '@/components/interfaces';
+
+import {convertToBounceableAddress} from '@/helpers'
+
 
 import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
 
@@ -15,14 +17,17 @@ import styles from '@/pages/CreateEdition/styles.module.scss';
 
 import SuccessIcon from '@/assets/images/svg/common/success.svg';
 import FailureIcon from '@/assets/images/svg/common/failure.svg';
+import { TransferOwnershiptValues } from '../interfaces';
 
 const renderDeployInProgressComponent = () => (
+	<div className={styles.deploymentModal}>
 	<div className={styles.deploymentModalTitle}>
 		Edition owner is being updated
-		<div className={styles.deploymentModalTitleCaption}>This may take up to 30 seconds</div>
 		<div className={styles.deploymentModalSpinner}>
 			<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
 		</div>
+		</div>
+		<div className={styles.deploymentModalTitleCaption}>It usually takes about 15 seconds</div>
 	</div>
 );
 
@@ -43,10 +48,10 @@ const renderDeployFailureComponent = (goBack: () => void, retryCreateEdition: ()
 		<img src={FailureIcon} className={styles.deploymentModalImage} />
 		<div className={styles.deploymentModalTitle}>Something went wrong</div>
 		<div className={styles.deploymentModalTitleCaption}>
-			Edition owner hasn't been updated, an error occurred while trying to deploy
+			Edition owner hasn't been updated, an error occurred while trying to update
 		</div>
 		<div className={styles.deploymentModalActions}>
-			<Button componentType="button" kind={ButtonKinds.basic} onClick={goBack}>
+			<Button componentType="button" basicInverted kind={ButtonKinds.basic} onClick={goBack}>
 				Go back
 			</Button>
 			<Button componentType="button" kind={ButtonKinds.basic} onClick={retryCreateEdition}>
@@ -63,7 +68,7 @@ enum DeploymentStatus {
 }
 
 type Props = {
-	onClose: () => void;
+	values: TransferOwnershiptValues;
 	address: string | null;
 	deploy: () => void;
 };
@@ -71,7 +76,7 @@ type Props = {
 const deployExpirationTime = 40 * 1000; // 40 seconds
 const retryContractDeployedCheck = 2 * 1000; // every 2 seconds check whether contract is deployed or not
 
-export function DeploymentModal({ address, onClose, deploy }: Props) {
+export function DeploymentModal({ address, deploy, values }: Props) {
 	const [status, setStatus] = useState(DeploymentStatus.inProgress);
 	const { ownerDeploymentState, setOwnerDeploymentState, editionName } =
 		useContext(DeploymentContext);
@@ -100,16 +105,21 @@ export function DeploymentModal({ address, onClose, deploy }: Props) {
 
 		const nftCollection = NftCollection.createFromAddress(Address.parse(address));
 		const nftColelctionContract = tonClient.open(nftCollection);
+
 		let collectionData;
+		let managerData;
 		try {
-			collectionData = await nftColelctionContract.getCollectionData();
-			setStatus(DeploymentStatus.success);
+			let collectionData = await nftColelctionContract.getCollectionData();
+	
+			const nftManager = NftManager.createFromAddress(collectionData.ownerAddress);
+			const nftManagerContract = tonClient.open(nftManager);
+			managerData = await nftManagerContract.getManagerData();
 		} catch (error) {
 			setStatus(DeploymentStatus.inProgress);
 			throw error;
 		}
 
-		return { collectionData };
+		return { collectionData, managerAddress: managerData.owner };
 	}, [tonClient, address]);
 
 	const retry = useCallback(() => {
@@ -119,10 +129,6 @@ export function DeploymentModal({ address, onClose, deploy }: Props) {
 		});
 
 		deploy();
-	}, []);
-
-	const goBack = useCallback(() => {
-		onClose();
 	}, []);
 
 	const goBackSuccess = useCallback(() => {
@@ -139,18 +145,25 @@ export function DeploymentModal({ address, onClose, deploy }: Props) {
 	}, []);
 
 	useEffect(() => {
-		if (collectionDataAsync.value?.collectionData) {
-			setStatus(DeploymentStatus.success);
-		} else if (collectionDataAsync.error && status == DeploymentStatus.inProgress) {
-			retryTimeoutId = setTimeout(collectionDataAsync.retry, retryContractDeployedCheck);
-		}
+		if (collectionDataAsync.value) {
+			const exitingOwnerValue = collectionDataAsync.value.managerAddress.toString();
+			const bounceableOnwerAddress = convertToBounceableAddress(exitingOwnerValue);
+			console.log('bounceableOnwerAddress', bounceableOnwerAddress)
+			const formManagerAddress = convertToBounceableAddress(values.managerAddress);
+			console.log('formManagerAddress', formManagerAddress)
 
+			if(bounceableOnwerAddress === formManagerAddress) {
+				setStatus(DeploymentStatus.success);
+			} else {
+				retryTimeoutId = setTimeout(collectionDataAsync.retry, retryContractDeployedCheck);
+			}
+		}
 		return () => {
-			if (collectionDataAsync.value?.collectionData) {
+			if (collectionDataAsync.value?.managerAddress) {
 				clearTimeout(retryTimeoutId);
 			}
 		};
-	}, [collectionDataAsync.value, collectionDataAsync.error, status]);
+	}, [values, collectionDataAsync.value?.managerAddress, collectionDataAsync.error, status]);
 
 	const closeOnOverlayClick = status !== DeploymentStatus.inProgress;
 
@@ -166,7 +179,7 @@ export function DeploymentModal({ address, onClose, deploy }: Props) {
 			{status == DeploymentStatus.success &&
 				renderDeploySuccessComponent(goBackSuccess, editionName)}
 			{status == DeploymentStatus.inProgress && renderDeployInProgressComponent()}
-			{status == DeploymentStatus.failiure && renderDeployFailureComponent(goBack, retry)}
+			{status == DeploymentStatus.failiure && renderDeployFailureComponent(goBackFailiure, retry)}
 		</Modal>
 	);
 }

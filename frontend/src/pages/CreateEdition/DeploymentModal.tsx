@@ -22,7 +22,7 @@ const renderDeployInProgressComponent = () => (
 				<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
 			</div>
 		</div>
-		<div className={styles.deploymentModalTitleCaption}>This may take up to 30 seconds</div>
+		<div className={styles.deploymentModalTitleCaption}>It usually takes about 15 seconds</div>
 	</div>
 );
 
@@ -99,7 +99,6 @@ export function DeploymentModal({
 	const [status, setStatus] = useState(DeploymentStatus.inProgress);
 	let retryTimeoutId: ReturnType<typeof setTimeout>;
 	const tonClient = useTonClient();
-	// const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	useEffect(() => {
 		const failiureTimeoutId = setTimeout(() => {

@@ -1,6 +1,7 @@
 import { HTMLInputTypeAttribute } from 'react';
 import { useFormikContext, useField } from 'formik';
 import { useMediaQuery } from 'react-responsive';
+import { isUndefined } from 'lodash';
 
 import classNames from 'classnames';
 import styles from '@/components/Input/styles.module.scss';
@@ -35,7 +36,7 @@ export function Input(props: Props) {
 		disabled,
 		subCaption,
 		noEdit,
-		min,
+		min = 0,
 		max,
 		optional,
 		units,
@@ -112,7 +113,7 @@ export function Input(props: Props) {
 						onBlur={onBlur}
 						type={fieldType}
 						placeholder={placeholder}
-						value={value || ''}
+						value={!isUndefined(value) ? value : ''}
 						{...(isInputOfNumberType && inputOfTypeNumberProps)}
 						{...(isInputOfTextType && isInputOfTextTypeProps)}
 					/>

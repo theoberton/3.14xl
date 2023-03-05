@@ -22,7 +22,7 @@ const renderDeployInProgressComponent = () => (
 				<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
 			</div>
 		</div>
-		<div className={styles.deploymentModalTitleCaption}>This may take up to 30 seconds</div>
+		<div className={styles.deploymentModalTitleCaption}>It usually takes about 15 seconds</div>
 	</div>
 );
 

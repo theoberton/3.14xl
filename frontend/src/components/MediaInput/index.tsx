@@ -129,7 +129,7 @@ export function MediaInput(props: Props) {
 				onChange={onSelectFile}
 				accept="image/jpeg,image/png,image/gif,image/jpg"
 				type="file"
-				disabled={isSubmitting}
+				disabled={disabled || isSubmitting}
 				hidden
 			/>
 			<div className={inputWrapperClass} onClick={handleAddMediaFileClick}>
