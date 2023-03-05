@@ -5,6 +5,7 @@ export type NftManagerInitData = {
 	maxSupply: bigint;
 	mintDateStart: bigint;
 	mintDateEnd: bigint;
+	content: string;
 };
 
 export type SetNftCollectionAddress = {

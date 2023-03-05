@@ -170,7 +170,7 @@
 
 			&Wrapper {
 				display: flex;
-				@media (max-width: $breakpoint-xs) {
+				@media (max-width: $breakpoint-m) {
 					gap: 20px;
 					flex-direction: column;
 				}

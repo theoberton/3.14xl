@@ -27,11 +27,13 @@ PROGRAM{
     STSLICER
   }>
   __gen_write_NftManager PROCINLINE:<{
-    s7 s6 XCHG2
+    s8 s7 XCHG2
     __tact_store_address INLINECALLDICT
-    s0 s4 XCHG2
+    s1 s5 XCHG
+    STREF
+    s0 s3 XCHG2
     __tact_store_address INLINECALLDICT
-    ROT
+    SWAP
     STGRAMS
     32 STU
     32 STU
@@ -41,11 +43,13 @@ PROGRAM{
     __tact_store_address INLINECALLDICT
   }>
   $__gen_NftManager_init PROC:<{
-    s5 PUSH
-    s0 s7 XCHG
+    s6 PUSH
+    s0 s8 XCHG
     NEWC
     STREF
-    7 -ROLL
+    s0 s8 XCHG
+    s0 s7 XCHG
+    5 2 BLKSWAP
     __gen_write_NftManager INLINECALLDICT
     ENDC
   }>

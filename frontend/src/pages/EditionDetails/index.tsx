@@ -24,10 +24,14 @@ export default function EditionDetailsPage() {
 
 		const nftCollection = NftCollection.createFromAddress(Address.parse(collectionAddress));
 		const nftColelctionContract = tonClient.open(nftCollection);
+		console.log('nftColelctionContract', nftColelctionContract.address.toString())
 		let collectionData = await nftColelctionContract.getCollectionData();
+
 		const content: CollectionContent = await fetch(collectionData.collectionContentUri).then(res =>
 			res.json()
 		);
+		console.log('collectionData.ownerAddress', collectionData.ownerAddress.toString())
+
 		const nftManager = NftManager.createFromAddress(collectionData.ownerAddress);
 		const nftManagerContract = tonClient.open(nftManager);
 		const managerData = await nftManagerContract.getManagerData();

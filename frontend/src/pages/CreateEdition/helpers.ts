@@ -43,6 +43,7 @@ export const createEdition = async (
 
 	const managerInitData = {
 		owner: ownerAddress,
+		content: collectionContentUrl,
 		mintPrice: toNano(params.price),
 		maxSupply: BigInt(params.maxSupply),
 		mintDateStart: BigInt(params.dateStart),
@@ -52,6 +53,8 @@ export const createEdition = async (
 
 	const nftManager = NftManager.createFromConfig(managerInitData);
 	const nftManagerContract = tonClient.open(nftManager);
+
+	console.log('nftManagerContract.address', nftManagerContract.address.toString());
 
 	const nftCollectionInitData: NftCollectionDataOptional = {
 		ownerAddress: nftManagerContract.address,

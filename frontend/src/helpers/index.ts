@@ -3,3 +3,4 @@ export * from './date';
 export * from './math';
 export * from './sampleData';
 export * from './text';
+export * from './address';

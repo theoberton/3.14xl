@@ -12,6 +12,7 @@ import { EDITIONS_SIZES } from '@/constants/common';
 import { useTonClient } from '@/hooks';
 import { createEdition } from '@/pages/CreateEdition/helpers';
 import { dateToUnix } from '@/helpers';
+import { Address } from 'ton-core';
 
 const initialDeploymentState = {
 	isModalOpened: false,
@@ -47,11 +48,12 @@ function CreateEditionForm() {
 			const turnOffSubmition = () => bag.setSubmitting(false);
 
 			bag.setSubmitting(true);
-
+			let creatorAddress = address;
 			try {
 				if (!tonConnectUI.connected) {
 					try {
-						await tonConnectUI.connectWallet();
+						let result = await tonConnectUI.connectWallet();
+						creatorAddress = Address.parseRaw(result.account.address).toString();
 					} catch (error) {
 						console.error('Error occured when connecting to wallet', error);
 
@@ -71,7 +73,7 @@ function CreateEditionForm() {
 						price: values.price,
 						royalty: values.royalty,
 						payoutAddress: values.payoutAddress,
-						creatorAddress: address,
+						creatorAddress,
 						maxSupply:
 							values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0',
 						dateStart: values.validity.start ? dateToUnix(values.validity.start) : 0,

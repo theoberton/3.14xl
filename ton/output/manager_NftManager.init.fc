@@ -27,9 +27,10 @@ builder __tact_store_address(builder b, slice address) inline {
     return b;
 }
 
-builder __gen_write_NftManager(builder build_0, (slice, slice, int, int, int, int, slice) v) inline {
-    var (v'owner, v'nft_collection_address, v'mint_price, v'max_supply, v'mint_date_start, v'mint_date_end, v'payout_address) = v;
+builder __gen_write_NftManager(builder build_0, (slice, cell, slice, int, int, int, int, slice) v) inline {
+    var (v'owner, v'content_init, v'nft_collection_address, v'mint_price, v'max_supply, v'mint_date_start, v'mint_date_end, v'payout_address) = v;
     build_0 = __tact_store_address(build_0, v'owner);
+    build_0 = build_0.store_ref(v'content_init);
     build_0 = __tact_store_address(build_0, v'nft_collection_address);
     build_0 = build_0.store_coins(v'mint_price);
     build_0 = build_0.store_uint(v'max_supply, 32);
@@ -39,8 +40,8 @@ builder __gen_write_NftManager(builder build_0, (slice, slice, int, int, int, in
     return build_0;
 }
 
-cell $__gen_NftManager_init(cell sys', slice $owner, int $mint_price, int $max_supply, int $mint_date_start, int $mint_date_end, slice $payout_address) {
-    var (($self'owner, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address)) = (null(), null(), null(), null(), null(), null(), null());
+cell $__gen_NftManager_init(cell sys', slice $owner, int $mint_price, int $max_supply, int $mint_date_start, int $mint_date_end, slice $payout_address, cell $content_init) {
+    var (($self'owner, $self'content_init, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address)) = (null(), null(), null(), null(), null(), null(), null(), null());
     $self'owner = $owner;
     $self'nft_collection_address = $owner;
     $self'mint_price = $mint_price;
@@ -48,20 +49,22 @@ cell $__gen_NftManager_init(cell sys', slice $owner, int $mint_price, int $max_s
     $self'mint_date_start = $mint_date_start;
     $self'mint_date_end = $mint_date_end;
     $self'payout_address = $payout_address;
+    $self'content_init = $content_init;
     var b' = begin_cell();
     b' = b'.store_ref(sys');
-    b' = __gen_write_NftManager(b', ($self'owner, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address));
+    b' = __gen_write_NftManager(b', ($self'owner, $self'content_init, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address));
     return b'.end_cell();
 }
 
-cell init(cell sys', slice $$owner, int $$mint_price, int $$max_supply, int $$mint_date_start, int $$mint_date_end, slice $$payout_address) method_id {
+cell init(cell sys', slice $$owner, int $$mint_price, int $$max_supply, int $$mint_date_start, int $$mint_date_end, slice $$payout_address, cell $$content_init) method_id {
     slice $owner = $$owner;
     int $mint_price = $$mint_price;
     int $max_supply = $$max_supply;
     int $mint_date_start = $$mint_date_start;
     int $mint_date_end = $$mint_date_end;
     slice $payout_address = $$payout_address;
-    return $__gen_NftManager_init(sys', $owner, $mint_price, $max_supply, $mint_date_start, $mint_date_end, $payout_address);
+    cell $content_init = $$content_init;
+    return $__gen_NftManager_init(sys', $owner, $mint_price, $max_supply, $mint_date_start, $mint_date_end, $payout_address, $content_init);
 }
 
 () main() {

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from 'ton-core';
 import { addressFilter } from '@/helpers';
@@ -8,8 +8,6 @@ import { useTime } from '@/hooks';
 import { Button, ButtonKinds } from '@/components/Button';
 
 import styles from './styles.module.scss';
-
-import { CollectionData, CollectionContent } from '@/wrappers/types';
 import { composeMintTransaction } from '@/pages/EditionDetails/helper';
 import MintDateSection from './MintTime';
 import { CopyToClipboard } from '@/components';
@@ -31,7 +29,6 @@ function EditionDetails({
 
 	const now = useTime();
 	const navigate = useNavigate();
-	const location = useLocation();
 
 	const [isDeploymentModalOpened, setDeploymentStatus] = useState(false);
 
@@ -77,13 +74,8 @@ function EditionDetails({
 	}, [tonConnectUI.connected, address]);
 
 	const goToEdititingPage = useCallback(() => {
-		let editPage = `${location.pathname}edit`;
-		if(location.pathname[location.pathname.length-1] !== '/') {
-			editPage = `${editPage}/`
-		}
-
-		navigate(editPage);
-	}, [location.pathname]);
+		navigate(`/edition/${collectionAddress}/edit`);
+	}, [collectionAddress]);
 
 	const mintButtonHandler = isEndOfMinting ? () => {} : mint;
 	const mintAllowed = isMintAllowed(now, content.dateStart, content.dateEnd);
