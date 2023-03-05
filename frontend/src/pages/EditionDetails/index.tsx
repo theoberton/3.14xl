@@ -30,8 +30,6 @@ export default function EditionDetailsPage() {
 		const content: CollectionContent = await fetch(collectionData.collectionContentUri).then(res =>
 			res.json()
 		);
-		console.log('collectionData.ownerAddress', collectionData.ownerAddress.toString())
-
 		const nftManager = NftManager.createFromAddress(collectionData.ownerAddress);
 		const nftManagerContract = tonClient.open(nftManager);
 		const managerData = await nftManagerContract.getManagerData();

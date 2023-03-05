@@ -14,7 +14,6 @@ import { initialDeploymentState } from '@/pages/EditionEdit/constants';
 import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
 import { Content } from '@/pages/EditionEdit/Content';
 import { useTonAddress } from '@tonconnect/ui-react';
-import { useNavigate } from 'react-router-dom';
 // Hotfix for https://github.com/yocontra/react-responsive/issues/306, remove when resolved
 console.log(useMediaQuery);
 
@@ -94,14 +93,6 @@ function EditionEdit() {
 			collectionDataAsync.retry();
 		}
 	}, [ownerDeploymentState.deployCount, contentDeploymentState.deployCount]);
-
-
-
-	// useEffect(() => {
-	// 		if(isNotAllowedToEdit) {
-	// 			navigate('/not-found');
-	// 	}
-	// }, [mangerAddress, loggedAccountAddress])
 
 	if (collectionDataAsync.error && !collectionDataAsync.value) {
 		return <div>Something went wrong</div>;
