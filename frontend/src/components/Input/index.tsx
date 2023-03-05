@@ -8,6 +8,8 @@ import styles from '@/components/Input/styles.module.scss';
 
 import { useCustomStateFormField } from '@/hooks/useCustomStateFormField';
 
+console.log(useMediaQuery);
+
 interface Props {
 	placeholder?: string;
 	subCaption?: string;

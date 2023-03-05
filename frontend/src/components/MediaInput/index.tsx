@@ -12,6 +12,7 @@ import { Loader } from '@/components';
 import styles from '@/components/MediaInput/styles.module.scss';
 
 import { useCustomStateFormField } from '@/hooks/useCustomStateFormField';
+console.log(useMediaQuery);
 
 const storage = new ThirdwebStorage();
 
