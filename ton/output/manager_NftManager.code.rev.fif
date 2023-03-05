@@ -806,7 +806,20 @@ SETCP0
           SENDRAWMSG
         }> CALLREF
         -1 PUSHINT
-        2 CALLDICT
+        0 PUSHINT
+        40829073211017387707525970175388402652587852245746681944198239174303715381585 PUSHINT
+        NEWC
+        2 PUSHINT
+        s0 s1 XCHG
+        2 STU
+        0 PUSHINT
+        s0 s1 XCHG
+        1 STU
+        s1 s2 XCHG
+        8 STI
+        256 STU
+        ENDC
+        CTOS
         1 PUSHINT
         PUSHSLICE
         <{
@@ -1574,9 +1587,6 @@ SETCP0
     }> IFJMPREF
     s0 POP
     130 THROW
-
-  2: 
-    PUSHSLICE
 
   76510: 
     c4 PUSH

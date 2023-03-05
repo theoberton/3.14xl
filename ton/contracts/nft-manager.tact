@@ -2,11 +2,7 @@ import "@stdlib/ownable";
 import "@stdlib/deploy";
 import "./params.fc";
 
-@name(pixel_addr)
-native pixelAddress(): Address;
-
-@name(min_tons_for_storage)
-native minTonsForStorage(): Int;
+const minTonsForStorage: Int = ton("0.05");
 
 message(0x1) Mint {
   query_id: Int as uint64;
@@ -93,7 +89,7 @@ contract NftManager with Deployable, Ownable {
   receive(msg: ChangeOwnerOfCollection) {
     self.requireOwner();
 
-    let restAmount: Int = myBalance() - minTonsForStorage();
+    let restAmount: Int = myBalance() - minTonsForStorage;
 
     require(restAmount >= 0, "Insufficient amount sent");
 
@@ -103,7 +99,7 @@ contract NftManager with Deployable, Ownable {
   receive(msg: EditData) {
     self.requireOwner();
 
-    let restAmount: Int = myBalance() - minTonsForStorage() - ton("0.05");
+    let restAmount: Int = myBalance() - minTonsForStorage - ton("0.05");
 
     require(restAmount >= 0, "Insufficient amount sent");
 
@@ -129,7 +125,7 @@ contract NftManager with Deployable, Ownable {
     let item_content: Cell = beginCell().storeAddress(msg.item_owner).storeRef(emptyCell()).endCell();
 
     let pixelReward: Int = self.mint_price / 20;
-    let restAmount: Int = myBalance() - minTonsForStorage() - self.mint_price - pixelReward - ton("0.05") - ton("0.03");
+    let restAmount: Int = myBalance() - minTonsForStorage - self.mint_price - pixelReward - ton("0.05") - ton("0.03");
 
     require(restAmount >= 0, "Insufficient amount sent");
 
@@ -145,7 +141,7 @@ contract NftManager with Deployable, Ownable {
     });
 
     send(SendParameters{
-      to: pixelAddress(),
+      to: newAddress(0, 0x5a446fbecfcd5a9f4c81e6938c980ad7f5ce56de21cff8a351cee42012b35151),
       value: pixelReward,
       mode: SendPayGasSeparately,
       body: "NFT item minted".asComment()

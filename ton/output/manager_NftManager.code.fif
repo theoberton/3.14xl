@@ -1,6 +1,5 @@
 PROGRAM{
   DECLPROC force_chain
-  DECLPROC pixel_addr
   DECLPROC __tact_my_balance
   DECLPROC __tact_not_null
   DECLPROC __tact_context_get
@@ -8,6 +7,7 @@ PROGRAM{
   DECLPROC __tact_store_bool
   DECLPROC __tact_load_address
   DECLPROC __tact_store_address
+  DECLPROC __tact_create_address
   DECLPROC __tact_address_eq
   DECLPROC __tact_string_builder_start
   DECLPROC __tact_string_builder_start_comment
@@ -60,9 +60,6 @@ PROGRAM{
     EQUAL
     333 THROWIFNOT
   }>
-  pixel_addr PROC:<{
-    x{800B488DF7D9F9AB53E9903CD27193015AFEB9CADBC439FF146A39DC8402566A2A3_} PUSHSLICE
-  }>
   __tact_my_balance PROCINLINE:<{
     BALANCE
     FIRST
@@ -92,6 +89,20 @@ PROGRAM{
   }>
   __tact_store_address PROCINLINE:<{
     STSLICER
+  }>
+  __tact_create_address PROCINLINE:<{
+    NEWC
+    2 PUSHINT
+    SWAP
+    2 STU
+    0 PUSHINT
+    SWAP
+    1 STU
+    s1 s2 XCHG
+    8 STI
+    256 STU
+    ENDC
+    CTOS
   }>
   __tact_address_eq PROCINLINE:<{
     SDEQ
@@ -632,7 +643,9 @@ PROGRAM{
     s4 s3 s4 XCHG3
     $send INLINECALLDICT
     TRUE
-    pixel_addr CALLDICT
+    0 PUSHINT
+    40829073211017387707525970175388402652587852245746681944198239174303715381585 PUSHINT
+    __tact_create_address INLINECALLDICT
     1 PUSHINT
     B{b5ee9c7241010101001100001e4e4654206974656d206d696e746564af01325a} B>boc <s PUSHSLICE
     $__gen_String_asComment INLINECALLDICT

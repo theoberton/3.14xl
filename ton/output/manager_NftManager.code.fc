@@ -12,10 +12,7 @@ int workchain() asm "0 PUSHINT";
 slice null_addr() asm "b{00} PUSHSLICE";
 int flag::regular() asm "0x10 PUSHINT";
 int flag::bounce() asm "0x8 PUSHINT";
-slice pixel_addr() {
-  return "EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx"a;
-}
-int min_tons_for_storage() asm "50000000 PUSHINT"; ;; 0.05 TON
+
 
 int __tact_my_balance() inline {
     return pair_first(get_balance());
@@ -47,6 +44,15 @@ builder __tact_store_address(builder b, slice address) inline {
     __tact_verify_address(address);
     b = b.store_slice(address);
     return b;
+}
+
+slice __tact_create_address(int chain, int hash) inline {
+    var b = begin_cell();
+    b = b.store_uint(2, 2);
+    b = b.store_uint(0, 1);
+    b = b.store_int(chain, 8);
+    b = b.store_uint(hash, 256);
+    return b.end_cell().begin_parse();
 }
 
 int __tact_address_eq(slice a, slice b) inline {
@@ -357,7 +363,7 @@ _ $__gen_get_owner() method_id(83229) {
     var ($self'owner, $self'content_init, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address) = $self;
     var ($msg'new_owner) = $msg;
     ($self'owner, $self'content_init, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address)~$__gen_NftManager_requireOwner();
-    int $restAmount = (__tact_my_balance() - min_tons_for_storage());
+    int $restAmount = (__tact_my_balance() - 50000000);
     throw_unless(13674, ($restAmount >= 0));
     $self'owner = $msg'new_owner;
     return (($self'owner, $self'content_init, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address), ());
@@ -367,7 +373,7 @@ _ $__gen_get_owner() method_id(83229) {
     var ($self'owner, $self'content_init, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address) = $self;
     var ($msg'query_id, $msg'content, $msg'mint_price, $msg'mint_date_start, $msg'mint_date_end, $msg'payout_address) = $msg;
     ($self'owner, $self'content_init, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address)~$__gen_NftManager_requireOwner();
-    int $restAmount = ((__tact_my_balance() - min_tons_for_storage()) - 50000000);
+    int $restAmount = ((__tact_my_balance() - 50000000) - 50000000);
     throw_unless(13674, ($restAmount >= 0));
     $self'mint_price = $msg'mint_price;
     $self'mint_date_start = $msg'mint_date_start;
@@ -383,13 +389,13 @@ _ $__gen_get_owner() method_id(83229) {
     var ($ctx'bounced, $ctx'sender, $ctx'value, $ctx'raw) = __tact_context_get();
     cell $item_content = end_cell(store_ref(__tact_store_address(begin_cell(), $msg'item_owner), $emptyCell()));
     int $pixelReward = ($self'mint_price / 20);
-    int $restAmount = (((((__tact_my_balance() - min_tons_for_storage()) - $self'mint_price) - $pixelReward) - 50000000) - 30000000);
+    int $restAmount = (((((__tact_my_balance() - 50000000) - $self'mint_price) - $pixelReward) - 50000000) - 30000000);
     throw_unless(13674, ($restAmount >= 0));
     throw_unless(47714, (($self'max_supply == 0) | ($msg'next_item_index < $self'max_supply)));
     throw_unless(23716, ($self'mint_date_start < now()));
     throw_unless(36032, (($self'mint_date_end == 0) | ($self'mint_date_end > now())));
     $send((true, $self'payout_address, $self'mint_price, 1, $__gen_String_asComment(__gen_str_3884301487()), null(), null()));
-    $send((true, pixel_addr(), $pixelReward, 1, $__gen_String_asComment(__gen_str_3884301487()), null(), null()));
+    $send((true, __tact_create_address(0, 40829073211017387707525970175388402652587852245746681944198239174303715381585), $pixelReward, 1, $__gen_String_asComment(__gen_str_3884301487()), null(), null()));
     $send((true, $self'nft_collection_address, 50000000, 0, __gen_writecell_Mint(($msg'query_id, $msg'next_item_index, 20000000, $item_content)), null(), null()));
     $send((true, $ctx'sender, $restAmount, 1, __gen_writecell_Excesses(($msg'query_id)), null(), null()));
     return (($self'owner, $self'content_init, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address), ());
