@@ -3,6 +3,7 @@ import { useGetSetState } from 'react-use';
 import { Formik } from 'formik';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import styles from '@/pages/CreateEdition/styles.module.scss';
+import { isTestnet } from '@/helpers/location';
 
 import { FormArea } from '@/pages/CreateEdition/FormArea';
 import { formSchema } from '@/pages/CreateEdition/validation';
@@ -19,6 +20,26 @@ const initialDeploymentState = {
 	address: '',
 	editionName: '',
 };
+
+function getTestnetInitialValues(address: string) {
+	return {
+		name: 'TestOne',
+		symbol: '$TST',
+		description: 'Hello, this is description',
+		media: null,
+		price: '1',
+		editionSize: {
+			type: EDITIONS_SIZES.OPEN_EDITION,
+			amount: '',
+		},
+		royalty: '2',
+		validity: {
+			start: null,
+			end: null,
+		},
+		payoutAddress: address,
+	};
+}
 
 function CreateEditionForm() {
 	const address = useTonAddress();
@@ -96,23 +117,29 @@ function CreateEditionForm() {
 		[address, tonConnectUI.connected, tonClient]
 	);
 
-	const createEditionInitialValues: FormValues = {
-		name: '',
-		symbol: '',
-		description: '',
-		media: null,
-		price: '',
-		editionSize: {
-			type: EDITIONS_SIZES.OPEN_EDITION,
-			amount: '',
-		},
-		royalty: '',
-		validity: {
-			start: null,
-			end: null,
-		},
-		payoutAddress: address,
-	};
+	let createEditionInitialValues: FormValues;
+
+	if (!isTestnet()) {
+		createEditionInitialValues = {
+			name: '',
+			symbol: '',
+			description: '',
+			media: null,
+			price: '',
+			editionSize: {
+				type: EDITIONS_SIZES.OPEN_EDITION,
+				amount: '',
+			},
+			royalty: '',
+			validity: {
+				start: null,
+				end: null,
+			},
+			payoutAddress: address,
+		};
+	} else {
+		createEditionInitialValues = getTestnetInitialValues(address);
+	}
 
 	return (
 		<Formik

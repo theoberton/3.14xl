@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from 'ton-core';
-import { addressFilter } from '@/helpers';
+import { addressFilter, isMintAllowed } from '@/helpers';
 import { MintDeployModal } from '@/pages/EditionDetails/MintDeployModal';
 import { useTime } from '@/hooks';
 import { Button, ButtonKinds } from '@/components/Button';
@@ -13,12 +13,8 @@ import MintDateSection from './MintTime';
 import { CopyToClipboard } from '@/components';
 import { EditionData } from '../EditionEdit/interfaces';
 
-function isMintAllowed(now: Date, start?: number, end?: number) {
-	return (!start || new Date(start * 1000) < now) && (!end || now < new Date(end * 1000));
-}
-
 function EditionDetails({
-	editionData: { content, collectionData, managerAddress},
+	editionData: { content, collectionData, managerAddress },
 	currentNextNftItemIndex,
 	setCurrentNftItemIndex,
 }: {
@@ -26,7 +22,6 @@ function EditionDetails({
 	currentNextNftItemIndex: number;
 	editionData: EditionData;
 }) {
-
 	const now = useTime();
 	const navigate = useNavigate();
 
@@ -92,10 +87,14 @@ function EditionDetails({
 			}
 		}
 	}, [tonConnectUI.connected]);
-	const addresFriendly = Address.parseFriendly(address)
 
-	const loginWalletAddress = addresFriendly.address.toString();
+	let loginWalletAddress;
 
+	if (address) {
+		const addresFriendly = Address.parseFriendly(address);
+
+		loginWalletAddress = addresFriendly.address.toString();
+	}
 	const isMyEdition = managerAddress.toString() === loginWalletAddress;
 
 	return (
@@ -127,8 +126,7 @@ function EditionDetails({
 							{!isEndOfMinting ? 'Mint' : `No tokens left  ¯\\_(ツ)_/¯`}
 						</Button>
 					</div>
-				)
-				}
+				)}
 				{mintAllowed && !isAuthorized && (
 					<div className={styles.editionDetailsInfoPriceBlock}>
 						<Button
@@ -140,8 +138,7 @@ function EditionDetails({
 							Connect wallet
 						</Button>
 					</div>
-				)
-				}
+				)}
 			</div>
 			<div className={styles.editionDetailsInfoAboutWrapper}>
 				<div className={styles.editionDetailsInfoAbout}>
@@ -149,19 +146,18 @@ function EditionDetails({
 					<h1>{content.name}</h1>
 					<p>{content.description}</p>
 				</div>
-				{
-					isMyEdition &&
-						<div className={styles.editionDetailsInfoAboutEdit}>
-								<Button
-									componentType="button"
-									basicInverted
-									kind={ButtonKinds.basic}
-									onClick={goToEdititingPage}
-								>
-									Edit
-								</Button>
-						</div>
-				}
+				{isMyEdition && (
+					<div className={styles.editionDetailsInfoAboutEdit}>
+						<Button
+							componentType="button"
+							basicInverted
+							kind={ButtonKinds.basic}
+							onClick={goToEdititingPage}
+						>
+							Edit
+						</Button>
+					</div>
+				)}
 			</div>
 			<div className={styles.editionDetailsInfoData}>
 				<h3>DETAILS</h3>

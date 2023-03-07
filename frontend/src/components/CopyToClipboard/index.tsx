@@ -15,14 +15,19 @@ export function CopyToClipboard({ textValue, message, children }: Props) {
 	const [state, copyToClipboard] = useCopyToClipboard();
 	const [isTooltipShow, setTooltipShowStatus] = useState(false);
 
-	const copy = useCallback(() => {
-		copyToClipboard(textValue);
-		setTooltipShowStatus(true);
+	const copy = useCallback(
+		(e: React.MouseEvent<HTMLElement>) => {
+			e.preventDefault();
+			e.stopPropagation();
+			copyToClipboard(textValue);
+			setTooltipShowStatus(true);
 
-		setTimeout(() => {
-			setTooltipShowStatus(false);
-		}, 2000);
-	}, [copyToClipboard, textValue]);
+			setTimeout(() => {
+				setTooltipShowStatus(false);
+			}, 2000);
+		},
+		[copyToClipboard, textValue]
+	);
 
 	const renderNode = children ? (
 		children

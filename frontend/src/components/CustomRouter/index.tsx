@@ -1,14 +1,15 @@
 import { useState, useLayoutEffect } from 'react';
-import { Router } from 'react-router-dom';
-import { BrowserHistory } from 'history';
+import { HashRouter } from 'react-router-dom';
+import { history } from '@/helpers';
+import { History } from 'history';
 
 interface CustomRouterHistory {
-	history: BrowserHistory;
+	history: History;
 	basename?: string;
 	children?: React.ReactNode;
 }
 
-export function CustomRouter({ history, ...props }: CustomRouterHistory) {
+export function CustomRouter({ history }: CustomRouterHistory) {
 	const [state, setState] = useState({
 		action: history.action,
 		location: history.location,
@@ -17,11 +18,7 @@ export function CustomRouter({ history, ...props }: CustomRouterHistory) {
 	useLayoutEffect(() => history.listen(setState), [history]);
 
 	return (
-		<Router
-			{...props}
-			location={state.location}
-			navigationType={state.action}
-			navigator={history}
-		/>
+		// ts-ingore next-line
+		<HashRouter history={state} />
 	);
 }

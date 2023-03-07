@@ -1,5 +1,5 @@
 import { useCallback, useState, Context, Provider, useMemo, useEffect } from 'react';
-import { useAsync, useGetSetState, useAsyncRetry } from 'react-use';
+import { useGetSetState, useAsyncRetry } from 'react-use';
 import { Address } from 'ton-core';
 import { useTonClient } from '@/hooks/useTonClient';
 import { NftCollection, NftManager } from '@/wrappers';
@@ -8,7 +8,7 @@ import { useParams } from 'react-router';
 import { useMediaQuery } from 'react-responsive';
 import { Helmet } from 'react-helmet-async';
 import { PageLoader } from '@/components';
-import {convertToBounceableAddress} from '@/helpers'
+import { convertToBounceableAddress } from '@/helpers';
 
 import { initialDeploymentState } from '@/pages/EditionEdit/constants';
 import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
@@ -58,7 +58,9 @@ function EditionEdit() {
 		return { collectionData, content, managerAddress: managerData.owner };
 	}, [tonClient, collectionAddress]);
 
-	const mangerAddress = convertToBounceableAddress(collectionDataAsync.value?.managerAddress.toString());
+	const mangerAddress = convertToBounceableAddress(
+		collectionDataAsync.value?.managerAddress.toString()
+	);
 	const loggedAccountAddress = convertToBounceableAddress(accountAddress);
 
 	const isUserCollection = mangerAddress == loggedAccountAddress;
@@ -89,7 +91,7 @@ function EditionEdit() {
 	);
 
 	useEffect(() => {
-		if(ownerDeploymentState.deployCount || contentDeploymentState.deployCount) {
+		if (ownerDeploymentState.deployCount || contentDeploymentState.deployCount) {
 			collectionDataAsync.retry();
 		}
 	}, [ownerDeploymentState.deployCount, contentDeploymentState.deployCount]);

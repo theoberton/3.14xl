@@ -23,7 +23,7 @@ export function PresentationSection() {
 
 			<div className={styles.landingPresentationLinks}>
 				<Button componentType="link" kind={ButtonKinds.basic} to="/create-edition">
-					Create new collection
+					Create new edition
 				</Button>
 				<Button componentType="link" kind={ButtonKinds.basic} to="/explore">
 					Explore

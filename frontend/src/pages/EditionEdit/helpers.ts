@@ -32,7 +32,7 @@ export const updateEdition = async (
 	const managerEditData = {
 		description: params.description,
 		payoutAddress: Address.parse(params.payoutAddress),
-		mintPrice: toNano(params.price),
+		mintPrice: toNano(String(params.price)),
 		mintDateStart: BigInt(params.dateStart),
 		mintDateEnd: BigInt(params.dateEnd),
 		content: collectionContentUrl,

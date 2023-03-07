@@ -9,6 +9,7 @@
 	border-radius: 8px;
 	color: $white;
 	font-size: inherit;
+	height: 40px;
 
 	&:focus {
 		outline: 1px solid $gray-one;
@@ -43,6 +44,7 @@
 		position: relative;
 		display: flex;
 		gap: 15px;
+		height: 40px;
 
 		&Mobile {
 			flex-direction: column;

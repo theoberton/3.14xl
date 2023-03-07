@@ -46,7 +46,7 @@ const renderDeployFailureComponent = (goBack: () => void, retryCreateEdition: ()
 			NFT hasn't been minted, an error occurred
 		</div>
 		<div className={styles.deploymentModalActions}>
-			<Button componentType="button" kind={ButtonKinds.basic} onClick={goBack}>
+			<Button componentType="button" kind={ButtonKinds.basic} basicInverted onClick={goBack}>
 				Go back
 			</Button>
 			<Button componentType="button" kind={ButtonKinds.basic} onClick={retryCreateEdition}>

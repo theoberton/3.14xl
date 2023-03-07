@@ -19,8 +19,6 @@ interface Props {
 	isSubmitting?: boolean;
 	disabled?: boolean;
 	optional?: boolean;
-	min?: number;
-	max?: number;
 	units?: string | null;
 	marginless?: boolean;
 	noEdit?: boolean;
@@ -36,8 +34,6 @@ export function Input(props: Props) {
 		disabled,
 		subCaption,
 		noEdit,
-		min = 0,
-		max,
 		optional,
 		units,
 		inputSupplementaryComponent,
@@ -79,16 +75,8 @@ export function Input(props: Props) {
 		[styles.inputContentSupplementaryMobile]: isTabletOrMobile,
 	});
 
-	const isInputOfNumberType = fieldType == 'number';
-	const isInputOfTextType = fieldType == 'text';
-	const isInputOfTextTypeProps = {
-		maxLength: max,
-	};
-
-	const inputOfTypeNumberProps = {
-		min,
-		max,
-	};
+	// const isInputOfNumberType = fieldType == 'number';
+	// const isInputOfTextType = fieldType == 'text';
 
 	const error = getError();
 
@@ -114,8 +102,6 @@ export function Input(props: Props) {
 						type={fieldType}
 						placeholder={placeholder}
 						value={!isUndefined(value) ? value : ''}
-						{...(isInputOfNumberType && inputOfTypeNumberProps)}
-						{...(isInputOfTextType && isInputOfTextTypeProps)}
 					/>
 					{units && <div className={styles.inputUnits}>{units}</div>}
 				</div>

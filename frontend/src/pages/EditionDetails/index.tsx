@@ -1,5 +1,5 @@
 import { Address } from 'ton-core';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useAsyncRetry } from 'react-use';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -24,7 +24,7 @@ export default function EditionDetailsPage() {
 
 		const nftCollection = NftCollection.createFromAddress(Address.parse(collectionAddress));
 		const nftColelctionContract = tonClient.open(nftCollection);
-		console.log('nftColelctionContract', nftColelctionContract.address.toString())
+
 		let collectionData = await nftColelctionContract.getCollectionData();
 
 		const content: CollectionContent = await fetch(collectionData.collectionContentUri).then(res =>
@@ -33,7 +33,6 @@ export default function EditionDetailsPage() {
 		const nftManager = NftManager.createFromAddress(collectionData.ownerAddress);
 		const nftManagerContract = tonClient.open(nftManager);
 		const managerData = await nftManagerContract.getManagerData();
-
 
 		setCurrentNftItemIndex(collectionData.nextItemIndex);
 		return { collectionData, content, managerAddress: managerData.owner };

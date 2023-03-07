@@ -11,9 +11,9 @@ import { isAfter } from 'date-fns';
 
 type Props = {
 	disabled?: boolean;
-}
+};
 
-function ValidityPeriod({disabled = false}: Props) {
+function ValidityPeriod({ disabled = false }: Props) {
 	const { setFieldValue, values } = useFormikContext<FormValues>();
 
 	const resetDates = useCallback(() => {
@@ -27,7 +27,7 @@ function ValidityPeriod({disabled = false}: Props) {
 	let validityStart = values.validity.start;
 	let validityEnd = values.validity.end;
 
-	if(validityStart && validityEnd && isAfter(validityStart, validityEnd)) {
+	if (validityStart && validityEnd && isAfter(validityStart, validityEnd)) {
 		setFieldValue('validity.end', null);
 	}
 

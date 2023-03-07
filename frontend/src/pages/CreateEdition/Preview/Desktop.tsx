@@ -36,7 +36,7 @@ function EditionPreview({ openPreviewImage }: Props) {
 				</div>
 				<div className={styles.previewMainAttributes}>
 					<div className={styles.previewMainAttributesName}>
-						{values.name ? values.name : 'Collection name'}
+						{values.name ? values.name : 'Edition name'}
 					</div>
 					<Label text={values.symbol ? values.symbol : '$SYMBOL'} />
 				</div>

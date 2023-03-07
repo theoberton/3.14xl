@@ -1,14 +1,15 @@
 import { Modal } from '@/components';
 import { useTonClient } from '@/hooks';
 import { useEffect, useState, useCallback } from 'react';
-import { Address } from 'ton-core';
-import { NftCollection } from '@/wrappers';
 import { useAsyncRetry } from 'react-use';
 import { Loader } from '@/components';
+import { composeEditionOverviewData, getFullNftCollectionData } from '@/helpers';
 import { Button, ButtonKinds } from '@/components/Button';
 
 import { LoaderSizes, LoaderColors, LoaderTypes } from '@/components/interfaces';
 import { useNavigate } from 'react-router';
+import { createManagerContract } from '@/libs/apiClient';
+
 import styles from '@/pages/CreateEdition/styles.module.scss';
 
 import SuccessIcon from '@/assets/images/svg/common/success.svg';
@@ -61,7 +62,7 @@ const renderDeployFailureComponent = (goBack: () => void, retryCreateEdition: ()
 			Edition hasn't been created, an error occurred while trying to deploy
 		</div>
 		<div className={styles.deploymentModalActions}>
-			<Button componentType="button" kind={ButtonKinds.basic} onClick={goBack}>
+			<Button componentType="button" kind={ButtonKinds.basic} basicInverted onClick={goBack}>
 				Go back
 			</Button>
 			<Button componentType="button" kind={ButtonKinds.basic} onClick={retryCreateEdition}>
@@ -119,11 +120,20 @@ export function DeploymentModal({
 			return null;
 		}
 
-		const nftCollection = NftCollection.createFromAddress(Address.parse(address));
-		const nftColelctionContract = tonClient.open(nftCollection);
 		let collectionData;
+
 		try {
-			collectionData = await nftColelctionContract.getCollectionData();
+			const data = await getFullNftCollectionData(tonClient, address);
+			collectionData = data.collectionData;
+			const overviewData = composeEditionOverviewData(data);
+
+			await createManagerContract({
+				contractAddress: data.collectionData.ownerAddress,
+				collectionAddress: address,
+				ownerAddress: data.managerAddress,
+				overviewData,
+			}).catch(err => console.log(err));
+			// await apiClient.createManagerContract()
 			setStatus(DeploymentStatus.success);
 		} catch (error) {
 			setStatus(DeploymentStatus.inProgress);

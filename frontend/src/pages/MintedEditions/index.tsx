@@ -24,7 +24,7 @@ export default function MintedEditionsPage() {
 			<div className={styles.mintedEditionsShowCase}>
 				{exampleData &&
 					exampleData.map(edition => (
-						<EditionCard edition={edition} key={edition.name + edition.minter} />
+						<EditionCard edition={edition} key={edition.name + edition.owner} />
 					))}
 			</div>
 		</div>

@@ -22,7 +22,6 @@ console.log(useMediaQuery);
 import styles from './../styles.module.scss';
 import { EditionData } from '../interfaces';
 
-
 type Props = {
 	editionData: EditionData;
 };

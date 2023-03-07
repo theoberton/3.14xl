@@ -10,8 +10,7 @@ import { TransferOwnershiptValues } from '../interfaces';
 export function FormArea() {
 	const { submitForm, values, dirty } = useFormikContext<TransferOwnershiptValues>();
 
-	const { ownerDeploymentState, isFormDisabled } =
-		useContext(DeploymentContext);
+	const { ownerDeploymentState, isFormDisabled } = useContext(DeploymentContext);
 
 	return (
 		<Form className={styles.editEditionForm}>

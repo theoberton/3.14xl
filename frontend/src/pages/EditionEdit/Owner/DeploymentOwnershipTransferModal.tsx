@@ -7,9 +7,9 @@ import { useAsyncRetry } from 'react-use';
 import { Loader } from '@/components';
 import { Button, ButtonKinds } from '@/components/Button';
 import { LoaderSizes, LoaderColors, LoaderTypes } from '@/components/interfaces';
+import { updateManagerContracts } from '@/libs/apiClient';
 
-import {convertToBounceableAddress} from '@/helpers'
-
+import { convertToBounceableAddress, getFullNftCollectionData } from '@/helpers';
 
 import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
 
@@ -21,11 +21,11 @@ import { TransferOwnershiptValues } from '../interfaces';
 
 const renderDeployInProgressComponent = () => (
 	<div className={styles.deploymentModal}>
-	<div className={styles.deploymentModalTitle}>
-		Edition owner is being updated
-		<div className={styles.deploymentModalSpinner}>
-			<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
-		</div>
+		<div className={styles.deploymentModalTitle}>
+			Edition owner is being updated
+			<div className={styles.deploymentModalSpinner}>
+				<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
+			</div>
 		</div>
 		<div className={styles.deploymentModalTitleCaption}>It usually takes about 15 seconds</div>
 	</div>
@@ -110,9 +110,10 @@ export function DeploymentModal({ address, deploy, values }: Props) {
 		let managerData;
 		try {
 			let collectionData = await nftColelctionContract.getCollectionData();
-	
+
 			const nftManager = NftManager.createFromAddress(collectionData.ownerAddress);
 			const nftManagerContract = tonClient.open(nftManager);
+
 			managerData = await nftManagerContract.getManagerData();
 		} catch (error) {
 			setStatus(DeploymentStatus.inProgress);
@@ -144,16 +145,29 @@ export function DeploymentModal({ address, deploy, values }: Props) {
 		});
 	}, []);
 
+	const updateOwner = useCallback(async () => {
+		if (!tonClient || !address) return;
+
+		const data = await getFullNftCollectionData(tonClient, address);
+
+		try {
+			await updateManagerContracts(data.collectionData.ownerAddress, {
+				ownerAddress: data.managerAddress,
+			}).catch(err => console.log(err));
+		} catch (error) {
+			console.log('error', error);
+		}
+	}, [tonClient, address]);
+
 	useEffect(() => {
-		if (collectionDataAsync.value) {
+		if (collectionDataAsync.value && tonClient) {
 			const exitingOwnerValue = collectionDataAsync.value.managerAddress.toString();
 			const bounceableOnwerAddress = convertToBounceableAddress(exitingOwnerValue);
-			console.log('bounceableOnwerAddress', bounceableOnwerAddress)
 			const formManagerAddress = convertToBounceableAddress(values.managerAddress);
-			console.log('formManagerAddress', formManagerAddress)
 
-			if(bounceableOnwerAddress === formManagerAddress) {
+			if (bounceableOnwerAddress === formManagerAddress) {
 				setStatus(DeploymentStatus.success);
+				updateOwner();
 			} else {
 				retryTimeoutId = setTimeout(collectionDataAsync.retry, retryContractDeployedCheck);
 			}
@@ -163,7 +177,14 @@ export function DeploymentModal({ address, deploy, values }: Props) {
 				clearTimeout(retryTimeoutId);
 			}
 		};
-	}, [values, collectionDataAsync.value?.managerAddress, collectionDataAsync.error, status]);
+	}, [
+		address,
+		tonClient,
+		values,
+		collectionDataAsync.value?.managerAddress,
+		collectionDataAsync.error,
+		status,
+	]);
 
 	const closeOnOverlayClick = status !== DeploymentStatus.inProgress;
 

@@ -33,6 +33,15 @@
 		line-height: 1.4rem;
 	}
 
+	&Caption {
+		color: $gray-one;
+		text-transform: uppercase;
+
+		&Optional {
+			color: $gray-one;
+		}
+	}
+
 	&FieldArea {
 		display: flex;
 		width: 100%;

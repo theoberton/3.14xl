@@ -113,7 +113,7 @@ export function Datepicker({
 	);
 
 	let shouldDisableDate;
-	if(disableFrom) {
+	if (disableFrom) {
 		shouldDisableDate = (date: Date) => isBefore(date, subDays(disableFrom, 1));
 	}
 

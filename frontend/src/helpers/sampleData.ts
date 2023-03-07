@@ -7,13 +7,14 @@ import PlanetImg from '../assets/images/png/examples/planet.png';
 import SpringImg from '../assets/images/png/examples/spring.png';
 import PaperArtImg from '../assets/images/png/examples/paper_art.png';
 
-import { IEditionExampleItem } from '@/components/EditionCard/interface';
+import { IEditionItem } from '@/components/EditionCard/interface';
 
-export const exampleData: IEditionExampleItem[] = [
+export const exampleData: IEditionItem[] = [
 	{
 		name: 'Hello Pixel',
-		minter: 'EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx',
-		img: 'https://gateway.ipfscdn.io/ipfs/QmdEPjAppgeNfN9K2RkPNA5S55ipw9y6qmoe17291zk9hM/hello.png',
+		owner: 'EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx',
+		content:
+			'https://gateway.ipfscdn.io/ipfs/QmdEPjAppgeNfN9K2RkPNA5S55ipw9y6qmoe17291zk9hM/hello.png',
 		isActive: true,
 		price: 0.1,
 		minted: 3,
@@ -22,8 +23,8 @@ export const exampleData: IEditionExampleItem[] = [
 	},
 	{
 		name: 'Fish',
-		minter: 'sample minter',
-		img: FishImg,
+		owner: 'sample creator',
+		content: FishImg,
 		isActive: true,
 		price: 0.07,
 		minted: 54321,
@@ -31,8 +32,8 @@ export const exampleData: IEditionExampleItem[] = [
 	},
 	{
 		name: 'Cloud in the desert',
-		minter: 'sample minter',
-		img: CloudImg,
+		owner: 'sample creator',
+		content: CloudImg,
 		isActive: false,
 		price: 0.07,
 		minted: 996,
@@ -40,8 +41,8 @@ export const exampleData: IEditionExampleItem[] = [
 	},
 	{
 		name: 'Flower',
-		minter: 'sample minter',
-		img: FlowerImg,
+		owner: 'sample creator',
+		content: FlowerImg,
 		isActive: true,
 		price: 0.007,
 		minted: 4321,
@@ -49,8 +50,8 @@ export const exampleData: IEditionExampleItem[] = [
 	},
 	{
 		name: 'Blue eyes',
-		minter: 'sample minter',
-		img: EyesImg,
+		owner: 'sample creator',
+		content: EyesImg,
 		isActive: false,
 		price: 0.007,
 		minted: 5432,
@@ -58,8 +59,8 @@ export const exampleData: IEditionExampleItem[] = [
 	},
 	{
 		name: 'Glitch run',
-		minter: 'sample minter',
-		img: GlitchImg,
+		owner: 'sample creator',
+		content: GlitchImg,
 		isActive: true,
 		price: 0.07,
 		minted: 321,
@@ -67,8 +68,8 @@ export const exampleData: IEditionExampleItem[] = [
 	},
 	{
 		name: 'Planet',
-		minter: 'sample minter',
-		img: PlanetImg,
+		owner: 'sample creator',
+		content: PlanetImg,
 		isActive: true,
 		price: 0,
 		minted: 54321,
@@ -76,8 +77,8 @@ export const exampleData: IEditionExampleItem[] = [
 	},
 	{
 		name: 'Spring',
-		minter: 'sample minter',
-		img: SpringImg,
+		owner: 'sample creator',
+		content: SpringImg,
 		isActive: true,
 		price: 0.007,
 		minted: 4321,
@@ -85,8 +86,8 @@ export const exampleData: IEditionExampleItem[] = [
 	},
 	{
 		name: 'Paper art',
-		minter: 'sample minter',
-		img: PaperArtImg,
+		owner: 'sample creator',
+		content: PaperArtImg,
 		isActive: false,
 		price: 0.07,
 		minted: 996,
