@@ -26,6 +26,9 @@ export function Modal(props: Props) {
 
 	const modalClassnames = {
 		modal: !fullSpace ? styles.modalModal : styles.modalModalFullSpace,
+		closeButton: styles.modalButton,
+		closeIcon: styles.modalButtonIcon,
+		overlay: styles.modalOverlay,
 	};
 
 	return (

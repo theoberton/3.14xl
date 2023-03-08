@@ -10,6 +10,7 @@ $syne-font: 'Syne';
 $white: #fff;
 $gray-one: #888888;
 $gray-one-transparent: #8888881a;
+$gray-one-super-transparent: #8888880a;
 
 $gray-two: #dddddd;
 $gray-three: #c4c9d8;
@@ -24,6 +25,11 @@ $gray-eleven: #444444;
 $gray-twelve: #151515;
 
 $error-one: #f5365c;
+$error-one-highlight: #ff355e;
+$error-disabled: #641626;
+
+$purple-one: #9747ff;
+$purple-one-transparent: #9747ff52;
 
 :export {
 	black: $black-one;

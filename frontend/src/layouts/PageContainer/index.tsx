@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { Header } from '@/components';
+import { Header, Footer } from '@/components';
 
 import styles from './styles.module.scss';
 
@@ -8,6 +8,7 @@ export default function PageContainer() {
 		<div className={styles.pageContainer}>
 			<Header />
 			<Outlet />
+			<Footer />
 		</div>
 	);
 }

@@ -1,0 +1,30 @@
+@import '@/assets/styles/variables.scss';
+.footer {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	position: absolute;
+	bottom: 0;
+
+	align-self: flex-end;
+
+	height: $header-height;
+	width: 100%;
+	padding-block: 24px;
+
+	background-color: transparent;
+	background: transparent;
+
+	p {
+		user-select: none;
+		color: $white;
+	}
+
+	a {
+		transition: 0.3s ease-out;
+
+		&:hover {
+			color: $purple-one;
+		}
+	}
+}

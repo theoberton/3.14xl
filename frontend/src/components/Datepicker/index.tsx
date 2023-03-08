@@ -75,6 +75,7 @@ export function Datepicker({
 
 	const inputDefaultClass = classNames({
 		[inputStyles.input]: true,
+		[styles.input]: true,
 	});
 
 	const inputContainerClass = classNames({

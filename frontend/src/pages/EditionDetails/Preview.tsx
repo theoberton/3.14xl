@@ -1,9 +1,9 @@
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 import { useCallback, useState } from 'react';
 import WiderIcon from '@/assets/images/svg/common/wider.svg';
-import { addressFilter, EditionData } from '@/helpers';
 import { CollectionContent } from '@/wrappers/types';
-import { PreviewImageModal } from '@/components';
+import { CreatorLabel, PreviewImageModal } from '@/components';
+import { EditionData } from '@/helpers';
 import { useMediaQuery } from 'react-responsive';
 
 // Hotfix for https://github.com/yocontra/react-responsive/issues/306, remove when resolved
@@ -39,10 +39,7 @@ function EditionPreview({ content }: { collectionData: EditionData; content: Col
 						<img src={WiderIcon} className={styles.editionDetailsPreviewFooterItemImage} />
 					</div>
 				)}
-				<div className={styles.editionDetailsPreviewFooterItem}>
-					<p>Creator: </p>
-					<div>{addressFilter(content.feeRecipient)}</div>
-				</div>
+				<CreatorLabel creator={content.feeRecipient} />
 			</div>
 		</div>
 	);

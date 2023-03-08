@@ -3,6 +3,7 @@
 .pageContainer {
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
 	min-height: 100vh;
 	width: 100%;
 	background-color: $black-one;
@@ -12,6 +13,10 @@
 	> * {
 		width: 100%;
 		padding-inline: 15px;
+	}
+
+	& > :nth-last-child(2) {
+		padding-bottom: $header-height;
 	}
 }
 

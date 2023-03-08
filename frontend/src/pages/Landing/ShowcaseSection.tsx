@@ -39,7 +39,7 @@ function ShowcaseSection() {
 	}, []);
 
 	return (
-		<section className={styles.ShowcaseSection}>
+		<section className={styles.ShowcaseSection} id="landingShowcase">
 			{editions &&
 				editions.map(edition => (
 					<EditionCard edition={edition} key={edition.name + edition.owner} />

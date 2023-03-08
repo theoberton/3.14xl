@@ -15,13 +15,40 @@
 	background-color: $white;
 	display: inline-block;
 
+	transition: 0.3s ease-out;
+
+	&:hover {
+		background-color: $purple-one;
+		color: $white;
+	}
+
 	&Disabled {
 		background-color: $gray-ten;
+		color: $black-one;
+
+		cursor: not-allowed;
+
+		&:hover {
+			color: $black-one;
+		}
 	}
 
 	&Danger {
+		@extend .button;
+
 		background-color: $error-one;
 		color: $white;
+
+		&:hover {
+			background-color: $error-one-highlight;
+		}
+
+		&.buttonDisabled {
+			background-color: $error-disabled;
+			color: $black-one;
+
+			cursor: not-allowed;
+		}
 	}
 
 	&BasicInverted {
@@ -29,6 +56,10 @@
 		background-color: transparent;
 		color: $white;
 		border: 1px solid $gray-eleven;
+
+		&:hover {
+			background-color: $gray-eleven;
+		}
 	}
 
 	&Expanded {

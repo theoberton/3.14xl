@@ -118,14 +118,20 @@ function EditionDetails({
 				</div>
 				{mintAllowed && isAuthorized && (
 					<div className={styles.editionDetailsInfoPriceBlock}>
-						<Button
-							componentType="button"
-							kind={ButtonKinds.basic}
-							basicInverted={isEndOfMinting}
-							onClick={mintButtonHandler}
-						>
-							{!isEndOfMinting ? 'Mint' : `No tokens left  ¯\\_(ツ)_/¯`}
-						</Button>
+						{!isEndOfMinting ? (
+							<Button
+								componentType="button"
+								kind={ButtonKinds.basic}
+								basicInverted={isEndOfMinting}
+								onClick={mintButtonHandler}
+							>
+								Mint
+							</Button>
+						) : (
+							<div className={styles.editionDetailsInfoPriceBlockEmpty}>
+								No tokens left ¯\\_(ツ)_/¯{' '}
+							</div>
+						)}
 					</div>
 				)}
 				{mintAllowed && !isAuthorized && (

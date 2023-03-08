@@ -86,7 +86,7 @@ export function Button(props: IProps) {
 }
 
 function getButtonContent(props: IProps): React.ReactNode {
-	const { children, kind, green, disabled, mini, basicInverted, isSubmitting } = props;
+	const { children, kind, green, disabled, mini, isSubmitting, danger, basicInverted } = props;
 
 	let basicButtonContent: JSX.Element | null = null;
 
@@ -97,6 +97,7 @@ function getButtonContent(props: IProps): React.ReactNode {
 	const commonContentClassnames = cn({
 		[styles.buttonDisabled]: !basicInverted && (disabled || isSubmitting),
 		[styles.buttonMini]: mini,
+		[styles.buttonDanger]: danger,
 	});
 
 	const LoaderComponent = <Loader size={LoaderSizes.small} color={LoaderColors.black} />;
