@@ -16,7 +16,7 @@
 	}
 
 	& > :nth-last-child(2) {
-		padding-bottom: $header-height;
+		padding-bottom: calc($header-height * 2);
 	}
 }
 
