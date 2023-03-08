@@ -25,10 +25,12 @@ export function EditionCard({ edition }: IProps) {
 			<div className={styles.editionCardPreview}>
 				<img src={img} />
 			</div>
-			<h3>{name}</h3>
-			<div className={styles.editionCardInfo}>
-				<p>{price === 0 ? 'Free' : `${price} TON`}</p>
-				<p>{limit ? `${minted}/${limit}` : `${minted}/∞`}</p>
+			<div>
+				<h3>{name}</h3>
+				<div className={styles.editionCardInfo}>
+					<p>{price === 0 ? 'Free' : `${price} TON`}</p>
+					<p>{limit ? `${minted}/${limit}` : `${minted}/∞`}</p>
+				</div>
 			</div>
 		</div>
 	);

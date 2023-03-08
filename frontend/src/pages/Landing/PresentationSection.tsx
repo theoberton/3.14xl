@@ -6,6 +6,13 @@ import CubeRight from '@/assets/images/png/landing/CubeRight.png';
 import styles from '@/pages/Landing/styles.module.scss';
 
 export function PresentationSection() {
+	const goToFeaturedCollections = () => {
+		const element = document.getElementById('landingShowcase');
+		if (element) {
+			element.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
+
 	return (
 		<section className={styles.landingPresentationSection}>
 			<img src={CubeLeft} className={styles.landingCubeLeft} />
@@ -29,6 +36,14 @@ export function PresentationSection() {
 					Explore
 				</Button>
 			</div>
+			<Button
+				componentType="button"
+				kind={ButtonKinds.basic}
+				basicInverted
+				onClick={goToFeaturedCollections}
+			>
+				Featured collectons
+			</Button>
 		</section>
 	);
 }

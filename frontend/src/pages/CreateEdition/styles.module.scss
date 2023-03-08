@@ -74,8 +74,11 @@
 			border-bottom: 1px solid $gray-eleven;
 		}
 		width: 100%;
-		display: grid;
-		grid-template-columns: 3fr 7fr 5fr;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+
+		padding: 5px 0;
 	}
 
 	&Modal {
@@ -108,7 +111,6 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				padding: 5px 15px 15px 15px;
 				text-align: center;
 				border: none;
 			}
@@ -241,6 +243,15 @@
 			color: $gray-one;
 			margin-left: 10px;
 			font-weight: $font-normal;
+			cursor: pointer;
+
+			&:hover {
+				color: $white;
+			}
+		}
+
+		&:hover {
+			color: $white;
 		}
 	}
 

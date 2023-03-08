@@ -23,7 +23,7 @@ function ValidityPeriod() {
 	let validityStart = values.validity.start;
 	let validityEnd = values.validity.end;
 
-	if(validityStart && validityEnd && isAfter(validityStart, validityEnd)) {
+	if (validityStart && validityEnd && isAfter(validityStart, validityEnd)) {
 		setFieldValue('validity.end', null);
 	}
 

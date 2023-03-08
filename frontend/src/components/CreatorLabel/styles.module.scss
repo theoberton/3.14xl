@@ -1,0 +1,50 @@
+@import '@/assets/styles/variables.scss';
+
+.creatorLabel {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+
+	> p {
+		margin-right: 1em;
+	}
+
+	&Name {
+		cursor: pointer;
+
+		position: relative;
+
+		transition: 0.3s ease-out;
+
+		:hover {
+			color: $purple-one;
+		}
+
+		&Tooltip {
+			position: absolute;
+			top: -20px;
+			left: 20px;
+			opacity: 0;
+
+			transition: all ease;
+
+			&Active {
+				animation: animate 1s linear;
+			}
+		}
+	}
+}
+
+@keyframes animate {
+	0% {
+		opacity: 0;
+	}
+
+	50% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}

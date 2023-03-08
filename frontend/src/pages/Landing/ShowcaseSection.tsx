@@ -5,7 +5,7 @@ import styles from '@/pages/Landing/styles.module.scss';
 
 function ShowcaseSection() {
 	return (
-		<section className={styles.ShowcaseSection}>
+		<section className={styles.ShowcaseSection} id="landingShowcase">
 			{exampleData &&
 				exampleData.map(edition => (
 					<EditionCard edition={edition} key={edition.name + edition.minter} />
