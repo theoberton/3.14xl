@@ -29,6 +29,7 @@ $error-one-highlight: #ff355e;
 $error-disabled: #641626;
 
 $purple-one: #9747ff;
+$purple-one-transparent: #9747ff52;
 
 :export {
 	black: $black-one;
@@ -62,4 +63,4 @@ $breakpoint-l: 1199.98px;
 $breakpoint-xl: 1399.98px;
 
 $header-height: 86px;
-$page-height: calc(100vh - $header-height);
+$page-height: calc(100vh - calc($header-height * 2));

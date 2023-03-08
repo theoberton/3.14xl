@@ -4,10 +4,11 @@ import { TonConnectButton } from '@tonconnect/ui-react';
 import { Button, ButtonKinds } from '@/components/Button';
 import { useTonAddress } from '@tonconnect/ui-react';
 
-import Logo from '@/assets/images/svg/common/logo.svg';
-import styles from '@/components/Header/styles.module.scss';
 import buttonStyles from '@/components/Button/styles.module.scss';
 import { isTestnet } from '@/helpers/location';
+
+import Logo from '@/assets/images/svg/common/logo.svg';
+import styles from './styles.module.scss';
 
 export function Header() {
 	const headerClass = classNames([styles.headerContainer, styles.headerContainerTransparent]);

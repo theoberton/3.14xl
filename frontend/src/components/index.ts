@@ -2,7 +2,7 @@ export * from './Datepicker';
 export * from './Button';
 export * from './Select';
 export * from './MediaInput';
-export * from './Header';
+export * from './Layout';
 export * from './Input';
 export * from './PrivateRoute';
 export * from './Loader';
