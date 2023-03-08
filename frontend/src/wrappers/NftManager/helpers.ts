@@ -16,6 +16,8 @@ import { encodeOffChainContent } from './../utils/nft-content';
 import { NftManagerCodeCell, NftManagerSystemCell } from './NftManager.source';
 
 export function buildNftManagerDataCell(managerData: NftManagerInitData, systemCell: Cell) {
+	let collectionContent = encodeOffChainContent(managerData.content);
+
 	let data = beginCell()
 		.storeRef(systemCell)
 		.storeAddress(managerData.owner)
@@ -25,6 +27,7 @@ export function buildNftManagerDataCell(managerData: NftManagerInitData, systemC
 		.storeInt(managerData.mintDateStart ?? 0n, 32)
 		.storeInt(managerData.mintDateEnd ?? 0n, 32)
 		.storeAddress(managerData.payoutAddress)
+		.storeRef(collectionContent)
 		.endCell();
 	return data;
 }

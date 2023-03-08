@@ -5,7 +5,6 @@ import { Address, beginCell, contractAddress, Cell } from 'ton-core';
 import { encodeOffChainContent } from './../utils/nft-content';
 import { randomAddress } from './../utils';
 import { defaultsDeep } from 'lodash';
-import { Buffer } from 'buffer';
 
 import { GetStaticDataParams, NftItemDataOptional, NftItemData, NftInitItemData } from './../types';
 import { NftItemCodeCell } from './NftItem.source';

@@ -1,20 +1,30 @@
+import { isMintAllowed, unixToDate } from '@/helpers';
+import { isBefore, isAfter } from 'date-fns';
 import styles from './styles.module.scss';
 
 interface IProps {
-	isActive: boolean;
+	dateStart: number;
+	dateEnd: number;
 }
 
-function EditionStatus({ isActive }: IProps) {
+function EditionStatus({ dateStart, dateEnd }: IProps) {
+	const currentDate = new Date();
+
+	const isActive = isMintAllowed(currentDate, dateStart, dateEnd);
+
+	const isNotStartedYet = Boolean(dateStart) && isAfter(unixToDate(dateStart), currentDate);
+	const isEnded = Boolean(dateEnd) && isBefore(unixToDate(dateEnd), currentDate);
+
 	return (
 		<div className={styles.statusContainer}>
-			{isActive ? (
+			{isActive && (
 				<>
 					<p>Active</p>
 					<div></div>
 				</>
-			) : (
-				<p className={styles.statusEnded}>Sale ended</p>
 			)}
+			{isNotStartedYet && <p className={styles.statusEnded}>Mint hasn't started </p>}
+			{isEnded && <p className={styles.statusEnded}>Mint ended</p>}
 		</div>
 	);
 }

@@ -86,7 +86,7 @@ export function Button(props: IProps) {
 }
 
 function getButtonContent(props: IProps): React.ReactNode {
-	const { children, kind, green, disabled, mini, isSubmitting, danger } = props;
+	const { children, kind, green, disabled, mini, isSubmitting, danger, basicInverted } = props;
 
 	let basicButtonContent: JSX.Element | null = null;
 
@@ -95,7 +95,7 @@ function getButtonContent(props: IProps): React.ReactNode {
 		[styles.buttonIconImageSalad]: green,
 	});
 	const commonContentClassnames = cn({
-		[styles.buttonDisabled]: disabled || isSubmitting,
+		[styles.buttonDisabled]: !basicInverted && (disabled || isSubmitting),
 		[styles.buttonMini]: mini,
 		[styles.buttonDanger]: danger,
 	});
@@ -106,7 +106,6 @@ function getButtonContent(props: IProps): React.ReactNode {
 		const resultClassname = cn({
 			[commonContentClassnames]: true,
 			[styles.buttonContentBasic]: !mini,
-			[styles.buttonDisabled]: disabled || isSubmitting,
 			[styles.buttonContentBasicMini]: mini,
 		});
 

@@ -3,6 +3,7 @@ import { useGetSetState } from 'react-use';
 import { Formik } from 'formik';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import styles from '@/pages/CreateEdition/styles.module.scss';
+import { isTestnet } from '@/helpers/location';
 
 import { FormArea } from '@/pages/CreateEdition/FormArea';
 import { formSchema } from '@/pages/CreateEdition/validation';
@@ -12,12 +13,33 @@ import { EDITIONS_SIZES } from '@/constants/common';
 import { useTonClient } from '@/hooks';
 import { createEdition } from '@/pages/CreateEdition/helpers';
 import { dateToUnix } from '@/helpers';
+import { Address } from 'ton-core';
 
 const initialDeploymentState = {
 	isModalOpened: false,
 	address: '',
 	editionName: '',
 };
+
+function getTestnetInitialValues(address: string) {
+	return {
+		name: 'TestOne',
+		symbol: '$TST',
+		description: 'Hello, this is description',
+		media: null,
+		price: '1',
+		editionSize: {
+			type: EDITIONS_SIZES.OPEN_EDITION,
+			amount: '',
+		},
+		royalty: '2',
+		validity: {
+			start: null,
+			end: null,
+		},
+		payoutAddress: address,
+	};
+}
 
 function CreateEditionForm() {
 	const address = useTonAddress();
@@ -47,11 +69,12 @@ function CreateEditionForm() {
 			const turnOffSubmition = () => bag.setSubmitting(false);
 
 			bag.setSubmitting(true);
-
+			let creatorAddress = address;
 			try {
 				if (!tonConnectUI.connected) {
 					try {
-						await tonConnectUI.connectWallet();
+						let result = await tonConnectUI.connectWallet();
+						creatorAddress = Address.parseRaw(result.account.address).toString();
 					} catch (error) {
 						console.error('Error occured when connecting to wallet', error);
 
@@ -71,7 +94,7 @@ function CreateEditionForm() {
 						price: values.price,
 						royalty: values.royalty,
 						payoutAddress: values.payoutAddress,
-						creatorAddress: address,
+						creatorAddress,
 						maxSupply:
 							values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0',
 						dateStart: values.validity.start ? dateToUnix(values.validity.start) : 0,
@@ -94,23 +117,29 @@ function CreateEditionForm() {
 		[address, tonConnectUI.connected, tonClient]
 	);
 
-	const createEditionInitialValues: FormValues = {
-		name: '',
-		symbol: '',
-		description: '',
-		media: null,
-		price: '',
-		editionSize: {
-			type: EDITIONS_SIZES.OPEN_EDITION,
-			amount: '',
-		},
-		royalty: '',
-		validity: {
-			start: null,
-			end: null,
-		},
-		payoutAddress: address,
-	};
+	let createEditionInitialValues: FormValues;
+
+	if (!isTestnet()) {
+		createEditionInitialValues = {
+			name: '',
+			symbol: '',
+			description: '',
+			media: null,
+			price: '',
+			editionSize: {
+				type: EDITIONS_SIZES.OPEN_EDITION,
+				amount: '',
+			},
+			royalty: '',
+			validity: {
+				start: null,
+				end: null,
+			},
+			payoutAddress: address,
+		};
+	} else {
+		createEditionInitialValues = getTestnetInitialValues(address);
+	}
 
 	return (
 		<Formik

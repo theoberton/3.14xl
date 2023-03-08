@@ -16,6 +16,8 @@ import { getDefaultNftCollectionData } from '../NftCollection/helpers';
 import { NftCollectionCodeCell } from '../NftCollection/NftCollection.source';
 import '@ton-community/test-utils'; // register matchers
 
+const defaultManagerInitContent = 'www.google.com';
+
 const pixelWallet = WalletContractV4.create({
 	workchain: 0,
 	publicKey: Buffer.from('M5FeZeMPgnPKNabfcw7nU37OD2QMhJsfZcucjTxdcH0=', 'base64'),
@@ -155,6 +157,7 @@ describe('NftManager', () => {
 			maxSupply: 0n,
 			mintDateStart: 0n,
 			mintDateEnd: 0n,
+			content: defaultManagerInitContent,
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -201,6 +204,7 @@ describe('NftManager', () => {
 			maxSupply: 1n,
 			mintDateStart: 0n,
 			mintDateEnd: 0n,
+			content: defaultManagerInitContent,
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -250,6 +254,7 @@ describe('NftManager', () => {
 			maxSupply: 0n,
 			mintDateStart: BigInt(dateToUnix(new Date()) + 1000),
 			mintDateEnd: 0n,
+			content: defaultManagerInitContent,
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -287,6 +292,7 @@ describe('NftManager', () => {
 			maxSupply: 0n,
 			mintDateStart: 0n,
 			mintDateEnd: BigInt(dateToUnix(new Date()) - 1000),
+			content: defaultManagerInitContent,
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -325,6 +331,7 @@ describe('NftManager', () => {
 			maxSupply: 0n,
 			mintDateStart: BigInt(dateToUnix(new Date()) - 1000),
 			mintDateEnd: BigInt(dateToUnix(new Date()) + 1000),
+			content: defaultManagerInitContent,
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -362,6 +369,7 @@ describe('NftManager', () => {
 			maxSupply: 0n,
 			mintDateStart: 0n,
 			mintDateEnd: 0n,
+			content: defaultManagerInitContent,
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -433,6 +441,7 @@ describe('NftManager', () => {
 			maxSupply: 0n,
 			mintDateStart: 0n,
 			mintDateEnd: 0n,
+			content: defaultManagerInitContent,
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);
@@ -485,6 +494,7 @@ describe('NftManager', () => {
 			maxSupply: 0n,
 			mintDateStart: 0n,
 			mintDateEnd: 0n,
+			content: defaultManagerInitContent,
 		};
 
 		const nftManager = NftManager.createFromConfig(managerInitData);

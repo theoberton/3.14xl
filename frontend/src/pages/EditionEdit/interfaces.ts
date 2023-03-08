@@ -14,6 +14,10 @@ export interface FormValues {
 	payoutAddress: string;
 }
 
+export interface TransferOwnershiptValues {
+	managerAddress: string;
+}
+
 export interface UpdateEditionParams {
 	image: string;
 	description: string;
@@ -36,5 +40,4 @@ export interface EditionData {
 export interface DeploymentState {
 	isModalOpened: boolean;
 	address: string;
-	deployCount: number;
 }

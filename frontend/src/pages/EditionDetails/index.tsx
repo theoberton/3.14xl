@@ -1,62 +1,63 @@
-import { Address } from 'ton-core';
-import { useCallback, useState } from 'react';
-import { useAsyncRetry } from 'react-use';
+import { useState, useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { PageLoader } from '@/components';
 import EditionDetails from './Details';
 import EditionPreview from './Preview';
 import styles from '@/pages/EditionDetails/styles.module.scss';
-import { CollectionContent } from '@/wrappers/types';
-import { NftCollection } from '@/wrappers/NftCollection';
 import { useTonClient } from '@/hooks/useTonClient';
-import { NftManager } from '@/wrappers';
+import { getFullNftCollectionData, ManagerFullData } from '@/helpers';
 
 export default function EditionDetailsPage() {
 	const { collectionAddress } = useParams();
 	const tonClient = useTonClient();
 	const [currentNextNftItemIndex, setCurrentNftItemIndex] = useState(0);
+	const [edtionDetails, setEditionDetails] = useState<ManagerFullData | null>(null);
+	const [isLoading, setLoading] = useState(false);
 
-	const collectionDataAsync = useAsyncRetry(async () => {
+	const getEditionDetails = useCallback(async () => {
 		if (!collectionAddress || !tonClient) {
 			return null;
 		}
+		setLoading(true);
 
-		const nftCollection = NftCollection.createFromAddress(Address.parse(collectionAddress));
-		const nftColelctionContract = tonClient.open(nftCollection);
-		let collectionData = await nftColelctionContract.getCollectionData();
-		const content: CollectionContent = await fetch(collectionData.collectionContentUri).then(res =>
-			res.json()
-		);
-		const nftManager = NftManager.createFromAddress(collectionData.ownerAddress);
-		const nftManagerContract = tonClient.open(nftManager);
-		const managerData = await nftManagerContract.getManagerData();
+		try {
+			const fullData = await getFullNftCollectionData(tonClient, collectionAddress);
 
-
-		setCurrentNftItemIndex(collectionData.nextItemIndex);
-		return { collectionData, content, managerAddress: managerData.owner };
+			setCurrentNftItemIndex(fullData.collectionData.nextItemIndex);
+			setEditionDetails(fullData);
+		} catch (error) {
+			console.log('error', error);
+		} finally {
+			setLoading(false);
+		}
 	}, [tonClient, collectionAddress, currentNextNftItemIndex]);
 
-	if (collectionDataAsync.error && !collectionDataAsync.value) {
-		return <div>Something went wrong</div>;
-	}
+	useEffect(() => {
+		getEditionDetails();
+	}, [collectionAddress, tonClient]);
 
-	if (collectionDataAsync.loading || !collectionDataAsync.value) {
+	if (isLoading && !edtionDetails) {
 		return <PageLoader />;
 	}
 
 	return (
 		<div className={styles.editionDetailsContainer}>
 			<Helmet title="3.14XL - Edition details" />
-			<EditionPreview
-				collectionData={collectionDataAsync.value.collectionData}
-				content={collectionDataAsync.value.content}
-			/>
-			<EditionDetails
-				setCurrentNftItemIndex={setCurrentNftItemIndex}
-				currentNextNftItemIndex={currentNextNftItemIndex}
-				editionData={collectionDataAsync.value}
-			/>
+			{edtionDetails && (
+				<>
+					<EditionPreview
+						collectionData={edtionDetails.collectionData}
+						content={edtionDetails.content}
+					/>
+					<EditionDetails
+						getEditionDetails={getEditionDetails}
+						setCurrentNftItemIndex={setCurrentNftItemIndex}
+						currentNextNftItemIndex={currentNextNftItemIndex}
+						editionData={edtionDetails}
+					/>
+				</>
+			)}
 		</div>
 	);
 }

@@ -4,6 +4,7 @@ import styles from '@/pages/CreateEdition/styles.module.scss';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
 import tonLogo from '@/assets/images/svg/common/tonLogo.svg';
 import { useState, useCallback } from 'react';
+import { createManagerContract } from '@/libs/apiClient';
 
 type Props = {
 	openPreviewImage: () => void;
@@ -27,7 +28,7 @@ function PreviewMobile({ openPreviewImage }: Props) {
 				<div className={styles.previewMainAttributesMobile}>
 					<Label text={values.symbol ? values.symbol : '$SYMBOL'} grey mini />
 					<div className={styles.previewMainAttributesNameMobile}>
-						{values.name ? values.name : 'Collection name'}
+						{values.name ? values.name : 'Edition name'}
 					</div>
 				</div>
 				<div className={styles.previewMainAttributesPriceMobile}>

@@ -38,7 +38,6 @@ function EditionSize() {
 						noEdit={isOpenEdition}
 						disabled={isOpenEdition}
 						marginless
-						min={!isOpenEdition ? 0 : undefined}
 						placeholder={isOpenEdition ? 'Unlimited' : '1000'}
 						units={isOpenEdition ? null : 'editions'}
 					/>

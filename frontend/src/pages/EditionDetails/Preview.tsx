@@ -1,8 +1,9 @@
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 import { useCallback, useState } from 'react';
 import WiderIcon from '@/assets/images/svg/common/wider.svg';
-import { CollectionData, CollectionContent } from '@/wrappers/types';
+import { CollectionContent } from '@/wrappers/types';
 import { CreatorLabel, PreviewImageModal } from '@/components';
+import { EditionData } from '@/helpers';
 import { useMediaQuery } from 'react-responsive';
 
 // Hotfix for https://github.com/yocontra/react-responsive/issues/306, remove when resolved
@@ -12,12 +13,7 @@ import styles from './styles.module.scss';
 
 const thirdwebStorage = new ThirdwebStorage();
 
-function EditionPreview({
-	content,
-}: {
-	collectionData: CollectionData;
-	content: CollectionContent;
-}) {
+function EditionPreview({ content }: { collectionData: EditionData; content: CollectionContent }) {
 	const [isImagePreviewOpened, setImagePreviewOpenedStatus] = useState(false);
 
 	const closePreviewImageModal = useCallback(() => {

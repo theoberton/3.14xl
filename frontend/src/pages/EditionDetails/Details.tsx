@@ -1,36 +1,32 @@
 import { useCallback, useState } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from 'ton-core';
-import { addressFilter } from '@/helpers';
+import { addressFilter, isMintAllowed, ManagerFullData } from '@/helpers';
 import { MintDeployModal } from '@/pages/EditionDetails/MintDeployModal';
 import { useTime } from '@/hooks';
 import { Button, ButtonKinds } from '@/components/Button';
 
 import styles from './styles.module.scss';
-
-import { CollectionData, CollectionContent } from '@/wrappers/types';
 import { composeMintTransaction } from '@/pages/EditionDetails/helper';
 import MintDateSection from './MintTime';
 import { CopyToClipboard } from '@/components';
-import { EditionData } from '../EditionEdit/interfaces';
 
-function isMintAllowed(now: Date, start?: number, end?: number) {
-	return (!start || new Date(start * 1000) < now) && (!end || now < new Date(end * 1000));
-}
+type Props = {
+	getEditionDetails: () => void;
+	setCurrentNftItemIndex: React.Dispatch<React.SetStateAction<number>>;
+	currentNextNftItemIndex: number;
+	editionData: ManagerFullData;
+};
 
 function EditionDetails({
 	editionData: { content, collectionData, managerAddress },
 	currentNextNftItemIndex,
 	setCurrentNftItemIndex,
-}: {
-	setCurrentNftItemIndex: React.Dispatch<React.SetStateAction<number>>;
-	currentNextNftItemIndex: number;
-	editionData: EditionData;
-}) {
+	getEditionDetails,
+}: Props) {
 	const now = useTime();
 	const navigate = useNavigate();
-	const location = useLocation();
 
 	const [isDeploymentModalOpened, setDeploymentStatus] = useState(false);
 
@@ -65,24 +61,16 @@ function EditionDetails({
 		const transaction = composeMintTransaction(collectionData, content, transactionAccountAddress!);
 
 		try {
-			const result = await tonConnectUI.sendTransaction(transaction);
+			await tonConnectUI.sendTransaction(transaction);
 			handleDeploymentModalOpen();
-			// you can use signed boc to find the transaction
-			// const someTxData = await myAppExplorerService.getTransaction(result.boc);
-			// alert('Transaction was sent successfully', someTxData);
 		} catch (e) {
 			console.error(e);
 		}
 	}, [tonConnectUI.connected, address]);
 
 	const goToEdititingPage = useCallback(() => {
-		let editPage = `${location.pathname}edit`;
-		if (location.pathname[location.pathname.length - 1] !== '/') {
-			editPage = `${editPage}/`;
-		}
-
-		navigate(editPage);
-	}, [location.pathname]);
+		navigate(`/edition/${collectionAddress}/edit`);
+	}, [collectionAddress]);
 
 	const mintButtonHandler = isEndOfMinting ? () => {} : mint;
 	const mintAllowed = isMintAllowed(now, content.dateStart, content.dateEnd);
@@ -99,10 +87,14 @@ function EditionDetails({
 			}
 		}
 	}, [tonConnectUI.connected]);
-	const addresFriendly = Address.parseFriendly(address);
 
-	const loginWalletAddress = addresFriendly.address.toString();
+	let loginWalletAddress;
 
+	if (address) {
+		const addresFriendly = Address.parseFriendly(address);
+
+		loginWalletAddress = addresFriendly.address.toString();
+	}
 	const isMyEdition = managerAddress.toString() === loginWalletAddress;
 
 	return (
@@ -110,6 +102,7 @@ function EditionDetails({
 			{isDeploymentModalOpened && (
 				<MintDeployModal
 					deploy={mint}
+					getEditionDetails={getEditionDetails}
 					setCurrentNftItemIndex={setCurrentNftItemIndex}
 					currentNextNftItemIndex={currentNextNftItemIndex}
 					editionName={content.name}

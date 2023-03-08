@@ -26,10 +26,10 @@ describe('nft collection smc', () => {
 				defaultNftCollectionConfig,
 				NftCollectionCodeCell
 			);
-			const code = await compile('../../frontend/src/wrappers/NftCollection/NftCollection');
-			console.log('_______')
-			console.log(code.toBoc().toString('base64'));
-			console.log('_______')
+			// const code = await compile('../../frontend/src/wrappers/NftCollection/NftCollection');
+			// console.log('_______')
+			// console.log(code.toBoc().toString('base64'));
+			// console.log('_______')
 
 			contract = blockchain.openContract(nftCollection);
 

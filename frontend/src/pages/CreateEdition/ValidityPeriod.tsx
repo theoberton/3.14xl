@@ -9,7 +9,11 @@ import { FormValues } from '@/pages/CreateEdition/interfaces';
 import { useMediaQuery } from 'react-responsive';
 import { isAfter } from 'date-fns';
 
-function ValidityPeriod() {
+type Props = {
+	disabled?: boolean;
+};
+
+function ValidityPeriod({ disabled = false }: Props) {
 	const { setFieldValue, values } = useFormikContext<FormValues>();
 
 	const resetDates = useCallback(() => {
@@ -43,6 +47,7 @@ function ValidityPeriod() {
 			<div className={styles.customFieldControlsValidityDate}>
 				<Datepicker
 					name="validity.start"
+					disabled={disabled}
 					inputFormat={DATE_INPUT_FORMAT}
 					disablePast
 					popperProps={{ placement: 'right' }}
@@ -51,6 +56,7 @@ function ValidityPeriod() {
 				<img src={arrowRight} />
 				<Datepicker
 					name="validity.end"
+					disabled={disabled}
 					inputFormat={DATE_INPUT_FORMAT}
 					disablePast
 					popperProps={{ placement: 'right' }}

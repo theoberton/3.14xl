@@ -7,26 +7,29 @@ import ValidityPeriod from '@/pages/CreateEdition/ValidityPeriod';
 import { DeploymentModal } from '@/pages/EditionEdit/Content/DeploymentEditModal';
 import { useCallback, useContext } from 'react';
 import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function FormArea() {
 	const { dirty, submitForm, values, isSubmitting } = useFormikContext<FormValues>();
-	const { contentDeploymentState, setContentDeploymentState, editionName } =
+	const { contentDeploymentState, isFormDisabled, editionName, getEditionDetails } =
 		useContext(DeploymentContext);
 
-	let location = useLocation();
 	const navigate = useNavigate();
+	const params = useParams();
 
+	const handleDeploymentModalClose = useCallback(() => {
+		getEditionDetails();
+	}, []);
 
 	const hanelCancelClick = useCallback(() => {
-		const editionSourcePathname = location.pathname.substring(0, location.pathname.length - 4); // Remove edit word
-		navigate(editionSourcePathname)
-	}, [isSubmitting, location.pathname]);
+		navigate(`/edition/${params.collectionAddress}`);
+	}, [isSubmitting, params]);
 
 	return (
 		<Form className={styles.editEditionForm}>
 			{contentDeploymentState.isModalOpened && (
 				<DeploymentModal
+					onClose={handleDeploymentModalClose}
 					values={values}
 					deploy={submitForm}
 					editionName={editionName}
@@ -38,20 +41,40 @@ function FormArea() {
 			</div>
 			<TextArea
 				label={'Description'}
+				optional
+				disabled={isFormDisabled}
 				placeholder={"I'd like to share my project. It's about..."}
 				name={'description'}
 				maxLength={260}
 			/>
-			<MediaInput label={'Media'} name="media" placeholder="None selected" />
-			<Input label={'Price'} name="price" type="text" placeholder="0.01" units="TON" max={8} />
-			<ValidityPeriod />
-			<Input label={'Payout address'} name="payoutAddress" type="text" placeholder="Address" />
+			<MediaInput
+				label={'Media'}
+				disabled={isFormDisabled}
+				name="media"
+				placeholder="None selected"
+			/>
+			<Input
+				label={'Price'}
+				disabled={isFormDisabled}
+				name="price"
+				type="number"
+				placeholder="0.01"
+				units="TON"
+			/>
+			<ValidityPeriod disabled={isFormDisabled} />
+			<Input
+				type="text"
+				disabled={isFormDisabled}
+				label={'Payout address'}
+				name="payoutAddress"
+				placeholder="Address"
+			/>
 			<div className={styles.editEditionFormButtons}>
 				<Button
 					componentType="button"
 					buttonType="reset"
 					expanded
-					isSubmitting={isSubmitting}
+					disabled={isFormDisabled || isSubmitting}
 					onClick={hanelCancelClick}
 					kind={ButtonKinds.basic}
 					basicInverted

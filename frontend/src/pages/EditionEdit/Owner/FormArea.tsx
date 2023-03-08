@@ -3,28 +3,26 @@ import { useCallback, useContext } from 'react';
 import styles from './../styles.module.scss';
 
 import { Button, ButtonKinds, Input } from '@/components';
-import { FormValues } from '@/pages/CreateEdition/interfaces';
-import { DeploymentModal } from '@/pages/EditionEdit/Content/DeploymentEditModal';
+import { DeploymentModal } from '@/pages/EditionEdit/Owner/DeploymentOwnershipTransferModal';
 import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
-import { initialDeploymentState } from '@/pages/EditionEdit/constants';
+import { TransferOwnershiptValues } from '../interfaces';
 
 export function FormArea() {
-	const { submitForm, values, dirty } = useFormikContext<FormValues>();
+	const { submitForm, values, dirty } = useFormikContext<TransferOwnershiptValues>();
 
-	const { ownerDeploymentState, editionName, setOwnerDeploymentState } =
-		useContext(DeploymentContext);
+	const { ownerDeploymentState, isFormDisabled, getEditionDetails } = useContext(DeploymentContext);
 
 	const handleDeploymentModalClose = useCallback(() => {
-		setOwnerDeploymentState(initialDeploymentState);
+		getEditionDetails();
 	}, []);
 
 	return (
 		<Form className={styles.editEditionForm}>
 			{ownerDeploymentState.isModalOpened && (
 				<DeploymentModal
+					onClose={handleDeploymentModalClose}
 					values={values}
 					deploy={submitForm}
-					editionName={editionName}
 					address={ownerDeploymentState.address}
 				/>
 			)}
@@ -38,13 +36,13 @@ export function FormArea() {
 					label={'Wallet address'}
 					name="managerAddress"
 					type="text"
+					disabled={isFormDisabled}
 					placeholder="Enter wallet address"
-					max={48}
 				/>
 				<Button
 					componentType="button"
 					buttonType="submit"
-					disabled={!dirty}
+					disabled={isFormDisabled || !dirty}
 					expanded
 					kind={ButtonKinds.basic}
 					danger

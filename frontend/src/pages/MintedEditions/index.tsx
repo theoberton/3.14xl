@@ -2,8 +2,6 @@ import { EditionCard } from '@/components';
 import { Button, ButtonKinds } from '@/components/Button';
 import { Helmet } from 'react-helmet-async';
 
-import { exampleData } from '@/helpers';
-
 import styles from './styles.module.scss';
 
 export default function MintedEditionsPage() {
@@ -22,10 +20,10 @@ export default function MintedEditionsPage() {
 				</div>
 			</div>
 			<div className={styles.mintedEditionsShowCase}>
-				{exampleData &&
+				{/* {exampleData &&
 					exampleData.map(edition => (
-						<EditionCard edition={edition} key={edition.name + edition.minter} />
-					))}
+						<EditionCard edition={edition} key={edition.name + edition.owner} />
+					))} */}
 			</div>
 		</div>
 	);

@@ -1,6 +1,5 @@
 PROGRAM{
   DECLPROC force_chain
-  DECLPROC pixel_addr
   DECLPROC __tact_verify_address
   DECLPROC __tact_store_address
   DECLPROC __gen_write_NftManager
@@ -14,9 +13,6 @@ PROGRAM{
     EQUAL
     333 THROWIFNOT
   }>
-  pixel_addr PROC:<{
-    x{800B488DF7D9F9AB53E9903CD27193015AFEB9CADBC439FF146A39DC8402566A2A3_} PUSHSLICE
-  }>
   __tact_verify_address PROCINLINE:<{
     SBITS
     267 PUSHINT
@@ -27,11 +23,13 @@ PROGRAM{
     STSLICER
   }>
   __gen_write_NftManager PROCINLINE:<{
-    s7 s6 XCHG2
+    s8 s7 XCHG2
     __tact_store_address INLINECALLDICT
-    s0 s4 XCHG2
+    s1 s5 XCHG
+    STREF
+    s0 s3 XCHG2
     __tact_store_address INLINECALLDICT
-    ROT
+    SWAP
     STGRAMS
     32 STU
     32 STU
@@ -41,11 +39,13 @@ PROGRAM{
     __tact_store_address INLINECALLDICT
   }>
   $__gen_NftManager_init PROC:<{
-    s5 PUSH
-    s0 s7 XCHG
+    s6 PUSH
+    s0 s8 XCHG
     NEWC
     STREF
-    7 -ROLL
+    s0 s8 XCHG
+    s0 s7 XCHG
+    5 2 BLKSWAP
     __gen_write_NftManager INLINECALLDICT
     ENDC
   }>

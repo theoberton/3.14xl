@@ -1,22 +1,27 @@
-import { useCallback, useState, Context, Provider, useMemo, useEffect } from 'react';
-import { useAsync, useGetSetState, useAsyncRetry } from 'react-use';
-import { Address } from 'ton-core';
+import { useCallback, useState, useMemo, useEffect } from 'react';
+import { useGetSetState } from 'react-use';
 import { useTonClient } from '@/hooks/useTonClient';
-import { NftCollection, NftManager } from '@/wrappers';
-import { CollectionContent } from '@/wrappers/types';
 import { useParams } from 'react-router';
 import { useMediaQuery } from 'react-responsive';
 import { Helmet } from 'react-helmet-async';
 import { PageLoader } from '@/components';
+import { convertToBounceableAddress, getFullNftCollectionData, ManagerFullData } from '@/helpers';
+
 import { initialDeploymentState } from '@/pages/EditionEdit/constants';
 import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
 import { Content } from '@/pages/EditionEdit/Content';
+import { useTonAddress } from '@tonconnect/ui-react';
 // Hotfix for https://github.com/yocontra/react-responsive/issues/306, remove when resolved
 console.log(useMediaQuery);
 
 function EditionEdit() {
 	const { collectionAddress } = useParams();
 	const [editionName, setName] = useState<string>('');
+	const accountAddress = useTonAddress();
+	// const navigate = useNavigate();
+	const [isLoading, setLoading] = useState(false);
+	const [edtionDetails, setEditionDetails] = useState<ManagerFullData | null>(null);
+
 	const [getContentDeploymentState, setContentDeploymentState] =
 		useGetSetState(initialDeploymentState);
 	const [getOwnerDeploymentState, setOwnerDeploymentState] = useGetSetState(initialDeploymentState);
@@ -30,27 +35,34 @@ function EditionEdit() {
 
 	const tonClient = useTonClient();
 
-	const collectionDataAsync = useAsyncRetry(async () => {
+	const getEditionDetails = useCallback(async () => {
 		if (!collectionAddress || !tonClient) {
 			return null;
 		}
+		setLoading(true);
 
-		const nftCollection = NftCollection.createFromAddress(Address.parse(collectionAddress));
-		const nftColelctionContract = tonClient.open(nftCollection);
-		let collectionData = await nftColelctionContract.getCollectionData();
+		try {
+			const fullData = await getFullNftCollectionData(tonClient, collectionAddress);
 
-		const content: CollectionContent = await fetch(collectionData.collectionContentUri).then(res =>
-			res.json()
-		);
-
-		setEditionName(content.name);
-
-		const nftManager = NftManager.createFromAddress(collectionData.ownerAddress);
-		const nftManagerContract = tonClient.open(nftManager);
-		const managerData = await nftManagerContract.getManagerData();
-
-		return { collectionData, content, managerAddress: managerData.owner };
+			setEditionName(fullData.content.name);
+			setEditionDetails(fullData);
+		} catch (error) {
+			console.log('error', error);
+		} finally {
+			setLoading(false);
+		}
 	}, [tonClient, collectionAddress]);
+
+	useEffect(() => {
+		getEditionDetails();
+	}, [collectionAddress, tonClient]);
+
+	const mangerAddress = convertToBounceableAddress(edtionDetails?.managerAddress);
+
+	const loggedAccountAddress = convertToBounceableAddress(accountAddress);
+
+	const isUserCollection = mangerAddress == loggedAccountAddress;
+	const isFormDisabled = Boolean(mangerAddress && !isUserCollection);
 
 	const contentDeploymentState = getContentDeploymentState();
 	const ownerDeploymentState = getOwnerDeploymentState();
@@ -61,37 +73,31 @@ function EditionEdit() {
 			setEditionName,
 			ownerDeploymentState,
 			contentDeploymentState,
+			isFormDisabled,
+			getEditionDetails,
 			setContentDeploymentState,
 			setOwnerDeploymentState,
 		}),
 		[
 			editionName,
+			isFormDisabled,
 			setEditionName,
 			ownerDeploymentState,
 			contentDeploymentState,
 			setContentDeploymentState,
 			setOwnerDeploymentState,
+			getEditionDetails,
 		]
 	);
 
-	useEffect(() => {
-		if(ownerDeploymentState.deployCount || contentDeploymentState.deployCount) {
-			collectionDataAsync.retry();
-		}
-	}, [ownerDeploymentState.deployCount, contentDeploymentState.deployCount]);
-
-	if (collectionDataAsync.error && !collectionDataAsync.value) {
-		return <div>Something went wrong</div>;
-	}
-
-	if (collectionDataAsync.loading || !collectionDataAsync.value) {
+	if (isLoading && !edtionDetails) {
 		return <PageLoader />;
 	}
 
 	return (
 		<DeploymentContext.Provider value={ContextProviderValue}>
 			<Helmet title={'3.14XL - Edit edition'} />
-			<Content editionData={collectionDataAsync.value} />
+			{edtionDetails && <Content editionData={edtionDetails} />}
 		</DeploymentContext.Provider>
 	);
 }
