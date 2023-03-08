@@ -62,8 +62,6 @@ export default function ExplorePage() {
 	}, [tonClient, editions]);
 
 	useEffect(() => {
-		console.log('Getting')
-
 		getEditions();
 	}, []);
 
@@ -71,7 +69,7 @@ export default function ExplorePage() {
 		if (editions.length > 0) {
 			getMintData();
 		}
-	}, [editions.length]);
+	}, [tonClient, editions.length]);
 
 	if (isLoading) {
 		return <PageLoader />;

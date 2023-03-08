@@ -2,49 +2,84 @@ import EditionsHeader from './Header';
 import { Helmet } from 'react-helmet-async';
 import { EditionCard } from '@/components';
 import { getManagerContractByOwner } from '@/libs/apiClient';
-import { convertToBounceableAddress } from '@/helpers';
+import { convertToBounceableAddress, getNftCollectionData } from '@/helpers';
 
 import { PageLoader } from '@/components';
-import { useAsync } from 'react-use';
-import { isMintAllowed } from '@/helpers';
 
 import styles from '@/pages/Explore/styles.module.scss';
 
 import { useTonClient } from '@/hooks';
 import { useTonAddress } from '@tonconnect/ui-react';
+import { useCallback, useEffect, useState } from 'react';
+import { IEditionItem } from '@/components/EditionCard/interface';
 
 export default function ExplorePage() {
 	const tonClient = useTonClient();
 	const address = useTonAddress();
+	const [isLoading, setLoading] = useState(false);
+	const [editions, setEditions] = useState<IEditionItem[]>([]);
 
-	const editions = useAsync(async () => {
+	const getEditions = useCallback(async () => {
 		const bouncableAddress = convertToBounceableAddress(address);
 		if (!bouncableAddress) return;
 
-		const contracts = await getManagerContractByOwner(bouncableAddress);
+		try {
+			setLoading(true);
+			const contracts = await getManagerContractByOwner(bouncableAddress);
 
-		return contracts.result.map(data => {
-			const currentDate = new Date();
 
-			return {
-				collectionAddress: data.collectionAddress,
-				content: data.overviewData.content,
-				dateStart: data.overviewData.dateStart,
-				dateEnd: data.overviewData.dateEnd,
-				price: data.overviewData.price,
-				minted: null,
-				limit: data.overviewData.limit,
-				name: data.overviewData.name,
-				owner: data.overviewData.owner,
-			};
-		});
-	}, [tonClient, address]);
+			const result = contracts.result.map(data => {
+				return {
+					collectionAddress: data.collectionAddress,
+					content: data.overviewData.content,
+					dateStart: data.overviewData.dateStart,
+					dateEnd: data.overviewData.dateEnd,
+					price: data.overviewData.price,
+					minted: null,
+					limit: data.overviewData.limit,
+					name: data.overviewData.name,
+					owner: data.overviewData.owner,
+				};
+			});
 
-	if (editions.error && !editions.value) {
-		throw editions.error;
-	}
+			setEditions(result);
+		} catch (error) {
+			console.log('error', error);
+		} finally {
+			setLoading(false);
+		}
+	}, [tonClient]);
 
-	if (editions.loading && !editions.value && !editions.error) {
+	const getMintData = useCallback(async () => {
+		if (!tonClient) return;
+
+		const editionsWithActualMintNumber = await Promise.all(
+			editions.map(async edition => {
+				const collectionData = await getNftCollectionData(tonClient, edition.collectionAddress);
+
+				return {
+					...edition,
+					minted: collectionData.nextItemIndex || 0,
+				};
+			})
+		);
+
+		setEditions(editionsWithActualMintNumber);
+	}, [tonClient, editions]);
+
+
+	useEffect(() => {
+		getEditions();
+	}, []);
+
+	useEffect(() => {
+		if (editions.length > 0) {
+			getMintData();
+		}
+	}, [tonClient, editions.length]);
+
+
+	if (isLoading) {
 		return <PageLoader />;
 	}
 
@@ -53,8 +88,8 @@ export default function ExplorePage() {
 			<Helmet title={'3.14XL - Explore editions'} />
 			<EditionsHeader />
 			<div className={styles.editionsShowCase}>
-				{editions.value &&
-					editions.value.map(edition => (
+				{editions &&
+					editions.map(edition => (
 						<EditionCard edition={edition} key={edition.name + edition.owner} />
 					))}
 			</div>

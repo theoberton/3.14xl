@@ -110,7 +110,6 @@ export function MediaInput(props: Props) {
 		[styles.input]: true,
 		[styles.inputFilled]: Boolean(value),
 	});
-	console.log('disableffffd', disabled);
 
 	return (
 		<div className={inputContainerClass}>
@@ -153,7 +152,7 @@ export function MediaInput(props: Props) {
 					</div>
 				)}
 			</div>
-			{error && <div className={styles.inputError}>{error}</div>}
+			{/* {error && <div className={styles.inputError}>{error}</div>} */}
 		</div>
 	);
 }
