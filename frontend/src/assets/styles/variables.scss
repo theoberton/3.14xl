@@ -63,4 +63,4 @@ $breakpoint-l: 1199.98px;
 $breakpoint-xl: 1399.98px;
 
 $header-height: 86px;
-$page-height: calc(100vh - calc($header-height * 2));
+$page-height: calc(100vh - $header-height);
