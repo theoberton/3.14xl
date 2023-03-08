@@ -78,8 +78,8 @@ export function FormArea({
 					Clear fields
 				</Button>
 			</div>
-			<Input label={'Name'} name="name" placeholder="The Project" max={30} type="text" />
-			<Input label={'Symbol'} name="symbol" type="text" max={15} placeholder="$SYMBOL" />
+			<Input label={'Name'} name="name" placeholder="The Project" type="text" />
+			<Input label={'Symbol'} name="symbol" type="text" placeholder="$SYMBOL" />
 			<TextArea
 				optional
 				label={'Description'}
@@ -94,7 +94,6 @@ export function FormArea({
 				type="number"
 				placeholder="0.01"
 				units="TON"
-				max={10000000000}
 			/>
 			<EditionSize />
 			<ValidityPeriod />
@@ -104,7 +103,6 @@ export function FormArea({
 				type="number"
 				placeholder="5"
 				units="%"
-				max={10000000000}
 			/>
 			<Input
 				subCaption={`Enter the address where you want to receive withdrawals and royalties. ${

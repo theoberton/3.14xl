@@ -10,12 +10,18 @@ import { TransferOwnershiptValues } from '../interfaces';
 export function FormArea() {
 	const { submitForm, values, dirty } = useFormikContext<TransferOwnershiptValues>();
 
-	const { ownerDeploymentState, isFormDisabled } = useContext(DeploymentContext);
+	const { ownerDeploymentState, isFormDisabled, getEditionDetails} = useContext(DeploymentContext);
+
+
+	const handleDeploymentModalClose = useCallback(() => {
+		getEditionDetails();
+	}, []);
 
 	return (
 		<Form className={styles.editEditionForm}>
 			{ownerDeploymentState.isModalOpened && (
 				<DeploymentModal
+					onClose={handleDeploymentModalClose}
 					values={values}
 					deploy={submitForm}
 					address={ownerDeploymentState.address}
@@ -33,7 +39,6 @@ export function FormArea() {
 					type="text"
 					disabled={isFormDisabled}
 					placeholder="Enter wallet address"
-					max={48}
 				/>
 				<Button
 					componentType="button"

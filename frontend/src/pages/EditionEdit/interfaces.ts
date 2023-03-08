@@ -40,5 +40,4 @@ export interface EditionData {
 export interface DeploymentState {
 	isModalOpened: boolean;
 	address: string;
-	deployCount: number;
 }

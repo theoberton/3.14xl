@@ -20,10 +20,10 @@ import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
 console.log(useMediaQuery);
 
 import styles from './../styles.module.scss';
-import { EditionData } from '../interfaces';
+import { ManagerFullData } from '@/helpers';
 
 type Props = {
-	editionData: EditionData;
+	editionData: ManagerFullData;
 };
 
 export function Owner({ editionData }: Props) {

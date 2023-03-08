@@ -1,8 +1,7 @@
 import { Address } from 'ton-core';
-import { isEmpty } from 'lodash';
 
-export function convertToBounceableAddress(randomAddress: string) {
-	if (isEmpty(randomAddress)) {
+export function convertToBounceableAddress(randomAddress: string | undefined | null) {
+	if (randomAddress === null || randomAddress === undefined || randomAddress === '') {
 		return null;
 	}
 

@@ -13,7 +13,7 @@ import { useTonAddress } from '@tonconnect/ui-react';
 import { useCallback, useEffect, useState } from 'react';
 import { IEditionItem } from '@/components/EditionCard/interface';
 
-export default function ExplorePage() {
+export default function MyEdition() {
 	const tonClient = useTonClient();
 	const address = useTonAddress();
 	const [isLoading, setLoading] = useState(false);
@@ -48,7 +48,7 @@ export default function ExplorePage() {
 		} finally {
 			setLoading(false);
 		}
-	}, [tonClient]);
+	}, [tonClient, address]);
 
 	const getMintData = useCallback(async () => {
 		if (!tonClient) return;
@@ -67,10 +67,9 @@ export default function ExplorePage() {
 		setEditions(editionsWithActualMintNumber);
 	}, [tonClient, editions]);
 
-
 	useEffect(() => {
 		getEditions();
-	}, []);
+	}, [address]);
 
 	useEffect(() => {
 		if (editions.length > 0) {

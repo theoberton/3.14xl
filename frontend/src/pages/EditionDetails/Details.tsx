@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from 'ton-core';
-import { addressFilter, isMintAllowed } from '@/helpers';
+import { addressFilter, isMintAllowed, ManagerFullData } from '@/helpers';
 import { MintDeployModal } from '@/pages/EditionDetails/MintDeployModal';
 import { useTime } from '@/hooks';
 import { Button, ButtonKinds } from '@/components/Button';
@@ -11,17 +11,20 @@ import styles from './styles.module.scss';
 import { composeMintTransaction } from '@/pages/EditionDetails/helper';
 import MintDateSection from './MintTime';
 import { CopyToClipboard } from '@/components';
-import { EditionData } from '../EditionEdit/interfaces';
+
+type Props = {
+	getEditionDetails: () => void;
+	setCurrentNftItemIndex: React.Dispatch<React.SetStateAction<number>>;
+	currentNextNftItemIndex: number;
+	editionData: ManagerFullData;
+};
 
 function EditionDetails({
 	editionData: { content, collectionData, managerAddress },
 	currentNextNftItemIndex,
 	setCurrentNftItemIndex,
-}: {
-	setCurrentNftItemIndex: React.Dispatch<React.SetStateAction<number>>;
-	currentNextNftItemIndex: number;
-	editionData: EditionData;
-}) {
+	getEditionDetails,
+} : Props) {
 	const now = useTime();
 	const navigate = useNavigate();
 
@@ -58,11 +61,8 @@ function EditionDetails({
 		const transaction = composeMintTransaction(collectionData, content, transactionAccountAddress!);
 
 		try {
-			const result = await tonConnectUI.sendTransaction(transaction);
+			await tonConnectUI.sendTransaction(transaction);
 			handleDeploymentModalOpen();
-			// you can use signed boc to find the transaction
-			// const someTxData = await myAppExplorerService.getTransaction(result.boc);
-			// alert('Transaction was sent successfully', someTxData);
 		} catch (e) {
 			console.error(e);
 		}
@@ -102,6 +102,7 @@ function EditionDetails({
 			{isDeploymentModalOpened && (
 				<MintDeployModal
 					deploy={mint}
+					getEditionDetails={getEditionDetails}
 					setCurrentNftItemIndex={setCurrentNftItemIndex}
 					currentNextNftItemIndex={currentNextNftItemIndex}
 					editionName={content.name}

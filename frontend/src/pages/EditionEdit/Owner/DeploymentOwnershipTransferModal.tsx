@@ -71,12 +71,13 @@ type Props = {
 	values: TransferOwnershiptValues;
 	address: string | null;
 	deploy: () => void;
+	onClose: () => void;
 };
 
 const deployExpirationTime = 40 * 1000; // 40 seconds
 const retryContractDeployedCheck = 2 * 1000; // every 2 seconds check whether contract is deployed or not
 
-export function DeploymentModal({ address, deploy, values }: Props) {
+export function DeploymentModal({ address, deploy, values, onClose }: Props) {
 	const [status, setStatus] = useState(DeploymentStatus.inProgress);
 	const { ownerDeploymentState, setOwnerDeploymentState, editionName } =
 		useContext(DeploymentContext);
@@ -135,9 +136,9 @@ export function DeploymentModal({ address, deploy, values }: Props) {
 	const goBackSuccess = useCallback(() => {
 		setOwnerDeploymentState({
 			isModalOpened: false,
-			deployCount: ownerDeploymentState.deployCount + 1,
 		});
-	}, [ownerDeploymentState]);
+		onClose()
+	}, [ownerDeploymentState, onClose]);
 
 	const goBackFailiure = useCallback(() => {
 		setOwnerDeploymentState({

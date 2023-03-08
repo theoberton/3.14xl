@@ -11,10 +11,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 function FormArea() {
 	const { dirty, submitForm, values, isSubmitting } = useFormikContext<FormValues>();
-	const { contentDeploymentState, isFormDisabled, editionName } = useContext(DeploymentContext);
+	const { contentDeploymentState, isFormDisabled, editionName, getEditionDetails } = useContext(DeploymentContext);
 
 	const navigate = useNavigate();
 	const params = useParams();
+
+	const handleDeploymentModalClose = useCallback(() => {
+		getEditionDetails();
+	}, []);
 
 	const hanelCancelClick = useCallback(() => {
 		navigate(`/edition/${params.collectionAddress}`);
@@ -24,6 +28,7 @@ function FormArea() {
 		<Form className={styles.editEditionForm}>
 			{contentDeploymentState.isModalOpened && (
 				<DeploymentModal
+					onClose={handleDeploymentModalClose}
 					values={values}
 					deploy={submitForm}
 					editionName={editionName}
@@ -54,7 +59,6 @@ function FormArea() {
 				type="number"
 				placeholder="0.01"
 				units="TON"
-				max={8}
 			/>
 			<ValidityPeriod disabled={isFormDisabled} />
 			<Input

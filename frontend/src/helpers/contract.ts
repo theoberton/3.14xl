@@ -3,16 +3,18 @@ import { Address } from 'ton-core';
 import { NftCollection, NftManager } from '@/wrappers';
 import { CollectionContent, NftManagerData } from '@/wrappers/types';
 
-type ManagerFullData = {
-	collectionData: {
-		ownerAddress: string;
-		address: string;
-		nextItemIndex: number;
-		collectionContentUri: string;
-	};
+export type ManagerFullData = {
+	collectionData: EditionData;
 	content: CollectionContent;
 	managerAddress: string;
 	managerData: NftManagerData;
+};
+
+export type EditionData = {
+	ownerAddress: string;
+	address: string;
+	nextItemIndex: number;
+	collectionContentUri: string;
 };
 
 export async function getFullNftCollectionData(tonClient: TonClient, collectionAddress: string) {

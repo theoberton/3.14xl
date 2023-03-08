@@ -4,8 +4,8 @@ import { HTTP_METHODS_MAP } from '@/constants/common';
 import _ from 'lodash';
 import { isTestnet } from '@/helpers/location';
 
-// const API_HOST = 'https://api-pixel.com';
-const API_HOST = 'http://localhost:3000';
+const API_HOST = 'https://api-pixel.com';
+// const API_HOST = 'http://localhost:3000';
 
 type ServerError = {
 	statusCode: number;
@@ -34,13 +34,13 @@ async function handleFailedRequest(error: AxiosError<any, any>) {
 }
 
 async function hanleServerError(data: ServerError, code: number) {
-	console.log('data', data);
 	if (code === 404) {
-		return window.location.replace(`${window.location.origin}/not-found`);
+		// return window.location.replace(`${window.location.origin}/#/not-found`);
+		throw new Error();
 	}
 
 	if (code >= 500) {
-		return window.location.replace(`${window.location.origin}/something-went-wrong`);
+		throw new Error();
 	}
 
 	throw data;

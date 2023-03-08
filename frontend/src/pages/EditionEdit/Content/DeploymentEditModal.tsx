@@ -71,12 +71,13 @@ type Props = {
 	address: string | null;
 	deploy: () => void;
 	editionName: string | null;
+	onClose: () => void;
 };
 
 const deployExpirationTime = 40 * 1000; // 40 seconds
 const retryContractDeployedCheck = 2 * 1000; // every 2 seconds check whether contract is deployed or not
 
-export function DeploymentModal({ address, deploy, values }: Props) {
+export function DeploymentModal({ address, deploy, values, onClose }: Props) {
 	const [status, setStatus] = useState(DeploymentStatus.inProgress);
 	let retryTimeoutId: ReturnType<typeof setTimeout>;
 	const tonClient = useTonClient();
@@ -131,14 +132,15 @@ export function DeploymentModal({ address, deploy, values }: Props) {
 	const goBackSuccess = useCallback(() => {
 		setContentDeploymentState({
 			isModalOpened: false,
-			deployCount: contentDeploymentState.deployCount + 1,
 		});
+		onClose();
 	}, [contentDeploymentState]);
 
 	const goBackFailiure = useCallback(() => {
 		setContentDeploymentState({
 			isModalOpened: false,
 		});
+		onClose();
 	}, []);
 
 	useEffect(() => {

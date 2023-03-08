@@ -5,8 +5,6 @@ import styles from '@/pages/Explore/styles.module.scss';
 import { useTonAddress } from '@tonconnect/ui-react';
 
 function EditionsHeader() {
-	const address = useTonAddress();
-
 	return (
 		<div className={styles.editionsHeader}>
 			<h1>My editions</h1>
