@@ -27,7 +27,6 @@ export default function MyEdition() {
 			setLoading(true);
 			const contracts = await getManagerContractByOwner(bouncableAddress);
 
-
 			const result = contracts.result.map(data => {
 				return {
 					collectionAddress: data.collectionAddress,
@@ -76,7 +75,6 @@ export default function MyEdition() {
 			getMintData();
 		}
 	}, [tonClient, editions.length]);
-
 
 	if (isLoading) {
 		return <PageLoader />;

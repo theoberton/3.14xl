@@ -1,5 +1,5 @@
 import { useCallback, useState, useMemo, useEffect } from 'react';
-import { useGetSetState} from 'react-use';
+import { useGetSetState } from 'react-use';
 import { useTonClient } from '@/hooks/useTonClient';
 import { useParams } from 'react-router';
 import { useMediaQuery } from 'react-responsive';
@@ -42,13 +42,12 @@ function EditionEdit() {
 		setLoading(true);
 
 		try {
-			
 			const fullData = await getFullNftCollectionData(tonClient, collectionAddress);
 
 			setEditionName(fullData.content.name);
 			setEditionDetails(fullData);
 		} catch (error) {
-			console.log('error', error);	
+			console.log('error', error);
 		} finally {
 			setLoading(false);
 		}
@@ -58,9 +57,7 @@ function EditionEdit() {
 		getEditionDetails();
 	}, [collectionAddress, tonClient]);
 
-	const mangerAddress = convertToBounceableAddress(
-		edtionDetails?.managerAddress
-	);
+	const mangerAddress = convertToBounceableAddress(edtionDetails?.managerAddress);
 
 	const loggedAccountAddress = convertToBounceableAddress(accountAddress);
 
@@ -106,5 +103,3 @@ function EditionEdit() {
 }
 
 export default EditionEdit;
-
-

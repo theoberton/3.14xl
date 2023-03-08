@@ -88,22 +88,10 @@ export function FormArea({
 				maxLength={260}
 			/>
 			<MediaInput label={'Media'} name="media" placeholder="None selected" />
-			<Input
-				label={'Price'}
-				name="price"
-				type="number"
-				placeholder="0.01"
-				units="TON"
-			/>
+			<Input label={'Price'} name="price" type="number" placeholder="0.01" units="TON" />
 			<EditionSize />
 			<ValidityPeriod />
-			<Input
-				label={'Royalty'}
-				name="royalty"
-				type="number"
-				placeholder="5"
-				units="%"
-			/>
+			<Input label={'Royalty'} name="royalty" type="number" placeholder="5" units="%" />
 			<Input
 				subCaption={`Enter the address where you want to receive withdrawals and royalties. ${
 					!isWalletConnected

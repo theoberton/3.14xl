@@ -11,7 +11,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 function FormArea() {
 	const { dirty, submitForm, values, isSubmitting } = useFormikContext<FormValues>();
-	const { contentDeploymentState, isFormDisabled, editionName, getEditionDetails } = useContext(DeploymentContext);
+	const { contentDeploymentState, isFormDisabled, editionName, getEditionDetails } =
+		useContext(DeploymentContext);
 
 	const navigate = useNavigate();
 	const params = useParams();

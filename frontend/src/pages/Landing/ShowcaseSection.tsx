@@ -40,10 +40,10 @@ function ShowcaseSection() {
 
 	return (
 		<section className={styles.ShowcaseSection}>
-				{editions &&
-					editions.map(edition => (
-						<EditionCard edition={edition} key={edition.name + edition.owner} />
-					))}
+			{editions &&
+				editions.map(edition => (
+					<EditionCard edition={edition} key={edition.name + edition.owner} />
+				))}
 		</section>
 	);
 }

@@ -13,12 +13,7 @@ import styles from './styles.module.scss';
 
 const thirdwebStorage = new ThirdwebStorage();
 
-function EditionPreview({
-	content,
-}: {
-	collectionData: EditionData;
-	content: CollectionContent;
-}) {
+function EditionPreview({ content }: { collectionData: EditionData; content: CollectionContent }) {
 	const [isImagePreviewOpened, setImagePreviewOpenedStatus] = useState(false);
 
 	const closePreviewImageModal = useCallback(() => {

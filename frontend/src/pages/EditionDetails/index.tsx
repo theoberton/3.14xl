@@ -1,4 +1,3 @@
-
 import { useState, useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -23,13 +22,12 @@ export default function EditionDetailsPage() {
 		setLoading(true);
 
 		try {
-			
 			const fullData = await getFullNftCollectionData(tonClient, collectionAddress);
 
 			setCurrentNftItemIndex(fullData.collectionData.nextItemIndex);
 			setEditionDetails(fullData);
 		} catch (error) {
-			console.log('error', error);	
+			console.log('error', error);
 		} finally {
 			setLoading(false);
 		}
@@ -46,8 +44,7 @@ export default function EditionDetailsPage() {
 	return (
 		<div className={styles.editionDetailsContainer}>
 			<Helmet title="3.14XL - Edition details" />
-			{
-				edtionDetails &&
+			{edtionDetails && (
 				<>
 					<EditionPreview
 						collectionData={edtionDetails.collectionData}
@@ -60,7 +57,7 @@ export default function EditionDetailsPage() {
 						editionData={edtionDetails}
 					/>
 				</>
-			}
+			)}
 		</div>
 	);
 }

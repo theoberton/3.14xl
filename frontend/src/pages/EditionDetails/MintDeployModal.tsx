@@ -135,7 +135,7 @@ export function MintDeployModal({
 			setCurrentNftItemIndex(collectionDataAsync.value.collectionData.nextItemIndex);
 		}
 		onClose();
-		getEditionDetails()
+		getEditionDetails();
 	}, [collectionDataAsync.value]);
 
 	useEffect(() => {

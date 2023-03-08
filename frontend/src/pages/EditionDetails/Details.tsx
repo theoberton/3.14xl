@@ -24,7 +24,7 @@ function EditionDetails({
 	currentNextNftItemIndex,
 	setCurrentNftItemIndex,
 	getEditionDetails,
-} : Props) {
+}: Props) {
 	const now = useTime();
 	const navigate = useNavigate();
 

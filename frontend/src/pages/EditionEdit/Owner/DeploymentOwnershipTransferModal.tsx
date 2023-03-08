@@ -137,7 +137,7 @@ export function DeploymentModal({ address, deploy, values, onClose }: Props) {
 		setOwnerDeploymentState({
 			isModalOpened: false,
 		});
-		onClose()
+		onClose();
 	}, [ownerDeploymentState, onClose]);
 
 	const goBackFailiure = useCallback(() => {
