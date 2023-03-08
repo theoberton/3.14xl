@@ -6,7 +6,8 @@ import { DeploymentState } from './interfaces';
 
 const defaultValue = {
 	editionName: '',
-  isFormDisabled: false,
+	isFormDisabled: false,
+	getEditionDetails: () => {},
 	setEditionName: (name: string) => {},
 	ownerDeploymentState: initialDeploymentState,
 	contentDeploymentState: initialDeploymentState,

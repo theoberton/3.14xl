@@ -7,7 +7,7 @@ import styles from '@/pages/Landing/styles.module.scss';
 export default function LandingPage() {
 	return (
 		<>
-			<Helmet title="3.14XL - Bring vision to life" />
+			<Helmet title="3.14XL - Bring visions to life" />
 			<div className={styles.landingContainer}>
 				<PresentationSection />
 			</div>

@@ -1,26 +1,31 @@
 import EditionsHeader from './Header';
 import { Helmet } from 'react-helmet-async';
 import { EditionCard } from '@/components';
-import { getManagerContracts } from '@/libs/apiClient';
+import { getManagerContractByOwner } from '@/libs/apiClient';
+import { convertToBounceableAddress, getNftCollectionData } from '@/helpers';
+
 import { PageLoader } from '@/components';
 
-import styles from './styles.module.scss';
+import styles from '@/pages/Explore/styles.module.scss';
 
 import { useTonClient } from '@/hooks';
-import { useEffect, useCallback, useState } from 'react';
+import { useTonAddress } from '@tonconnect/ui-react';
+import { useCallback, useEffect, useState } from 'react';
 import { IEditionItem } from '@/components/EditionCard/interface';
-import { getNftCollectionData } from '@/helpers';
-import _ from 'lodash';
 
-export default function ExplorePage() {
+export default function MyEdition() {
 	const tonClient = useTonClient();
+	const address = useTonAddress();
 	const [isLoading, setLoading] = useState(false);
 	const [editions, setEditions] = useState<IEditionItem[]>([]);
 
 	const getEditions = useCallback(async () => {
+		const bouncableAddress = convertToBounceableAddress(address);
+		if (!bouncableAddress) return;
+
 		try {
 			setLoading(true);
-			const contracts = await getManagerContracts();
+			const contracts = await getManagerContractByOwner(bouncableAddress);
 
 			const result = contracts.result.map(data => {
 				return {
@@ -42,7 +47,7 @@ export default function ExplorePage() {
 		} finally {
 			setLoading(false);
 		}
-	}, [tonClient]);
+	}, [tonClient, address]);
 
 	const getMintData = useCallback(async () => {
 		if (!tonClient) return;
@@ -63,7 +68,7 @@ export default function ExplorePage() {
 
 	useEffect(() => {
 		getEditions();
-	}, []);
+	}, [address]);
 
 	useEffect(() => {
 		if (editions.length > 0) {

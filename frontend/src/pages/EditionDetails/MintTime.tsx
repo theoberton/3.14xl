@@ -1,4 +1,4 @@
-import { mintDateFilter } from '@/helpers';
+import { EditionData, mintDateFilter } from '@/helpers';
 import { CollectionContent, CollectionData } from '@/wrappers/types';
 import styles from './styles.module.scss';
 
@@ -7,7 +7,7 @@ function MintDate({
 	content,
 	now,
 }: {
-	collectionData: CollectionData;
+	collectionData: EditionData;
 	content: CollectionContent;
 	now: Date;
 }) {
@@ -28,7 +28,7 @@ function Block({ text, label }: { label: string; text: string }) {
 	);
 }
 
-function getFirstBlockProps(collectionData: CollectionData, content: CollectionContent, now: Date) {
+function getFirstBlockProps(collectionData: EditionData, content: CollectionContent, now: Date) {
 	const dateStart = new Date((content.dateStart ?? 0) * 1000);
 
 	if (dateStart < now) {

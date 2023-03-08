@@ -45,6 +45,7 @@ export function MediaInput(props: Props) {
 
 	const onSelectFile = useCallback(
 		async (e: ChangeEvent<HTMLInputElement>) => {
+			console.log('e', e);
 			const file = e.target.files && e.target.files[0];
 
 			if (!file) {
@@ -136,7 +137,6 @@ export function MediaInput(props: Props) {
 			<div className={inputWrapperClass} onClick={handleAddMediaFileClick}>
 				{value && <img ref={minifiedImageRef} className={styles.inputMinifiedImage} src={value} />}
 				<input
-					disabled
 					className={inputClass}
 					onFocus={onFocus}
 					onBlur={onBlur}
@@ -153,7 +153,7 @@ export function MediaInput(props: Props) {
 					</div>
 				)}
 			</div>
-			{error && <div className={styles.inputError}>{error}</div>}
+			{/* {error && <div className={styles.inputError}>{error}</div>} */}
 		</div>
 	);
 }

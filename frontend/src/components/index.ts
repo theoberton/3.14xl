@@ -1,6 +1,5 @@
 export * from './Datepicker';
 export * from './Button';
-export * from './CustomRouter';
 export * from './Select';
 export * from './MediaInput';
 export * from './Header';

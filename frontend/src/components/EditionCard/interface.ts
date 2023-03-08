@@ -1,10 +1,11 @@
-export interface IEditionExampleItem {
+export interface IEditionItem {
 	name: string;
-	minter: string;
-	img: string;
-	isActive: boolean;
-	price: number;
-	minted: number;
+	owner: string;
+	content: string;
+	dateStart: number;
+	dateEnd: number;
+	price: string;
+	minted: number | null;
 	limit: number | null;
-	collectionAddress?: string;
+	collectionAddress: string;
 }

@@ -67,7 +67,7 @@ export function FormArea({
 				/>
 			)}
 			<div className={styles.createEditionActionTitleWrapper}>
-				<div className={styles.createEditionActionTitle}>Collection details</div>
+				<div className={styles.createEditionActionTitle}>Edition details</div>
 				<Button
 					componentType="button"
 					kind={ButtonKinds.basic}
@@ -78,19 +78,20 @@ export function FormArea({
 					Clear fields
 				</Button>
 			</div>
-			<Input label={'Name'} name="name" placeholder="The Project" max={30} type="text" />
-			<Input label={'Symbol'} name="symbol" type="text" max={15} placeholder="$SYMBOL" />
+			<Input label={'Name'} name="name" placeholder="The Project" type="text" />
+			<Input label={'Symbol'} name="symbol" type="text" placeholder="$SYMBOL" />
 			<TextArea
+				optional
 				label={'Description'}
 				placeholder={"I'd like to share my project. It's about..."}
 				name={'description'}
 				maxLength={260}
 			/>
 			<MediaInput label={'Media'} name="media" placeholder="None selected" />
-			<Input label={'Price'} name="price" type="number" placeholder="0.01" units="TON" max={10000000000} />
+			<Input label={'Price'} name="price" type="number" placeholder="0.01" units="TON" />
 			<EditionSize />
 			<ValidityPeriod />
-			<Input label={'Royalty'} name="royalty" type="number" placeholder="5" units="%" max={10000000000} />
+			<Input label={'Royalty'} name="royalty" type="number" placeholder="5" units="%" />
 			<Input
 				subCaption={`Enter the address where you want to receive withdrawals and royalties. ${
 					!isWalletConnected

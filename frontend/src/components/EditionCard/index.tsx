@@ -1,34 +1,33 @@
 import { Link } from 'react-router-dom';
-import { IEditionExampleItem } from './interface';
+import { IEditionItem } from './interface';
+import { CopyToClipboard } from '@/components';
 import EditionStatus from './EditionStatus/EditionStatus';
 import { addressFilter } from '@/helpers';
 import styles from './styles.module.scss';
 
 interface IProps {
-	edition: IEditionExampleItem;
+	edition: IEditionItem;
 }
 
 export function EditionCard({ edition }: IProps) {
-	const { name, minter, img, isActive, limit, minted, price, collectionAddress } = edition;
+	const { name, owner, content, dateStart, dateEnd, limit, minted, price, collectionAddress } =
+		edition;
 
 	const Card = (
-		<div
-			className={styles.editionCard}
-			onClick={() => {
-				if (!collectionAddress) return alert('This is a fake item 😋');
-			}}
-		>
+		<div className={styles.editionCard}>
 			<div className={styles.editionCardHeader}>
-				<p>by {addressFilter(minter)}</p>
-				<EditionStatus isActive={isActive} />
+				<CopyToClipboard textValue={owner} message="Owner address has been copied!">
+					<p>by {addressFilter(owner)}</p>
+				</CopyToClipboard>
+				<EditionStatus dateStart={dateStart} dateEnd={dateEnd} />
 			</div>
 			<div className={styles.editionCardPreview}>
-				<img src={img} />
+				<img src={content} />
 			</div>
 			<h3>{name}</h3>
 			<div className={styles.editionCardInfo}>
-				<p>{price === 0 ? 'Free' : `${price} TON`}</p>
-				<p>{limit ? `${minted}/${limit}` : `${minted}/∞`}</p>
+				<p>{price === '0' ? 'Free' : `${price} TON`}</p>
+				{minted !== null && <p>{limit ? `${minted}/${limit}` : `${minted}/∞`}</p>}
 			</div>
 		</div>
 	);

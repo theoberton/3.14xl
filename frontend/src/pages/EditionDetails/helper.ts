@@ -1,10 +1,10 @@
-import { CollectionContent, CollectionData } from '@/wrappers/types';
+import { CollectionContent } from '@/wrappers/types';
 import { toNano, Address } from 'ton-core';
 import { Queries } from '@/wrappers/NftManager/helpers';
-import { calcPercent } from '@/helpers';
+import { calcPercent, EditionData } from '@/helpers';
 
 export function composeMintTransaction(
-	collectionData: CollectionData,
+	collectionData: EditionData,
 	content: CollectionContent,
 	address: Address
 ) {

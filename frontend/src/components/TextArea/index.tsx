@@ -15,6 +15,7 @@ type TextAreaProps = {
 	disabled?: boolean;
 	rows?: number;
 	maxLength?: number;
+	optional?: boolean;
 };
 
 export function TextArea({
@@ -25,6 +26,7 @@ export function TextArea({
 	disabled,
 	rows = 3,
 	maxLength,
+	optional,
 }: TextAreaProps) {
 	const [field] = useField(name);
 	const { value, name: fieldName, onChange } = field;
@@ -53,11 +55,23 @@ export function TextArea({
 
 	const error = getError();
 
+	/**
+			{label && (
+				<>
+					<label htmlFor={fieldName} className={inputLabelClass}>
+						{label}
+						{optional && <span className={styles.inputCaptionOptional}>{' (Optional)'}</span>}
+					</label>
+				</>
+			)}
+ */
+
 	return (
 		<div className={inputContainerClass}>
 			{label && (
 				<label htmlFor={fieldName} className={inputLabelClass}>
 					{label}
+					{optional && <span className={styles.inputCaptionOptional}>{' (Optional)'}</span>}
 				</label>
 			)}
 			<div className={inputWrapperClass}>

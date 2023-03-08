@@ -1,8 +1,8 @@
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 import { useCallback, useState } from 'react';
 import WiderIcon from '@/assets/images/svg/common/wider.svg';
-import { addressFilter } from '@/helpers';
-import { CollectionData, CollectionContent } from '@/wrappers/types';
+import { addressFilter, EditionData } from '@/helpers';
+import { CollectionContent } from '@/wrappers/types';
 import { PreviewImageModal } from '@/components';
 import { useMediaQuery } from 'react-responsive';
 
@@ -13,12 +13,7 @@ import styles from './styles.module.scss';
 
 const thirdwebStorage = new ThirdwebStorage();
 
-function EditionPreview({
-	content,
-}: {
-	collectionData: CollectionData;
-	content: CollectionContent;
-}) {
+function EditionPreview({ content }: { collectionData: EditionData; content: CollectionContent }) {
 	const [isImagePreviewOpened, setImagePreviewOpenedStatus] = useState(false);
 
 	const closePreviewImageModal = useCallback(() => {

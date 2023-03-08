@@ -11,11 +11,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 function FormArea() {
 	const { dirty, submitForm, values, isSubmitting } = useFormikContext<FormValues>();
-	const { contentDeploymentState, isFormDisabled, editionName } =
+	const { contentDeploymentState, isFormDisabled, editionName, getEditionDetails } =
 		useContext(DeploymentContext);
 
 	const navigate = useNavigate();
 	const params = useParams();
+
+	const handleDeploymentModalClose = useCallback(() => {
+		getEditionDetails();
+	}, []);
 
 	const hanelCancelClick = useCallback(() => {
 		navigate(`/edition/${params.collectionAddress}`);
@@ -25,6 +29,7 @@ function FormArea() {
 		<Form className={styles.editEditionForm}>
 			{contentDeploymentState.isModalOpened && (
 				<DeploymentModal
+					onClose={handleDeploymentModalClose}
 					values={values}
 					deploy={submitForm}
 					editionName={editionName}
@@ -36,15 +41,34 @@ function FormArea() {
 			</div>
 			<TextArea
 				label={'Description'}
+				optional
 				disabled={isFormDisabled}
 				placeholder={"I'd like to share my project. It's about..."}
 				name={'description'}
 				maxLength={260}
 			/>
-			<MediaInput label={'Media'} disabled={isFormDisabled} name="media" placeholder="None selected" />
-			<Input label={'Price'} disabled={isFormDisabled} name="price" type="number" placeholder="0.01" units="TON" max={8} />
+			<MediaInput
+				label={'Media'}
+				disabled={isFormDisabled}
+				name="media"
+				placeholder="None selected"
+			/>
+			<Input
+				label={'Price'}
+				disabled={isFormDisabled}
+				name="price"
+				type="number"
+				placeholder="0.01"
+				units="TON"
+			/>
 			<ValidityPeriod disabled={isFormDisabled} />
-			<Input type='text' disabled={isFormDisabled} label={'Payout address'} name="payoutAddress" placeholder="Address" />
+			<Input
+				type="text"
+				disabled={isFormDisabled}
+				label={'Payout address'}
+				name="payoutAddress"
+				placeholder="Address"
+			/>
 			<div className={styles.editEditionFormButtons}>
 				<Button
 					componentType="button"

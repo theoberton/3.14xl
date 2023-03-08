@@ -46,7 +46,7 @@ const renderDeployFailureComponent = (goBack: () => void, retryCreateEdition: ()
 			NFT hasn't been minted, an error occurred
 		</div>
 		<div className={styles.deploymentModalActions}>
-			<Button componentType="button" kind={ButtonKinds.basic} onClick={goBack}>
+			<Button componentType="button" kind={ButtonKinds.basic} basicInverted onClick={goBack}>
 				Go back
 			</Button>
 			<Button componentType="button" kind={ButtonKinds.basic} onClick={retryCreateEdition}>
@@ -65,6 +65,7 @@ enum DeploymentStatus {
 type Props = {
 	onClose: () => void;
 	address: string | undefined;
+	getEditionDetails: () => void;
 	deploy: () => void;
 	editionName: string | null;
 	currentNextNftItemIndex: number;
@@ -76,6 +77,7 @@ const retryContractDeployedCheck = 2 * 1000; // every 2 seconds check whether co
 
 export function MintDeployModal({
 	address,
+	getEditionDetails,
 	onClose,
 	deploy,
 	currentNextNftItemIndex,
@@ -132,8 +134,8 @@ export function MintDeployModal({
 		if (collectionDataAsync.value) {
 			setCurrentNftItemIndex(collectionDataAsync.value.collectionData.nextItemIndex);
 		}
-
-		// onClose();
+		onClose();
+		getEditionDetails();
 	}, [collectionDataAsync.value]);
 
 	useEffect(() => {

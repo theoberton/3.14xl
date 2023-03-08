@@ -9,7 +9,7 @@ import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Helmet } from 'react-helmet-async';
 import { CollectionContent } from '@/wrappers/types';
 import { fromUnixToDate } from '@/utils';
-import { dateToUnix } from '@/helpers';
+import { dateToUnix, ManagerFullData } from '@/helpers';
 import { Owner } from '@/pages/EditionEdit/Owner';
 import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
 
@@ -28,15 +28,7 @@ console.log(useMediaQuery);
 import styles from './../styles.module.scss';
 
 type Props = {
-	editionData: {
-		collectionData: {
-			nextItemIndex: number;
-			ownerAddress: Address;
-			collectionContentUri: string;
-		};
-		content: CollectionContent;
-		managerAddress: Address;
-	};
+	editionData: ManagerFullData;
 };
 
 export function Content({ editionData }: Props) {

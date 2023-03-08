@@ -30,9 +30,9 @@ export type CollectionContent = {
 	maxSupply: string;
 	symbol: string;
 	feeRecipient: string;
-	dateStart?: number;
+	dateStart: number;
 	payoutAddress: string;
-	dateEnd?: number;
+	dateEnd: number;
 };
 
 export interface RoyaltyParams {
