@@ -9,11 +9,13 @@ import { FormArea } from '@/pages/CreateEdition/FormArea';
 import { formSchema } from '@/pages/CreateEdition/validation';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
 import { Preview } from '@/pages/CreateEdition/Preview';
-import { EDITIONS_SIZES } from '@/constants/common';
-import { useTonClient } from '@/hooks';
+import { EDITIONS_SIZES, TELEGRAM_WEB_APP_ACTION } from '@/constants/common';
+import { useTelegram, useTonClient } from '@/hooks';
 import { createEdition } from '@/pages/CreateEdition/helpers';
 import { dateToUnix } from '@/helpers';
 import { Address } from 'ton-core';
+import { sendMessageToChat } from '@/libs/apiClient';
+import { composeFullEditionAddress } from '@/utils';
 
 const initialDeploymentState = {
 	isModalOpened: false,
@@ -47,9 +49,29 @@ function CreateEditionForm() {
 	const [tonConnectUI] = useTonConnectUI();
 	const [getdeploymentState, setDeploymentState] = useGetSetState(initialDeploymentState);
 
-	const handleDeploymentModalClose = useCallback(() => {
-		setDeploymentState(initialDeploymentState);
-	}, []);
+	const telegram = useTelegram();
+	console.log('telegram', telegram)
+
+	const sendEditionUrlToTelegram = useCallback((editionAddress: string, edtionName: string) => {
+		if(!telegram.user) return;
+
+		const edtionFullAddress = composeFullEditionAddress(editionAddress);
+
+		const message = {
+			action: TELEGRAM_WEB_APP_ACTION.EDITION_MINT,
+			payload: {
+				chatId: telegram.user.id,
+				message: `
+				Here is the link to your newly created ${edtionName} NFT edtion 🚀🚀🚀
+				${edtionFullAddress}
+				`	
+			}
+		};
+
+		console.log('message', message)
+
+		sendMessageToChat(message);
+	}, [sendMessageToChat, telegram.user]);
 
 	const handleConnectWalletClick = useCallback(async () => {
 		if (!tonConnectUI.connected) {
@@ -103,6 +125,8 @@ function CreateEditionForm() {
 					turnOffSubmition
 				);
 
+				sendEditionUrlToTelegram(collectionAddress, values.name);
+
 				setDeploymentState({
 					isModalOpened: true,
 					address: collectionAddress,
@@ -114,8 +138,12 @@ function CreateEditionForm() {
 				turnOffSubmition();
 			}
 		},
-		[address, tonConnectUI.connected, tonClient]
+		[sendEditionUrlToTelegram, address, tonConnectUI.connected, tonClient]
 	);
+
+	const handleDeploymentModalClose = useCallback(() => {
+		setDeploymentState(initialDeploymentState);
+	}, []);
 
 	let createEditionInitialValues: FormValues;
 

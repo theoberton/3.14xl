@@ -1,2 +1,2 @@
 export * from './manager';
-export * from './webApp';
+export * from './telegramWebApp';

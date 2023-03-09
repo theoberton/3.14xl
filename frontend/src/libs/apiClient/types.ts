@@ -1,3 +1,5 @@
+import { TELEGRAM_WEB_APP_ACTION } from '@/constants/common';
+
 export type ManagerContract = {
 	contractAddress: string;
 	ownerAddress: string;
@@ -20,4 +22,12 @@ export type ManagerContract = {
 export type ManagerContractList = {
 	count: number;
 	result: [ManagerContract];
+};
+
+export type TelegramMessage = {
+	action: TELEGRAM_WEB_APP_ACTION;
+	payload: {
+		chatId: number;
+		message: string;	
+	}
 };

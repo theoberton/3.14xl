@@ -16,3 +16,7 @@ export enum HTTP_METHODS_MAP {
 	POST = 'POST',
 	DELETE = 'DELETE',
 }
+
+export enum TELEGRAM_WEB_APP_ACTION {
+	EDITION_MINT = 'EditionMint',
+}

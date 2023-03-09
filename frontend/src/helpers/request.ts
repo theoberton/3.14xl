@@ -86,7 +86,12 @@ export async function request(method: Method, endpoint: string, data?: Object, p
 	}
 }
 
-export async function requestFull(url: string, method: Method, endpoint: string, data?: Object, params = {}) {
+export async function requestFullUrl(
+	url: string,
+	method: Method,
+	data?: Object,
+	params = {}
+) {
 	const requestParams: AxiosRequestConfig = {
 		method,
 		url,
