@@ -22,10 +22,10 @@
 
 		&Transparent {
 			padding: 24px 30px;
-			background-color: transparent;
+			background: transparent;
 
 			@media (max-width: $breakpoint-l) {
-				background-color: transparent;
+				background: transparent;
 			}
 		}
 	}
