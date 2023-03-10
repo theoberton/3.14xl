@@ -3,6 +3,9 @@
 .editions {
 	&Container {
 		padding-block: 40px;
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
 	}
 
 	&Header {
