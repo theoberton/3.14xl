@@ -1,26 +1,30 @@
 import { Form, useFormikContext } from 'formik';
 import { useCallback, useContext } from 'react';
 import styles from './../styles.module.scss';
+import { useNavigate } from 'react-router';
 
 import { Button, ButtonKinds, Input } from '@/components';
 import { DeploymentModal } from '@/pages/EditionEdit/Owner/DeploymentOwnershipTransferModal';
 import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
 import { TransferOwnershiptValues } from '../interfaces';
+import { useParams } from 'react-router-dom';
 
 export function FormArea() {
 	const { submitForm, values, dirty } = useFormikContext<TransferOwnershiptValues>();
+	const navigate = useNavigate();
+	const { collectionAddress } = useParams();
 
-	const { ownerDeploymentState, isFormDisabled, getEditionDetails } = useContext(DeploymentContext);
+	const { ownerDeploymentState, isFormDisabled } = useContext(DeploymentContext);
 
-	const handleDeploymentModalClose = useCallback(() => {
-		getEditionDetails();
-	}, []);
+	const handleDeploymentSuccessModalClose = useCallback(() => {
+		navigate(`/edition/${collectionAddress}`);
+	}, [collectionAddress]);
 
 	return (
 		<Form className={styles.editEditionForm}>
 			{ownerDeploymentState.isModalOpened && (
 				<DeploymentModal
-					onClose={handleDeploymentModalClose}
+					handleDeploymentSuccessModalClose={handleDeploymentSuccessModalClose}
 					values={values}
 					deploy={submitForm}
 					address={ownerDeploymentState.address}

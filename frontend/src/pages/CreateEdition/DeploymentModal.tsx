@@ -84,12 +84,14 @@ type Props = {
 	deploy: () => void;
 	editionName: string | null;
 	createNewEditionHandler: () => void;
+	sendEditionUrlToTelegram: (address: string, name: string) => void;
 };
 
 const deployExpirationTime = 40 * 1000; // 40 seconds
 const retryContractDeployedCheck = 2 * 1000; // every 2 seconds check whether contract is deployed or not
 
 export function DeploymentModal({
+	sendEditionUrlToTelegram,
 	address,
 	onClose,
 	deploy,
@@ -127,14 +129,15 @@ export function DeploymentModal({
 			collectionData = data.collectionData;
 			const overviewData = composeEditionOverviewData(data);
 
-			await createManagerContract({
+			createManagerContract({
 				contractAddress: data.collectionData.ownerAddress,
 				collectionAddress: address,
 				ownerAddress: data.managerAddress,
 				overviewData,
 			}).catch(err => console.log(err));
+			sendEditionUrlToTelegram(address, data.content.name);
+
 			// await apiClient.createManagerContract()
-			setStatus(DeploymentStatus.success);
 		} catch (error) {
 			setStatus(DeploymentStatus.inProgress);
 			throw error;

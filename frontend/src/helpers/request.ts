@@ -95,9 +95,6 @@ export async function requestFullUrl(
 	const requestParams: AxiosRequestConfig = {
 		method,
 		url,
-		headers: {
-			testnet: isTestnet(),
-		},
 		...params,
 	};
 

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useGetSetState } from 'react-use';
 import { Formik } from 'formik';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
@@ -50,7 +50,6 @@ function CreateEditionForm() {
 	const [getdeploymentState, setDeploymentState] = useGetSetState(initialDeploymentState);
 
 	const telegram = useTelegram();
-	console.log('telegram', telegram)
 
 	const sendEditionUrlToTelegram = useCallback((editionAddress: string, edtionName: string) => {
 		if(!telegram.user) return;
@@ -62,9 +61,7 @@ function CreateEditionForm() {
 			payload: {
 				chatId: telegram.user.id,
 				message: `
-				Here is the link to your newly created ${edtionName} NFT edtion 🚀🚀🚀
-				${edtionFullAddress}
-				`	
+				Here is the link to your newly created ${edtionName} NFT edtion 🚀 \n ${edtionFullAddress}`	
 			}
 		};
 
@@ -125,8 +122,6 @@ function CreateEditionForm() {
 					turnOffSubmition
 				);
 
-				sendEditionUrlToTelegram(collectionAddress, values.name);
-
 				setDeploymentState({
 					isModalOpened: true,
 					address: collectionAddress,
@@ -179,6 +174,7 @@ function CreateEditionForm() {
 			<section className={styles.createEditionContainer}>
 				<Preview />
 				<FormArea
+					sendEditionUrlToTelegram={sendEditionUrlToTelegram}
 					address={address}
 					handleDeploymentModalClose={handleDeploymentModalClose}
 					deploymentState={getdeploymentState()}

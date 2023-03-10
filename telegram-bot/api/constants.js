@@ -1,0 +1,17 @@
+const TELEGRAM_API_KEY = "6025437205:AAH1Jfglz5MCh_Q9CJAJqqSinUIE1KanCH8";
+
+const USER_COMMANDS_MAP = {
+  START: '/start',
+  MY_EDITIONS: '/my-editions',
+  CREATE_EDITION: '/create-edition',
+};
+
+const WEB_APP_ACTIONS_MAP = {
+  EDITION_CREATED: 'EDITION_CREATED',
+};
+
+module.exports = {
+  USER_COMMANDS_MAP,
+  TELEGRAM_API_KEY,
+  WEB_APP_ACTIONS_MAP,
+}
