@@ -1,10 +1,9 @@
 import EditionsHeader from './Header';
 import { Helmet } from 'react-helmet-async';
-import { EditionCard } from '@/components';
+import { EditionCard, PageLoader } from '@/components';
 import { getManagerContractByOwner } from '@/libs/apiClient';
 import { convertToBounceableAddress, getNftCollectionData } from '@/helpers';
-
-import { PageLoader } from '@/components';
+import NoEditions from './NoEditions';
 
 import styles from '@/pages/Explore/styles.module.scss';
 
@@ -84,12 +83,15 @@ export default function MyEdition() {
 		<div className={styles.editionsContainer}>
 			<Helmet title={'3.14XL - Explore editions'} />
 			<EditionsHeader />
-			<div className={styles.editionsShowCase}>
-				{editions &&
-					editions.map(edition => (
+			{editions?.length ? (
+				<div className={styles.editionsShowCase}>
+					{editions.map(edition => (
 						<EditionCard edition={edition} key={edition.name + edition.owner} />
 					))}
-			</div>
+				</div>
+			) : (
+				<NoEditions />
+			)}
 		</div>
 	);
 }
