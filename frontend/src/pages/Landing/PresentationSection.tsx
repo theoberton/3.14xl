@@ -1,8 +1,5 @@
 import { Button, ButtonKinds } from '@/components/Button';
 
-import CubeLeft from '@/assets/images/png/landing/CubeLeft.png';
-import CubeRight from '@/assets/images/png/landing/CubeRight.png';
-
 import styles from '@/pages/Landing/styles.module.scss';
 
 export function PresentationSection() {
@@ -15,8 +12,6 @@ export function PresentationSection() {
 
 	return (
 		<section className={styles.landingPresentationSection}>
-			<img src={CubeLeft} className={styles.landingCubeLeft} />
-			<img src={CubeRight} className={styles.landingCubeRight} />
 			<div className={styles.landingPresentationSlogan}>
 				<span className={styles.landingPresentationSloganItem}>Bring</span>
 				<span className={styles.landingPresentationSloganItem}>visions</span>

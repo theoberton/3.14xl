@@ -6,63 +6,10 @@
 		background-color: $black-one;
 		min-height: $page-height;
 
-		position: relative;
-
 		@media (max-width: $breakpoint-l) {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-		}
-	}
-
-	&Cube {
-		position: absolute;
-		z-index: 0;
-		user-select: none;
-		pointer-events: none;
-
-		&Left {
-			z-index: 1;
-			width: 65vw;
-			top: -40%;
-			left: -15%;
-			@extend .landingCube;
-
-			@media (max-width: $breakpoint-l) {
-				width: 65vw;
-				top: 2%;
-				left: -13%;
-			}
-
-			@media (max-width: $breakpoint-s) {
-				width: 65vw;
-				top: 3%;
-				left: -10%;
-			}
-
-			@media (max-width: $breakpoint-xs) {
-				top: 7%;
-			}
-		}
-
-		&Right {
-			z-index: 3;
-			width: 55vw;
-			right: -10%;
-			top: -10%;
-			@extend .landingCube;
-
-			@media (max-width: $breakpoint-l) {
-				width: 55vw;
-				right: -10%;
-				top: 20%;
-			}
-
-			@media (max-width: $breakpoint-s) {
-				width: 60vw;
-				right: -10%;
-				top: 25%;
-			}
 		}
 	}
 
