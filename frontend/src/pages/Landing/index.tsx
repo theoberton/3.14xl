@@ -8,18 +8,43 @@ export default function LandingPage() {
 	return (
 		<>
 			<Helmet title="3.14XL - Bring visions to life">
-				<meta property="og:title" content="Test Title" />
-				<meta name="twitter:title" content="Test Title" />
-				<meta name="description" content="Test Description" />
-				<meta property="og:description" content="Test Description" />
-				<meta name="twitter:description" content="Test Description" />
 				<meta
-					property="og:image"
-					content="https://images.unsplash.com/photo-1616020453784-a24fa9845b05?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHNhbXBsZXxlbnwwfHwwfHw%3D&w=1000&q=80"
+					name="description"
+					content="Create captivating NFT projects on TON blockchain with ease ( ^ ͜ʖ ^ ) - theoberton/3.14xl: Create captivating NFT projects on TON blockchain with ease ( ^ ͜ʖ ^ )"
 				/>
 				<meta
-					name="twitter:image"
-					content="https://images.unsplash.com/photo-1616020453784-a24fa9845b05?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHNhbXBsZXxlbnwwfHwwfHw%3D&w=1000&q=80"
+					name="twitter:image:src"
+					content="https://opengraph.githubassets.com/3d8fe384474efd9ad5ae33f9b55cddf543cff5526dfcd14eb0d0e3ee41e18596/theoberton/3.14xl"
+				></meta>
+				<meta name="twitter:site" content="@test" />
+				<meta
+					name="twitter:title"
+					content="theoberton/3.14xl: Create captivating NFT projects on TON blockchain with ease ( ^ ͜ʖ ^ )"
+				/>
+				<meta
+					name="twitter:description"
+					content="Create captivating NFT projects on TON blockchain with ease ( ^ ͜ʖ ^ ) - theoberton/3.14xl: Create captivating NFT projects on TON blockchain with ease ( ^ ͜ʖ ^ )"
+				/>
+				<meta
+					property="og:image"
+					content="https://opengraph.githubassets.com/3d8fe384474efd9ad5ae33f9b55cddf543cff5526dfcd14eb0d0e3ee41e18596/theoberton/3.14xl"
+				/>
+				<meta
+					property="og:image:alt"
+					content="Create captivating NFT projects on TON blockchain with ease ( ^ ͜ʖ ^ ) - theoberton/3.14xl: Create captivating NFT projects on TON blockchain with ease ( ^ ͜ʖ ^ )"
+				/>
+				<meta property="og:image:width" content="1200" />
+				<meta property="og:image:height" content="600" />
+				<meta property="og:site_name" content="GitHub" />
+				<meta property="og:type" content="object" />
+				<meta
+					property="og:title"
+					content="theoberton/3.14xl: Create captivating NFT projects on TON blockchain with ease ( ^ ͜ʖ ^ )"
+				/>
+				<meta property="og:url" content="https://pi.oberton.io/" />
+				<meta
+					property="og:description"
+					content="Create captivating NFT projects on TON blockchain with ease ( ^ ͜ʖ ^ ) - theoberton/3.14xl: Create captivating NFT projects on TON blockchain with ease ( ^ ͜ʖ ^ )"
 				/>
 			</Helmet>
 			<div className={styles.landingContainer}>
