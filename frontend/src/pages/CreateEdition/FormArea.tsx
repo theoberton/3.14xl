@@ -89,6 +89,7 @@ export function FormArea({
 			/>
 			<MediaInput label={'Media'} name="media" placeholder="None selected" />
 			<Input label={'Price'} name="price" type="number" placeholder="0.01" units="TON" />
+			<div className={styles.createEditionPriceHint}>Collector pays additional 5% to 3.14XL</div>
 			<EditionSize />
 			<ValidityPeriod />
 			<Input label={'Royalty'} name="royalty" type="number" placeholder="5" units="%" />
