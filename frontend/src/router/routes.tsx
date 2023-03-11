@@ -10,6 +10,7 @@ import 'nprogress/nprogress.css';
 const PageContainer = withSuspense(React.lazy(() => import('@/layouts/PageContainer')));
 const CreateEdition = withSuspense(React.lazy(() => import('@/pages/CreateEdition')));
 const LandingPage = withSuspense(React.lazy(() => import('@/pages/Landing')));
+const TelegramLandingPage = withSuspense(React.lazy(() => import('@/pages/TelegramLanding')));
 const NotFound = withSuspense(React.lazy(() => import('@/pages/NotFound')));
 const EditionDetailsPage = withSuspense(React.lazy(() => import('@/pages/EditionDetails')));
 const EditionEditPage = withSuspense(React.lazy(() => import('@/pages/EditionEdit')));
@@ -24,6 +25,7 @@ function ApplicationRoutes() {
 				<Routes>
 					<Route element={<PageContainer />}>
 						<Route path="/" element={<LandingPage />} />
+						<Route path="/telegram" element={<TelegramLandingPage />} />
 						<Route path="/edition/:collectionAddress" element={<EditionDetailsPage />} />
 						<Route path="/edition/:collectionAddress/edit" element={<EditionEditPage />} />
 						<Route path="/minted" element={<MintedEditionsPage />} />

@@ -85,3 +85,40 @@ export async function request(method: Method, endpoint: string, data?: Object, p
 		}
 	}
 }
+// TO DO: REMAKE
+export async function requestFullUrl(url: string, method: Method, data?: Object, params = {}) {
+	const requestParams: AxiosRequestConfig = {
+		method,
+		url,
+		...params,
+	};
+
+	if (method === HTTP_METHODS_MAP.GET) {
+		const stringifiedQuery = qs.stringify(data);
+		const queryString = stringifiedQuery ? `?${stringifiedQuery}` : '';
+
+		requestParams.url += queryString;
+	} else {
+		requestParams.data = data;
+	}
+
+	if (method === HTTP_METHODS_MAP.PUT) {
+		const stringifiedQuery = qs.stringify(params);
+		const queryString = stringifiedQuery ? `?${stringifiedQuery}` : '';
+
+		requestParams.url += queryString;
+	}
+
+	try {
+		const axiosResponse = await axios(requestParams);
+
+		return axiosResponse.data;
+	} catch (error: unknown) {
+		if (axios.isAxiosError(error)) {
+			return handleFailedRequest(error);
+		} else {
+			console.log('unexpected error: ', error);
+			return 'An unexpected error occurred';
+		}
+	}
+}

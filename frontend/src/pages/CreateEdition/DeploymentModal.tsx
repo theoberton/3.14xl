@@ -1,10 +1,10 @@
-import { Modal } from '@/components';
 import { useTonClient } from '@/hooks';
 import { useEffect, useState, useCallback } from 'react';
 import { useAsyncRetry } from 'react-use';
-import { Loader, SharePanel } from '@/components';
+import { Loader } from '@/components';
 import { composeEditionOverviewData, getFullNftCollectionData } from '@/helpers';
 import { Button, ButtonKinds } from '@/components/Button';
+import { Modal, SharePanel } from '@/components';
 
 import { LoaderSizes, LoaderColors, LoaderTypes } from '@/components/interfaces';
 import { useNavigate } from 'react-router';
@@ -95,12 +95,14 @@ type Props = {
 	deploy: () => void;
 	editionName: string | null;
 	createNewEditionHandler: () => void;
+	sendEditionUrlToTelegram: (address: string, name: string) => void;
 };
 
 const deployExpirationTime = 40 * 1000; // 40 seconds
 const retryContractDeployedCheck = 2 * 1000; // every 2 seconds check whether contract is deployed or not
 
 export function DeploymentModal({
+	sendEditionUrlToTelegram,
 	address,
 	onClose,
 	deploy,
@@ -132,21 +134,22 @@ export function DeploymentModal({
 		}
 
 		let collectionData;
-		let overviewData;
 
+		let overviewData;
 		try {
 			const data = await getFullNftCollectionData(tonClient, address);
 			collectionData = data.collectionData;
 			overviewData = composeEditionOverviewData(data);
 
-			await createManagerContract({
+			createManagerContract({
 				contractAddress: data.collectionData.ownerAddress,
 				collectionAddress: address,
 				ownerAddress: data.managerAddress,
 				overviewData,
 			}).catch(err => console.log(err));
+			sendEditionUrlToTelegram(address, data.content.name);
+
 			// await apiClient.createManagerContract()
-			setStatus(DeploymentStatus.success);
 		} catch (error) {
 			setStatus(DeploymentStatus.inProgress);
 			throw error;

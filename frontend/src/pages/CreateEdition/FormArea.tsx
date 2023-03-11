@@ -16,10 +16,12 @@ type Props = {
 	deploymentState: { isModalOpened: boolean; address: string; editionName: string };
 	handleConnectWalletClick: () => void;
 	handleDeploymentModalClose: () => void;
+	sendEditionUrlToTelegram: (address: string, name: string) => void;
 };
 
 export function FormArea({
 	isWalletConnected,
+	sendEditionUrlToTelegram,
 	handleDeploymentModalClose,
 	handleConnectWalletClick,
 	deploymentState,
@@ -59,6 +61,7 @@ export function FormArea({
 		<Form className={styles.createEdition}>
 			{deploymentState.isModalOpened && (
 				<DeploymentModal
+					sendEditionUrlToTelegram={sendEditionUrlToTelegram}
 					deploy={submitForm}
 					editionName={deploymentState.editionName}
 					address={deploymentState.address}

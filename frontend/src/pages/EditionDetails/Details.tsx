@@ -12,7 +12,6 @@ import { composeMintTransaction } from '@/pages/EditionDetails/helper';
 import MintDateSection from './MintTime';
 import { CopyToClipboard, ShareButton } from '@/components';
 
-
 type Props = {
 	getEditionDetails: () => void;
 	setCurrentNftItemIndex: React.Dispatch<React.SetStateAction<number>>;

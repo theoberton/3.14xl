@@ -4,6 +4,7 @@
   "repository": "https://github.com/theoberton/3.14xl.git",
   "author": "Oberton",
   "license": "MIT",
+  "homepage": "",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
