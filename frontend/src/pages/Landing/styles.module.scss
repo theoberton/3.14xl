@@ -25,7 +25,6 @@
 
 		&Slogan {
 			z-index: 1;
-
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
@@ -62,6 +61,7 @@
 			gap: 20px;
 			justify-content: center;
 			align-items: center;
+			padding-bottom: 80px;
 
 			@media (max-width: $breakpoint-xs) {
 				> :nth-child(1) {

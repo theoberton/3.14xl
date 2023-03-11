@@ -1,14 +1,30 @@
 import { Button, ButtonKinds } from '@/components/Button';
 
 import styles from '@/pages/Landing/styles.module.scss';
+import { useEffect, useState } from 'react';
 
 export function PresentationSection() {
+	const [isViewFeaturedButtonShown, setIsViewfeaturedButtonShown] = useState(true);
+
 	const goToFeaturedCollections = () => {
+		setIsViewfeaturedButtonShown(false);
 		const element = document.getElementById('landingShowcase');
 		if (element) {
 			element.scrollIntoView({ behavior: 'smooth' });
 		}
 	};
+
+	useEffect(() => {
+		window.onscroll = () => {
+			if (window.pageYOffset === 0) {
+				setIsViewfeaturedButtonShown(true);
+			}
+
+			if (window.pageYOffset > 30) {
+				setIsViewfeaturedButtonShown(false);
+			}
+		};
+	}, []);
 
 	return (
 		<section className={styles.landingPresentationSection}>
@@ -31,14 +47,16 @@ export function PresentationSection() {
 					Explore
 				</Button>
 			</div>
-			<Button
-				componentType="button"
-				kind={ButtonKinds.basic}
-				basicInverted
-				onClick={goToFeaturedCollections}
-			>
-				Featured collectons
-			</Button>
+			{
+				<Button
+					isInvisible={!isViewFeaturedButtonShown}
+					componentType="button"
+					kind={ButtonKinds.arrowDown}
+					basicInverted
+					trembling
+					onClick={goToFeaturedCollections}
+				/>
+			}
 		</section>
 	);
 }

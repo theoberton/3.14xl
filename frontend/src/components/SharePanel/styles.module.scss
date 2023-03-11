@@ -1,0 +1,12 @@
+.share {
+	&Social {
+	}
+	&Container {
+		display: flex;
+		gap: 20px;
+		justify-content: center;
+	}
+	&Button {
+		cursor: pointer;
+	}
+}

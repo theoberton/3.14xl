@@ -13,6 +13,12 @@
 	align-items: center;
 	gap: 20px;
 
+	&FeeCaption {
+		color: $gray-one;
+		text-align: center;
+		font-weight: $font-normal;
+	}
+
 	border-right: 1px solid $gray-eleven;
 
 	> * {

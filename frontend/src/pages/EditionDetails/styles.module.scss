@@ -6,10 +6,10 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: flex-start;
-
 		padding-block: 30px;
 
 		@media (max-width: $breakpoint-m) {
+			gap: 35px;
 			flex-direction: column;
 			justify-content: flex-start;
 			align-items: center;
@@ -174,6 +174,14 @@
 
 		&About {
 			flex: 1;
+
+			&Name {
+
+				@media (max-width: $breakpoint-m) {
+					display: flex;
+					justify-content: space-between;
+				}
+			}
 
 			&Wrapper {
 				display: flex;
