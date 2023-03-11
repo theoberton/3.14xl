@@ -13,7 +13,7 @@ const manifestUrl = 'https://pi.oberton.io/tonconnect-manifest.json';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
-		<TonConnectUIProvider manifestUrl={manifestUrl}>
+		<TonConnectUIProvider manifestUrl={manifestUrl} walletsList={{ wallets: ['Tonkeeper'] }} >
 			<HelmetProvider>
 				<ApplicationRoutes />
 			</HelmetProvider>
