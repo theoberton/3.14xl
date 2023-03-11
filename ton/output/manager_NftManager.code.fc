@@ -232,6 +232,11 @@ builder __gen_write_NftManager(builder build_0, (slice, slice, int, int, int, in
     return (sc_0, (v'owner, v'nft_collection_address, v'mint_price, v'max_supply, v'mint_date_start, v'mint_date_end, v'payout_address, v'content_init));
 }
 
+_ __gen_Context_get_value((int, slice, int, slice) v) inline {
+    var (v'bounced, v'sender, v'value, v'raw) = v;
+    return v'value;
+}
+
 (slice, slice, int, int, int, int, slice) __gen_ManagerData_to_external(((slice, slice, int, int, int, int, slice)) v) inline {
     var (v'owner, v'nft_collection_address, v'mint_price, v'max_supply, v'mint_date_start, v'mint_date_end, v'payout_address) = v; 
     return (v'owner, v'nft_collection_address, v'mint_price, v'max_supply, v'mint_date_start, v'mint_date_end, v'payout_address);
@@ -414,17 +419,23 @@ _ $__gen_get_owner() method_id(83229) {
     return (query_id, collection_content);
 }
 
+((int)) __gen_constructor_Excesses$query_id(int query_id) inline {
+    return (query_id);
+}
+
 (((slice, slice, int, int, int, int, slice, cell)), ()) $__gen_NftManager_receive_EditData((slice, slice, int, int, int, int, slice, cell) $self, (int, cell, int, int, int, slice) $msg) impure inline {
     var ($self'owner, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address, $self'content_init) = $self;
     var ($msg'query_id, $msg'content, $msg'mint_price, $msg'mint_date_start, $msg'mint_date_end, $msg'payout_address) = $msg;
     ($self'owner, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address, $self'content_init)~$__gen_NftManager_requireOwner();
-    int $restAmount = ((__tact_my_balance() - 50000000) - 50000000);
+    int $storageFee = max((50000000 - __tact_my_balance()), 0);
+    int $restAmount = ((__gen_Context_get_value(__tact_context_get()) - $storageFee) - 20000000);
     throw_unless(13674, ($restAmount >= 0));
     $self'mint_price = $msg'mint_price;
     $self'mint_date_start = $msg'mint_date_start;
     $self'mint_date_end = $msg'mint_date_end;
     $self'payout_address = $msg'payout_address;
-    $send(__gen_constructor_SendParameters$to_value_body($self'nft_collection_address, 50000000, __gen_writecell_UpdateContent(__gen_constructor_UpdateContent$query_id_collection_content($msg'query_id, $msg'content))));
+    $send(__gen_constructor_SendParameters$to_value_body($self'nft_collection_address, 20000000, __gen_writecell_UpdateContent(__gen_constructor_UpdateContent$query_id_collection_content($msg'query_id, $msg'content))));
+    $send(__gen_constructor_SendParameters$to_value_body(__tact_context_get_sender(), $restAmount, __gen_writecell_Excesses(__gen_constructor_Excesses$query_id($msg'query_id))));
     return (($self'owner, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address, $self'content_init), ());
 }
 
@@ -437,10 +448,6 @@ slice __gen_slice_address_d78b550aaa9750d9d9cefa48a13776d0c56f2aec64ae92bd04598a
 
 ((int, int, int, cell)) __gen_constructor_Mint$query_id_item_index_item_value_item_content(int query_id, int item_index, int item_value, cell item_content) inline {
     return (query_id, item_index, item_value, item_content);
-}
-
-((int)) __gen_constructor_Excesses$query_id(int query_id) inline {
-    return (query_id);
 }
 
 (((slice, slice, int, int, int, int, slice, cell)), ()) $__gen_NftManager_receive_MintSafe((slice, slice, int, int, int, int, slice, cell) $self, (int, int, slice) $msg) impure inline {

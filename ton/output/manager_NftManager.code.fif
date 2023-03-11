@@ -29,6 +29,7 @@ PROGRAM{
   DECLPROC __gen_read_InitArgs
   DECLPROC __gen_write_NftManager
   DECLPROC __gen_read_NftManager
+  DECLPROC __gen_Context_get_value
   DECLPROC __gen_ManagerData_to_external
   DECLPROC __gen_read_$init$NftManager
   DECLPROC $__gen_NftManager_init
@@ -51,10 +52,10 @@ PROGRAM{
   DECLPROC $__gen_NftManager_receive_ChangeOwnerOfCollection
   DECLPROC __gen_constructor_SendParameters$to_value_body
   DECLPROC __gen_constructor_UpdateContent$query_id_collection_content
+  DECLPROC __gen_constructor_Excesses$query_id
   DECLPROC $__gen_NftManager_receive_EditData
   DECLPROC __gen_constructor_SendParameters$to_value_mode_body
   DECLPROC __gen_constructor_Mint$query_id_item_index_item_value_item_content
-  DECLPROC __gen_constructor_Excesses$query_id
   DECLPROC $__gen_NftManager_receive_MintSafe
   DECLPROC __gen_constructor_DeployOk$queryId
   DECLPROC $__gen_NftManager_receive_Deploy
@@ -369,6 +370,10 @@ PROGRAM{
     LDREF
     8 -ROLL
   }>
+  __gen_Context_get_value PROCINLINE:<{
+    s1 s3 XCHG
+    3 BLKDROP
+  }>
   __gen_ManagerData_to_external PROCINLINE:<{
   }>
   __gen_read_$init$NftManager PROCINLINE:<{
@@ -606,6 +611,8 @@ PROGRAM{
   }>
   __gen_constructor_UpdateContent$query_id_collection_content PROCINLINE:<{
   }>
+  __gen_constructor_Excesses$query_id PROCINLINE:<{
+  }>
   $__gen_NftManager_receive_EditData PROCINLINE:<{
     s7 s13 XCHG
     s6 s12 XCHG
@@ -616,26 +623,39 @@ PROGRAM{
     $__gen_NftManager_requireOwner INLINECALLDICT
     s5 POP
     3 BLKDROP
+    50000000 PUSHINT
     __tact_my_balance INLINECALLDICT
-    50000000 PUSHINT
     SUB
-    50000000 PUSHINT
+    0 PUSHINT
+    MAX
+    __tact_context_get INLINECALLDICT
+    __gen_Context_get_value INLINECALLDICT
+    SWAP
+    SUB
+    20000000 PUSHINT
     SUB
     13674 PUSHINT
-    SWAP
+    OVER
     -1 GTINT
     THROWANYIFNOT
-    s0 s7 XCHG
-    50000000 PUSHINT
-    s0 s7 XCHG
+    s8 PUSH
+    20000000 PUSHINT
+    s0 s9 XCHG
     __gen_constructor_UpdateContent$query_id_collection_content INLINECALLDICT
     __gen_writecell_UpdateContent INLINECALLDICT
-    s2 s6 s6 PUXC2
+    s4 s8 s8 PUXC2
+    __gen_constructor_SendParameters$to_value_body INLINECALLDICT
+    $send INLINECALLDICT
+    __tact_context_get_sender INLINECALLDICT
+    s0 s8 XCHG
+    __gen_constructor_Excesses$query_id INLINECALLDICT
+    __gen_writecell_Excesses INLINECALLDICT
+    s8 s7 s0 XCHG3
     __gen_constructor_SendParameters$to_value_body INLINECALLDICT
     $send INLINECALLDICT
     s7 s6 XCHG2
     s3 s5 XCHG
-    4 ROLL
+    3 ROLL
   }>
   __gen_constructor_SendParameters$to_value_mode_body PROCINLINE:<{
     TRUE
@@ -644,8 +664,6 @@ PROGRAM{
     PUSHNULL
   }>
   __gen_constructor_Mint$query_id_item_index_item_value_item_content PROCINLINE:<{
-  }>
-  __gen_constructor_Excesses$query_id PROCINLINE:<{
   }>
   $__gen_NftManager_receive_MintSafe PROCINLINE:<{
     __tact_context_get INLINECALLDICT

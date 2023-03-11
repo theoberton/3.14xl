@@ -108,7 +108,8 @@ contract NftManager with Deployable, Ownable {
   receive(msg: EditData) {
     self.requireOwner();
 
-    let restAmount: Int = myBalance() - minTonsForStorage - ton("0.05");
+    let storageFee: Int = max(minTonsForStorage - myBalance(), 0);
+    let restAmount: Int = context().value - storageFee - ton("0.02");
 
     require(restAmount >= 0, "Insufficient amount sent");
 
@@ -117,15 +118,21 @@ contract NftManager with Deployable, Ownable {
     self.mint_date_end = msg.mint_date_end;
     self.payout_address = msg.payout_address;
 
-    // let collection_content: Cell = beginCell().storeRef().storeRef(emptyCell()).endCell();
-
     send(SendParameters {
       to: self.nft_collection_address,
-      value: ton("0.05"),
+      value: ton("0.02"),
       body: UpdateContent {
         query_id: msg.query_id,
         collection_content: msg.content
       }.toCell()
+    });
+
+     send(SendParameters {
+      to: sender(),
+      value: restAmount,
+      body: Excesses {
+        query_id: msg.query_id
+      }.toCell()  
     });
   }
 

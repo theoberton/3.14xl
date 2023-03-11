@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: NftManager
-BOC Size: 1896 bytes
+BOC Size: 1940 bytes
 
 # Types
 Total Types: 15

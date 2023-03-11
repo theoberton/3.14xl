@@ -414,6 +414,13 @@ describe('NftManager', () => {
 			success: true,
 		});
 
+		expect(result.transactions).toHaveTransaction({
+			from: manager.address,
+			to: creator.address,
+			success: true,
+			value: value => (value ?? 0) > toNano('0.028'),
+		});
+
 		const updatedManagerData = await manager.getManagerData();
 
 		const collectionDataAfterEdit = await collection.getCollectionData();
