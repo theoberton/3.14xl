@@ -2,7 +2,7 @@ import { Modal } from '@/components';
 import { useTonClient } from '@/hooks';
 import { useEffect, useState, useCallback } from 'react';
 import { useAsyncRetry } from 'react-use';
-import { Loader } from '@/components';
+import { Loader, SharePanel } from '@/components';
 import { composeEditionOverviewData, getFullNftCollectionData } from '@/helpers';
 import { Button, ButtonKinds } from '@/components/Button';
 
@@ -30,13 +30,24 @@ const renderDeployInProgressComponent = () => (
 const renderDeploySuccessComponent = (
 	createNewEditionHandler: () => void,
 	viewCreatedEdition: () => void,
-	editionName: string | null
+	settings: {
+		editionName: string | null;
+		address: string | null;
+		media?: string;
+	}
 ) => (
 	<div className={styles.deploymentModal}>
 		<img src={SuccessIcon} className={styles.deploymentModalImage} />
 		<div className={styles.deploymentModalTitle}>Edition has been created</div>
 		<div className={styles.deploymentModalTitleCaption}>
-			{editionName} has successfully been deployed
+			{settings.editionName} has successfully been deployed
+		</div>
+		<div>
+			<SharePanel
+				title={settings.editionName!}
+				shareUrl={`${window.location.origin}/#/edition/${settings.address}`}
+				media={settings.media}
+			/>
 		</div>
 		<div className={styles.deploymentModalActions}>
 			<Button
@@ -121,11 +132,12 @@ export function DeploymentModal({
 		}
 
 		let collectionData;
+		let overviewData;
 
 		try {
 			const data = await getFullNftCollectionData(tonClient, address);
 			collectionData = data.collectionData;
-			const overviewData = composeEditionOverviewData(data);
+			overviewData = composeEditionOverviewData(data);
 
 			await createManagerContract({
 				contractAddress: data.collectionData.ownerAddress,
@@ -140,7 +152,7 @@ export function DeploymentModal({
 			throw error;
 		}
 
-		return { collectionData };
+		return { collectionData, content: overviewData.content };
 	}, [tonClient, address]);
 
 	const viewCreatedEdition = useCallback(() => {
@@ -179,6 +191,12 @@ export function DeploymentModal({
 
 	const closeOnOverlayClick = status !== DeploymentStatus.inProgress;
 
+	const settings = {
+		editionName,
+		address,
+		media: collectionDataAsync.value?.content,
+	};
+
 	return (
 		<Modal
 			closeOnOverlayClick={closeOnOverlayClick}
@@ -189,7 +207,7 @@ export function DeploymentModal({
 			onClose={onClose}
 		>
 			{status == DeploymentStatus.success &&
-				renderDeploySuccessComponent(createNewEditionHandler, viewCreatedEdition, editionName)}
+				renderDeploySuccessComponent(createNewEditionHandler, viewCreatedEdition, settings)}
 			{status == DeploymentStatus.inProgress && renderDeployInProgressComponent()}
 			{status == DeploymentStatus.failiure &&
 				renderDeployFailureComponent(goBack, retryCreateEdition)}

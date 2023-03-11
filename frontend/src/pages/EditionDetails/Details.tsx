@@ -10,7 +10,8 @@ import { Button, ButtonKinds } from '@/components/Button';
 import styles from './styles.module.scss';
 import { composeMintTransaction } from '@/pages/EditionDetails/helper';
 import MintDateSection from './MintTime';
-import { CopyToClipboard } from '@/components';
+import { CopyToClipboard, ShareButton } from '@/components';
+
 
 type Props = {
 	getEditionDetails: () => void;
@@ -150,7 +151,10 @@ function EditionDetails({
 			<div className={styles.editionDetailsInfoAboutWrapper}>
 				<div className={styles.editionDetailsInfoAbout}>
 					<h3>ABOUT</h3>
-					<h1>{content.name}</h1>
+					<div className={styles.editionDetailsInfoAboutName}>
+							<h1>{content.name}</h1>
+							<ShareButton />
+					</div>
 					<p>{content.description}</p>
 				</div>
 				{isMyEdition && (

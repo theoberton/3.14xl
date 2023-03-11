@@ -41,6 +41,7 @@
     "react-router-dom": "^6.8.0",
     "react-router-prompt": "^0.5.2",
     "react-select": "^5.7.0",
+    "react-share": "^4.4.1",
     "react-spinners": "^0.13.8",
     "react-textarea-autosize": "^8.4.0",
     "react-use": "^17.4.0",

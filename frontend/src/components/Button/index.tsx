@@ -1,12 +1,11 @@
 import cn from 'classnames';
 import styles from '@/components/Button/styles.module.scss';
-import ArrowLeftIcon from '@/assets/images/svg/button/arrowLeft.svg';
 import ArrowRightIcon from '@/assets/images/svg/button/arrowRight.svg';
 import { ButtonKinds, LoaderColors } from '@/components/interfaces';
 import { Link } from 'react-router-dom';
 import { Loader } from '@/components';
 import { LoaderSizes } from '@/components/interfaces';
-
+import ArrowDownIcon from '@/assets/images/svg/button/arrowDown.svg';
 export * from './interfaces';
 
 interface CommonProps {
@@ -20,6 +19,8 @@ interface CommonProps {
 	mini?: boolean;
 	disabled?: boolean;
 	danger?: boolean;
+	trembling?: boolean;
+	isInvisible?: boolean;
 }
 
 interface ButtonProps extends CommonProps {
@@ -38,23 +39,29 @@ type IProps = ButtonProps | LinkProps;
 export function Button(props: IProps) {
 	const {
 		componentType,
+		isInvisible = false,
 		expanded = false,
 		basicInverted,
 		kind,
 		danger = false,
 		isSubmitting,
+		trembling,
 	} = props;
 
 	const buttonContent = getButtonContent(props);
 
-	const isWithIconType = [ButtonKinds.arrowLeft, ButtonKinds.arrowRight].includes(kind);
+	const isWithIconType = [ButtonKinds.arrowDown].includes(kind);
 
 	const btnClass = cn({
-		[styles.button]: true,
-		[styles.buttonBasicInverted]: basicInverted,
+		[styles.button]: !isWithIconType,
+		[styles.buttonIcon]: isWithIconType,
+		[styles.buttonBasicInverted]: basicInverted && !isWithIconType,
+		[styles.buttonBasicInvertedIcon]: basicInverted && isWithIconType,
 		[styles.buttonWithIcon]: isWithIconType,
 		[styles.buttonExpanded]: expanded,
 		[styles.buttonDanger]: danger,
+		[styles.buttonTrembling]: trembling,
+		[styles.buttonInvisible]: isInvisible,
 	});
 
 	if (componentType === 'button') {
@@ -114,36 +121,8 @@ function getButtonContent(props: IProps): React.ReactNode {
 				<div className={styles.buttonContentMain}>{isSubmitting ? LoaderComponent : children}</div>
 			</div>
 		);
-	} else if (kind == ButtonKinds.arrowLeft) {
-		basicButtonContent = <img className={imageClassname} src={ArrowLeftIcon} />;
-	} else if (kind == ButtonKinds.arrowRight) {
-		basicButtonContent = <img className={imageClassname} src={ArrowRightIcon} />;
-	} else if (kind == ButtonKinds.basicWithIconArrowLeft) {
-		const resultImageClassname = cn({
-			[imageClassname]: true,
-			[styles.buttonContentWhite]: green,
-		});
-		const resultClassname = cn(styles.buttonContentWithArrow, commonContentClassnames);
-
-		basicButtonContent = (
-			<div className={resultClassname}>
-				<div className={styles.buttonContentMain}>{children}</div>
-				<img className={resultImageClassname} src={ArrowLeftIcon} />
-			</div>
-		);
-	} else if (kind == ButtonKinds.basicWithIconArrowRight) {
-		const resultImageClassname = cn({
-			[imageClassname]: true,
-			[styles.buttonContentWhite]: green,
-		});
-		const resultClassname = cn(styles.buttonContentWithArrow, commonContentClassnames);
-
-		basicButtonContent = (
-			<div className={resultClassname}>
-				<div className={styles.buttonContentMain}>{children}</div>
-				<img className={resultImageClassname} src={ArrowRightIcon} />
-			</div>
-		);
+	} else if (kind == ButtonKinds.arrowDown) {
+		basicButtonContent = <img className={imageClassname} src={ArrowDownIcon} />;
 	}
 
 	return basicButtonContent;
