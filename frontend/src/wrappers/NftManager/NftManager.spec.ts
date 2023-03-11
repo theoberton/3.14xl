@@ -20,7 +20,7 @@ const defaultManagerInitContent = 'www.google.com';
 
 const pixelWallet = WalletContractV4.create({
 	workchain: 0,
-	publicKey: Buffer.from('M5FeZeMPgnPKNabfcw7nU37OD2QMhJsfZcucjTxdcH0=', 'base64'),
+	publicKey: Buffer.from('x6g1ibBSQlGst4wLfD3kl8neG7KiMkZ7HSP/+JYthQI=', 'base64'),
 });
 
 async function setupPixelWallet(blkch: Blockchain) {

@@ -3,7 +3,7 @@ import "@stdlib/deploy";
 import "./params.fc";
 
 const minTonsForStorage: Int = ton("0.05");
-const pixelTreasury: Address = address("EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx");
+const pixelTreasury: Address = address("EQAkL7VQ5_K7Ksc_J2xnAM_umLjed1aPekxOk0drbQcnGfWy");
 
 message(0x1) Mint {
   query_id: Int as uint64;

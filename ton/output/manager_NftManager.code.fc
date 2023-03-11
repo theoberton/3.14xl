@@ -432,8 +432,8 @@ _ $__gen_get_owner() method_id(83229) {
     return (true, to, value, mode, body, null(), null());
 }
 
-;; ;; EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx
-slice __gen_slice_address_5b01eb7e947c760b198f95cdda3afe784fb3a54e2ba99bcfd1708ce678434459() asm "B{b5ee9c72410101010024000043800b488df7d9f9ab53e9903cd27193015afeb9cadbc439ff146a39dc8402566a2a3013f698de} B>boc <s PUSHSLICE";
+;; ;; EQAkL7VQ5_K7Ksc_J2xnAM_umLjed1aPekxOk0drbQcnGfWy
+slice __gen_slice_address_d78b550aaa9750d9d9cefa48a13776d0c56f2aec64ae92bd04598a5152c3ee1e() asm "B{b5ee9c72410101010024000043800485f6aa1cfe576558e7e4ed8ce019fdd3171bceead1ef4989d268ed6da0e4e330aee6b07d} B>boc <s PUSHSLICE";
 
 ((int, int, int, cell)) __gen_constructor_Mint$query_id_item_index_item_value_item_content(int query_id, int item_index, int item_value, cell item_content) inline {
     return (query_id, item_index, item_value, item_content);
@@ -455,7 +455,7 @@ slice __gen_slice_address_5b01eb7e947c760b198f95cdda3afe784fb3a54e2ba99bcfd1708c
     throw_unless(23716, ($self'mint_date_start < now()));
     throw_unless(36032, (($self'mint_date_end == 0) | ($self'mint_date_end > now())));
     $send(__gen_constructor_SendParameters$to_value_mode_body($self'payout_address, $self'mint_price, 1, $__gen_String_asComment(__gen_str_3884301487())));
-    $send(__gen_constructor_SendParameters$to_value_mode_body(__gen_slice_address_5b01eb7e947c760b198f95cdda3afe784fb3a54e2ba99bcfd1708ce678434459(), $pixelReward, 1, $__gen_String_asComment(__gen_str_3884301487())));
+    $send(__gen_constructor_SendParameters$to_value_mode_body(__gen_slice_address_d78b550aaa9750d9d9cefa48a13776d0c56f2aec64ae92bd04598a5152c3ee1e(), $pixelReward, 1, $__gen_String_asComment(__gen_str_3884301487())));
     $send(__gen_constructor_SendParameters$to_value_body($self'nft_collection_address, 50000000, __gen_writecell_Mint(__gen_constructor_Mint$query_id_item_index_item_value_item_content($msg'query_id, $msg'next_item_index, 20000000, $item_content))));
     $send(__gen_constructor_SendParameters$to_value_mode_body($ctx'sender, $restAmount, 1, __gen_writecell_Excesses(__gen_constructor_Excesses$query_id($msg'query_id))));
     return (($self'owner, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address, $self'content_init), ());
