@@ -732,8 +732,8 @@ function dictValueParserExcesses(): DictionaryValue<Excesses> {
     }
 }
 
- type NftManager_init_args = {
-    $$type: 'NftManager_init_args';
+export type InitArgs = {
+    $$type: 'InitArgs';
     owner: Address;
     mint_price: bigint;
     max_supply: bigint;
@@ -743,28 +743,84 @@ function dictValueParserExcesses(): DictionaryValue<Excesses> {
     content_init: Cell;
 }
 
-function initNftManager_init_args(src: NftManager_init_args) {
+export function storeInitArgs(src: InitArgs) {
     return (builder: Builder) => {
         let b_0 = builder;
         b_0.storeAddress(src.owner);
-        b_0.storeInt(src.mint_price, 257);
-        b_0.storeInt(src.max_supply, 257);
-        let b_1 = new Builder();
-        b_1.storeInt(src.mint_date_start, 257);
-        b_1.storeInt(src.mint_date_end, 257);
-        b_1.storeAddress(src.payout_address);
-        b_1.storeRef(src.content_init);
-        b_0.storeRef(b_1.endCell());
+        b_0.storeCoins(src.mint_price);
+        b_0.storeUint(src.max_supply, 32);
+        b_0.storeUint(src.mint_date_start, 32);
+        b_0.storeUint(src.mint_date_end, 32);
+        b_0.storeAddress(src.payout_address);
+        b_0.storeRef(src.content_init);
     };
 }
 
-async function NftManager_init(owner: Address, mint_price: bigint, max_supply: bigint, mint_date_start: bigint, mint_date_end: bigint, payout_address: Address, content_init: Cell) {
-    const __code = Cell.fromBase64('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');
-    const __system = Cell.fromBase64('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');
+export function loadInitArgs(slice: Slice) {
+    let sc_0 = slice;
+    let _owner = sc_0.loadAddress();
+    let _mint_price = sc_0.loadCoins();
+    let _max_supply = sc_0.loadUintBig(32);
+    let _mint_date_start = sc_0.loadUintBig(32);
+    let _mint_date_end = sc_0.loadUintBig(32);
+    let _payout_address = sc_0.loadAddress();
+    let _content_init = sc_0.loadRef();
+    return { $$type: 'InitArgs' as const, owner: _owner, mint_price: _mint_price, max_supply: _max_supply, mint_date_start: _mint_date_start, mint_date_end: _mint_date_end, payout_address: _payout_address, content_init: _content_init };
+}
+
+function loadTupleInitArgs(source: TupleReader) {
+    let _owner = source.readAddress();
+    let _mint_price = source.readBigNumber();
+    let _max_supply = source.readBigNumber();
+    let _mint_date_start = source.readBigNumber();
+    let _mint_date_end = source.readBigNumber();
+    let _payout_address = source.readAddress();
+    let _content_init = source.readCell();
+    return { $$type: 'InitArgs' as const, owner: _owner, mint_price: _mint_price, max_supply: _max_supply, mint_date_start: _mint_date_start, mint_date_end: _mint_date_end, payout_address: _payout_address, content_init: _content_init };
+}
+
+function storeTupleInitArgs(source: InitArgs) {
+    let builder = new TupleBuilder();
+    builder.writeAddress(source.owner);
+    builder.writeNumber(source.mint_price);
+    builder.writeNumber(source.max_supply);
+    builder.writeNumber(source.mint_date_start);
+    builder.writeNumber(source.mint_date_end);
+    builder.writeAddress(source.payout_address);
+    builder.writeCell(source.content_init);
+    return builder.build();
+}
+
+function dictValueParserInitArgs(): DictionaryValue<InitArgs> {
+    return {
+        serialize: (src, buidler) => {
+            buidler.storeRef(beginCell().store(storeInitArgs(src)).endCell());
+        },
+        parse: (src) => {
+            return loadInitArgs(src.loadRef().beginParse());
+        }
+    }
+}
+
+ type NftManager_init_args = {
+    $$type: 'NftManager_init_args';
+    initArgs: InitArgs;
+}
+
+function initNftManager_init_args(src: NftManager_init_args) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.store(storeInitArgs(src.initArgs));
+    };
+}
+
+async function NftManager_init(initArgs: InitArgs) {
+    const __code = Cell.fromBase64('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');
+    const __system = Cell.fromBase64('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');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
-    initNftManager_init_args({ $$type: 'NftManager_init_args', owner, mint_price, max_supply, mint_date_start, mint_date_end, payout_address, content_init })(builder);
+    initNftManager_init_args({ $$type: 'NftManager_init_args', initArgs })(builder);
     const __data = builder.endCell();
     return { code: __code, data: __data };
 }
@@ -803,12 +859,12 @@ const NftManager_errors: { [key: number]: { message: string } } = {
 
 export class NftManager implements Contract {
     
-    static async init(owner: Address, mint_price: bigint, max_supply: bigint, mint_date_start: bigint, mint_date_end: bigint, payout_address: Address, content_init: Cell) {
-        return await NftManager_init(owner, mint_price, max_supply, mint_date_start, mint_date_end, payout_address, content_init);
+    static async init(initArgs: InitArgs) {
+        return await NftManager_init(initArgs);
     }
     
-    static async fromInit(owner: Address, mint_price: bigint, max_supply: bigint, mint_date_start: bigint, mint_date_end: bigint, payout_address: Address, content_init: Cell) {
-        const init = await NftManager_init(owner, mint_price, max_supply, mint_date_start, mint_date_end, payout_address, content_init);
+    static async fromInit(initArgs: InitArgs) {
+        const init = await NftManager_init(initArgs);
         const address = contractAddress(0, init);
         return new NftManager(address, init);
     }

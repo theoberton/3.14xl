@@ -20,7 +20,7 @@ export function buildNftManagerDataCell(managerData: NftManagerInitData, systemC
 
 	let data = beginCell()
 		.storeRef(systemCell)
-		.storeAddress(managerData.owner)
+		.storeUint(0, 1)
 		.storeAddress(managerData.owner)
 		.storeCoins(managerData.mintPrice)
 		.storeInt(managerData.maxSupply ?? 0n, 32)

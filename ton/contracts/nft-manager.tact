@@ -54,29 +54,37 @@ message(0xd53276db) Excesses {
   query_id: Int as uint64;
 }
 
+struct InitArgs {
+  owner: Address;
+  mint_price: Int as coins;
+  max_supply: Int as uint32;
+  mint_date_start: Int as uint32;
+  mint_date_end: Int as uint32;
+  payout_address: Address;
+  content_init: Cell;
+}
+
 contract NftManager with Deployable, Ownable {
   owner: Address;
-  content_init: Cell;
   nft_collection_address: Address;
   mint_price: Int as coins;
   max_supply: Int as uint32;
   mint_date_start: Int as uint32;
   mint_date_end: Int as uint32;
   payout_address: Address;
+  content_init: Cell;
 
   init(
-    owner: Address, mint_price: Int,
-    max_supply: Int, mint_date_start: Int, mint_date_end: Int,
-    payout_address: Address, content_init: Cell
+    initArgs: InitArgs
   ) {
-    self.owner = owner;
-    self.nft_collection_address = owner;
-    self.mint_price = mint_price;
-    self.max_supply = max_supply;
-    self.mint_date_start = mint_date_start;
-    self.mint_date_end = mint_date_end;
-    self.payout_address = payout_address;
-    self.content_init = content_init;
+    self.owner = initArgs.owner;
+    self.nft_collection_address = initArgs.owner;
+    self.mint_price = initArgs.mint_price;
+    self.max_supply = initArgs.max_supply;
+    self.mint_date_start = initArgs.mint_date_start;
+    self.mint_date_end = initArgs.mint_date_end;
+    self.payout_address = initArgs.payout_address;
+    self.content_init = initArgs.content_init;
   }
 
   receive(msg: SetNftCollectionAddress) {
