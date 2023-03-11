@@ -3,7 +3,6 @@ PROGRAM{
   DECLPROC __tact_verify_address
   DECLPROC __tact_load_address
   DECLPROC __tact_store_address
-  DECLPROC __tact_create_address
   DECLPROC __tact_my_balance
   DECLPROC __tact_not_null
   DECLPROC __tact_context_get
@@ -101,21 +100,6 @@ PROGRAM{
   __tact_store_address PROCINLINE:<{
     __tact_verify_address INLINECALLDICT
     STSLICER
-  }>
-  __tact_create_address PROCINLINE:<{
-    NEWC
-    2 PUSHINT
-    SWAP
-    2 STU
-    0 PUSHINT
-    SWAP
-    1 STU
-    s1 s2 XCHG
-    8 STI
-    256 STU
-    ENDC
-    CTOS
-    __tact_verify_address INLINECALLDICT
   }>
   __tact_my_balance PROCINLINE:<{
     BALANCE
@@ -732,9 +716,7 @@ PROGRAM{
     s13 s2 s(-1) PUXC2
     __gen_constructor_SendParameters$to_value_mode_body INLINECALLDICT
     $send INLINECALLDICT
-    0 PUSHINT
-    40829073211017387707525970175388402652587852245746681944198239174303715381585 PUSHINT
-    __tact_create_address INLINECALLDICT
+    B{b5ee9c72410101010024000043800b488df7d9f9ab53e9903cd27193015afeb9cadbc439ff146a39dc8402566a2a3013f698de} B>boc <s PUSHSLICE
     1 PUSHINT
     B{b5ee9c7241010101001100001e4e4654206974656d206d696e746564af01325a} B>boc <s PUSHSLICE
     $__gen_String_asComment INLINECALLDICT

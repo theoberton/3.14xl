@@ -3,6 +3,7 @@ import "@stdlib/deploy";
 import "./params.fc";
 
 const minTonsForStorage: Int = ton("0.05");
+const pixelTreasury: Address = address("EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx");
 
 message(0x1) Mint {
   query_id: Int as uint64;
@@ -141,7 +142,7 @@ contract NftManager with Deployable, Ownable {
     });
 
     send(SendParameters{
-      to: newAddress(0, 0x5a446fbecfcd5a9f4c81e6938c980ad7f5ce56de21cff8a351cee42012b35151),
+      to: pixelTreasury,
       value: pixelReward,
       mode: SendPayGasSeparately,
       body: "NFT item minted".asComment()

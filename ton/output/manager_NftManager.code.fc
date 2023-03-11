@@ -31,16 +31,6 @@ builder __tact_store_address(builder b, slice address) inline {
     return b.store_slice(__tact_verify_address(address));
 }
 
-slice __tact_create_address(int chain, int hash) inline {
-    var b = begin_cell();
-    b = b.store_uint(2, 2);
-    b = b.store_uint(0, 1);
-    b = b.store_int(chain, 8);
-    b = b.store_uint(hash, 256);
-    var addr = b.end_cell().begin_parse();
-    return __tact_verify_address(addr);
-}
-
 int __tact_my_balance() inline {
     return pair_first(get_balance());
 }
@@ -437,6 +427,9 @@ _ $__gen_get_owner() method_id(83229) {
     return (true, to, value, mode, body, null(), null());
 }
 
+;; ;; EQBaRG--z81an0yB5pOMmArX9c5W3iHP-KNRzuQgErNRUemx
+slice __gen_slice_address_5b01eb7e947c760b198f95cdda3afe784fb3a54e2ba99bcfd1708ce678434459() asm "B{b5ee9c72410101010024000043800b488df7d9f9ab53e9903cd27193015afeb9cadbc439ff146a39dc8402566a2a3013f698de} B>boc <s PUSHSLICE";
+
 ((int, int, int, cell)) __gen_constructor_Mint$query_id_item_index_item_value_item_content(int query_id, int item_index, int item_value, cell item_content) inline {
     return (query_id, item_index, item_value, item_content);
 }
@@ -457,7 +450,7 @@ _ $__gen_get_owner() method_id(83229) {
     throw_unless(23716, ($self'mint_date_start < now()));
     throw_unless(36032, (($self'mint_date_end == 0) | ($self'mint_date_end > now())));
     $send(__gen_constructor_SendParameters$to_value_mode_body($self'payout_address, $self'mint_price, 1, $__gen_String_asComment(__gen_str_3884301487())));
-    $send(__gen_constructor_SendParameters$to_value_mode_body(__tact_create_address(0, 40829073211017387707525970175388402652587852245746681944198239174303715381585), $pixelReward, 1, $__gen_String_asComment(__gen_str_3884301487())));
+    $send(__gen_constructor_SendParameters$to_value_mode_body(__gen_slice_address_5b01eb7e947c760b198f95cdda3afe784fb3a54e2ba99bcfd1708ce678434459(), $pixelReward, 1, $__gen_String_asComment(__gen_str_3884301487())));
     $send(__gen_constructor_SendParameters$to_value_body($self'nft_collection_address, 50000000, __gen_writecell_Mint(__gen_constructor_Mint$query_id_item_index_item_value_item_content($msg'query_id, $msg'next_item_index, 20000000, $item_content))));
     $send(__gen_constructor_SendParameters$to_value_mode_body($ctx'sender, $restAmount, 1, __gen_writecell_Excesses(__gen_constructor_Excesses$query_id($msg'query_id))));
     return (($self'owner, $self'content_init, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address), ());

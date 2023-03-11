@@ -4,8 +4,8 @@ function main() {
   const inputFile = "./output/manager_NftManager.ts";
   const tactOutput = fs.readFileSync(inputFile);
 
-  const system = tactOutput.toString().match(/__system = '(.*?)';/)?.[1];
-  const code = tactOutput.toString().match(/__code = '(.*?)';/)?.[1];
+  const system = tactOutput.toString().match(/const __system = Cell\.fromBase64\('(.*?)'\);/)?.[1];
+  const code = tactOutput.toString().match(/const __code = Cell\.fromBase64\('(.*?)'\);/)?.[1];
 
   const outputFileName = "../frontend/src/wrappers/NftManager/NftManager.source.ts";
   const output = fs.readFileSync(outputFileName).toString();
