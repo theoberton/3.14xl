@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { useTonConnectUI } from '@tonconnect/ui-react';
 import { Button, ButtonKinds } from '@/components/Button';
 import { AddressLabel } from '@/components';
-import { useTonAddress } from '@tonconnect/ui-react';
 import { Menu, MenuItem, MenuDivider, MenuButton  } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/transitions/slide.css';
 
@@ -43,7 +42,6 @@ function AuthMenu() {
 
 export function Header() {
 	const headerClass = classNames([styles.headerContainer, styles.headerContainerTransparent]);
-	const address = useTonAddress();
 
 	return (
 		<header className={headerClass}>

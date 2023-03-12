@@ -1,8 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 
 import { Button, ButtonKinds } from '@/components';
-import pageContainerStyles from '@/layouts/PageContainer/styles.module.scss';
+import pageContainerStyles from '@/components/Layout/Page/styles.module.scss';
 import styles from '@/pages/NotFound/styles.module.scss';
+
 
 const Background = () => {
 	const array = new Array(10).fill(undefined);

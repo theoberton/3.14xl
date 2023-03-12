@@ -3,12 +3,11 @@ import React, { Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import NProgress from 'nprogress';
+import { Page } from '@/components';
 import SomethingWentWrong from '@/pages/SomethingWentWrong';
 
 import 'nprogress/nprogress.css';
 
-const PageContainer = withSuspense(React.lazy(() => import('@/layouts/PageContainer')));
-const PageContainerWithFooter = withSuspense(React.lazy(() => import('@/layouts/PageContainerWithFooter')));
 const CreateEdition = withSuspense(React.lazy(() => import('@/pages/CreateEdition')));
 const LandingPage = withSuspense(React.lazy(() => import('@/pages/Landing')));
 const TelegramLandingPage = withSuspense(React.lazy(() => import('@/pages/TelegramLanding')));
@@ -24,7 +23,7 @@ function ApplicationRoutes() {
 		<HashRouter window={window}>
 			<ErrorBoundary FallbackComponent={SomethingWentWrong}>
 				<Routes>
-					<Route element={<PageContainer />}>
+					<Route element={<Page />}>
 						<Route path="/edition/:collectionAddress" element={<EditionDetailsPage />} />
 						<Route path="/edition/:collectionAddress/edit" element={<EditionEditPage />} />
 						<Route path="/minted" element={<MintedEditionsPage />} />
@@ -33,7 +32,7 @@ function ApplicationRoutes() {
 						<Route path="/create-edition" element={<CreateEdition />} />
 						<Route path="*" element={<NotFound />} />
 					</Route>
-					<Route element={<PageContainerWithFooter />}>
+					<Route element={<Page footer />}>
 						<Route path="/" element={<LandingPage />} />
 						<Route path="/telegram" element={<TelegramLandingPage />} />
 					</Route>
