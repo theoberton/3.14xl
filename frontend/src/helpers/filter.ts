@@ -1,5 +1,9 @@
+import { Address } from 'ton';
+
 export function addressFilter(address: string) {
-	return address.slice(0, 4) + '...' + address.slice(-4);
+	const friendlyAddress = Address.parse(address).toString();
+
+	return friendlyAddress.slice(0, 4) + '...' + friendlyAddress.slice(-4);
 }
 
 export function mintDateFilter(date: Date) {
