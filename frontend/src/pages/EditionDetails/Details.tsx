@@ -154,8 +154,7 @@ function EditionDetails({
 				<div className={styles.editionDetailsInfoAbout}>
 					<h3>ABOUT</h3>
 					<div className={styles.editionDetailsInfoAboutName}>
-							<h1>{content.name}</h1>
-							<ShareButton />
+						<h1>{content.name}</h1>
 					</div>
 					<p>{content.description}</p>
 				</div>
