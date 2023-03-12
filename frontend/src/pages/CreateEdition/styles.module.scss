@@ -132,6 +132,8 @@
 			background-color: $gray-eight;
 			min-width: 350px;
 			min-height: 350px;
+			max-width: 350px;
+			max-height: 350px;
 
 			&Mobile {
 				@extend .previewImageEmpty;
@@ -139,6 +141,8 @@
 				border-width: 0;
 				min-width: 45px;
 				min-height: 45px;
+				max-width: 45px;
+				max-height: 45px;
 			}
 		}
 	}
