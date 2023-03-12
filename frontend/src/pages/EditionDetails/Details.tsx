@@ -1,5 +1,9 @@
 import { useCallback, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import InfoIcon from '@/assets/images/svg/common/info.svg';
+
+import { useNavigate } from 'react-router-dom';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from 'ton-core';
 import { isMintAllowed, ManagerFullData, priceFilter } from '@/helpers';
@@ -113,7 +117,12 @@ function EditionDetails({
 			<div className={styles.editionDetailsInfoPrice}>
 				<div className={styles.editionDetailsInfoPriceBlock}>
 					<h3>PRICE</h3>
-					<span>{priceFilter(content.price)}</span>
+					<div style={{ display: 'flex', alignItems:'center', gap: '4px'}}>
+						<span>{priceFilter(content.price)}</span>
+						<Tooltip title="Plus 1 TON to cover blockchain fees. Unspent amount will be returned">
+							<img src={InfoIcon} />
+						</Tooltip>
+					</div>
 				</div>
 				{mintAllowed && isAuthorized && (
 					<div className={styles.editionDetailsInfoPriceBlock}>
