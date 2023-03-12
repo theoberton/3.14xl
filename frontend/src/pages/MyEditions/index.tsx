@@ -82,13 +82,15 @@ export default function MyEdition() {
 	return (
 		<div className={styles.editionsContainer}>
 			<Helmet title={'3.14XL - Explore editions'} />
-			<EditionsHeader />
 			{editions?.length ? (
-				<div className={styles.editionsShowCase}>
-					{editions.map(edition => (
-						<EditionCard edition={edition} key={edition.name + edition.owner} />
-					))}
-				</div>
+				<>
+					<EditionsHeader />
+					<div className={styles.editionsShowCase}>
+						{editions.map(edition => (
+							<EditionCard edition={edition} key={edition.name + edition.owner} />
+						))}
+					</div>
+				</>
 			) : (
 				<NoEditions />
 			)}
