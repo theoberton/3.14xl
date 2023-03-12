@@ -4,15 +4,8 @@
 	&Img {
 		width: 30px;
 		height: 30px;
-		margin-left: 20px;
-		background-image: url('./../../../assets/images/svg/common/githubIcon.svg');
-		background-size: cover;
+		margin-left: 10px;
 		cursor: pointer;
-		transition: 0.5s;
-		&:hover {
-			background-image: url('./../../../assets/images/svg/common/githubIconHover.svg');
-			background-size: cover;
-		}
 	}
 
 	display: flex;
@@ -33,13 +26,5 @@
 	p {
 		user-select: none;
 		color: $white;
-	}
-
-	a {
-		transition: 0.3s ease-out;
-
-		&:hover {
-			color: $purple-one;
-		}
 	}
 }
