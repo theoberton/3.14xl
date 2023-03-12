@@ -48,7 +48,7 @@ function ShowcaseSection() {
 					))}
 			</section>
 			<section className={styles.ExploreSection}>
-				<Button componentType="link" kind={ButtonKinds.basic} to="/explore">
+				<Button componentType="link" kind={ButtonKinds.basic} basicInverted to="/explore">
 					Explore more
 				</Button>
 			</section>

@@ -6,7 +6,6 @@ import styles from '@/pages/CreateEdition/styles.module.scss';
 import { useCallback } from 'react';
 import { useFormikContext } from 'formik';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
-import { useMediaQuery } from 'react-responsive';
 import { isAfter } from 'date-fns';
 
 type Props = {
