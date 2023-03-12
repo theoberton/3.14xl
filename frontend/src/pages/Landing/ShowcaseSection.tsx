@@ -49,7 +49,7 @@ function ShowcaseSection() {
 			</div>
 			
 			<div className={styles.showcaseSectionExplore}>
-				<Button componentType="link" kind={ButtonKinds.basic} to="/explore">
+				<Button componentType="link" basicInverted kind={ButtonKinds.basic} to="/explore">
 					Explore more
 				</Button>
 			</div>
