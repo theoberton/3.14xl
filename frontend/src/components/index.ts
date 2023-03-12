@@ -15,6 +15,6 @@ export * from './Modal';
 export * from './PreviewImageModal';
 export * from './Tooltip';
 export * from './CopyToClipboard';
-export * from './CreatorLabel';
+export * from './AddressLabel';
 export * from './SharePanel';
 export * from './ShareButton';

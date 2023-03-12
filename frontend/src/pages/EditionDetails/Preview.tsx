@@ -2,7 +2,7 @@ import { ThirdwebStorage } from '@thirdweb-dev/storage';
 import { useCallback, useState } from 'react';
 import WiderIcon from '@/assets/images/svg/common/wider.svg';
 import { CollectionContent } from '@/wrappers/types';
-import { CreatorLabel, PreviewImageModal } from '@/components';
+import { AddressLabel, PreviewImageModal } from '@/components';
 import { EditionData } from '@/helpers';
 import { useMediaQuery } from 'react-responsive';
 
@@ -39,7 +39,8 @@ function EditionPreview({ content }: { collectionData: EditionData; content: Col
 						<img src={WiderIcon} className={styles.editionDetailsPreviewFooterItemImage} />
 					</div>
 				)}
-				<CreatorLabel creator={content.feeRecipient} />
+				<p>CREATOR</p>
+				<AddressLabel address={content.feeRecipient} />
 			</div>
 		</div>
 	);

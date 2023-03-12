@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from 'ton-core';
-import { addressFilter, isMintAllowed, ManagerFullData } from '@/helpers';
+import { isMintAllowed, ManagerFullData } from '@/helpers';
 import { MintDeployModal } from '@/pages/EditionDetails/MintDeployModal';
 import { useTime } from '@/hooks';
 import { Button, ButtonKinds } from '@/components/Button';
@@ -10,7 +10,7 @@ import { Button, ButtonKinds } from '@/components/Button';
 import styles from './styles.module.scss';
 import { composeMintTransaction } from '@/pages/EditionDetails/helper';
 import MintDateSection from './MintTime';
-import { CopyToClipboard, ShareButton } from '@/components';
+import { AddressLabel, ShareButton } from '@/components';
 
 type Props = {
 	getEditionDetails: () => void;
@@ -30,7 +30,6 @@ function EditionDetails({
 
 	const [isDeploymentModalOpened, setDeploymentStatus] = useState(false);
 
-	const { collectionAddress } = useParams();
 	const address = useTonAddress();
 	const [tonConnectUI] = useTonConnectUI();
 
@@ -69,8 +68,8 @@ function EditionDetails({
 	}, [tonConnectUI.connected, address]);
 
 	const goToEdititingPage = useCallback(() => {
-		navigate(`/edition/${collectionAddress}/edit`);
-	}, [collectionAddress]);
+		navigate(`/edition/${collectionData.address}/edit`);
+	}, [collectionData]);
 
 	const mintButtonHandler = isEndOfMinting ? () => {} : mint;
 	const mintAllowed = isMintAllowed(now, content.dateStart, content.dateEnd);
@@ -106,7 +105,7 @@ function EditionDetails({
 					setCurrentNftItemIndex={setCurrentNftItemIndex}
 					currentNextNftItemIndex={currentNextNftItemIndex}
 					editionName={content.name}
-					address={collectionAddress}
+					address={collectionData.address}
 					onClose={handleDeploymentModalClose}
 				/>
 			)}
@@ -173,18 +172,11 @@ function EditionDetails({
 				<h3>DETAILS</h3>
 				<div>
 					<p>Contract Address</p>
-					<CopyToClipboard
-						textValue={collectionAddress!}
-						message="Contract address has been copied!"
-					>
-						<span>{addressFilter(collectionAddress!)}</span>
-					</CopyToClipboard>
+					<AddressLabel address={collectionData.address} withIcon={false} />
 				</div>
 				<div>
 					<p>Symbol</p>
-					<CopyToClipboard textValue={collectionAddress!} message="Edition symbol has been copied!">
-						<span>{content.symbol}</span>
-					</CopyToClipboard>
+					<span>{content.symbol}</span>
 				</div>
 				<div>
 					<p>Blockchain</p>
