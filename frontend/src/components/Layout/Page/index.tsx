@@ -7,9 +7,7 @@ export function Page({ footer = false }: { footer?: boolean}) {
 	return (
 		<div className={styles.pageContainer}>
 			<Header />
-			<main className={styles.pageContainerMain}>
-				<Outlet />
-			</main>
+			<Outlet />
 			{footer && <Footer />}
 		</div>
 	);

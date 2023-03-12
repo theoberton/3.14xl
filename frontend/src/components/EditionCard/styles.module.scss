@@ -1,7 +1,7 @@
 @import '@/assets/styles/variables.scss';
 
 .editionCard {
-	padding: 20px;
+	padding: 24px;
 	border-radius: 8px;
 	border: 1px solid $gray-eleven;
 	font-weight: 100;
@@ -17,10 +17,10 @@
 
 	transition: background-color 0.3s ease-in-out;
 
-	background-color: transparent;
+	background-color: $black-one;
 
 	&:hover {
-		background-color: $gray-one-super-transparent;
+		background-color: lighten($black-one, 3%);
 	}
 
 	> div {

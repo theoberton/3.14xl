@@ -40,19 +40,20 @@ function ShowcaseSection() {
 	}, []);
 
 	return (
-		<>
-			<section className={styles.ShowcaseSection} id="landingShowcase">
+		<section className={styles.showcaseSection} id="landingShowcase">
+			<div className={styles.showcaseSectionGrid}>
 				{editions &&
 					editions.map(edition => (
 						<EditionCard edition={edition} key={edition.collectionAddress} />
 					))}
-			</section>
-			<section className={styles.ExploreSection}>
-				<Button componentType="link" kind={ButtonKinds.basic} basicInverted to="/explore">
+			</div>
+			
+			<div className={styles.showcaseSectionExplore}>
+				<Button componentType="link" kind={ButtonKinds.basic} to="/explore">
 					Explore more
 				</Button>
-			</section>
-		</>
+			</div>
+		</section>
 	);
 }
 

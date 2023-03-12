@@ -9,10 +9,9 @@
 
 		height: $header-height;
 		width: 100%;
-		padding-block: 24px;
 		background-color: $black-one;
 
-		z-index: 100;
+		z-index: 1;
 
 		@media (max-width: $breakpoint-l) {
 			position: sticky;
@@ -21,7 +20,6 @@
 		}
 
 		&Transparent {
-			padding: 24px 30px;
 			background: transparent;
 
 			@media (max-width: $breakpoint-l) {

@@ -4,48 +4,31 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
-	min-height: 100vh;
+	min-height: $page-height;
 	width: 100%;
 	background-color: $black-one;
 	position: relative;
 	overflow: hidden;
 
-	> * {
-		width: 100%;
-		padding-inline: 15px;
+	padding-inline: 16px;
+
+	@media (min-width: $breakpoint-xs) {
+		padding-inline: 24px;
 	}
 
-	&Main {
-		min-height: $page-height;
+	@media (min-width: $breakpoint-s) {
+		padding-inline: 40px;
 	}
-}
 
-@media (min-width: $breakpoint-xs) {
-	.pageContainer > * {
-		padding-inline: calc(50% - 270px);
+	@media (min-width: $breakpoint-m) {
+		padding-inline: 60px;
 	}
-}
 
-@media (min-width: $breakpoint-s) {
-	.pageContainer > * {
-		padding-inline: calc(50% - 360px);
+	@media (min-width: $breakpoint-l) {
+		padding-inline: 80px;
 	}
-}
 
-@media (min-width: $breakpoint-m) {
-	.pageContainer > * {
-		padding-inline: calc(50% - 480px);
-	}
-}
-
-@media (min-width: $breakpoint-l) {
-	.pageContainer > * {
-		padding-inline: calc(50% - 590px);
-	}
-}
-
-@media (min-width: $breakpoint-xl) {
-	.pageContainer > * {
-		padding-inline: calc(50% - 690px);
+	@media (min-width: $breakpoint-xl) {
+		padding-inline: 108px;
 	}
 }
