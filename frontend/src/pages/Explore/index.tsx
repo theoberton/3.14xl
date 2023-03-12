@@ -82,7 +82,7 @@ export default function ExplorePage() {
 			<div className={styles.editionsShowCase}>
 				{editions &&
 					editions.map(edition => (
-						<EditionCard edition={edition} key={edition.name + edition.owner} />
+						<EditionCard edition={edition} key={edition.collectionAddress} />
 					))}
 			</div>
 		</div>
