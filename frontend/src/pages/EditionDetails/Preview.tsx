@@ -1,6 +1,5 @@
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 import { useCallback, useState } from 'react';
-import WiderIcon from '@/assets/images/svg/common/wider.svg';
 import { CollectionContent } from '@/wrappers/types';
 import { AddressLabel, PreviewImageModal } from '@/components';
 import { EditionData } from '@/helpers';
@@ -23,7 +22,6 @@ function EditionPreview({ content }: { collectionData: EditionData; content: Col
 	const openPreviewImage = useCallback(() => {
 		setImagePreviewOpenedStatus(true);
 	}, []);
-	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	return (
 		<div className={styles.editionDetailsPreview}>
@@ -34,11 +32,6 @@ function EditionPreview({ content }: { collectionData: EditionData; content: Col
 				<img src={thirdwebStorage.resolveScheme(content.image)} />
 			</div>
 			<div className={styles.editionDetailsPreviewInfo}>
-				{!isTabletOrMobile && (
-					<div className={styles.editionDetailsPreviewFooterItem} onClick={openPreviewImage}>
-						<img src={WiderIcon} className={styles.editionDetailsPreviewFooterItemImage} />
-					</div>
-				)}
 				<p>CREATOR</p>
 				<AddressLabel address={content.feeRecipient} />
 			</div>
