@@ -12,12 +12,12 @@
 		gap: 10px;
 
 		> div {
-			height: 5px;
-			width: 5px;
-			border-radius: 50%;
+			height: 4px;
+			width: 4px;
+			border-radius: 1px;
 			background-color: $green-one;
 
-			box-shadow: 0px 0px 2px 2px $green-one;
+			box-shadow: 0 0 0 2px transparentize($green-one, 0.8);
 		}
 
 		font-size: 14px;
