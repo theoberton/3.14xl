@@ -92,6 +92,7 @@ body,
 	font-family: 'Sans';
 	font-style: normal;
 	font-weight: $font-normal;
+	font-variant-numeric: lining-nums;
 	src: url('../fonts/Syne-Regular.ttf');
 }
 
@@ -99,6 +100,7 @@ body,
 	font-family: 'Sans';
 	font-style: normal;
 	font-weight: $font-semi-bold;
+	font-variant-numeric: lining-nums;
 	src: url('../fonts/Syne-SemiBold.ttf');
 }
 
@@ -106,6 +108,7 @@ body,
 	font-family: 'Sans';
 	font-style: normal;
 	font-weight: $font-bold;
+	font-variant-numeric: lining-nums;
 	src: url('../fonts/Syne-Bold.ttf');
 }
 
