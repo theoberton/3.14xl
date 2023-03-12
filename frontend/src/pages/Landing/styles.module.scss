@@ -32,8 +32,16 @@
 
 			text-align: center;
 
+			background: linear-gradient(90.13deg,#d1aad7 .11%,#c88bc4 25.06%,#7b8fdd 50%,#86bff2 74.8%,#bbdef2 99.76%);
+			background-clip: border-box;
+			background-clip: border-box;
+			background-clip: border-box;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+
 			font-size: $font-extra-huge;
 			line-height: $font-extra-huge;
+			
 
 			@media (max-width: $breakpoint-xs) {
 				font-size: $font-super-huge;
