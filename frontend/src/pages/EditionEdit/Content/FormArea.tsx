@@ -7,23 +7,20 @@ import ValidityPeriod from '@/pages/CreateEdition/ValidityPeriod';
 import { DeploymentModal } from '@/pages/EditionEdit/Content/DeploymentEditModal';
 import { useCallback, useContext } from 'react';
 import { DeploymentContext } from '@/pages/EditionEdit/deploymentContext';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useNavigateHandler } from '@/hooks';
 
 function FormArea() {
 	const { dirty, submitForm, values, isSubmitting } = useFormikContext<FormValues>();
 	const { contentDeploymentState, isFormDisabled, editionName, getEditionDetails } =
 		useContext(DeploymentContext);
-
-	const navigate = useNavigate();
 	const params = useParams();
 
 	const handleDeploymentModalClose = useCallback(() => {
 		getEditionDetails();
 	}, []);
 
-	const hanelCancelClick = useCallback(() => {
-		navigate(`/edition/${params.collectionAddress}`);
-	}, [isSubmitting, params]);
+	const goToEditionDetails = useNavigateHandler(`/edition/${params.collectionAddress}`);
 
 	return (
 		<Form className={styles.editEditionForm}>
@@ -75,7 +72,7 @@ function FormArea() {
 					buttonType="reset"
 					expanded
 					disabled={isFormDisabled || isSubmitting}
-					onClick={hanelCancelClick}
+					onClick={goToEditionDetails}
 					kind={ButtonKinds.basic}
 					basicInverted
 				>

@@ -8,7 +8,6 @@ import { Loader } from '@/components';
 import { Button, ButtonKinds } from '@/components/Button';
 
 import { LoaderSizes, LoaderColors, LoaderTypes } from '@/components/interfaces';
-import { useNavigate } from 'react-router';
 import styles from '@/pages/CreateEdition/styles.module.scss';
 
 import SuccessIcon from '@/assets/images/svg/common/success.svg';

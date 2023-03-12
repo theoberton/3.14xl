@@ -4,7 +4,6 @@ export * from './Select';
 export * from './MediaInput';
 export * from './Layout';
 export * from './Input';
-export * from './PrivateRoute';
 export * from './Loader';
 export * from './TextArea';
 export * from './Label';

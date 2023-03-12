@@ -1,6 +1,6 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
+import { useTonConnectUI } from '@tonconnect/ui-react';
 import { Button, ButtonKinds } from '@/components/Button';
 import { AddressLabel } from '@/components';
 import { useTonAddress } from '@tonconnect/ui-react';
@@ -12,14 +12,12 @@ import { isTestnet } from '@/helpers/location';
 import Logo from '@/assets/images/svg/common/logo.svg';
 import styles from './styles.module.scss';
 import { useCallback } from 'react';
+import { useNavigateHandler } from '@/hooks';
 
 function AuthMenu() {
 	const [tonConnectUI] = useTonConnectUI();
-	const navigate = useNavigate();
 
-	const goToMyEditionstHandler = useCallback(() => {
-		navigate('/my-editions')
-	}, [navigate]);
+	const goToMyEditions = useNavigateHandler('/my-editions');
 	const disconnectHandler = useCallback(async () => {
 		await tonConnectUI.disconnect();
 	}, [tonConnectUI.disconnect]);
@@ -36,7 +34,7 @@ function AuthMenu() {
 			theming="dark"
 			transition
 			menuButton={<MenuButton><AddressLabel address={tonConnectUI.account.address} withCopy={false} /></MenuButton>}>
-			<MenuItem onClick={goToMyEditionstHandler}>My editions</MenuItem>
+			<MenuItem onClick={goToMyEditions}>My editions</MenuItem>
 			<MenuDivider />
 			<MenuItem onClick={disconnectHandler}>Disconnect</MenuItem>
 		</Menu>

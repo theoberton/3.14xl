@@ -1,14 +1,12 @@
 import { useCallback, useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@/assets/images/svg/common/info.svg';
 
-import { useNavigate } from 'react-router-dom';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from 'ton-core';
 import { isMintAllowed, ManagerFullData, priceFilter } from '@/helpers';
 import { MintDeployModal } from '@/pages/EditionDetails/MintDeployModal';
-import { useTime } from '@/hooks';
+import { useNavigateHandler, useTime } from '@/hooks';
 import { Button, ButtonKinds } from '@/components/Button';
 
 import styles from './styles.module.scss';
@@ -30,7 +28,6 @@ function EditionDetails({
 	getEditionDetails,
 }: Props) {
 	const now = useTime();
-	const navigate = useNavigate();
 
 	const [isDeploymentModalOpened, setDeploymentStatus] = useState(false);
 
@@ -71,9 +68,7 @@ function EditionDetails({
 		}
 	}, [tonConnectUI.connected, address]);
 
-	const goToEdititingPage = useCallback(() => {
-		navigate(`/edition/${collectionData.address}/edit`);
-	}, [collectionData]);
+	const goToEditionEdit = useNavigateHandler(`/edition/${collectionData.address}/edit`);
 
 	const mintButtonHandler = isEndOfMinting ? () => {} : mint;
 	const mintAllowed = isMintAllowed(now, content.dateStart, content.dateEnd);
@@ -170,7 +165,7 @@ function EditionDetails({
 							componentType="button"
 							basicInverted
 							kind={ButtonKinds.basic}
-							onClick={goToEdititingPage}
+							onClick={goToEditionEdit}
 						>
 							Edit
 						</Button>

@@ -1,4 +1,4 @@
-import { useTonClient } from '@/hooks';
+import { useNavigateHandler, useTonClient } from '@/hooks';
 import { useEffect, useState, useCallback } from 'react';
 import { useAsyncRetry } from 'react-use';
 import { Loader } from '@/components';
@@ -7,7 +7,6 @@ import { Button, ButtonKinds } from '@/components/Button';
 import { Modal, SharePanel } from '@/components';
 
 import { LoaderSizes, LoaderColors, LoaderTypes } from '@/components/interfaces';
-import { useNavigate } from 'react-router';
 import { createManagerContract } from '@/libs/apiClient';
 
 import styles from '@/pages/CreateEdition/styles.module.scss';
@@ -109,7 +108,6 @@ export function DeploymentModal({
 	editionName,
 	createNewEditionHandler,
 }: Props) {
-	const navigate = useNavigate();
 	const [status, setStatus] = useState(DeploymentStatus.inProgress);
 	let retryTimeoutId: ReturnType<typeof setTimeout>;
 	const tonClient = useTonClient();
@@ -158,9 +156,7 @@ export function DeploymentModal({
 		return { collectionData, content: overviewData.content };
 	}, [tonClient, address]);
 
-	const viewCreatedEdition = useCallback(() => {
-		navigate(`/edition/${address}`);
-	}, [address]);
+	const goToEditionDetails = useNavigateHandler(`/edition/${address}`);
 
 	const retryCreateEdition = useCallback(() => {
 		setStatus(DeploymentStatus.inProgress);
@@ -210,7 +206,7 @@ export function DeploymentModal({
 			onClose={onClose}
 		>
 			{status == DeploymentStatus.success &&
-				renderDeploySuccessComponent(createNewEditionHandler, viewCreatedEdition, settings)}
+				renderDeploySuccessComponent(createNewEditionHandler, goToEditionDetails, settings)}
 			{status == DeploymentStatus.inProgress && renderDeployInProgressComponent()}
 			{status == DeploymentStatus.failiure &&
 				renderDeployFailureComponent(goBack, retryCreateEdition)}

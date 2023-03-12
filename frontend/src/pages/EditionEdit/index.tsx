@@ -18,7 +18,6 @@ function EditionEdit() {
 	const { collectionAddress } = useParams();
 	const [editionName, setName] = useState<string>('');
 	const accountAddress = useTonAddress();
-	// const navigate = useNavigate();
 	const [isLoading, setLoading] = useState(false);
 	const [edtionDetails, setEditionDetails] = useState<ManagerFullData | null>(null);
 
