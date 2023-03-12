@@ -2,6 +2,7 @@ import { useFormikContext } from 'formik';
 import { Label } from '@/components';
 import styles from '@/pages/CreateEdition/styles.module.scss';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
+import { priceFilter } from '@/helpers';
 
 type Props = {
 	openPreviewImage: () => void;
@@ -26,7 +27,7 @@ function EditionPreview({ openPreviewImage }: Props) {
 					<div className={styles.previewLabelItem}>
 						<div className={styles.previewLabel}>Edition price</div>
 						<div className={styles.previewLabelValue}>
-							{`${values.price ? values.price : '0.00'} TON`}
+							{priceFilter(values.price)}
 						</div>
 					</div>
 					<div className={styles.previewLabelItem}>

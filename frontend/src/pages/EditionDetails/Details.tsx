@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from 'ton-core';
-import { isMintAllowed, ManagerFullData } from '@/helpers';
+import { isMintAllowed, ManagerFullData, priceFilter } from '@/helpers';
 import { MintDeployModal } from '@/pages/EditionDetails/MintDeployModal';
 import { useTime } from '@/hooks';
 import { Button, ButtonKinds } from '@/components/Button';
@@ -113,7 +113,7 @@ function EditionDetails({
 			<div className={styles.editionDetailsInfoPrice}>
 				<div className={styles.editionDetailsInfoPriceBlock}>
 					<h3>PRICE</h3>
-					<span>{content.price} TON</span>
+					<span>{priceFilter(content.price)}</span>
 				</div>
 				{mintAllowed && isAuthorized && (
 					<div className={styles.editionDetailsInfoPriceBlock}>

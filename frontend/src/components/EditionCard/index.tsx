@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { IEditionItem } from './interface';
 import EditionStatus from './EditionStatus/EditionStatus';
 import styles from './styles.module.scss';
+import { priceFilter } from '@/helpers';
 
 interface IProps {
 	edition: IEditionItem;
@@ -22,7 +23,7 @@ export function EditionCard({ edition }: IProps) {
 			</div>
 			<div>
 				<div className={styles.editionCardInfo}>
-					<p>{price === '0' ? 'Free' : `${price} TON`}</p>
+					<p>{priceFilter(price)}</p>
 					<p>{minted ?? 0} / {limit || '∞'}</p>
 				</div>
 			</div>

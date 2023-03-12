@@ -5,6 +5,7 @@ import { FormValues } from '@/pages/CreateEdition/interfaces';
 import tonLogo from '@/assets/images/svg/common/tonLogo.svg';
 import { useState, useCallback } from 'react';
 import { createManagerContract } from '@/libs/apiClient';
+import { priceFilter } from '@/helpers';
 
 type Props = {
 	openPreviewImage: () => void;
@@ -33,7 +34,7 @@ function PreviewMobile({ openPreviewImage }: Props) {
 				</div>
 				<div className={styles.previewMainAttributesPriceMobile}>
 					<img src={tonLogo} className={styles.tonLogoMobile} />
-					{`${values.price ? values.price : '0.00'} TON`}
+					{priceFilter(values.price)}
 				</div>
 			</div>
 		</div>
