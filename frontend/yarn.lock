@@ -1095,6 +1095,14 @@
   dependencies:
     "@solid-primitives/context" "^0.1.4"
 
+"@szhsin/react-menu@^3.5.2":
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/@szhsin/react-menu/-/react-menu-3.5.2.tgz#b316b7aec4cc0dfd10c13a81e9063ea1668d4096"
+  integrity sha512-eR7dzDBrwlt9RSgGmLXjfA1Rd5tYqD5mnqjQgZJysf3Jt3vBPkrbDT1oW21nLpfUCkyUQOuZ38n2IdhWl9KkzQ==
+  dependencies:
+    prop-types "^15.7.2"
+    react-transition-state "^1.1.5"
+
 "@thirdweb-dev/storage@^1.0.8":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@thirdweb-dev/storage/-/storage-1.1.0.tgz#f2339d7994201c066e28d63ce4e29bd432af8c25"
@@ -4298,6 +4306,11 @@ react-transition-group@^4.3.0, react-transition-group@^4.4.5:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react-transition-state@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/react-transition-state/-/react-transition-state-1.1.5.tgz#22accee21d0011b1d0245be24b6262ae67f494c3"
+  integrity sha512-ITY2mZqc2dWG2eitJkYNdcSFW8aKeOlkL2A/vowRrLL8GH3J6Re/SpD/BLvQzrVOTqjsP0b5S9N10vgNNzwMUQ==
 
 react-universal-interface@^0.6.2:
   version "0.6.2"

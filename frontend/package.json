@@ -19,6 +19,7 @@
     "@mui/material": "^5.10.13",
     "@mui/x-date-pickers": "^5.0.18",
     "@orbs-network/ton-access": "^2.2.2",
+    "@szhsin/react-menu": "^3.5.2",
     "@thirdweb-dev/storage": "^1.0.8",
     "@ton-community/blueprint": "^0.2.0",
     "@ton-community/sandbox": "^0.5.0",

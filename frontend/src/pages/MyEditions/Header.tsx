@@ -1,8 +1,5 @@
 import { Button, ButtonKinds } from '@/components/Button';
 import styles from '@/pages/Explore/styles.module.scss';
-// import { useEffect } from 'react';
-// import { getManagerContractByOwner } from '@/libs/apiClient';
-import { useTonAddress } from '@tonconnect/ui-react';
 
 function EditionsHeader() {
 	return (

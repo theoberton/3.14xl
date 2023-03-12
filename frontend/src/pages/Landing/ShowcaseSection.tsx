@@ -44,7 +44,7 @@ function ShowcaseSection() {
 			<section className={styles.ShowcaseSection} id="landingShowcase">
 				{editions &&
 					editions.map(edition => (
-						<EditionCard edition={edition} key={edition.name + edition.owner} />
+						<EditionCard edition={edition} key={edition.collectionAddress} />
 					))}
 			</section>
 			<section className={styles.ExploreSection}>
