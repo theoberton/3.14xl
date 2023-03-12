@@ -64,7 +64,7 @@
 
 		@media (max-width: $breakpoint-l) {
 			grid-template-columns: 1fr;
-			padding-block: 15px;
+			grid-gap: 32px;
 		}
 	}
 
@@ -74,174 +74,6 @@
 	}
 }
 
-.preview {
-	max-width: 40vw;
-	width: 100%;
-
-	&Mobile {
-		&ContentWrapper {
-			margin: 0 5px;
-			border-bottom: 1px solid $gray-eleven;
-		}
-		width: 100%;
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-
-		padding: 5px 0;
-	}
-
-	&Modal {
-		max-width: 80vw;
-		max-height: 70vh;
-	}
-
-	&Image {
-		cursor: pointer;
-
-		&Container {
-			display: flex;
-			align-items: center;
-		}
-
-		max-width: 100%;
-		max-height: 50vh;
-
-		&Mobile {
-			max-width: 60px;
-			max-height: 60px;
-		}
-
-		&Wrapper {
-			text-align: center;
-			margin-bottom: 30px;
-			border: none;
-
-			&Mobile {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				text-align: center;
-				border: none;
-			}
-		}
-
-		&Empty {
-			@extend .previewImage;
-			background-color: $gray-eight;
-			min-width: 350px;
-			min-height: 350px;
-			max-width: 350px;
-			max-height: 350px;
-
-			&Mobile {
-				@extend .previewImageEmpty;
-				border-radius: 5px;
-				border-width: 0;
-				min-width: 45px;
-				min-height: 45px;
-				max-width: 45px;
-				max-height: 45px;
-			}
-		}
-	}
-
-	&Labels {
-		width: 100%;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		> :nth-child(1) {
-			border-right: 0;
-		}
-	}
-	&Label {
-		color: $gray-one;
-		font-size: $font-small-enlarged;
-		text-transform: uppercase;
-		margin-bottom: 5px;
-
-		&Item {
-			flex-direction: column;
-			display: flex;
-			align-items: center;
-			padding: 20px;
-			flex-grow: 1;
-			border: 1px solid $gray-eleven;
-		}
-
-		&Value {
-			font-size: $font-medium-enlarged;
-		}
-	}
-
-	&Section {
-		display: flex;
-		justify-content: center;
-		padding: 0 20px;
-		width: 100%;
-		padding-left: 20%;
-
-		order: 2;
-
-		&Mobile {
-			order: 1;
-			padding: 0 20px 0 0;
-
-			width: 100%;
-
-			position: sticky;
-			top: 2px;
-
-			border-bottom: 2px solid $gray-eleven;
-
-			margin-bottom: 20px;
-
-			background-color: $black-one-transparent;
-		}
-	}
-
-	&MainAttributes {
-		display: flex;
-		gap: 30px;
-		justify-content: space-between;
-		margin: 30px 0;
-
-		&Mobile {
-			font-size: $font-small-enlarged;
-			display: flex;
-			white-space: break-spaces;
-			gap: 10px;
-			flex-direction: column;
-			padding: 10px 0;
-		}
-
-		&Price {
-			width: 50%;
-
-			&Mobile {
-				white-space: nowrap;
-				font-size: $font-base;
-				display: flex;
-				align-items: center;
-			}
-		}
-
-		&Name {
-			font-size: $font-big-enlarged;
-			width: 50%;
-
-			&Mobile {
-				font-size: $font-medium;
-			}
-		}
-
-		&Description {
-			overflow-wrap: anywhere;
-			color: $gray-one;
-		}
-	}
-}
 
 .customField {
 	&Reset {
@@ -325,7 +157,6 @@
 
 	&Image {
 		justify-content: center;
-		max-width: 100px;
 	}
 
 	&Spinner {
@@ -352,13 +183,5 @@
 			text-align: center;
 			font-weight: $font-normal;
 		}
-	}
-}
-
-.tonLogo {
-	max-width: 60px;
-
-	&Mobile {
-		max-width: 25px;
 	}
 }

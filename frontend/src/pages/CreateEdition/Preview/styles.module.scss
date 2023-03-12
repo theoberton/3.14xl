@@ -1,0 +1,145 @@
+@import '@/assets/styles/variables.scss';
+
+.preview {
+	max-width: 40vw;
+	width: 100%;
+
+	&Modal {
+		max-width: 80vw;
+		max-height: 70vh;
+	}
+
+	&Media {
+    margin-bottom: 32px;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    width: 100%;
+
+    &Image {
+      @extend .previewMedia;
+      cursor: pointer;
+      background-size: contain;
+      background-position: center;
+    }
+
+    &Empty {
+      @extend .previewMedia;
+      background-color: $gray-seven;
+    }
+  }
+
+	&Labels {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		> :nth-child(1) {
+			border-right: 0;
+		}
+	}
+	&Label {
+		color: $gray-one;
+		font-size: $font-small-enlarged;
+		text-transform: uppercase;
+		margin-bottom: 5px;
+
+		&Item {
+			flex-direction: column;
+			display: flex;
+			padding: 20px;
+			flex-grow: 1;
+			border: 1px solid $gray-eleven;
+		}
+
+		&Value {
+			font-size: $font-medium-enlarged;
+		}
+	}
+
+	&Section {
+		display: flex;
+		justify-content: center;
+		padding: 0 20px;
+		width: 100%;
+		padding-left: 20%;
+
+		order: 2;
+	}
+
+	&MainAttributes {
+		display: flex;
+		gap: 30px;
+		justify-content: space-between;
+		margin: 30px 0;
+
+		&Price {
+			width: 50%;
+		}
+
+		&Name {
+			font-size: $font-big-enlarged;
+			width: 50%;
+		}
+
+		&Description {
+			overflow-wrap: anywhere;
+			color: $gray-one;
+		}
+	}
+}
+
+.previewMobile {
+  &Section {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding-block: 16px;
+  
+
+    order: 1;
+
+    width: 100%;
+
+    position: sticky;
+    top: 2px;
+
+    border-bottom: 2px solid $gray-eleven;
+
+    background-color: $black-one-transparent;
+  }
+
+  &Media {
+    &Image {
+      height: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      background-position: center;
+      background-size: cover;
+    }
+
+    &Empty {
+      @extend .previewMobileMediaImage;
+      background-color: $gray-seven;
+    }
+  }
+
+  &Main {
+    font-size: $font-small-enlarged;
+    display: flex;
+    flex-direction: column;
+    white-space: break-spaces;
+    gap: 10px;
+    padding: 10px 0;
+
+    &Name {
+      font-size: $font-medium;
+    }
+  }
+
+  &PriceBlock {
+    font-size: $font-base;
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+  }
+}

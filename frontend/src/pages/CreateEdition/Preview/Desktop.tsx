@@ -1,8 +1,8 @@
 import { useFormikContext } from 'formik';
 import { Label } from '@/components';
-import styles from '@/pages/CreateEdition/styles.module.scss';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
 import { priceFilter } from '@/helpers';
+import styles from './styles.module.scss';
 
 type Props = {
 	openPreviewImage: () => void;
@@ -14,15 +14,11 @@ function EditionPreview({ openPreviewImage }: Props) {
 	return (
 		<div className={styles.previewSection}>
 			<div className={styles.preview}>
-				{
-					<div className={styles.previewImageWrapper} onClick={openPreviewImage}>
-						{values.media ? (
-							<img className={styles.previewImage} src={values.media} />
-						) : (
-							<img className={styles.previewImageEmpty} />
-						)}
-					</div>
-				}
+				{values.media ? (
+					<div className={styles.previewMediaImage} onClick={openPreviewImage} style={{ backgroundImage: `url("${values.media}")` }} />
+				) : (
+					<div className={styles.previewMediaEmpty} />
+				)}
 				<div className={styles.previewLabels}>
 					<div className={styles.previewLabelItem}>
 						<div className={styles.previewLabel}>Edition price</div>
