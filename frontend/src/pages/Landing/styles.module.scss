@@ -2,9 +2,8 @@
 
 .landing {
 	&Container {
-		padding: 20px;
 		background-color: $black-one;
-		min-height: $page-height;
+		min-height: calc($page-height - 120px); // To nudge next section to user
 
 		@media (max-width: $breakpoint-l) {
 			display: flex;
@@ -69,7 +68,6 @@
 			gap: 20px;
 			justify-content: center;
 			align-items: center;
-			padding-bottom: 80px;
 
 			@media (max-width: $breakpoint-xs) {
 				> :nth-child(1) {
@@ -97,4 +95,9 @@
 	@media (max-width: $breakpoint-xs) {
 		grid-template-columns: 1fr;
 	}
+}
+
+.ExploreSection {
+	display: flex;
+	justify-content: center;
 }

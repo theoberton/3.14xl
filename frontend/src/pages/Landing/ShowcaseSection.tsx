@@ -2,6 +2,7 @@ import { EditionCard } from '@/components';
 import { IEditionItem } from '@/components/EditionCard/interface';
 import { useTonClient } from '@/hooks';
 import { getManagerContracts } from '@/libs/apiClient';
+import { Button, ButtonKinds } from '@/components/Button';
 
 import styles from '@/pages/Landing/styles.module.scss';
 import { useCallback, useEffect, useState } from 'react';
@@ -39,12 +40,19 @@ function ShowcaseSection() {
 	}, []);
 
 	return (
-		<section className={styles.ShowcaseSection} id="landingShowcase">
-			{editions &&
-				editions.map(edition => (
-					<EditionCard edition={edition} key={edition.name + edition.owner} />
-				))}
-		</section>
+		<>
+			<section className={styles.ShowcaseSection} id="landingShowcase">
+				{editions &&
+					editions.map(edition => (
+						<EditionCard edition={edition} key={edition.name + edition.owner} />
+					))}
+			</section>
+			<section className={styles.ExploreSection}>
+				<Button componentType="link" kind={ButtonKinds.basic} to="/explore">
+					Explore more
+				</Button>
+			</section>
+		</>
 	);
 }
 

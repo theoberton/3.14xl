@@ -7,7 +7,9 @@ export default function PageContainer() {
 	return (
 		<div className={styles.pageContainer}>
 			<Header />
-			<Outlet />
+			<main className={styles.pageContainerMain}>
+				<Outlet />
+			</main>
 			<Footer />
 		</div>
 	);

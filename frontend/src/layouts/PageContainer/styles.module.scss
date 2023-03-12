@@ -15,8 +15,8 @@
 		padding-inline: 15px;
 	}
 
-	& > :nth-last-child(2) {
-		padding-bottom: calc($header-height * 2);
+	&Main {
+		min-height: $page-height;
 	}
 }
 
