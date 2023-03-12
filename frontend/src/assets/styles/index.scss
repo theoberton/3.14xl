@@ -7,6 +7,7 @@
 	font-size: $font-medium;
 	font-weight: $font-semi-bold;
 	font-synthesis: none;
+	font-variant-numeric: lining-nums;
 	color: $white;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -92,7 +93,6 @@ body,
 	font-family: 'Sans';
 	font-style: normal;
 	font-weight: $font-normal;
-	font-variant-numeric: lining-nums;
 	src: url('../fonts/Syne-Regular.ttf');
 }
 
@@ -100,7 +100,6 @@ body,
 	font-family: 'Sans';
 	font-style: normal;
 	font-weight: $font-semi-bold;
-	font-variant-numeric: lining-nums;
 	src: url('../fonts/Syne-SemiBold.ttf');
 }
 
@@ -108,7 +107,6 @@ body,
 	font-family: 'Sans';
 	font-style: normal;
 	font-weight: $font-bold;
-	font-variant-numeric: lining-nums;
 	src: url('../fonts/Syne-Bold.ttf');
 }
 
