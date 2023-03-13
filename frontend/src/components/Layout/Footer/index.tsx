@@ -16,7 +16,7 @@ export function Footer() {
 					<TelegramIcon />
 				</a>
 
-				<a className={styles.footerSocialLink} target="_blank" href="https://twitter.com/alldayalone">
+				<a className={styles.footerSocialLink} target="_blank" href="https://twitter.com/obertonglobal">
 					<TwitterIcon  />
 				</a>
 			</div>
