@@ -13,7 +13,6 @@ import { EDITIONS_SIZES, TELEGRAM_WEB_APP_ACTION } from '@/constants/common';
 import { useTelegram, useTonClient } from '@/hooks';
 import { createEdition } from '@/pages/CreateEdition/helpers';
 import { dateToUnix } from '@/helpers';
-import { Address } from 'ton-core';
 import { sendMessageToChat } from '@/libs/apiClient';
 import { composeFullEditionAddress } from '@/utils';
 
@@ -44,7 +43,7 @@ function getTestnetInitialValues(address: string) {
 }
 
 function CreateEditionForm() {
-	const address = useTonAddress();
+	const tonConnectAddress = useTonAddress();
 	const tonClient = useTonClient();
 	const [tonConnectUI] = useTonConnectUI();
 	const [getdeploymentState, setDeploymentState] = useGetSetState(initialDeploymentState);
@@ -70,36 +69,15 @@ function CreateEditionForm() {
 		sendMessageToChat(message);
 	}, [sendMessageToChat, telegram.user]);
 
-	const handleConnectWalletClick = useCallback(async () => {
-		if (!tonConnectUI.connected) {
-			try {
-				await tonConnectUI.connectWallet();
-			} catch (error) {
-				console.error('Error occured when connecting to wallet', error);
-
-				throw error;
-			}
-		}
-	}, [tonConnectUI.connected]);
-
 	const handleSubmit = useCallback(
 		async (values: FormValues, bag: { setSubmitting: (arg0: boolean) => void }) => {
 			if (!tonClient) return;
 			const turnOffSubmition = () => bag.setSubmitting(false);
 
 			bag.setSubmitting(true);
-			let creatorAddress = address;
-			try {
-				if (!tonConnectUI.connected) {
-					try {
-						let result = await tonConnectUI.connectWallet();
-						creatorAddress = Address.parseRaw(result.account.address).toString();
-					} catch (error) {
-						console.error('Error occured when connecting to wallet', error);
 
-						throw error;
-					}
-				}
+			try {
+				if (!tonConnectAddress) throw new Error('Ton not connected');
 				if (!values.media) throw new Error('No media');
 
 				const { collectionAddress } = await createEdition(
@@ -113,7 +91,7 @@ function CreateEditionForm() {
 						price: values.price,
 						royalty: values.royalty,
 						payoutAddress: values.payoutAddress,
-						creatorAddress,
+						creatorAddress: tonConnectAddress,
 						maxSupply:
 							values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0',
 						dateStart: values.validity.start ? dateToUnix(values.validity.start) : 0,
@@ -133,7 +111,7 @@ function CreateEditionForm() {
 				turnOffSubmition();
 			}
 		},
-		[sendEditionUrlToTelegram, address, tonConnectUI.connected, tonClient]
+		[sendEditionUrlToTelegram, tonConnectAddress, tonClient]
 	);
 
 	const handleDeploymentModalClose = useCallback(() => {
@@ -158,10 +136,10 @@ function CreateEditionForm() {
 				start: null,
 				end: null,
 			},
-			payoutAddress: address,
+			payoutAddress: tonConnectAddress
 		};
 	} else {
-		createEditionInitialValues = getTestnetInitialValues(address);
+		createEditionInitialValues = getTestnetInitialValues(tonConnectAddress);
 	}
 
 	return (
@@ -175,11 +153,8 @@ function CreateEditionForm() {
 				<Preview />
 				<FormArea
 					sendEditionUrlToTelegram={sendEditionUrlToTelegram}
-					address={address}
 					handleDeploymentModalClose={handleDeploymentModalClose}
 					deploymentState={getdeploymentState()}
-					isWalletConnected={tonConnectUI.connected}
-					handleConnectWalletClick={handleConnectWalletClick}
 				/>
 			</section>
 		</Formik>

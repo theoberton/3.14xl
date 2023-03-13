@@ -12,7 +12,7 @@ import { Button, ButtonKinds } from '@/components/Button';
 import styles from './styles.module.scss';
 import { composeMintTransaction } from '@/pages/EditionDetails/helper';
 import MintDateSection from './MintTime';
-import { AddressLabel, ShareButton } from '@/components';
+import { AddressLabel } from '@/components';
 
 type Props = {
 	getEditionDetails: () => void;
@@ -21,6 +21,7 @@ type Props = {
 	editionData: ManagerFullData;
 };
 
+// @todo: refactor this func
 function EditionDetails({
 	editionData: { content, collectionData, managerAddress },
 	currentNextNftItemIndex,
@@ -31,7 +32,7 @@ function EditionDetails({
 
 	const [isDeploymentModalOpened, setDeploymentStatus] = useState(false);
 
-	const address = useTonAddress();
+	const tonConnectAddress = useTonAddress();
 	const [tonConnectUI] = useTonConnectUI();
 
 	const maxSupply = Number(content.maxSupply);
@@ -45,18 +46,19 @@ function EditionDetails({
 	}, []);
 
 	const mint = useCallback(async () => {
-		let newlyConnecteaddress;
-		if (!tonConnectUI.connected) {
+		let transactionAccountAddress = tonConnectAddress && Address.parse(tonConnectAddress);
+
+		if (!transactionAccountAddress) {
 			try {
-				let result = await tonConnectUI.connectWallet();
-				newlyConnecteaddress = Address.parseRaw(result.account.address);
+				const result = await tonConnectUI.connectWallet();
+
+				transactionAccountAddress = Address.parseRaw(result.account.address);
 			} catch (error) {
 				console.error('Error occured when connecting to wallet', error);
 
 				throw error;
 			}
 		}
-		const transactionAccountAddress = !address ? newlyConnecteaddress : Address.parse(address);
 
 		const transaction = composeMintTransaction(collectionData, content, transactionAccountAddress!);
 
@@ -66,34 +68,12 @@ function EditionDetails({
 		} catch (e) {
 			console.error(e);
 		}
-	}, [tonConnectUI.connected, address]);
+	}, [handleDeploymentModalOpen, tonConnectUI, tonConnectAddress]);
 
 	const goToEditionEdit = useNavigateHandler(`/edition/${collectionData.address}/edit`);
 
-	const mintButtonHandler = isEndOfMinting ? () => {} : mint;
 	const mintAllowed = isMintAllowed(now, content.dateStart, content.dateEnd);
-	const isAuthorized = tonConnectUI.connected;
-
-	const handleConnectWalletClick = useCallback(async () => {
-		if (!tonConnectUI.connected) {
-			try {
-				await tonConnectUI.connectWallet();
-			} catch (error) {
-				console.error('Error occured when connecting to wallet', error);
-
-				throw error;
-			}
-		}
-	}, [tonConnectUI.connected]);
-
-	let loginWalletAddress;
-
-	if (address) {
-		const addresFriendly = Address.parseFriendly(address);
-
-		loginWalletAddress = addresFriendly.address.toString();
-	}
-	const isMyEdition = managerAddress.toString() === loginWalletAddress;
+	const isMyEdition: boolean = Boolean(tonConnectAddress) && managerAddress.toString() === Address.parse(tonConnectAddress).toString();
 
 	return (
 		<div className={styles.editionDetailsInfo}>
@@ -119,14 +99,14 @@ function EditionDetails({
 						</Tooltip>
 					</div>
 				</div>
-				{mintAllowed && isAuthorized && (
+				{mintAllowed && (
 					<div className={styles.editionDetailsInfoPriceBlock}>
 						{!isEndOfMinting ? (
 							<Button
 								componentType="button"
 								kind={ButtonKinds.basic}
 								basicInverted={isEndOfMinting}
-								onClick={mintButtonHandler}
+								onClick={mint}
 							>
 								Mint
 							</Button>
@@ -135,18 +115,6 @@ function EditionDetails({
 								No tokens left ¯\\_(ツ)_/¯{' '}
 							</div>
 						)}
-					</div>
-				)}
-				{mintAllowed && !isAuthorized && (
-					<div className={styles.editionDetailsInfoPriceBlock}>
-						<Button
-							componentType="button"
-							kind={ButtonKinds.basic}
-							basicInverted={isEndOfMinting}
-							onClick={handleConnectWalletClick}
-						>
-							Connect wallet
-						</Button>
 					</div>
 				)}
 			</div>

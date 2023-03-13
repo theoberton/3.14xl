@@ -9,28 +9,25 @@ import { Button, ButtonKinds, MediaInput, TextArea, Input } from '@/components';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
 import EditionSize from '@/pages/CreateEdition/EditionSize';
 import ValidityPeriod from '@/pages/CreateEdition/ValidityPeriod';
+import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 
 type Props = {
-	address: string;
-	isWalletConnected: boolean;
 	deploymentState: { isModalOpened: boolean; address: string; editionName: string };
-	handleConnectWalletClick: () => void;
 	handleDeploymentModalClose: () => void;
 	sendEditionUrlToTelegram: (address: string, name: string) => void;
 };
 
 export function FormArea({
-	isWalletConnected,
 	sendEditionUrlToTelegram,
 	handleDeploymentModalClose,
-	handleConnectWalletClick,
 	deploymentState,
-	address,
 }: Props) {
+	const [tonConnectUI] = useTonConnectUI();
+	const tonConnectAddress = useTonAddress();
 	const { isValid, dirty, values, touched, setFieldValue, isSubmitting, submitForm, resetForm } =
 		useFormikContext<FormValues>();
 
-	const isFormValid = isValid && dirty;
+	const isFormValid: boolean = isValid && dirty && Boolean(tonConnectAddress);
 
 	const createNewEditionHandler = useCallback(() => {
 		handleDeploymentModalClose();
@@ -38,10 +35,10 @@ export function FormArea({
 	}, [resetForm, handleDeploymentModalClose]);
 
 	useEffect(() => {
-		if (isWalletConnected && !values.payoutAddress) {
-			setFieldValue('payoutAddress', address);
+		if (tonConnectAddress && !values.payoutAddress) {
+			setFieldValue('payoutAddress', tonConnectAddress);
 		}
-	}, [address, isWalletConnected, values.payoutAddress]);
+	}, [tonConnectAddress, values.payoutAddress]);
 
 	useEffect(() => {
 		if ((touched.symbol && values.symbol && !values.name) || isSubmitting) {
@@ -98,34 +95,34 @@ export function FormArea({
 			<Input label={'Royalty'} name="royalty" type="number" placeholder="5" units="%" />
 			<Input
 				subCaption={`Enter the address where you want to receive withdrawals and royalties. ${
-					!isWalletConnected
-						? 'You can enter the payout address manually or connect your wallet.'
-						: ''
+					tonConnectAddress
+					? ''
+					: 'You can enter the payout address manually or connect your wallet.'
 				}`}
 				label={'Payout address'}
 				name="payoutAddress"
 				type="text"
 				placeholder="Address"
 				inputSupplementaryComponent={
-					!isWalletConnected ? (
+					tonConnectAddress ? null : (
 						<Button
 							componentType="button"
 							kind={ButtonKinds.basic}
-							onClick={handleConnectWalletClick}
+							onClick={() => tonConnectUI.connectWallet()}
 							basicInverted
 							mini
 							buttonType="button"
 						>
 							Connect wallet
 						</Button>
-					) : null
+					)
 				}
 			/>
 			<div className={styles.createEditionSubmitButton}>
 				<Button
 					componentType="button"
 					buttonType="submit"
-					disabled={!isFormValid}
+					disabled={!isFormValid || !tonConnectAddress}
 					expanded
 					isSubmitting={isSubmitting}
 					kind={ButtonKinds.basic}

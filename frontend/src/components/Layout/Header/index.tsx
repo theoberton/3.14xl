@@ -39,7 +39,14 @@ function AuthMenu() {
 	}
 
 	if (!address) {
-		return <Button componentType="button" kind={ButtonKinds.basic} basicInverted onClick={() => tonConnectUI.connectWallet()}>Connect wallet</Button>
+		return (
+			<Button 
+				componentType="button" 
+				kind={ButtonKinds.basic} 
+				basicInverted 
+				onClick={() => tonConnectUI.connectWallet()}
+			>Connect wallet</Button>
+		);
 	}
 
 	return (
