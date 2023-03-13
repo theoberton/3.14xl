@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { useTonConnectUI } from '@tonconnect/ui-react';
+import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Button, ButtonKinds } from '@/components/Button';
 import { AddressLabel } from '@/components';
 import { Menu, MenuItem, MenuDivider, MenuButton  } from '@szhsin/react-menu';
@@ -10,19 +10,35 @@ import { isTestnet } from '@/helpers/location';
 
 import Logo from '@/assets/images/svg/common/logo.svg';
 import styles from './styles.module.scss';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigateHandler } from '@/hooks';
+
+export function useTonConnectLoading(): boolean {
+	const [isLoading, setIsLoading] = useState(true);
+	const [tonConnectUI] = useTonConnectUI();
+
+	useEffect(() => {
+		tonConnectUI.connectionRestored.then(() => setIsLoading(false));
+	}, [tonConnectUI]);
+
+	return isLoading;
+}
 
 function AuthMenu() {
 	const [tonConnectUI] = useTonConnectUI();
+	const address = useTonAddress();
+	const isLoading = useTonConnectLoading();
 
 	const goToMyEditions = useNavigateHandler('/my-editions');
 	const disconnectHandler = useCallback(async () => {
 		await tonConnectUI.disconnect();
 	}, [tonConnectUI.disconnect]);
 
+	if (isLoading) {
+		return <div>loading..</div>;
+	}
 
-	if (!tonConnectUI.connected || !tonConnectUI.account) {
+	if (!address) {
 		return <Button componentType="button" kind={ButtonKinds.basic} basicInverted onClick={() => tonConnectUI.connectWallet()}>Connect wallet</Button>
 	}
 
@@ -32,7 +48,7 @@ function AuthMenu() {
 			align="end"
 			theming="dark"
 			transition
-			menuButton={<MenuButton><AddressLabel address={tonConnectUI.account.address} withCopy={false} /></MenuButton>}>
+			menuButton={<MenuButton><AddressLabel address={address} withCopy={false} /></MenuButton>}>
 			<MenuItem onClick={goToMyEditions}>My editions</MenuItem>
 			<MenuDivider />
 			<MenuItem onClick={disconnectHandler}>Disconnect</MenuItem>
