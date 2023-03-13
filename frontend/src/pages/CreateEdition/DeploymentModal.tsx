@@ -27,7 +27,6 @@ const renderDeployInProgressComponent = () => (
 );
 
 const renderDeploySuccessComponent = (
-	createNewEditionHandler: () => void,
 	viewCreatedEdition: () => void,
 	settings: {
 		editionName: string | null;
@@ -49,14 +48,6 @@ const renderDeploySuccessComponent = (
 			/>
 		</div>
 		<div className={styles.deploymentModalActions}>
-			<Button
-				basicInverted
-				componentType="button"
-				kind={ButtonKinds.basic}
-				onClick={createNewEditionHandler}
-			>
-				Create new edition
-			</Button>
 			<Button componentType="button" kind={ButtonKinds.basic} onClick={viewCreatedEdition}>
 				View created edition
 			</Button>
@@ -206,7 +197,7 @@ export function DeploymentModal({
 			onClose={onClose}
 		>
 			{status == DeploymentStatus.success &&
-				renderDeploySuccessComponent(createNewEditionHandler, goToEditionDetails, settings)}
+				renderDeploySuccessComponent(goToEditionDetails, settings)}
 			{status == DeploymentStatus.inProgress && renderDeployInProgressComponent()}
 			{status == DeploymentStatus.failiure &&
 				renderDeployFailureComponent(goBack, retryCreateEdition)}
