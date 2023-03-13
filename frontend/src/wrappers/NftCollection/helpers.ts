@@ -18,16 +18,16 @@ import {
 import { NftCollectionOpcodes } from '../constants';
 
 export function buildNftCollectionDataCell(data: NftCollectionData) {
-	let dataCell = beginCell();
+	const dataCell = beginCell();
 
 	dataCell.storeAddress(data.ownerAddress);
 	dataCell.storeUint(data.nextItemIndex, 64);
 
-	let contentCell = beginCell();
+	const contentCell = beginCell();
 
-	let collectionContent = encodeOffChainContent(data.collectionContentUri);
+	const collectionContent = encodeOffChainContent(data.collectionContentUri);
 
-	let commonContent = beginCell();
+	const commonContent = beginCell();
 	commonContent.storeBuffer(Buffer.from(data.commonContent));
 
 	contentCell.storeRef(collectionContent);
@@ -36,7 +36,7 @@ export function buildNftCollectionDataCell(data: NftCollectionData) {
 
 	dataCell.storeRef(data.nftItemCode);
 
-	let royaltyCell = beginCell();
+	const royaltyCell = beginCell();
 
 	royaltyCell.storeUint(data.royaltyParams.royaltyFactor, 16);
 	royaltyCell.storeUint(data.royaltyParams.royaltyBase, 16);
@@ -82,7 +82,7 @@ export function buildNftCollectionStateInit(
 		data: dataCell,
 	};
 
-	let address = contractAddress(0, stateInit);
+	const address = contractAddress(0, stateInit);
 
 	return {
 		stateInit,
@@ -92,15 +92,15 @@ export function buildNftCollectionStateInit(
 
 export const Queries = {
 	mint: (params: MintBodyParams) => {
-		let msgBody = beginCell();
+		const msgBody = beginCell();
 		msgBody.storeUint(NftCollectionOpcodes.Mint, 32);
 		msgBody.storeUint(params.queryId || 0, 64);
 		msgBody.storeUint(params.itemIndex, 64);
 		msgBody.storeCoins(params.amount);
 
-		let itemContent = beginCell();
+		const itemContent = beginCell();
 		itemContent.storeBuffer(Buffer.from(params.itemContent));
-		let nftItemMessage = beginCell();
+		const nftItemMessage = beginCell();
 
 		nftItemMessage.storeAddress(params.itemOwnerAddress);
 		nftItemMessage.storeRef(itemContent);
@@ -110,7 +110,7 @@ export const Queries = {
 		return msgBody.endCell();
 	},
 	changeOwner: (params: ChangeOwnerBodyParams) => {
-		let msgBody = beginCell();
+		const msgBody = beginCell();
 		msgBody.storeUint(NftCollectionOpcodes.ChangeOwner, 32);
 		msgBody.storeUint(params.queryId || 0, 64);
 		msgBody.storeAddress(params.newOwnerAddress);
@@ -118,27 +118,27 @@ export const Queries = {
 		return msgBody.endCell();
 	},
 	getRoyaltyParams: (params: GetRoyaltyParamsBodyParams) => {
-		let msgBody = beginCell();
+		const msgBody = beginCell();
 		msgBody.storeUint(NftCollectionOpcodes.GetRoyaltyParams, 32);
 		msgBody.storeUint(params.queryId || 0, 64);
 
 		return msgBody.endCell();
 	},
 	editContent: (params: EditContentParams) => {
-		let msgBody = beginCell();
+		const msgBody = beginCell();
 		msgBody.storeUint(NftCollectionOpcodes.EditContent, 32);
 		msgBody.storeUint(params.queryId || 0, 64);
 
-		let royaltyCell = beginCell();
+		const royaltyCell = beginCell();
 		royaltyCell.storeUint(params.royaltyParams.royaltyFactor, 16);
 		royaltyCell.storeUint(params.royaltyParams.royaltyBase, 16);
 		royaltyCell.storeAddress(params.royaltyParams.royaltyAddress);
 
-		let contentCell = beginCell();
+		const contentCell = beginCell();
 
-		let collectionContent = encodeOffChainContent(params.collectionContentUri);
+		const collectionContent = encodeOffChainContent(params.collectionContentUri);
 
-		let commonContent = encodeOffChainContent(params.commonContent);
+		const commonContent = encodeOffChainContent(params.commonContent);
 
 		contentCell.storeRef(collectionContent);
 		contentCell.storeRef(commonContent);

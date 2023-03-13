@@ -23,7 +23,7 @@ describe('nft item smc', () => {
 			blockchain = await Blockchain.create();
 
 			ownerOfItem = await blockchain.treasury('owner_of_item');
-			let nftCollection = await blockchain.treasury('collection_address');
+			const nftCollection = await blockchain.treasury('collection_address');
 
 			const ownerOfItemAddress = ownerOfItem.address;
 
@@ -58,7 +58,7 @@ describe('nft item smc', () => {
 		});
 
 		it('should return item data', async () => {
-			let res = await contract!.getData();
+			const res = await contract!.getData();
 
 			if (!res.isInitialized) {
 				throw new Error();
@@ -74,9 +74,9 @@ describe('nft item smc', () => {
 		});
 
 		it('should transfer ownership', async () => {
-			let newOwner = randomAddress();
+			const newOwner = randomAddress();
 
-			let ownershipTransferResult = await contract!.sendTransfer(ownerOfItem!.getSender(), {
+			const ownershipTransferResult = await contract!.sendTransfer(ownerOfItem!.getSender(), {
 				newOwner,
 				forwardAmount: toNano('0.01'),
 				responseTo: randomAddress(),
@@ -89,7 +89,7 @@ describe('nft item smc', () => {
 				outMessagesCount: 2,
 			});
 
-			let res = await contract!.getData();
+			const res = await contract!.getData();
 
 			if (!res.isInitialized) {
 				throw new Error();

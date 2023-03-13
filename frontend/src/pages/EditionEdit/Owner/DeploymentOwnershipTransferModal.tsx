@@ -110,7 +110,7 @@ export function DeploymentModal({ address, deploy, values, handleDeploymentSucce
 		let collectionData;
 		let managerData;
 		try {
-			let collectionData = await nftColelctionContract.getCollectionData();
+			const collectionData = await nftColelctionContract.getCollectionData();
 
 			const nftManager = NftManager.createFromAddress(collectionData.ownerAddress);
 			const nftManagerContract = tonClient.open(nftManager);

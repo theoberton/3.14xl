@@ -27,7 +27,7 @@ export class NftItem extends BaseLocalContract {
 	}
 
 	async sendDeploy(provider: ContractProvider, via: Sender, params: NftItemData, value: bigint) {
-		let msgBody = Queries.composeInitMessage(params);
+		const msgBody = Queries.composeInitMessage(params);
 
 		await provider.internal(via, {
 			value,
@@ -73,7 +73,7 @@ export class NftItem extends BaseLocalContract {
 		params: { queryId?: number; newOwner: Address; responseTo?: Address; forwardAmount?: bigint },
 		args: BaseTransactionArgs = defaultCommandArgs
 	) {
-		let msgBody = Queries.transfer(params);
+		const msgBody = Queries.transfer(params);
 
 		await provider.internal(via, {
 			...args,
@@ -86,7 +86,7 @@ export class NftItem extends BaseLocalContract {
 		via: Sender,
 		args: BaseTransactionArgs = defaultCommandArgs
 	) {
-		let msgBody = Queries.getStaticData({});
+		const msgBody = Queries.getStaticData({});
 
 		await provider.internal(via, {
 			...args,

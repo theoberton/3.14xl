@@ -1,18 +1,16 @@
-
 import Landing from '@/pages/Landing';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import qs from 'qs';
 
 export default function TelegramLanding() {
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   console.log('searchParams', searchParams)
 
 	const location = useLocation();
   console.log('location', location)
   const gmail = qs.parse(location.search)
   console.log('gmail', gmail);
-  // @ts-ignore
-  console.log(qs.parse(gmail["?tgWebAppData"]))
+  console.log(qs.parse(gmail["?tgWebAppData"] as string))
 
   const params = useParams()
   console.log('params', params)

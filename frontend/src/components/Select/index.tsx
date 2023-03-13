@@ -106,7 +106,7 @@ export function Select(props: SelectProps) {
 
 	const defaultClassname = styles.selectContainer;
 
-	let selectValue = options.filter(({ value }: { value: any }): boolean => value === field.value);
+	const selectValue = options.filter(({ value }: { value: any }): boolean => value === field.value);
 
 	const error = getError();
 	return (

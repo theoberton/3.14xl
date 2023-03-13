@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import styles from '@/components/Button/styles.module.scss';
-import ArrowRightIcon from '@/assets/images/svg/button/arrowRight.svg';
 import { ButtonKinds, LoaderColors } from '@/components/interfaces';
 import { Link } from 'react-router-dom';
 import { Loader } from '@/components';
@@ -72,7 +71,7 @@ export function Button(props: IProps) {
 				disabled={disabled || isSubmitting}
 				type={buttonType}
 				className={btnClass}
-				onClick={!disabled ? onClick : () => {}}
+				onClick={onClick}
 			>
 				{buttonContent}
 			</button>

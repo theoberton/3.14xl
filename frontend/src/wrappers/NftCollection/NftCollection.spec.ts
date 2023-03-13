@@ -51,7 +51,7 @@ describe('nft collection smc', () => {
 		});
 
 		it('should return collection data', async () => {
-			let res = await contract!.getCollectionData();
+			const res = await contract!.getCollectionData();
 
 			expect(res.nextItemIndex).toEqual(defaultNftCollectionConfig.nextItemIndex);
 			expect(res.collectionContentUri).toEqual(defaultNftCollectionConfig.collectionContentUri);
@@ -61,24 +61,24 @@ describe('nft collection smc', () => {
 		});
 
 		it('should return nft content', async () => {
-			let nftContent = beginCell();
+			const nftContent = beginCell();
 			nftContent.storeBuffer(Buffer.from('1'));
 
-			let res = await contract!.getNftItemContent(0, nftContent.endCell());
+			const res = await contract!.getNftItemContent(0, nftContent.endCell());
 			expect(res).toEqual(defaultNftCollectionConfig.commonContent + '1');
 		});
 
 		it('should return nft address by index', async () => {
-			let index = 77;
+			const index = 77;
 
-			let res = await contract!.getNftAddressByIndex(index);
+			const res = await contract!.getNftAddressByIndex(index);
 
 			// Basic nft item data
-			let nftItemData = beginCell();
+			const nftItemData = beginCell();
 			nftItemData.storeUint(index, 64);
 			nftItemData.storeAddress(contract!.address);
 
-			let expectedAddress = contractAddress(0, {
+			const expectedAddress = contractAddress(0, {
 				code: defaultNftCollectionConfig.nftItemCode,
 				data: nftItemData.endCell(),
 			});
@@ -87,7 +87,7 @@ describe('nft collection smc', () => {
 		});
 
 		it('should return royalty params', async () => {
-			let res = await contract!.getRoyaltyParams();
+			const res = await contract!.getRoyaltyParams();
 
 			expect(res.royaltyBase).toEqual(defaultNftCollectionConfig.royaltyParams.royaltyBase);
 			expect(res.royaltyFactor).toEqual(defaultNftCollectionConfig.royaltyParams.royaltyFactor);
@@ -129,7 +129,7 @@ describe('nft collection smc', () => {
 			deploy: true,
 		});
 
-		let itemIndex = 0;
+		const itemIndex = 0;
 
 		const newNftParams = {
 			amount: toNano('0.5'),
@@ -138,7 +138,7 @@ describe('nft collection smc', () => {
 			itemContent: 'test_content',
 		};
 
-		let result = await nftContract!.sendNewNftItem(
+		const result = await nftContract!.sendNewNftItem(
 			ownerOfCollectionContract.getSender(),
 			newNftParams
 		);
@@ -187,11 +187,11 @@ describe('nft collection smc', () => {
 			newOwnerAddress,
 		};
 
-		let resFirst = await nftContract!.getCollectionData();
+		const resFirst = await nftContract!.getCollectionData();
 
 		expect(resFirst.ownerAddress.toString()).toEqual(ownerAddress.toString());
 
-		let result = await nftContract!.sendChangeOwner(ownerOfCollectionContract.getSender(), params);
+		const result = await nftContract!.sendChangeOwner(ownerOfCollectionContract.getSender(), params);
 
 		expect(result.transactions).toHaveTransaction({
 			from: ownerOfCollectionContract.address,
@@ -200,7 +200,7 @@ describe('nft collection smc', () => {
 			exitCode: 0,
 		});
 
-		let res = await nftContract!.getCollectionData();
+		const res = await nftContract!.getCollectionData();
 
 		expect(res.ownerAddress.toString()).toEqual(newOwnerAddress.toString());
 	});
@@ -232,7 +232,7 @@ describe('nft collection smc', () => {
 			deploy: true,
 		});
 
-		let itemIndex = 0;
+		const itemIndex = 0;
 
 		const newNftParams = {
 			amount: toNano('0.5'),
@@ -241,7 +241,7 @@ describe('nft collection smc', () => {
 			itemContent: 'test_content',
 		};
 
-		let result = await nftContract!.sendNewNftItem(randomContract.getSender(), newNftParams);
+		const result = await nftContract!.sendNewNftItem(randomContract.getSender(), newNftParams);
 
 		expect(result.transactions).toHaveTransaction({
 			from: randomAddress,
@@ -274,7 +274,7 @@ describe('nft collection smc', () => {
 			deploy: true,
 		});
 
-		let result = await nftContract!.sendGetRoyaltyParams(randomContract.getSender(), {});
+		const result = await nftContract!.sendGetRoyaltyParams(randomContract.getSender(), {});
 
 		expect(result.transactions).toHaveTransaction({
 			from: randomAddress,
@@ -333,9 +333,9 @@ describe('nft collection smc', () => {
 			},
 		};
 
-		let resBefore = await nftContract!.getCollectionData();
+		const resBefore = await nftContract!.getCollectionData();
 
-		let result = await nftContract!.sendEditContent(ownerOfCollectionContract.getSender(), params);
+		const result = await nftContract!.sendEditContent(ownerOfCollectionContract.getSender(), params);
 
 		expect(result.transactions).toHaveTransaction({
 			from: ownerAddress,
@@ -343,7 +343,7 @@ describe('nft collection smc', () => {
 			success: true,
 		});
 
-		let res = await nftContract!.getCollectionData();
+		const res = await nftContract!.getCollectionData();
 
 		expect(res.nextItemIndex).toEqual(nftCollectionConfig.nextItemIndex);
 		expect(res.collectionContentUri).toEqual(params.collectionContentUri);

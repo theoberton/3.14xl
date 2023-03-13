@@ -93,14 +93,15 @@ export function MediaInput(props: Props) {
 		setFieldValue(name, undefined);
 	}, []);
 
-	const error = getError();
 	const inputIcon = value ? crossIcon : uploadIcon;
 
 	const handleInputClick = useCallback(
 		(e: React.MouseEvent<HTMLImageElement>) => {
 			if (disabled) return;
 
-			const manageInputHandler = value ? handleClearInput : () => {};
+			const manageInputHandler = value ? handleClearInput : () => {
+				// do nothing
+			};
 
 			return manageInputHandler(e);
 		},

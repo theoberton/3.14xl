@@ -1,7 +1,5 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
-module.exports = {
-	preset: 'ts-jest',
-	testEnvironment: 'node',
-	testPathIgnorePatterns: ['/node_modules/', '/dist/'],
-	maxWorkers: 1,
-};
+export const preset = 'ts-jest';
+export const testEnvironment = 'node';
+export const testPathIgnorePatterns = ['/node_modules/', '/dist/'];
+export const maxWorkers = 1;

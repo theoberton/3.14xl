@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useGetSetState } from 'react-use';
 import { Formik } from 'formik';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
@@ -15,6 +15,7 @@ import { createEdition } from '@/pages/CreateEdition/helpers';
 import { dateToUnix } from '@/helpers';
 import { sendMessageToChat } from '@/libs/apiClient';
 import { composeFullEditionAddress } from '@/utils';
+import { TelegramMessage } from '@/libs/apiClient/types';
 
 const initialDeploymentState = {
 	isModalOpened: false,
@@ -51,11 +52,11 @@ function CreateEditionForm() {
 	const telegram = useTelegram();
 
 	const sendEditionUrlToTelegram = useCallback((editionAddress: string, edtionName: string) => {
-		if(!telegram.user) return;
+		if(!telegram.user?.id) return;
 
 		const edtionFullAddress = composeFullEditionAddress(editionAddress);
 
-		const message = {
+		const message: TelegramMessage = {
 			action: TELEGRAM_WEB_APP_ACTION.EDITION_MINT,
 			payload: {
 				chatId: telegram.user.id,

@@ -10,7 +10,7 @@ import { GetStaticDataParams, NftItemDataOptional, NftItemData, NftInitItemData 
 import { NftItemCodeCell } from './NftItem.source';
 
 export function buildNftItemStateInitDataCell(data: NftInitItemData) {
-	let dataCell = beginCell();
+	const dataCell = beginCell();
 
 	dataCell.storeUint(data.itemIndex, 64);
 	dataCell.storeAddress(data.collectionAddress);
@@ -35,8 +35,6 @@ export const getDefaultNftItemData = (source: NftItemDataOptional = {}): NftItem
 	return value;
 };
 
-export function buildNftItemInitilizedDataCell(data: NftItemData) {}
-
 export function buildNftItemStateInit(conf: NftItemDataOptional, code: Cell = NftItemCodeCell) {
 	const nftItemData = getDefaultNftItemData(conf);
 	const dataCell = buildNftItemStateInitDataCell(nftItemData);
@@ -46,7 +44,7 @@ export function buildNftItemStateInit(conf: NftItemDataOptional, code: Cell = Nf
 		data: dataCell,
 	};
 
-	let address = contractAddress(0, stateInit);
+	const address = contractAddress(0, stateInit);
 
 	return {
 		stateInit,
@@ -61,7 +59,7 @@ export const Queries = {
 		responseTo?: Address;
 		forwardAmount?: bigint;
 	}) => {
-		let msgBody = beginCell();
+		const msgBody = beginCell();
 
 		msgBody.storeUint(NftItemOpcodes.Transfer, 32);
 		msgBody.storeUint(params.queryId || 0, 64);
@@ -74,7 +72,7 @@ export const Queries = {
 		return msgBody.endCell();
 	},
 	composeInitMessage: (params: NftItemData) => {
-		let dataCell = beginCell();
+		const dataCell = beginCell();
 
 		const contentCell = encodeOffChainContent(params.content);
 
@@ -84,7 +82,7 @@ export const Queries = {
 		return dataCell.endCell();
 	},
 	getStaticData: (params: GetStaticDataParams) => {
-		let msgBody = beginCell();
+		const msgBody = beginCell();
 		msgBody.storeUint(NftItemOpcodes.GetStaticData, 32);
 		msgBody.storeUint(params.queryId || 0, 64);
 

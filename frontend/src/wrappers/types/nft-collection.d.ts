@@ -57,7 +57,7 @@ export interface NftCollectionData {
 	royaltyParams: RoyaltyParams;
 }
 
-export interface NftCollectionDataOptional extends Partial<NftCollectionData> {}
+export type NftCollectionDataOptional = Partial<NftCollectionData>
 
 export interface CollectionMintItemInput {
 	passAmount: bigint;

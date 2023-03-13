@@ -26,7 +26,7 @@ export interface NftItemContent {
 	contentUri?: string;
 }
 
-export interface NftItemDataOptional extends Partial<NftItemData> {}
+export type NftItemDataOptional = Partial<NftItemData>
 
 export type NftDataResponse =
 	| { isInitialized: false; index: number; collectionAddress: Address | null }
@@ -37,7 +37,7 @@ export type NftDataResponse =
 			ownerAddress: Address;
 			content: string;
 			contentRaw: Cell;
-	  };
+		};
 
 export declare class NftItem implements Contract {
 	readonly address: Address;

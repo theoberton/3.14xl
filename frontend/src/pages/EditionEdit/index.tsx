@@ -66,28 +66,16 @@ function EditionEdit() {
 	const contentDeploymentState = getContentDeploymentState();
 	const ownerDeploymentState = getOwnerDeploymentState();
 
-	const ContextProviderValue = useMemo(
-		() => ({
-			editionName,
-			setEditionName,
-			ownerDeploymentState,
-			contentDeploymentState,
-			isFormDisabled,
-			getEditionDetails,
-			setContentDeploymentState,
-			setOwnerDeploymentState,
-		}),
-		[
-			editionName,
-			isFormDisabled,
-			setEditionName,
-			ownerDeploymentState,
-			contentDeploymentState,
-			setContentDeploymentState,
-			setOwnerDeploymentState,
-			getEditionDetails,
-		]
-	);
+	const ContextProviderValue = {
+		editionName,
+		isFormDisabled,
+		ownerDeploymentState,
+		contentDeploymentState,
+		getEditionDetails,
+		setEditionName,
+		setContentDeploymentState,
+		setOwnerDeploymentState,
+	}
 
 	if (isLoading && !edtionDetails) {
 		return <PageLoader />;

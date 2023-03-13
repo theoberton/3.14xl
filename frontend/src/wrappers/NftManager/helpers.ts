@@ -16,9 +16,9 @@ import { encodeOffChainContent } from './../utils/nft-content';
 import { NftManagerCodeCell, NftManagerSystemCell } from './NftManager.source';
 
 export function buildNftManagerDataCell(managerData: NftManagerInitData, systemCell: Cell) {
-	let collectionContent = encodeOffChainContent(managerData.content);
+	const collectionContent = encodeOffChainContent(managerData.content);
 
-	let data = beginCell()
+	const data = beginCell()
 		.storeRef(systemCell)
 		.storeUint(0, 1)
 		.storeAddress(managerData.owner)
@@ -39,7 +39,7 @@ export function buildNftManagerStateInit(
 	const data = buildNftManagerDataCell(managerData, NftManagerSystemCell);
 
 	const stateInit = { code, data };
-	let address = contractAddress(0, stateInit);
+	const address = contractAddress(0, stateInit);
 
 	return {
 		stateInit,
@@ -50,7 +50,7 @@ export function buildNftManagerStateInit(
 // Tact-generated payload builders
 export function storeSetNftCollectionAddress(src: SetNftCollectionAddress) {
 	return (builder: Builder) => {
-		let b_0 = builder;
+		const b_0 = builder;
 		b_0.storeUint(NftManagerOpcodes.SetNftCollectionAddress, 32);
 		b_0.storeAddress(src.nftCollectionAddress);
 	};
@@ -58,7 +58,7 @@ export function storeSetNftCollectionAddress(src: SetNftCollectionAddress) {
 
 export function storeMintSafe(src: MintSafe) {
 	return (builder: Builder) => {
-		let b_0 = builder;
+		const b_0 = builder;
 		b_0.storeUint(NftManagerOpcodes.MintSafe, 32);
 		b_0.storeUint(src.queryId ?? 0, 64);
 		b_0.storeUint(src.nextItemIndex, 64);
@@ -68,22 +68,22 @@ export function storeMintSafe(src: MintSafe) {
 
 export function storeChangeOwnerOfCollection(src: ChangeOwnerOfCollection) {
 	return (builder: Builder) => {
-		let b_0 = builder;
+		const b_0 = builder;
 		b_0.storeUint(NftManagerOpcodes.ChangeOwnerOfCollection, 32);
 		b_0.storeAddress(src.newOwner);
 	};
 }
 
 export function storeEditData(src: EditData) {
-	let collectionContent = encodeOffChainContent(src.content);
-	let commonContent = encodeOffChainContent(src.commonContent);
-	let contentCell = beginCell();
+	const collectionContent = encodeOffChainContent(src.content);
+	const commonContent = encodeOffChainContent(src.commonContent);
+	const contentCell = beginCell();
 
 	contentCell.storeRef(collectionContent);
 	contentCell.storeRef(commonContent);
 
 	return (builder: Builder) => {
-		let b_0 = builder;
+		const b_0 = builder;
 		b_0.storeUint(NftManagerOpcodes.EditData, 32);
 		b_0.storeUint(src.queryId ?? 0, 64);
 		b_0.storeRef(contentCell);

@@ -1,7 +1,6 @@
 import axios, { Method, AxiosError, AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 import { HTTP_METHODS_MAP } from '@/constants/common';
-import _ from 'lodash';
 import { isTestnet } from '@/helpers/location';
 
 const API_HOST = 'https://api-pixel.com';
@@ -13,7 +12,7 @@ type ServerError = {
 	error: string;
 };
 
-async function handleFailedRequest(error: AxiosError<any, any>) {
+async function handleFailedRequest(error: AxiosError) {
 	if (error.response) {
 		// The request was made and the server responded with a status code
 		// that falls out of the range of 2xx
@@ -46,7 +45,7 @@ async function hanleServerError(data: ServerError, code: number) {
 	throw data;
 }
 
-export async function request(method: Method, endpoint: string, data?: Object, params = {}) {
+export async function request(method: Method, endpoint: string, data?: object, params = {}) {
 	const requestParams: AxiosRequestConfig = {
 		method,
 		url: `${API_HOST}/${endpoint}`,
@@ -86,7 +85,7 @@ export async function request(method: Method, endpoint: string, data?: Object, p
 	}
 }
 // TO DO: REMAKE
-export async function requestFullUrl(url: string, method: Method, data?: Object, params = {}) {
+export async function requestFullUrl(url: string, method: Method, data?: object, params = {}) {
 	const requestParams: AxiosRequestConfig = {
 		method,
 		url,

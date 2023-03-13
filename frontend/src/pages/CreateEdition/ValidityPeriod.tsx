@@ -23,8 +23,8 @@ function ValidityPeriod({ disabled = false }: Props) {
 	const isResetButtonShown = values.validity.start || values.validity.end;
 	// const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
-	let validityStart = values.validity.start;
-	let validityEnd = values.validity.end;
+	const validityStart = values.validity.start;
+	const validityEnd = values.validity.end;
 
 	if (validityStart && validityEnd && isAfter(validityStart, validityEnd)) {
 		setFieldValue('validity.end', null);

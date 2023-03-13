@@ -70,7 +70,7 @@ export class NftCollection extends BaseLocalContract {
 		params: EditContentParams,
 		args: BaseTransactionArgs = defaultCommandArgs
 	) {
-		let msgBody = Queries.editContent(params);
+		const msgBody = Queries.editContent(params);
 
 		await provider.internal(via, {
 			...args,
@@ -84,7 +84,7 @@ export class NftCollection extends BaseLocalContract {
 		params: MintBodyParams,
 		args: BaseTransactionArgs = defaultCommandArgs
 	) {
-		let msgBody = Queries.mint(params);
+		const msgBody = Queries.mint(params);
 
 		await provider.internal(via, {
 			...args,
@@ -98,7 +98,7 @@ export class NftCollection extends BaseLocalContract {
 		params: ChangeOwnerBodyParams,
 		args: BaseTransactionArgs = defaultCommandArgs
 	) {
-		let msgBody = Queries.changeOwner(params);
+		const msgBody = Queries.changeOwner(params);
 
 		await provider.internal(via, {
 			...args,
@@ -112,7 +112,7 @@ export class NftCollection extends BaseLocalContract {
 		params: GetRoyaltyParamsBodyParams,
 		args: BaseTransactionArgs = defaultCommandArgs
 	) {
-		let msgBody = Queries.getRoyaltyParams(params);
+		const msgBody = Queries.getRoyaltyParams(params);
 
 		await provider.internal(via, {
 			...args,
@@ -141,17 +141,17 @@ export class NftCollection extends BaseLocalContract {
 	}
 
 	async getNftAddressByIndex(provider: ContractProvider, index: number): Promise<Address> {
-		let args = new TupleBuilder();
+		const args = new TupleBuilder();
 
 		args.writeNumber(index);
 
-		let { stack } = await provider.get('get_nft_address_by_index', args.build());
+		const { stack } = await provider.get('get_nft_address_by_index', args.build());
 
 		return stack.readAddress();
 	}
 
 	async getRoyaltyParams(provider: ContractProvider): Promise<RoyaltyParams> {
-		let { stack } = await provider.get('royalty_params', []);
+		const { stack } = await provider.get('royalty_params', []);
 
 		const royaltyFactor = stack.readNumber();
 		const royaltyBase = stack.readNumber();
@@ -165,12 +165,12 @@ export class NftCollection extends BaseLocalContract {
 	}
 
 	async getNftItemContent(provider: ContractProvider, index: number, individualContent: Cell) {
-		let args = new TupleBuilder();
+		const args = new TupleBuilder();
 
 		args.writeNumber(index);
 		args.writeCell(individualContent);
 
-		let { stack } = await provider.get('get_nft_content', args.build());
+		const { stack } = await provider.get('get_nft_content', args.build());
 
 		return decodeOffChainContent(stack.readCell());
 	}
