@@ -21,6 +21,31 @@ type Props = {
 	editionData: ManagerFullData;
 };
 
+function MintButton({ mint }: { mint: () => void }) {
+	const tonConnectAddress = useTonAddress();
+	const [tonConnectUI] = useTonConnectUI();
+
+	if (tonConnectAddress) {
+		return (
+			<Button
+				componentType="button"
+				kind={ButtonKinds.basic}
+				onClick={mint}
+			>
+				Mint
+			</Button>
+		)
+	}
+
+	return (
+		<Button 
+			componentType="button" 
+			kind={ButtonKinds.basic} 
+			onClick={() => tonConnectUI.connectWallet()}
+		>Connect wallet</Button>
+	);
+}
+
 // @todo: refactor this func
 function EditionDetails({
 	editionData: { content, collectionData, managerAddress },
@@ -45,22 +70,8 @@ function EditionDetails({
 		setDeploymentStatus(true);
 	}, []);
 
-	const mint = useCallback(async () => {
-		let transactionAccountAddress = tonConnectAddress && Address.parse(tonConnectAddress);
-
-		if (!transactionAccountAddress) {
-			try {
-				const result = await tonConnectUI.connectWallet();
-
-				transactionAccountAddress = Address.parseRaw(result.account.address);
-			} catch (error) {
-				console.error('Error occured when connecting to wallet', error);
-
-				throw error;
-			}
-		}
-
-		const transaction = composeMintTransaction(collectionData, content, transactionAccountAddress!);
+	const mint = async () => {
+		const transaction = composeMintTransaction(collectionData, content, tonConnectAddress);
 
 		try {
 			await tonConnectUI.sendTransaction(transaction);
@@ -68,7 +79,7 @@ function EditionDetails({
 		} catch (e) {
 			console.error(e);
 		}
-	}, [handleDeploymentModalOpen, tonConnectUI, tonConnectAddress]);
+	}
 
 	const goToEditionEdit = useNavigateHandler(`/edition/${collectionData.address}/edit`);
 
@@ -101,19 +112,12 @@ function EditionDetails({
 				</div>
 				{mintAllowed && (
 					<div className={styles.editionDetailsInfoPriceBlock}>
-						{!isEndOfMinting ? (
-							<Button
-								componentType="button"
-								kind={ButtonKinds.basic}
-								basicInverted={isEndOfMinting}
-								onClick={mint}
-							>
-								Mint
-							</Button>
-						) : (
+						{isEndOfMinting ? (
 							<div className={styles.editionDetailsInfoPriceBlockEmpty}>
 								No tokens left ¯\\_(ツ)_/¯{' '}
 							</div>
+						) : (
+							<MintButton mint={mint} />
 						)}
 					</div>
 				)}

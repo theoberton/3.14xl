@@ -6,12 +6,12 @@ import { calcPercent, EditionData } from '@/helpers';
 export function composeMintTransaction(
 	collectionData: EditionData,
 	content: CollectionContent,
-	address: Address
+	address: string
 ) {
 	const nftManagerAddress = collectionData.ownerAddress;
 
 	const payload = Queries.safeMint({
-		itemOwner: address,
+		itemOwner: Address.parse(address),
 		queryId: 0,
 		nextItemIndex: collectionData.nextItemIndex,
 	});
