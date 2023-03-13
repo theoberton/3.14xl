@@ -12,7 +12,7 @@ import { Button, ButtonKinds } from '@/components/Button';
 import styles from './styles.module.scss';
 import { composeMintTransaction } from '@/pages/EditionDetails/helper';
 import MintDateSection from './MintTime';
-import { AddressLabel } from '@/components';
+import { AddressLabel, ConnectButton } from '@/components';
 
 type Props = {
 	getEditionDetails: () => void;
@@ -20,31 +20,6 @@ type Props = {
 	currentNextNftItemIndex: number;
 	editionData: ManagerFullData;
 };
-
-function MintButton({ mint }: { mint: () => void }) {
-	const tonConnectAddress = useTonAddress();
-	const [tonConnectUI] = useTonConnectUI();
-
-	if (tonConnectAddress) {
-		return (
-			<Button
-				componentType="button"
-				kind={ButtonKinds.basic}
-				onClick={mint}
-			>
-				Mint
-			</Button>
-		)
-	}
-
-	return (
-		<Button 
-			componentType="button" 
-			kind={ButtonKinds.basic} 
-			onClick={() => tonConnectUI.connectWallet()}
-		>Connect wallet</Button>
-	);
-}
 
 // @todo: refactor this func
 function EditionDetails({
@@ -114,10 +89,18 @@ function EditionDetails({
 					<div className={styles.editionDetailsInfoPriceBlock}>
 						{isEndOfMinting ? (
 							<div className={styles.editionDetailsInfoPriceBlockEmpty}>
-								No tokens left ¯\\_(ツ)_/¯{' '}
+								No tokens left ¯\_(ツ)_/¯{' '}
 							</div>
 						) : (
-							<MintButton mint={mint} />
+							<ConnectButton>
+								<Button
+									componentType="button"
+									kind={ButtonKinds.basic}
+									onClick={mint}
+								>
+									Mint
+								</Button>
+							</ConnectButton>
 						)}
 					</div>
 				)}

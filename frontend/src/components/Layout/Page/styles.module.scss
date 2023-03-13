@@ -31,4 +31,8 @@
 	@media (min-width: $breakpoint-xl) {
 		padding-inline: 108px;
 	}
+
+	@media (min-width: $breakpoint-xxl) {
+		padding-inline: calc(50vw - 710px);
+	}
 }

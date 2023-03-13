@@ -5,11 +5,11 @@ import { getConsonants } from '@/helpers';
 
 import styles from '@/pages/CreateEdition/styles.module.scss';
 
-import { Button, ButtonKinds, MediaInput, TextArea, Input } from '@/components';
+import { Button, ButtonKinds, MediaInput, TextArea, Input, ConnectButton } from '@/components';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
 import EditionSize from '@/pages/CreateEdition/EditionSize';
 import ValidityPeriod from '@/pages/CreateEdition/ValidityPeriod';
-import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
+import { useTonAddress } from '@tonconnect/ui-react';
 
 type Props = {
 	deploymentState: { isModalOpened: boolean; address: string; editionName: string };
@@ -22,7 +22,6 @@ export function FormArea({
 	handleDeploymentModalClose,
 	deploymentState,
 }: Props) {
-	const [tonConnectUI] = useTonConnectUI();
 	const tonConnectAddress = useTonAddress();
 	const { isValid, dirty, values, touched, setFieldValue, isSubmitting, submitForm, resetForm } =
 		useFormikContext<FormValues>();
@@ -94,41 +93,23 @@ export function FormArea({
 			<ValidityPeriod />
 			<Input label={'Royalty'} name="royalty" type="number" placeholder="5" units="%" />
 			<Input
-				subCaption={`Enter the address where you want to receive withdrawals and royalties. ${
-					tonConnectAddress
-					? ''
-					: 'You can enter the payout address manually or connect your wallet.'
-				}`}
+				subCaption="Address that will receive withdrawals and royalties"
 				label={'Payout address'}
 				name="payoutAddress"
 				type="text"
 				placeholder="Address"
-				inputSupplementaryComponent={
-					tonConnectAddress ? null : (
-						<Button
-							componentType="button"
-							kind={ButtonKinds.basic}
-							onClick={() => tonConnectUI.connectWallet()}
-							basicInverted
-							mini
-							buttonType="button"
-						>
-							Connect wallet
-						</Button>
-					)
-				}
 			/>
 			<div className={styles.createEditionSubmitButton}>
-				<Button
-					componentType="button"
-					buttonType="submit"
-					disabled={!isFormValid || !tonConnectAddress}
-					expanded
-					isSubmitting={isSubmitting}
-					kind={ButtonKinds.basic}
-				>
-					Create edition
-				</Button>
+				<ConnectButton expanded>
+					<Button
+						componentType="button"
+						buttonType="submit"
+						disabled={isFormValid}
+						expanded
+						isSubmitting={isSubmitting}
+						kind={ButtonKinds.basic}
+					>Create edition</Button>
+				</ConnectButton>
 			</div>
 		</Form>
 	);

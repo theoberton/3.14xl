@@ -22,18 +22,18 @@ interface CommonProps {
 	isInvisible?: boolean;
 }
 
-interface ButtonProps extends CommonProps {
+export interface ButtonProps extends CommonProps {
 	componentType: 'button';
 	buttonType?: 'submit' | 'button' | 'reset';
 	onClick?: () => void;
 }
 
-interface LinkProps extends CommonProps {
+export interface LinkProps extends CommonProps {
 	componentType: 'link';
 	to: string;
 }
 
-type IProps = ButtonProps | LinkProps;
+export type IProps = ButtonProps | LinkProps;
 
 export function Button(props: IProps) {
 	const {

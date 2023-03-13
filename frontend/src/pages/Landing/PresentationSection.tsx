@@ -1,7 +1,13 @@
 import { Button, ButtonKinds } from '@/components/Button';
 import styles from '@/pages/Landing/styles.module.scss';
+import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
+import { useNavigate } from 'react-router-dom';
 
 export function PresentationSection() {
+	const [tonConnectUI] = useTonConnectUI();
+	const tonAddress = useTonAddress();
+	const navigate = useNavigate();
+
 	return (
 		<section className={styles.landingPresentationSection}>
 			<div className={styles.landingPresentationSlogan}>
@@ -16,9 +22,16 @@ export function PresentationSection() {
 			</p>
 
 			<div className={styles.landingPresentationLinks}>
-				<Button componentType="link" kind={ButtonKinds.basic} to="/create-edition">
-					Create new edition
-				</Button>
+				<Button 
+					componentType="button" 
+					kind={ButtonKinds.basic} 
+					onClick={async () => {
+						if (!tonAddress) {
+							await tonConnectUI.connectWallet();
+						}
+						navigate('/create-edition');
+					}}
+				>Create new edition</Button>
 			</div>
 		</section>
 	);
