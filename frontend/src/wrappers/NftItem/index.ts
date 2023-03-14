@@ -1,4 +1,4 @@
-import { Address, toNano, beginCell, Cell, ContractProvider, Sender, SendMode } from 'ton-core';
+import { Address, toNano, Cell, ContractProvider, Sender, SendMode } from 'ton-core';
 
 import { decodeOffChainContent } from './../utils/nft-content';
 import { BaseTransactionArgs, NftDataResponse, NftItemData } from './../types';
@@ -7,7 +7,7 @@ import { BaseLocalContract } from '../core/BaseLocalContract';
 
 const defaultCommandArgs: BaseTransactionArgs = {
 	value: toNano('0.1'),
-	sendMode: SendMode.PAY_GAS_SEPARATLY,
+	sendMode: SendMode.PAY_GAS_SEPARATELY,
 	bounce: false,
 };
 
@@ -31,7 +31,7 @@ export class NftItem extends BaseLocalContract {
 
 		await provider.internal(via, {
 			value,
-			sendMode: SendMode.PAY_GAS_SEPARATLY,
+			sendMode: SendMode.PAY_GAS_SEPARATELY,
 			body: msgBody,
 		});
 	}

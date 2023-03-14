@@ -25,7 +25,7 @@ import { BaseLocalContract } from '../core/BaseLocalContract';
 
 const defaultCommandArgs: BaseTransactionArgs = {
 	value: toNano('0.2'),
-	sendMode: SendMode.PAY_GAS_SEPARATLY,
+	sendMode: SendMode.PAY_GAS_SEPARATELY,
 	bounce: false,
 };
 
@@ -57,7 +57,7 @@ export class NftCollection extends BaseLocalContract {
 	async sendDeploy(provider: ContractProvider, via: Sender, value: bigint) {
 		await provider.internal(via, {
 			value,
-			sendMode: SendMode.PAY_GAS_SEPARATLY,
+			sendMode: SendMode.PAY_GAS_SEPARATELY,
 			body: beginCell().endCell(),
 		});
 	}

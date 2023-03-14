@@ -1,4 +1,4 @@
-import { Cell } from 'ton';
+import { Cell } from 'ton-core';
 import { Buffer } from 'buffer';
 
 export const NftCollectionCodeBoc =

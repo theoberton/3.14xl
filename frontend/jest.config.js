@@ -1,5 +1,9 @@
+/* eslint-disable no-undef */
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
-export const preset = 'ts-jest';
-export const testEnvironment = 'node';
-export const testPathIgnorePatterns = ['/node_modules/', '/dist/'];
-export const maxWorkers = 1;
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+  maxWorkers: 1,
+}
+
