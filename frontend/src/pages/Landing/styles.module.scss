@@ -16,6 +16,8 @@
 		}
 
 		&Slogan {
+			@extend .unselectable;
+
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
