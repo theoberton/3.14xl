@@ -5,16 +5,10 @@
   "author": "Oberton",
   "license": "MIT",
   "scripts": {
-    "build": "tact --config ./tact.config.json && yarn after-build",
-    "after-build": "ts-node scripts/manager.update-test-wrapper.ts",
-    "deploy": "blueprint run",
     "format": "prettier --write .",
     "compile": "./contracts/nft-item.fc"
   },
   "dependencies": {
-    "@tact-lang/compiler": "^1.0.0",
-    "@ton-community/blueprint": "^0.4.1",
-    "ton-compiler": "^2.2.0",
-    "ts-node": "^10.9.1"
+    "ton-compiler": "^2.2.0"
   }
 }
