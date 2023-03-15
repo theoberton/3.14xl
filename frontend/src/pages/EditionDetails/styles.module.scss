@@ -169,8 +169,11 @@
 		&About {
 			flex: 1;
 
-			&Name {
+			&Description {
+				white-space: pre-line;
+			}
 
+			&Name {
 				@media (max-width: $breakpoint-m) {
 					display: flex;
 					justify-content: space-between;

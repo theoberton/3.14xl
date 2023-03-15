@@ -111,7 +111,7 @@ function EditionDetails({
 					<div className={styles.editionDetailsInfoAboutName}>
 						<h1>{content.name}</h1>
 					</div>
-					<p>{content.description}</p>
+					<p className={styles.editionDetailsInfoAboutDescription}>{content.description}</p>
 				</div>
 				{isMyEdition && (
 					<div className={styles.editionDetailsInfoAboutEdit}>
