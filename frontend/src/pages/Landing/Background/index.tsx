@@ -1,13 +1,10 @@
 import styles from './styles.module.scss';
 
 function Background() {
-	const array = new Array(10).fill(undefined);
-
 	return (
 		<ul className={styles.landingBackground}>
-			{array.map((item, index) => (
-				<li key={index}></li>
-			))}
+			<li></li>
+			<li></li>
 		</ul>
 	);
 }

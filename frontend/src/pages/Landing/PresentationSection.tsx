@@ -2,6 +2,7 @@ import { Button, ButtonKinds } from '@/components/Button';
 import styles from '@/pages/Landing/styles.module.scss';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { useNavigate } from 'react-router-dom';
+import Background from './Background';
 
 export function PresentationSection() {
 	const [tonConnectUI] = useTonConnectUI();
@@ -10,6 +11,8 @@ export function PresentationSection() {
 
 	return (
 		<section className={styles.landingPresentationSection}>
+			<Background />
+
 			<div className={styles.landingPresentationSlogan}>
 				<span className={styles.landingPresentationSloganItem}>Bring</span>
 				<span className={styles.landingPresentationSloganItem}>visions</span>

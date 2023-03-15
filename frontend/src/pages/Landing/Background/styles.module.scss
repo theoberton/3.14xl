@@ -1,113 +1,62 @@
 @import '@/assets/styles/variables.scss';
+@import '@/assets/styles/index.scss';
 
 .landingBackground {
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
-	width: 100%;
+	width: 100vw;
 	height: 100vh;
-	overflow: hidden;
 	pointer-events: none;
 
-	li {
-		position: absolute;
-		display: block;
+	li:nth-child(1)  {
+		@extend .unselectable;
 		list-style: none;
-		width: 20px;
-		height: 20px;
-		background-image: url('./../../../assets/images/png/landing/CubeRight.png');
-		background-size: contain;
-		animation: animate 25s linear infinite;
-		bottom: -150px;
-		user-select: none;
-	}
 
-	li:nth-child(1) {
-		left: 25%;
-		width: 80px;
-		height: 80px;
-		animation-delay: 0s;
+		background-image: url('./../../../assets/images/png/landing/CubeLeft.png');
+		background-size: contain;
+
+		width: 70vw;
+		min-width: 350px;
+		max-width: 1000px;
+		aspect-ratio: 1 / 1;
+
+		
+		position: absolute;
+		right: 50vw;
+		bottom: 30vh;
+
+		@media (max-width: $breakpoint-m) {
+			bottom: 40vh;
+		}
+
+		@media (max-width: $breakpoint-s) {
+			bottom: 50vh;
+		}
 	}
 
 	li:nth-child(2) {
-		left: 10%;
-		width: 20px;
-		height: 20px;
-		animation-delay: 2s;
-		animation-duration: 12s;
-	}
+		@extend .unselectable;
+		position: absolute;
+		list-style: none;
+	
+		background-image: url('./../../../assets/images/png/landing/CubeRight.png');
+		background-size: contain;
 
-	li:nth-child(3) {
-		left: 70%;
-		width: 20px;
-		height: 20px;
-		animation-delay: 4s;
-	}
+		min-width: 300px;
+		width: 60vw;
+		max-width: 860px;
+		aspect-ratio: 1 / 1;
+		
+		left: 50vw;
+		top: 20vh;
 
-	li:nth-child(4) {
-		left: 45%;
-		width: 60px;
-		height: 60px;
-		animation-delay: 0s;
-		animation-duration: 18s;
-	}
+		@media (max-width: $breakpoint-m) {
+			top: 35vh;
+		}
 
-	li:nth-child(5) {
-		left: 65%;
-		width: 20px;
-		height: 20px;
-		animation-delay: 0s;
-	}
-
-	li:nth-child(6) {
-		left: 75%;
-		width: 110px;
-		height: 110px;
-		animation-delay: 3s;
-	}
-
-	li:nth-child(7) {
-		left: 35%;
-		width: 150px;
-		height: 150px;
-		animation-delay: 7s;
-	}
-
-	li:nth-child(8) {
-		left: 50%;
-		width: 25px;
-		height: 25px;
-		animation-delay: 15s;
-		animation-duration: 45s;
-	}
-
-	li:nth-child(9) {
-		left: 20%;
-		width: 15px;
-		height: 15px;
-		animation-delay: 2s;
-		animation-duration: 35s;
-	}
-
-	li:nth-child(10) {
-		left: 85%;
-		width: 150px;
-		height: 150px;
-		animation-delay: 0s;
-		animation-duration: 11s;
-	}
-}
-
-@keyframes animate {
-	0% {
-		transform: translateY(0) rotate(0deg);
-		opacity: 1;
-		//border-radius: 0;
-	}
-
-	100% {
-		transform: translateY(calc(1px - 100vh)) rotate(720deg);
-		opacity: 0;
-		//border-radius: 50%;
+		@media (max-width: $breakpoint-s) {
+			top: 50vh;
+		}
 	}
 }
