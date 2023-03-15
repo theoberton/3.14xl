@@ -1,9 +1,8 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import NProgress from 'nprogress';
-import { Page } from '@/components';
+import { Page, LazyLoad } from '@/components';
 import SomethingWentWrong from '@/pages/SomethingWentWrong';
 
 import 'nprogress/nprogress.css';
@@ -55,22 +54,5 @@ function withSuspense<P extends WithSuspenseProps>(Component: React.ComponentTyp
 		);
 	};
 }
-
-const LazyLoad = () => {
-	useEffect(() => {
-		NProgress.configure({
-			showSpinner: false,
-			trickleSpeed: 50,
-		});
-
-		NProgress.start();
-
-		return () => {
-			NProgress.done();
-		};
-	});
-
-	return <></>;
-};
 
 export default ApplicationRoutes;
