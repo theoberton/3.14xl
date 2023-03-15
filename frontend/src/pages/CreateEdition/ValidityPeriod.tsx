@@ -21,7 +21,6 @@ function ValidityPeriod({ disabled = false }: Props) {
 	}, []);
 
 	const isResetButtonShown = values.validity.start || values.validity.end;
-	// const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	const validityStart = values.validity.start;
 	const validityEnd = values.validity.end;

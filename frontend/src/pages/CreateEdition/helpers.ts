@@ -1,4 +1,3 @@
-import { TonConnectUI } from '@tonconnect/ui-react';
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
 
 const storage = new ThirdwebStorage();
@@ -12,11 +11,9 @@ import { CreateEditionParams } from './interfaces';
 import { Queries } from '@/wrappers/NftManager/helpers';
 import { CollectionContent } from '@/wrappers/types';
 
-export const createEdition = async (
+export const prepareDeployTransaction = async (
 	tonClient: TonClient,
-	tonConnectUI: TonConnectUI,
 	params: CreateEditionParams,
-	turnOffFormSubmitting: () => void
 ) => {
 	/** Upload collection metadata */
 	const content: CollectionContent = {
@@ -88,12 +85,5 @@ export const createEdition = async (
 		],
 	};
 
-	turnOffFormSubmitting();
-	await tonConnectUI.sendTransaction(transaction);
-
-	// you can use signed boc to find the transaction
-	// const someTxData = await myAppExplorerService.getTransaction(result.boc);
-	// alert('Transaction was sent successfully', someTxData);
-
-	return { collectionAddress: nftCollectionAddress };
+	return { collectionAddress: nftCollectionAddress, transaction };
 };

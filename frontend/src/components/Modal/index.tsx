@@ -1,7 +1,7 @@
 import { Modal as ReactModal } from 'react-responsive-modal';
 import styles from '@/components/Modal/styles.module.scss';
 
-type Props = {
+export type ModalProps = {
 	isOpen: boolean;
 	isCentered?: boolean;
 	showCloseIcon?: boolean;
@@ -12,7 +12,7 @@ type Props = {
 	onClose: () => void;
 };
 
-export function Modal(props: Props) {
+export function Modal(props: ModalProps) {
 	const {
 		isOpen,
 		fullSpace,
