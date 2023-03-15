@@ -28,9 +28,13 @@ function EditionPreview({ content }: { collectionData: EditionData; content: Col
 			{isImagePreviewOpened && (
 				<PreviewImageModal media={content.image} isOpen closeModal={closePreviewImageModal} />
 			)}
-			<div className={styles.editionDetailsPreviewImage} onClick={openPreviewImage}>
-				<img src={thirdwebStorage.resolveScheme(content.image)} />
-			</div>
+			<div
+				className={styles.editionDetailsPreviewImage}
+				onClick={openPreviewImage}
+				style={{
+					backgroundImage: `url('${thirdwebStorage.resolveScheme(content.image)}')`,
+				}}
+			/>
 			<div className={styles.editionDetailsPreviewInfo}>
 				<p>CREATOR</p>
 				<AddressLabel address={content.feeRecipient} />

@@ -18,9 +18,7 @@ export function EditionCard({ edition }: IProps) {
 				<h3>{name}</h3>
 				<EditionStatus dateStart={dateStart} dateEnd={dateEnd} />
 			</div>
-			<div className={styles.editionCardPreview}>
-				<img src={content} />
-			</div>
+			<div className={styles.editionCardPreview} style={{ backgroundImage: `url('${content}')`}} />
 			<div>
 				<div className={styles.editionCardInfo}>
 					<p>{priceFilter(price)}</p>

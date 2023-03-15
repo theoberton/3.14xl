@@ -40,16 +40,13 @@
 		}
 
 		&Image {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-
+			width: 100%;
+			aspect-ratio: 1/1;
+			border-radius: 8px;
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
 			cursor: pointer;
-
-			& > img {
-				width: 100%;
-				border-radius: 8px;
-			}
 		}
 
 		&Info {
