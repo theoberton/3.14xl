@@ -9,7 +9,6 @@ import 'nprogress/nprogress.css';
 
 const CreateEdition = withSuspense(React.lazy(() => import('@/pages/CreateEdition')));
 const LandingPage = withSuspense(React.lazy(() => import('@/pages/Landing')));
-const TelegramLandingPage = withSuspense(React.lazy(() => import('@/pages/TelegramLanding')));
 const NotFound = withSuspense(React.lazy(() => import('@/pages/NotFound')));
 const EditionDetailsPage = withSuspense(React.lazy(() => import('@/pages/EditionDetails')));
 const EditionEditPage = withSuspense(React.lazy(() => import('@/pages/EditionEdit')));
@@ -33,7 +32,6 @@ function ApplicationRoutes() {
 					</Route>
 					<Route element={<Page footer />}>
 						<Route path="/" element={<LandingPage />} />
-						<Route path="/telegram" element={<TelegramLandingPage />} />
 					</Route>
 				</Routes>
 			</ErrorBoundary>
