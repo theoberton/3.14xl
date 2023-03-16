@@ -51,7 +51,7 @@
 	}
 
 	&Units {
-		@extend .unselectable;
+		@include unselectable;
 
 		display: flex;
 		align-items: center;

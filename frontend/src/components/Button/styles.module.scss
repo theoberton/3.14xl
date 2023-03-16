@@ -2,7 +2,7 @@
 @import '@/assets/styles/index.scss';
 
 .button {
-	@extend .unselectable;
+	@include unselectable;
 	position: relative;
 	border: none;
 	color: $black-one;

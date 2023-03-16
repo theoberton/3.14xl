@@ -2,7 +2,7 @@
 @import '@/assets/styles/index.scss';
 
 .label {
-	@extend .unselectable;
+	@include unselectable;
 	border-radius: 20px;
 	max-width: fit-content;
 	max-height: min-content;

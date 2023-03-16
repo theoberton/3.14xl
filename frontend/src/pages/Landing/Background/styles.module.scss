@@ -10,7 +10,7 @@
 	pointer-events: none;
 
 	li:nth-child(1)  {
-		@extend .unselectable;
+		@include unselectable;
 		list-style: none;
 		animation: rotationRight 135s infinite linear;
 		background-image: url('./../../../assets/images/png/landing/CubeLeft.png');
@@ -36,7 +36,7 @@
 	}
 
 	li:nth-child(2) {
-		@extend .unselectable;
+		@include unselectable;
 		position: absolute;
 		list-style: none;
 	  animation: rotationLeft 140s infinite linear;

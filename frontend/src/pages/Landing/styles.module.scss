@@ -17,7 +17,7 @@
 		}
 
 		&Slogan {
-			@extend .unselectable;
+			@include unselectable;
 
 			display: flex;
 			flex-direction: column;
