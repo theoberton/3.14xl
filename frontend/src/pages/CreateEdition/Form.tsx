@@ -63,7 +63,7 @@ function CreateEditionForm() {
 			action: TELEGRAM_WEB_APP_ACTION.EDITION_MINT,
 			payload: {
 				chatId: telegram.user.id,
-				message: `Here is the link to your newly created ${edtionName} NFT edtion 🚀 \n ${edtionFullAddress}`,
+				message: `Here is the link to your newly created ${edtionName} NFT edition 🚀 \n ${edtionFullAddress}`,
 				link: edtionFullAddress,
 				edtionName,
 			}
