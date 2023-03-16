@@ -12,7 +12,7 @@
 	li:nth-child(1)  {
 		@extend .unselectable;
 		list-style: none;
-
+		animation: rotationRight 135s infinite linear;
 		background-image: url('./../../../assets/images/png/landing/CubeLeft.png');
 		background-size: contain;
 
@@ -39,7 +39,8 @@
 		@extend .unselectable;
 		position: absolute;
 		list-style: none;
-	
+	  animation: rotationLeft 140s infinite linear;
+
 		background-image: url('./../../../assets/images/png/landing/CubeRight.png');
 		background-size: contain;
 
@@ -50,6 +51,24 @@
 		
 		left: 50vw;
 		top: 20vh;
+
+		@keyframes rotationRight {
+			from {
+				transform: rotate(0deg);
+			}
+			to {
+				transform: rotate(359deg);
+			}
+		}
+
+		@keyframes rotationLeft {
+			from {
+				transform: rotate(359deg);
+			}
+			to {
+				transform: rotate(0deg);
+			}
+		}
 
 		@media (max-width: $breakpoint-m) {
 			top: 35vh;

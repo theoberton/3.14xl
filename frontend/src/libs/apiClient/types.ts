@@ -28,6 +28,8 @@ export type TelegramMessage = {
 	action: TELEGRAM_WEB_APP_ACTION;
 	payload: {
 		chatId: number;
-		message: string;	
+		message: string;
+		link: string;
+		edtionName: string;
 	}
 };

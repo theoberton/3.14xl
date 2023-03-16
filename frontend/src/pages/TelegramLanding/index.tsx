@@ -13,7 +13,6 @@ export default function TelegramLanding() {
   console.log(qs.parse(gmail["?tgWebAppData"] as string))
 
   const params = useParams()
-  console.log('params', params)
 
   return <Landing />
 }
