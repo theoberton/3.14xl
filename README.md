@@ -5,5 +5,7 @@ Bring your visions to life with ease! Create captivating NFT projects that can b
 
 [Telegram Bot](https://t.me/pixelObertonbot)
 
+[Telegram Bot and Explore feature backend](https://github.com/theoberton/3.14xl-backend)
+
 Licence
 MIT
