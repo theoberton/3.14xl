@@ -6,3 +6,4 @@ export * from './useTime';
 export * from './useTelegram';
 export * from './useIsMobileOrTablet';
 export * from './useNavigateHandler';
+export * from './useMurmurHash';

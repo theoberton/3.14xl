@@ -3,10 +3,6 @@ import { useCallback, useState } from 'react';
 import { CollectionContent } from '@/wrappers/types';
 import { AddressLabel, PreviewImageModal } from '@/components';
 import { EditionData } from '@/helpers';
-import { useMediaQuery } from 'react-responsive';
-
-// Hotfix for https://github.com/yocontra/react-responsive/issues/306, remove when resolved
-console.log(useMediaQuery);
 
 import styles from './styles.module.scss';
 
@@ -25,9 +21,7 @@ function EditionPreview({ content }: { collectionData: EditionData; content: Col
 
 	return (
 		<div className={styles.editionDetailsPreview}>
-			{isImagePreviewOpened && (
-				<PreviewImageModal media={content.image} isOpen closeModal={closePreviewImageModal} />
-			)}
+			<PreviewImageModal media={content.image} isOpen={isImagePreviewOpened} closeModal={closePreviewImageModal} />
 			<div
 				className={styles.editionDetailsPreviewImage}
 				onClick={openPreviewImage}
