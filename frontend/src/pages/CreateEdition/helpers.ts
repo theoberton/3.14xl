@@ -1,5 +1,4 @@
 import { ThirdwebStorage } from '@thirdweb-dev/storage';
-
 const storage = new ThirdwebStorage();
 
 import { toNano, Address } from 'ton-core';
@@ -15,6 +14,7 @@ export const prepareDeployTransaction = async (
 	tonClient: TonClient,
 	params: CreateEditionParams,
 ) => {
+
 	/** Upload collection metadata */
 	const content: CollectionContent = {
 		name: params.name,

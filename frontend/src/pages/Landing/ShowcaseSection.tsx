@@ -6,6 +6,7 @@ import { Button, ButtonKinds } from '@/components/Button';
 
 import styles from '@/pages/Landing/styles.module.scss';
 import { useCallback, useEffect, useState } from 'react';
+import { getNftCollectionData } from '@/helpers';
 
 function ShowcaseSection() {
 	const tonClient = useTonClient();
@@ -34,6 +35,29 @@ function ShowcaseSection() {
 			console.log('error', error);
 		}
 	}, [tonClient]);
+
+	const getMintData = useCallback(async () => {
+		if (!tonClient) return;
+
+		const editionsWithActualMintNumber = await Promise.all(
+			editions.map(async edition => {
+				const collectionData = await getNftCollectionData(tonClient, edition.collectionAddress);
+
+				return {
+					...edition,
+					minted: collectionData.nextItemIndex || 0,
+				};
+			})
+		);
+
+		setEditions(editionsWithActualMintNumber);
+	}, [tonClient, editions]);
+
+	useEffect(() => {
+		if (editions.length > 0) {
+			getMintData();
+		}
+	}, [tonClient, editions.length]);
 
 	useEffect(() => {
 		getEditions();
