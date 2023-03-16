@@ -136,6 +136,9 @@ export function DeploymentModal({
 				ownerAddress: data.managerAddress,
 				overviewData,
 			}).catch(err => console.log(err));
+			console.log('address', address)
+			console.log('data.content.name', data.content.name);
+
 			sendEditionUrlToTelegram(address, data.content.name);
 
 			// await apiClient.createManagerContract()

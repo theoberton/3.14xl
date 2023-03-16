@@ -53,8 +53,11 @@ function CreateEditionForm() {
 	const [getdeploymentState, setDeploymentState] = useGetSetState(initialDeploymentState);
 
 	const telegram = useTelegram();
+	console.log('telegram', telegram)
 
 	const sendEditionUrlToTelegram = useCallback((editionAddress: string, edtionName: string) => {
+		console.log('telegram.user?.id', telegram.user?.id);
+
 		if(!telegram.user?.id) return;
 
 		const edtionFullAddress = composeFullEditionAddress(editionAddress);
@@ -63,8 +66,7 @@ function CreateEditionForm() {
 			action: TELEGRAM_WEB_APP_ACTION.EDITION_MINT,
 			payload: {
 				chatId: telegram.user.id,
-				message: `
-				Here is the link to your newly created ${edtionName} NFT edtion 🚀 \n ${edtionFullAddress}`	
+				message: `Here is the link to your newly created ${edtionName} NFT edtion 🚀 \n ${edtionFullAddress}`
 			}
 		};
 
