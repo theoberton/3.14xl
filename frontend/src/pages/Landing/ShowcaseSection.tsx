@@ -7,6 +7,10 @@ import { Button, ButtonKinds } from '@/components/Button';
 import styles from '@/pages/Landing/styles.module.scss';
 import { useCallback, useEffect, useState } from 'react';
 import { getNftCollectionData } from '@/helpers';
+import { isTestnet } from '@/helpers/location';
+import { showcaseEditions } from './showcaseEdition';
+import { ManagerContract } from '@/libs/apiClient/types';
+
 
 function ShowcaseSection() {
 	const tonClient = useTonClient();
@@ -14,9 +18,16 @@ function ShowcaseSection() {
 
 	const getEditions = useCallback(async () => {
 		try {
-			const contracts = await getManagerContracts();
+			const testnet = isTestnet()
+			let contracts: ManagerContract[];
+			if(testnet) {
+				const managerContracts = await getManagerContracts()
+				contracts = managerContracts.result;
+			} else {
+				contracts = showcaseEditions;
+			}
 
-			const result = contracts.result.map(data => {
+			const result = contracts.map(data => {
 				return {
 					collectionAddress: data.collectionAddress,
 					content: data.overviewData.content,
