@@ -21,7 +21,7 @@ export function PresentationSection() {
 
 			<p className={styles.landingPresentationExplanation}>
 				Whether you are just starting out or have been in the game for a while, it's never been
-				easier to build something remarkable.
+				easier to build something remarkable
 			</p>
 
 			<div className={styles.landingPresentationLinks}>
