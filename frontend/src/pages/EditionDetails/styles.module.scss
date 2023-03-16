@@ -2,23 +2,26 @@
 
 .editionDetails {
 	&Container {
+		width: 100%;
+
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
 		align-items: flex-start;
-		padding-block: 30px;
+		padding-top: 30px;
+		gap: 80px;
 
 		@media (max-width: $breakpoint-m) {
-			width: 100%;
 			gap: 35px;
 			flex-direction: column;
 			justify-content: flex-start;
 			align-items: center;
+			padding-top: 0;
 		}
 	}
 
 	&Preview {
-		max-width: 50%;
+		width: 50%;
 		height: 100%;
 		flex: 1;
 		display: flex;
@@ -26,17 +29,7 @@
 		align-items: center;
 
 		@media (max-width: $breakpoint-m) {
-			max-width: 100%;
-		}
-
-		&FooterItem {
-			display: flex;
-			justify-content: space-between;
-			margin-right: auto;
-
-			&Image {
-				cursor: pointer;
-			}
+			width: 100%;
 		}
 
 		&Image {
@@ -64,7 +57,6 @@
 
 	&Info {
 		flex: 1;
-		padding-inline: 80px;
 		width: 50%;
 
 		display: flex;
@@ -74,7 +66,6 @@
 
 		@media (max-width: $breakpoint-m) {
 			width: 100%;
-			padding-inline: 0;
 		}
 
 		> div {
@@ -216,9 +207,6 @@
 				width: 100%;
 				display: flex;
 				justify-content: space-between;
-
-				p {
-				}
 
 				span {
 					color: $gray-one;
