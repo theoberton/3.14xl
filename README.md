@@ -12,23 +12,22 @@ or have been in the game for a while, it's never been easier to build something 
 
 ### Project structure
 
-`frontend` - the primary folder of a project containg all source code and configs <br>
-`frontend/src` - contains source code of the application <br> `frontend/src/contracts` - contains
+`src` - contains source code of the application <br> `src/contracts` - contains
 source code of smart contracts <br> Contracts used in the application are:
 
-- `frontend/src/contracts/nft-collection.fc` - NFT collection contract, TEP-62 compliant
-- `frontend/src/contracts/nft-item.fc` - NFT item contract, TEP-62 compliant
-- `frontend/src/contracts/nft-manager.tact` - NFT manager contract, that manages NFT collection, and
+- `src/contracts/nft-collection.fc` - NFT collection contract, TEP-62 compliant
+- `src/contracts/nft-item.fc` - NFT item contract, TEP-62 compliant
+- `src/contracts/nft-manager.tact` - NFT manager contract, that manages NFT collection, and
   settings and functionality related to NFT edition
 
-`frontend/src/wrappers` - contains Typescript wrapper classes used to deploy and interact with
+`src/wrappers` - contains Typescript wrapper classes used to deploy and interact with
 according contracts, and `*.spec.ts` files used to test one
 
 `.github/workflows` - contains `.yaml` deployment workflows
 
 ### Run the project
 
-Go to `frontend` folder and install dependencies
+Install dependencies
 
 ```
 yarn
