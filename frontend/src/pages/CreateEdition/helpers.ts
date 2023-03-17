@@ -12,9 +12,8 @@ import { CollectionContent } from '@/wrappers/types';
 
 export const prepareDeployTransaction = async (
 	tonClient: TonClient,
-	params: CreateEditionParams,
+	params: CreateEditionParams
 ) => {
-
 	/** Upload collection metadata */
 	const content: CollectionContent = {
 		name: params.name,

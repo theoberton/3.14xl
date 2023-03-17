@@ -11,17 +11,16 @@ import { isTestnet } from '@/helpers/location';
 import { showcaseEditions } from './showcaseEdition';
 import { ManagerContract } from '@/libs/apiClient/types';
 
-
 function ShowcaseSection() {
 	const tonClient = useTonClient();
 	const [editions, setEditions] = useState<IEditionItem[]>([]);
 
 	const getEditions = useCallback(async () => {
 		try {
-			const testnet = isTestnet()
+			const testnet = isTestnet();
 			let contracts: ManagerContract[];
-			if(testnet) {
-				const managerContracts = await getManagerContracts()
+			if (testnet) {
+				const managerContracts = await getManagerContracts();
 				contracts = managerContracts.result;
 			} else {
 				contracts = showcaseEditions;
@@ -82,7 +81,7 @@ function ShowcaseSection() {
 						<EditionCard edition={edition} key={edition.collectionAddress} />
 					))}
 			</div>
-			
+
 			<div className={styles.showcaseSectionExplore}>
 				<Button componentType="link" basicInverted kind={ButtonKinds.basic} to="/explore">
 					Explore more

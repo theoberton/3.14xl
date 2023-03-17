@@ -25,9 +25,11 @@ function PreviewImageModal(props: PreviewImageProps) {
 		return null;
 	}
 
-	const imageClick = isTabletOrMobile ? close : () => {
-		// do nothing
-	};
+	const imageClick = isTabletOrMobile
+		? close
+		: () => {
+				// do nothing
+		  };
 
 	return (
 		<Modal fullSpace isOpen={isOpen} onClose={close} showCloseIcon closeOnOverlayClick isCentered>

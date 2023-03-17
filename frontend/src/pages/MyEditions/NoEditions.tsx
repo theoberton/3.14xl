@@ -8,8 +8,8 @@ function NoEditions() {
 			<span style={{ marginBottom: '48px' }}>Get started by creating one!</span>
 
 			<Button componentType="link" kind={ButtonKinds.basic} to="/create-edition">
-					Create new edition
-				</Button>
+				Create new edition
+			</Button>
 		</div>
 	);
 }

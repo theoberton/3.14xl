@@ -28,7 +28,11 @@ export function Preview() {
 
 	return (
 		<>
-			<PreviewImageModal media={values.media} isOpen={isImagePreviewOpened} closeModal={closePreviewImageModal} />
+			<PreviewImageModal
+				media={values.media}
+				isOpen={isImagePreviewOpened}
+				closeModal={closePreviewImageModal}
+			/>
 			<PreviewComponent openPreviewImage={openPreviewImage} />
 		</>
 	);

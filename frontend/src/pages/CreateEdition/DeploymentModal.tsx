@@ -18,22 +18,18 @@ const renderDeployInProgressComponent = (isMobile: boolean) => (
 	<div className={styles.deploymentModal}>
 		<div className={styles.deploymentModalTitle}>
 			Edition is being created
-			{
-				!isMobile &&
-					<div className={styles.deploymentModalSpinner}>
-						<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
-					</div>
-			}
-			{
-				isMobile &&
-					<div className={styles.deploymentModalSpinner}>
-						<Loader type={LoaderTypes.pulse} size={LoaderSizes.tiny} color={LoaderColors.white} />
-					</div>
-			}
+			{!isMobile && (
+				<div className={styles.deploymentModalSpinner}>
+					<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
+				</div>
+			)}
+			{isMobile && (
+				<div className={styles.deploymentModalSpinner}>
+					<Loader type={LoaderTypes.pulse} size={LoaderSizes.tiny} color={LoaderColors.white} />
+				</div>
+			)}
 		</div>
-		<div className={styles.deploymentModalTitleCaption}>
-			It usually takes about 15 seconds
-		</div>
+		<div className={styles.deploymentModalTitleCaption}>It usually takes about 15 seconds</div>
 	</div>
 );
 
@@ -149,7 +145,7 @@ export function DeploymentModal({
 				ownerAddress: data.managerAddress,
 				overviewData,
 			}).catch(err => console.log(err));
-			console.log('address', address)
+			console.log('address', address);
 			console.log('data.content.name', data.content.name);
 
 			sendEditionUrlToTelegram(address, data.content.name);

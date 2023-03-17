@@ -191,7 +191,10 @@ describe('nft collection smc', () => {
 
 		expect(resFirst.ownerAddress.toString()).toEqual(ownerAddress.toString());
 
-		const result = await nftContract!.sendChangeOwner(ownerOfCollectionContract.getSender(), params);
+		const result = await nftContract!.sendChangeOwner(
+			ownerOfCollectionContract.getSender(),
+			params
+		);
 
 		expect(result.transactions).toHaveTransaction({
 			from: ownerOfCollectionContract.address,
@@ -335,7 +338,10 @@ describe('nft collection smc', () => {
 
 		const resBefore = await nftContract!.getCollectionData();
 
-		const result = await nftContract!.sendEditContent(ownerOfCollectionContract.getSender(), params);
+		const result = await nftContract!.sendEditContent(
+			ownerOfCollectionContract.getSender(),
+			params
+		);
 
 		expect(result.transactions).toHaveTransaction({
 			from: ownerAddress,

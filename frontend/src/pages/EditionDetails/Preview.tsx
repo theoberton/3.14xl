@@ -21,7 +21,11 @@ function EditionPreview({ content }: { collectionData: EditionData; content: Col
 
 	return (
 		<div className={styles.editionDetailsPreview}>
-			<PreviewImageModal media={content.image} isOpen={isImagePreviewOpened} closeModal={closePreviewImageModal} />
+			<PreviewImageModal
+				media={content.image}
+				isOpen={isImagePreviewOpened}
+				closeModal={closePreviewImageModal}
+			/>
 			<div
 				className={styles.editionDetailsPreviewImage}
 				onClick={openPreviewImage}

@@ -31,5 +31,5 @@ export type TelegramMessage = {
 		message: string;
 		link: string;
 		edtionName: string;
-	}
+	};
 };
