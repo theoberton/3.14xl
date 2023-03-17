@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 import { Address } from 'ton-core';
+import { EDITIONS_SIZES } from '@/constants/common';
 
 export const formSchema = () => {
 	return yup.object().shape({
@@ -7,6 +8,17 @@ export const formSchema = () => {
 		symbol: yup.string().min(1).max(30).required('Symbol is required'),
 		description: yup.string().max(300),
 		media: yup.mixed().required('Media is required'),
+		editionSize: yup.object({
+			amount: yup
+				.number()
+				.min(0)
+				.max(1000000000)
+				.when('type', {
+					is: EDITIONS_SIZES.FIXED,
+					then: schema => schema.required(),
+				}),
+			type: yup.string(),
+		}),
 		price: yup
 			.string()
 			.test(

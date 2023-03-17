@@ -1,15 +1,23 @@
-import { useFormikContext } from 'formik';
+import { useField, useFormikContext } from 'formik';
 import { Label } from '@/components';
 import { FormValues } from '@/pages/CreateEdition/interfaces';
 import { priceFilter } from '@/helpers';
 import styles from './styles.module.scss';
+import { EDITIONS_SIZES } from '@/constants/common';
 
 type Props = {
 	openPreviewImage: () => void;
 };
 
 function EditionPreview({ openPreviewImage }: Props) {
-	const { values } = useFormikContext<FormValues>();
+	const { values, } = useFormikContext<FormValues>();
+
+	const [editionSizeType] = useField('editionSize.type');
+
+	const [editionSizeAmount] = useField('editionSize.amount');
+
+	const [isOpen, isFixed] = [EDITIONS_SIZES.OPEN_EDITION, EDITIONS_SIZES.FIXED]
+		.map(v => v === editionSizeType.value)
 
 	return (
 		<div className={styles.previewSection}>
@@ -28,7 +36,12 @@ function EditionPreview({ openPreviewImage }: Props) {
 					</div>
 					<div className={styles.previewLabelItem}>
 						<div className={styles.previewLabel}>Total supply</div>
-						<div className={styles.previewLabelValue}>OPEN</div>
+						{
+							isOpen && <div className={styles.previewLabelValue}>OPEN</div>
+						}
+						{
+							isFixed && <div className={styles.previewLabelValue}> {editionSizeAmount.value}</div>
+						}
 					</div>
 				</div>
 				<div className={styles.previewMainAttributes}>

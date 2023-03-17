@@ -11,6 +11,7 @@ interface LoaderProps {
 }
 
 const sizeMapper = {
+	[LoaderSizes.tiny]: 3,
 	[LoaderSizes.mini]: 5,
 	[LoaderSizes.subSmall]: 12,
 	[LoaderSizes.small]: 20,

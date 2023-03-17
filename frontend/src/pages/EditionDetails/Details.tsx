@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react';
-import Tooltip from '@mui/material/Tooltip';
+
+import { Tooltip } from '@/components/Tooltip';
+
 import InfoIcon from '@/assets/images/svg/common/info.svg';
 
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
@@ -80,7 +82,7 @@ function EditionDetails({
 					<h3>PRICE</h3>
 					<div style={{ display: 'flex', alignItems:'center', gap: '4px'}}>
 						<span>{priceFilter(content.price)}</span>
-						<Tooltip title="Plus 1 TON to cover blockchain fees. Unspent amount will be returned">
+						<Tooltip isHoverable title="Plus 1 TON to cover blockchain fees. Unspent amount will be returned">
 							<img src={InfoIcon} />
 						</Tooltip>
 					</div>
