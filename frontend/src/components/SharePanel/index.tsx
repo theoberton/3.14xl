@@ -33,11 +33,7 @@ export function SharePanel({ title, shareUrl, media }: Props) {
 			</div>
 			{media && (
 				<div className={styles.shareSocial}>
-					<PinterestShareButton
-						url={shareUrl}
-						media={media}
-						className={styles.shareButton}
-					>
+					<PinterestShareButton url={shareUrl} media={media} className={styles.shareButton}>
 						<PinterestIcon size={shareButtonSize} round />
 					</PinterestShareButton>
 				</div>

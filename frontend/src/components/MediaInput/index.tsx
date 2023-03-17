@@ -99,9 +99,11 @@ export function MediaInput(props: Props) {
 		(e: React.MouseEvent<HTMLImageElement>) => {
 			if (disabled) return;
 
-			const manageInputHandler = value ? handleClearInput : () => {
-				// do nothing
-			};
+			const manageInputHandler = value
+				? handleClearInput
+				: () => {
+						// do nothing
+				  };
 
 			return manageInputHandler(e);
 		},

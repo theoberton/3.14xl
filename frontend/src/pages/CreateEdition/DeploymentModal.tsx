@@ -1,4 +1,4 @@
-import { useNavigateHandler, useTonClient } from '@/hooks';
+import { useNavigateHandler, useTonClient, useIsMobileOrTablet } from '@/hooks';
 import { useEffect, useState, useCallback } from 'react';
 import { useAsyncRetry } from 'react-use';
 import { Loader } from '@/components';
@@ -14,13 +14,20 @@ import styles from '@/pages/CreateEdition/styles.module.scss';
 import SuccessIcon from '@/assets/images/svg/common/success.svg';
 import FailureIcon from '@/assets/images/svg/common/failure.svg';
 
-const renderDeployInProgressComponent = () => (
+const renderDeployInProgressComponent = (isMobile: boolean) => (
 	<div className={styles.deploymentModal}>
 		<div className={styles.deploymentModalTitle}>
 			Edition is being created
-			<div className={styles.deploymentModalSpinner}>
-				<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
-			</div>
+			{!isMobile && (
+				<div className={styles.deploymentModalSpinner}>
+					<Loader type={LoaderTypes.pulse} size={LoaderSizes.mini} color={LoaderColors.white} />
+				</div>
+			)}
+			{isMobile && (
+				<div className={styles.deploymentModalSpinner}>
+					<Loader type={LoaderTypes.pulse} size={LoaderSizes.tiny} color={LoaderColors.white} />
+				</div>
+			)}
 		</div>
 		<div className={styles.deploymentModalTitleCaption}>It usually takes about 15 seconds</div>
 	</div>
@@ -100,6 +107,8 @@ export function DeploymentModal({
 	createNewEditionHandler,
 }: Props) {
 	const [status, setStatus] = useState(DeploymentStatus.inProgress);
+	const isMobile = useIsMobileOrTablet();
+
 	let retryTimeoutId: ReturnType<typeof setTimeout>;
 	const tonClient = useTonClient();
 
@@ -136,7 +145,7 @@ export function DeploymentModal({
 				ownerAddress: data.managerAddress,
 				overviewData,
 			}).catch(err => console.log(err));
-			console.log('address', address)
+			console.log('address', address);
 			console.log('data.content.name', data.content.name);
 
 			sendEditionUrlToTelegram(address, data.content.name);
@@ -201,7 +210,7 @@ export function DeploymentModal({
 		>
 			{status == DeploymentStatus.success &&
 				renderDeploySuccessComponent(goToEditionDetails, settings)}
-			{status == DeploymentStatus.inProgress && renderDeployInProgressComponent()}
+			{status == DeploymentStatus.inProgress && renderDeployInProgressComponent(isMobile)}
 			{status == DeploymentStatus.failiure &&
 				renderDeployFailureComponent(goBack, retryCreateEdition)}
 		</Modal>

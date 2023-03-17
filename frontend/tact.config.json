@@ -1,9 +1,9 @@
 {
-  "projects": [
-    {
-      "name": "manager",
-      "path": "./src/contracts/nft-manager.tact",
-      "output": "./src/contracts/output"
-    }
-  ]
+	"projects": [
+		{
+			"name": "manager",
+			"path": "./src/contracts/nft-manager.tact",
+			"output": "./src/contracts/output"
+		}
+	]
 }

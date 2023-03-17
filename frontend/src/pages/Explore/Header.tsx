@@ -3,7 +3,6 @@ import { useIsMobileOrTablet } from '@/hooks';
 import styles from './styles.module.scss';
 
 function EditionsHeader() {
-
 	const isMobile = useIsMobileOrTablet();
 
 	return (
@@ -13,12 +12,11 @@ function EditionsHeader() {
 				{/* <Button componentType="link" kind={ButtonKinds.basic} to="/minted">
 					Minted editions
 				</Button> */}
-				{
-					!isMobile &&
-						<Button componentType="link" kind={ButtonKinds.basic} to="/create-edition">
-							Create new edition
-						</Button>
-				}
+				{!isMobile && (
+					<Button componentType="link" kind={ButtonKinds.basic} to="/create-edition">
+						Create new edition
+					</Button>
+				)}
 			</div>
 		</div>
 	);

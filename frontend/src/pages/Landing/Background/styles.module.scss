@@ -9,7 +9,7 @@
 	height: 100vh;
 	pointer-events: none;
 
-	li:nth-child(1)  {
+	li:nth-child(1) {
 		@include unselectable;
 		list-style: none;
 		animation: rotationRight 135s infinite linear;
@@ -21,7 +21,6 @@
 		max-width: 1000px;
 		aspect-ratio: 1 / 1;
 
-		
 		position: absolute;
 		right: 50vw;
 		bottom: 30vh;
@@ -39,7 +38,7 @@
 		@include unselectable;
 		position: absolute;
 		list-style: none;
-	  animation: rotationLeft 140s infinite linear;
+		animation: rotationLeft 140s infinite linear;
 
 		background-image: url('./../../../assets/images/png/landing/CubeRight.png');
 		background-size: contain;
@@ -48,7 +47,7 @@
 		width: 60vw;
 		max-width: 860px;
 		aspect-ratio: 1 / 1;
-		
+
 		left: 50vw;
 		top: 20vh;
 

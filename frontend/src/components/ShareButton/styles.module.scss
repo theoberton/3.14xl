@@ -1,11 +1,9 @@
-
 .shareButton {
-  &Container {
-    display: flex;
-    align-items: center; 
-    
-    :hover {
-      
-    }
-  }
+	&Container {
+		display: flex;
+		align-items: center;
+
+		:hover {
+		}
+	}
 }

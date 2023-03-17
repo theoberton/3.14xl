@@ -23,8 +23,17 @@ export function FormArea({
 	deploymentState,
 }: Props) {
 	const tonConnectAddress = useTonAddress();
-	const { isValid, dirty, values, touched, setFieldValue, errors, isSubmitting, submitForm, resetForm } =
-		useFormikContext<FormValues>();
+	const {
+		isValid,
+		dirty,
+		values,
+		touched,
+		setFieldValue,
+		errors,
+		isSubmitting,
+		submitForm,
+		resetForm,
+	} = useFormikContext<FormValues>();
 
 	const isFormValid: boolean = isValid && dirty && Boolean(tonConnectAddress);
 
@@ -108,7 +117,9 @@ export function FormArea({
 						expanded
 						isSubmitting={isSubmitting}
 						kind={ButtonKinds.basic}
-					>Create edition</Button>
+					>
+						Create edition
+					</Button>
 				</ConnectButton>
 			</div>
 		</Form>

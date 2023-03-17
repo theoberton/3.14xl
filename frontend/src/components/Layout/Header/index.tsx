@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Button, ButtonKinds } from '@/components/Button';
 import { AddressLabel } from '@/components';
-import { Menu, MenuItem, MenuDivider, MenuButton  } from '@szhsin/react-menu';
+import { Menu, MenuItem, MenuDivider, MenuButton } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/transitions/slide.css';
 
 import { isTestnet } from '@/helpers/location';
@@ -40,12 +40,14 @@ function AuthMenu() {
 
 	if (!address) {
 		return (
-			<Button 
-				componentType="button" 
-				kind={ButtonKinds.basic} 
-				basicInverted 
+			<Button
+				componentType="button"
+				kind={ButtonKinds.basic}
+				basicInverted
 				onClick={() => tonConnectUI.connectWallet()}
-			>Connect wallet</Button>
+			>
+				Connect wallet
+			</Button>
 		);
 	}
 
@@ -55,12 +57,17 @@ function AuthMenu() {
 			align="end"
 			theming="dark"
 			transition
-			menuButton={<MenuButton><AddressLabel address={address} withCopy={false} /></MenuButton>}>
+			menuButton={
+				<MenuButton>
+					<AddressLabel address={address} withCopy={false} />
+				</MenuButton>
+			}
+		>
 			<MenuItem onClick={goToMyEditions}>My editions</MenuItem>
 			<MenuDivider />
 			<MenuItem onClick={disconnectHandler}>Disconnect</MenuItem>
 		</Menu>
-	)
+	);
 }
 
 export function Header() {

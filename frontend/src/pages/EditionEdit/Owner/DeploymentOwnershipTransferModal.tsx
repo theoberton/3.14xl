@@ -77,7 +77,12 @@ type Props = {
 const deployExpirationTime = 40 * 1000; // 40 seconds
 const retryContractDeployedCheck = 2 * 1000; // every 2 seconds check whether contract is deployed or not
 
-export function DeploymentModal({ address, deploy, values, handleDeploymentSuccessModalClose }: Props) {
+export function DeploymentModal({
+	address,
+	deploy,
+	values,
+	handleDeploymentSuccessModalClose,
+}: Props) {
 	const [status, setStatus] = useState(DeploymentStatus.inProgress);
 	const { ownerDeploymentState, setOwnerDeploymentState, editionName } =
 		useContext(DeploymentContext);

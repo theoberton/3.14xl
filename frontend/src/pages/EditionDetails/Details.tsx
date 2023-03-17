@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react';
-import Tooltip from '@mui/material/Tooltip';
+
+import { Tooltip } from '@/components/Tooltip';
+
 import InfoIcon from '@/assets/images/svg/common/info.svg';
 
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
@@ -54,12 +56,14 @@ function EditionDetails({
 		} catch (e) {
 			console.error(e);
 		}
-	}
+	};
 
 	const goToEditionEdit = useNavigateHandler(`/edition/${collectionData.address}/edit`);
 
 	const mintAllowed = isMintAllowed(now, content.dateStart, content.dateEnd);
-	const isMyEdition: boolean = Boolean(tonConnectAddress) && managerAddress.toString() === Address.parse(tonConnectAddress).toString();
+	const isMyEdition: boolean =
+		Boolean(tonConnectAddress) &&
+		managerAddress.toString() === Address.parse(tonConnectAddress).toString();
 
 	return (
 		<div className={styles.editionDetailsInfo}>
@@ -78,9 +82,12 @@ function EditionDetails({
 			<div className={styles.editionDetailsInfoPrice}>
 				<div className={styles.editionDetailsInfoPriceBlock}>
 					<h3>PRICE</h3>
-					<div style={{ display: 'flex', alignItems:'center', gap: '4px'}}>
+					<div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
 						<span>{priceFilter(content.price)}</span>
-						<Tooltip title="Plus 1 TON to cover blockchain fees. Unspent amount will be returned">
+						<Tooltip
+							isHoverable
+							title="Plus 1 TON to cover blockchain fees. Unspent amount will be returned"
+						>
 							<img src={InfoIcon} />
 						</Tooltip>
 					</div>
@@ -93,11 +100,7 @@ function EditionDetails({
 							</div>
 						) : (
 							<ConnectButton>
-								<Button
-									componentType="button"
-									kind={ButtonKinds.basic}
-									onClick={mint}
-								>
+								<Button componentType="button" kind={ButtonKinds.basic} onClick={mint}>
 									Mint
 								</Button>
 							</ConnectButton>

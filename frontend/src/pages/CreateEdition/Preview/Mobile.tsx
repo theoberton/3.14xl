@@ -18,8 +18,12 @@ function PreviewMobileMedia({ openPreviewImage }: Props) {
 	}
 
 	return (
-		<div className={styles.previewMobileMediaImage} style={{ backgroundImage: `url("${values.media}")` }} onClick={openPreviewImage} />
-	)
+		<div
+			className={styles.previewMobileMediaImage}
+			style={{ backgroundImage: `url("${values.media}")` }}
+			onClick={openPreviewImage}
+		/>
+	);
 }
 
 function PreviewMobile({ openPreviewImage }: Props) {
@@ -27,12 +31,10 @@ function PreviewMobile({ openPreviewImage }: Props) {
 
 	return (
 		<div className={styles.previewMobileSection}>
-			<PreviewMobileMedia openPreviewImage={openPreviewImage} />				
+			<PreviewMobileMedia openPreviewImage={openPreviewImage} />
 			<div className={styles.previewMobileMain}>
 				<Label text={values.symbol || '$SYMBOL'} grey mini />
-				<div className={styles.previewMobileMainName}>
-					{values.name || 'Edition name'}
-				</div>
+				<div className={styles.previewMobileMainName}>{values.name || 'Edition name'}</div>
 			</div>
 			<div className={styles.previewMobilePriceBlock}>
 				<TonLogo />

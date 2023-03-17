@@ -10,23 +10,24 @@
 	}
 
 	&Media {
-    margin-bottom: 32px;
-    aspect-ratio: 1 / 1;
-    border-radius: 8px;
-    width: 100%;
+		margin-bottom: 32px;
+		aspect-ratio: 1 / 1;
+		border-radius: 8px;
+		width: 100%;
 
-    &Image {
-      @extend .previewMedia;
-      cursor: pointer;
-      background-size: contain;
-      background-position: center;
-    }
+		&Image {
+			@extend .previewMedia;
+			cursor: pointer;
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: center;
+		}
 
-    &Empty {
-      @extend .previewMedia;
-      background-color: $gray-seven;
-    }
-  }
+		&Empty {
+			@extend .previewMedia;
+			background-color: $gray-seven;
+		}
+	}
 
 	&Labels {
 		width: 100%;
@@ -89,57 +90,56 @@
 }
 
 .previewMobile {
-  &Section {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding-block: 16px;
-  
+	&Section {
+		display: flex;
+		align-items: flex-start;
+		gap: 16px;
+		padding-block: 16px;
 
-    order: 1;
+		order: 1;
 
-    width: 100%;
+		width: 100%;
 
-    position: sticky;
-    top: 2px;
+		position: sticky;
+		top: 2px;
 
-    border-bottom: 2px solid $gray-eleven;
+		border-bottom: 2px solid $gray-eleven;
 
-    background-color: $black-one-transparent;
-  }
+		background-color: $black-one-transparent;
+	}
 
-  &Media {
-    &Image {
-      height: 100%;
-      aspect-ratio: 1 / 1;
-      border-radius: 8px;
-      background-position: center;
-      background-size: cover;
-    }
+	&Media {
+		&Image {
+			height: 100%;
+			aspect-ratio: 1 / 1;
+			border-radius: 8px;
+			background-position: center;
+			background-size: cover;
+		}
 
-    &Empty {
-      @extend .previewMobileMediaImage;
-      background-color: $gray-seven;
-    }
-  }
+		&Empty {
+			@extend .previewMobileMediaImage;
+			background-color: $gray-seven;
+		}
+	}
 
-  &Main {
-    font-size: $font-small-enlarged;
-    display: flex;
-    flex-direction: column;
-    white-space: break-spaces;
-    gap: 10px;
-    padding: 10px 0;
+	&Main {
+		font-size: $font-small-enlarged;
+		display: flex;
+		flex-direction: column;
+		white-space: break-spaces;
+		gap: 10px;
+		padding: 10px 0;
 
-    &Name {
-      font-size: $font-medium;
-    }
-  }
+		&Name {
+			font-size: $font-medium;
+		}
+	}
 
-  &PriceBlock {
-    font-size: $font-base;
-    display: flex;
-    margin-left: auto;
-    align-items: center;
-  }
+	&PriceBlock {
+		font-size: $font-base;
+		display: flex;
+		margin-left: auto;
+		align-items: center;
+	}
 }

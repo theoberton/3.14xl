@@ -75,7 +75,7 @@ function EditionEdit() {
 		setEditionName,
 		setContentDeploymentState,
 		setOwnerDeploymentState,
-	}
+	};
 
 	if (isLoading && !edtionDetails) {
 		return <PageLoader />;

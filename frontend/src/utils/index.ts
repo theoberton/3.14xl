@@ -6,7 +6,6 @@ export function fromUnixToDate(time?: number) {
 	return dateStart;
 }
 
-
 export function composeFullEditionAddress(editionAddress: string) {
-		return `https://${isTestnet() ? 'testnet' : ''}pi.oberton.io/#/edition/${editionAddress}`;
+	return `https://${isTestnet() ? 'testnet' : ''}pi.oberton.io/#/edition/${editionAddress}`;
 }

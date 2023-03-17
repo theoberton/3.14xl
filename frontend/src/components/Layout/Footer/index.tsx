@@ -11,13 +11,17 @@ export function Footer() {
 				<a className={styles.footerSocialLink} target="_blank" href="https://github.com/theoberton">
 					<GithubIcon />
 				</a>
-				
+
 				<a className={styles.footerSocialLink} target="_blank" href="https://t.me/theoberton">
 					<TelegramIcon />
 				</a>
 
-				<a className={styles.footerSocialLink} target="_blank" href="https://twitter.com/obertonglobal">
-					<TwitterIcon  />
+				<a
+					className={styles.footerSocialLink}
+					target="_blank"
+					href="https://twitter.com/obertonglobal"
+				>
+					<TwitterIcon />
 				</a>
 			</div>
 		</footer>

@@ -9,8 +9,7 @@ interface IProps {
 }
 
 export function EditionCard({ edition }: IProps) {
-	const { name, content, dateStart, dateEnd, limit, minted, price, collectionAddress } =
-		edition;
+	const { name, content, dateStart, dateEnd, limit, minted, price, collectionAddress } = edition;
 
 	const Card = (
 		<div className={styles.editionCard}>
@@ -18,11 +17,13 @@ export function EditionCard({ edition }: IProps) {
 				<h3>{name}</h3>
 				<EditionStatus dateStart={dateStart} dateEnd={dateEnd} />
 			</div>
-			<div className={styles.editionCardPreview} style={{ backgroundImage: `url('${content}')`}} />
+			<div className={styles.editionCardPreview} style={{ backgroundImage: `url('${content}')` }} />
 			<div>
 				<div className={styles.editionCardInfo}>
 					<p>{priceFilter(price)}</p>
-					<p>{minted ?? 0} / {limit || '∞'}</p>
+					<p>
+						{minted ?? 0} / {limit || '∞'}
+					</p>
 				</div>
 			</div>
 		</div>

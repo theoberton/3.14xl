@@ -54,30 +54,36 @@ function CreateEditionForm() {
 
 	const telegram = useTelegram();
 
-	const sendEditionUrlToTelegram = useCallback((editionAddress: string, edtionName: string) => {
-		if(!telegram.user?.id) return;
+	const sendEditionUrlToTelegram = useCallback(
+		(editionAddress: string, edtionName: string) => {
+			if (!telegram.user?.id) return;
 
-		const edtionFullAddress = composeFullEditionAddress(editionAddress);
+			const edtionFullAddress = composeFullEditionAddress(editionAddress);
 
-		const message: TelegramMessage = {
-			action: TELEGRAM_WEB_APP_ACTION.EDITION_MINT,
-			payload: {
-				chatId: telegram.user.id,
-				message: `Here is the link to your newly created ${edtionName} NFT edtion 🚀 \n ${edtionFullAddress}`,
-				link: edtionFullAddress,
-				edtionName,
-			}
-		};
+			const message: TelegramMessage = {
+				action: TELEGRAM_WEB_APP_ACTION.EDITION_MINT,
+				payload: {
+					chatId: telegram.user.id,
+					message: `Here is the link to your newly created ${edtionName} NFT edtion 🚀 \n ${edtionFullAddress}`,
+					link: edtionFullAddress,
+					edtionName,
+				},
+			};
 
-		sendMessageToChat(message);
-	}, [sendMessageToChat, telegram.user]);
+			sendMessageToChat(message);
+		},
+		[sendMessageToChat, telegram.user]
+	);
 
 	const [deployTransaction, setDeployTransaction] = useState<{
 		transaction: SendTransactionRequest;
 		collectionAddress: string;
 		editionName: string;
 	} | null>(null);
-	const handleSubmit = async (values: FormValues, bag: { setSubmitting: (arg0: boolean) => void }) => {
+	const handleSubmit = async (
+		values: FormValues,
+		bag: { setSubmitting: (arg0: boolean) => void }
+	) => {
 		if (!tonClient) return;
 
 		bag.setSubmitting(true);
@@ -86,23 +92,20 @@ function CreateEditionForm() {
 			if (!tonConnectAddress) throw new Error('Ton not connected');
 			if (!values.media) throw new Error('No media');
 
-			const { transaction, collectionAddress } = await prepareDeployTransaction(
-				tonClient,
-				{
-					name: values.name,
-					description: values.description,
-					image: values.media,
-					symbol: values.symbol,
-					price: values.price,
-					royalty: values.royalty,
-					payoutAddress: values.payoutAddress,
-					creatorAddress: tonConnectAddress,
-					maxSupply:
-						values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0',
-					dateStart: values.validity.start ? dateToUnix(values.validity.start) : 0,
-					dateEnd: values.validity.end ? dateToUnix(values.validity.end) : 0,
-				},
-			);		
+			const { transaction, collectionAddress } = await prepareDeployTransaction(tonClient, {
+				name: values.name,
+				description: values.description,
+				image: values.media,
+				symbol: values.symbol,
+				price: values.price,
+				royalty: values.royalty,
+				payoutAddress: values.payoutAddress,
+				creatorAddress: tonConnectAddress,
+				maxSupply:
+					values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0',
+				dateStart: values.validity.start ? dateToUnix(values.validity.start) : 0,
+				dateEnd: values.validity.end ? dateToUnix(values.validity.end) : 0,
+			});
 
 			if (isMobile) {
 				setDeployTransaction({ transaction, collectionAddress, editionName: values.name });
@@ -112,17 +115,15 @@ function CreateEditionForm() {
 				setDeploymentState({
 					isModalOpened: true,
 					address: collectionAddress,
-					editionName: values.name
-				});	
+					editionName: values.name,
+				});
 			}
-
 		} catch (error) {
 			console.error(error);
 		} finally {
 			bag.setSubmitting(false);
-
 		}
-	}
+	};
 
 	async function deploy() {
 		if (!deployTransaction) return;
@@ -133,10 +134,9 @@ function CreateEditionForm() {
 		setDeploymentState({
 			isModalOpened: true,
 			address: deployTransaction.collectionAddress,
-			editionName: deployTransaction.editionName
-		});	
+			editionName: deployTransaction.editionName,
+		});
 	}
-
 
 	const handleDeploymentModalClose = useCallback(() => {
 		setDeploymentState(initialDeploymentState);
@@ -160,7 +160,7 @@ function CreateEditionForm() {
 				start: null,
 				end: null,
 			},
-			payoutAddress: tonConnectAddress
+			payoutAddress: tonConnectAddress,
 		};
 	} else {
 		createEditionInitialValues = getTestnetInitialValues(tonConnectAddress);

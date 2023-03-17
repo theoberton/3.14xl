@@ -25,16 +25,18 @@ export function PresentationSection() {
 			</p>
 
 			<div className={styles.landingPresentationLinks}>
-				<Button 
-					componentType="button" 
-					kind={ButtonKinds.basic} 
+				<Button
+					componentType="button"
+					kind={ButtonKinds.basic}
 					onClick={async () => {
 						if (!tonAddress) {
 							await tonConnectUI.connectWallet();
 						}
 						navigate('/create-edition');
 					}}
-				>Create new edition</Button>
+				>
+					Create new edition
+				</Button>
 			</div>
 		</section>
 	);

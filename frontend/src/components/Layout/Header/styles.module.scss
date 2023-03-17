@@ -131,14 +131,14 @@
 		padding-left: 2.2rem;
 	}
 	.szh-menu__item--type-radio::before {
-		content: "○";
+		content: '○';
 		position: absolute;
 		left: 0.8rem;
 		top: 0.55rem;
 		font-size: 0.8rem;
 	}
 	.szh-menu__item--type-radio.szh-menu__item--checked::before {
-		content: "●";
+		content: '●';
 	}
 	.szh-menu__item--type-checkbox {
 		padding-left: 2.2rem;
@@ -148,13 +148,13 @@
 		left: 0.8rem;
 	}
 	.szh-menu__item--type-checkbox.szh-menu__item--checked::before {
-		content: "✔";
+		content: '✔';
 	}
 	.szh-menu__submenu > .szh-menu__item {
 		padding-right: 2.5rem;
 	}
 	.szh-menu__submenu > .szh-menu__item::after {
-		content: "❯";
+		content: '❯';
 		position: absolute;
 		right: 1rem;
 	}
@@ -190,4 +190,3 @@
 		background-color: #3a3a3a;
 	}
 }
-
