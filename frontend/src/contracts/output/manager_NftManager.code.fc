@@ -461,8 +461,10 @@ slice __gen_slice_address_d78b550aaa9750d9d9cefa48a13776d0c56f2aec64ae92bd04598a
     throw_unless(47714, (($self'max_supply == 0) | ($msg'next_item_index < $self'max_supply)));
     throw_unless(23716, ($self'mint_date_start < now()));
     throw_unless(36032, (($self'mint_date_end == 0) | ($self'mint_date_end > now())));
-    $send(__gen_constructor_SendParameters$to_value_mode_body($self'payout_address, $self'mint_price, 1, $__gen_String_asComment(__gen_str_3884301487())));
-    $send(__gen_constructor_SendParameters$to_value_mode_body(__gen_slice_address_d78b550aaa9750d9d9cefa48a13776d0c56f2aec64ae92bd04598a5152c3ee1e(), $pixelReward, 1, $__gen_String_asComment(__gen_str_3884301487())));
+    if (($self'mint_price > 0)) {
+        $send(__gen_constructor_SendParameters$to_value_mode_body($self'payout_address, $self'mint_price, 1, $__gen_String_asComment(__gen_str_3884301487())));
+        $send(__gen_constructor_SendParameters$to_value_mode_body(__gen_slice_address_d78b550aaa9750d9d9cefa48a13776d0c56f2aec64ae92bd04598a5152c3ee1e(), $pixelReward, 1, $__gen_String_asComment(__gen_str_3884301487())));
+    }
     $send(__gen_constructor_SendParameters$to_value_body($self'nft_collection_address, 50000000, __gen_writecell_Mint(__gen_constructor_Mint$query_id_item_index_item_value_item_content($msg'query_id, $msg'next_item_index, 20000000, $item_content))));
     $send(__gen_constructor_SendParameters$to_value_mode_body($ctx'sender, $restAmount, 1, __gen_writecell_Excesses(__gen_constructor_Excesses$query_id($msg'query_id))));
     return (($self'owner, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address, $self'content_init), ());

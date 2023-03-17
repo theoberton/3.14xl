@@ -149,19 +149,21 @@ contract NftManager with Deployable, Ownable {
     require(self.mint_date_start < now(), "Minting has not started yet");
     require(self.mint_date_end == 0 || self.mint_date_end > now(), "Minting has finished");
 
-    send(SendParameters{
-      to: self.payout_address,
-      value: self.mint_price,
-      mode: SendPayGasSeparately,
-      body: "NFT item minted".asComment()
-    });
+    if (self.mint_price > 0) {
+      send(SendParameters{
+        to: self.payout_address,
+        value: self.mint_price,
+        mode: SendPayGasSeparately,
+        body: "NFT item minted".asComment()
+      });
 
-    send(SendParameters{
-      to: pixelTreasury,
-      value: pixelReward,
-      mode: SendPayGasSeparately,
-      body: "NFT item minted".asComment()
-    });
+      send(SendParameters{
+        to: pixelTreasury,
+        value: pixelReward,
+        mode: SendPayGasSeparately,
+        body: "NFT item minted".asComment()
+      });
+    }
 
     send(SendParameters{
       to: self.nft_collection_address,

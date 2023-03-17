@@ -714,21 +714,27 @@ PROGRAM{
     GREATER
     OR
     THROWANYIFNOT
-    1 PUSHINT
-    B{b5ee9c7241010101001100001e4e4654206974656d206d696e746564af01325a} B>boc <s PUSHSLICE
-    $__gen_String_asComment INLINECALLDICT
-    s9 PUSH
-    s14 s2 s(-1) PUXC2
-    __gen_constructor_SendParameters$to_value_mode_body INLINECALLDICT
-    $send INLINECALLDICT
-    B{b5ee9c72410101010024000043800485f6aa1cfe576558e7e4ed8ce019fdd3171bceead1ef4989d268ed6da0e4e330aee6b07d} B>boc <s PUSHSLICE
-    1 PUSHINT
-    B{b5ee9c7241010101001100001e4e4654206974656d206d696e746564af01325a} B>boc <s PUSHSLICE
-    $__gen_String_asComment INLINECALLDICT
-    s2 s3 XCHG
-    s2 s4 XCHG
-    __gen_constructor_SendParameters$to_value_mode_body INLINECALLDICT
-    $send INLINECALLDICT
+    s11 PUSH
+    0 GTINT
+    IF:<{
+      1 PUSHINT
+      B{b5ee9c7241010101001100001e4e4654206974656d206d696e746564af01325a} B>boc <s PUSHSLICE
+      $__gen_String_asComment INLINECALLDICT
+      s9 PUSH
+      s14 s2 s(-1) PUXC2
+      __gen_constructor_SendParameters$to_value_mode_body INLINECALLDICT
+      $send INLINECALLDICT
+      B{b5ee9c72410101010024000043800485f6aa1cfe576558e7e4ed8ce019fdd3171bceead1ef4989d268ed6da0e4e330aee6b07d} B>boc <s PUSHSLICE
+      1 PUSHINT
+      B{b5ee9c7241010101001100001e4e4654206974656d206d696e746564af01325a} B>boc <s PUSHSLICE
+      $__gen_String_asComment INLINECALLDICT
+      s2 s3 XCHG
+      s2 s4 XCHG
+      __gen_constructor_SendParameters$to_value_mode_body INLINECALLDICT
+      $send INLINECALLDICT
+    }>ELSE<{
+      NIP
+    }>
     50000000 PUSHINT
     20000000 PUSHINT
     s6 PUSH
