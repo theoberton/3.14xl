@@ -11,7 +11,6 @@ import { isTestnet } from '@/helpers/location';
 import Logo from '@/assets/images/svg/common/logo.svg';
 import styles from './styles.module.scss';
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigateHandler } from '@/hooks';
 
 export function useTonConnectLoading(): boolean {
 	const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +28,6 @@ function AuthMenu() {
 	const address = useTonAddress();
 	const isLoading = useTonConnectLoading();
 
-	const goToMyEditions = useNavigateHandler('/my-editions');
 	const disconnectHandler = useCallback(async () => {
 		await tonConnectUI.disconnect();
 	}, [tonConnectUI.disconnect]);
@@ -63,8 +61,6 @@ function AuthMenu() {
 				</MenuButton>
 			}
 		>
-			<MenuItem onClick={goToMyEditions}>My editions</MenuItem>
-			<MenuDivider />
 			<MenuItem onClick={disconnectHandler}>Disconnect</MenuItem>
 		</Menu>
 	);
