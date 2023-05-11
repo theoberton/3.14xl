@@ -3,7 +3,10 @@
 		{
 			"name": "manager",
 			"path": "./src/contracts/nft-manager.tact",
-			"output": "./src/contracts/output"
+			"output": "./src/contracts/output",
+			"options": {
+				"debug": true
+			}
 		}
 	]
 }

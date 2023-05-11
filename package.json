@@ -28,6 +28,7 @@
     "@ton-community/test-utils": "^0.0.2",
     "@tonconnect/ui-react": "^0.0.14",
     "@types/jest": "^29.4.0",
+    "buffer": "^6.0.3",
     "classnames": "^2.3.2",
     "date-fns": "^2.29.3",
     "formik": "^2.2.9",

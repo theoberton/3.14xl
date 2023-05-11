@@ -1,8 +1,8 @@
 <a href="https://pi.oberton.io/#/">
-    <img src="https://i.ibb.co/H7GmT54/pixel.png" alt="Pixel logo" title="3.14xl" align="right" height="60" />
+    <img src="https://i.ibb.co/dfRJQTF/Screenshot-2023-03-15-at-15-14-05.png" alt="Collectible posts bot logo" title="3.14xl" align="right" height="60" />
 </a>
 
-# 3.14XL
+# Collectible NFT-posts bot
 
 ### Description
 

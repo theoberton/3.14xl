@@ -2,6 +2,7 @@ PROGRAM{
   DECLPROC force_chain
   DECLPROC __tact_verify_address
   DECLPROC __tact_load_address
+  DECLPROC __tact_load_address_opt
   DECLPROC __tact_store_address
   DECLPROC __tact_my_balance
   DECLPROC __tact_not_null
@@ -98,6 +99,19 @@ PROGRAM{
     LDMSGADDR
     SWAP
     __tact_verify_address INLINECALLDICT
+  }>
+  __tact_load_address_opt PROCINLINE:<{
+    LDMSGADDR
+    OVER
+    2 PLDU
+    0 NEQINT
+    IF:<{
+      SWAP
+      __tact_verify_address INLINECALLDICT
+    }>ELSE<{
+      NIP
+      PUSHNULL
+    }>
   }>
   __tact_store_address PROCINLINE:<{
     __tact_verify_address INLINECALLDICT
@@ -277,12 +291,12 @@ PROGRAM{
   __gen_read_MintSafe PROCINLINE:<{
     32 LDU
     SWAP
-    3323304562 PUSHINT
+    1200160875 PUSHINT
     EQUAL
     129 THROWIFNOT
     64 LDU
     64 LDU
-    __tact_load_address INLINECALLDICT
+    __tact_load_address_opt INLINECALLDICT
     s3 s3 s0 XCHG3
   }>
   __gen_read_EditData PROCREF:<{
@@ -331,7 +345,7 @@ PROGRAM{
     ENDC
   }>
   __gen_read_InitArgs PROCREF:<{
-    __tact_load_address INLINECALLDICT
+    __tact_load_address_opt INLINECALLDICT
     SWAP
     LDGRAMS
     32 LDU
@@ -380,6 +394,16 @@ PROGRAM{
     __gen_read_InitArgs INLINECALLDICT
   }>
   $__gen_NftManager_init PROCREF:<{
+    __tact_context_get INLINECALLDICT
+    s2 s3 XCHG
+    3 BLKDROP
+    s7 PUSH
+    ISNULL
+    s8 POP
+    s0 s7 XCHG
+    NOT
+    IF:<{
+    }>
     s6 PUSH
     6 -ROLL
   }>
@@ -667,10 +691,21 @@ PROGRAM{
   }>
   $__gen_NftManager_receive_MintSafe PROCINLINE:<{
     __tact_context_get INLINECALLDICT
-    2DROP
+    s2 s3 XCHG
+    3 BLKDROP
+    s0 s1 PUSH2
+    ISNULL
+    NOT
+    IF:<{
+      DROP
+      SWAP
+      __tact_not_null INLINECALLDICT
+      SWAP
+    }>ELSE<{
+      s2 POP
+    }>
     NEWC
-    s2 POP
-    s0 s2 XCHG
+    ROT
     __tact_store_address INLINECALLDICT
     $emptyCell INLINECALLDICT
     SWAP
@@ -806,7 +841,7 @@ PROGRAM{
       TRUE
     }>
     OVER
-    3323304562 PUSHINT
+    1200160875 PUSHINT
     EQUAL
     IFJMP:<{
       NIP
@@ -860,11 +895,12 @@ PROGRAM{
     123515602279859691144772641439386770278 PUSHINT
     209801025412363888721030803524359905849 PUSHINT
     42980537499636128163026532310500881091 PUSHINT
+    36993126140238121407019133875791708966 PUSHINT
     209474421377847335869795010607481022628 PUSHINT
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d55556f6d627366625648376b333131585176397052624d7a324761547a37724a4b3353384a35356e63537270} PUSHSLICE
+    x{697066733a2f2f516d564b4b573961687a465a315758737a465972797068583363376446326747697954744d693455586347756654} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

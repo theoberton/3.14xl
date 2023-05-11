@@ -94,8 +94,6 @@ export function storeEditData(src: EditData) {
 	};
 }
 
-// End
-
 export const Queries = {
 	safeMint: (params: SendMintParams): Cell => {
 		return beginCell()

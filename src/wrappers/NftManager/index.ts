@@ -50,6 +50,7 @@ export class NftManager extends BaseLocalContract {
 		mintPrice: bigint
 	) {
 		const msgBody = Queries.safeMint(params);
+
 		await provider.internal(via, {
 			value: mintPrice + calcPercent(mintPrice, 0.01) + toNano('0.2'),
 			body: msgBody,

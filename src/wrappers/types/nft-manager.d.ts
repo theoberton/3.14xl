@@ -1,5 +1,5 @@
 export type NftManagerInitData = {
-	owner: Address;
+	owner?: Address;
 	payoutAddress: Address;
 	mintPrice: bigint;
 	maxSupply: bigint;
@@ -25,7 +25,7 @@ export type ChangeOwnerOfCollectionParams = {
 export type SendMintParams = {
 	queryId?: number;
 	nextItemIndex: number;
-	itemOwner: Address;
+	itemOwner?: Address;
 };
 
 export type EditDataParams = {

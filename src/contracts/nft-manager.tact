@@ -20,7 +20,7 @@ message(0x4) UpdateContent {
 message MintSafe {
   query_id: Int as uint64;
   next_item_index: Int as uint64;
-  item_owner: Address;
+  item_owner: Address?;
 }
 
 message EditData {
@@ -55,7 +55,7 @@ message(0xd53276db) Excesses {
 }
 
 struct InitArgs {
-  owner: Address;
+  owner: Address?;
   mint_price: Int as coins;
   max_supply: Int as uint32;
   mint_date_start: Int as uint32;
@@ -77,8 +77,16 @@ contract NftManager with Deployable, Ownable {
   init(
     initArgs: InitArgs
   ) {
-    self.owner = initArgs.owner;
-    self.nft_collection_address = initArgs.owner;
+    let ctx: Context = context();
+
+    let ownerAddress: Address = ctx.sender;
+
+    if (initArgs.owner != null) {
+      ownerAddress = initArgs.owner!!;
+    }
+
+    self.owner = ctx.sender;
+    self.nft_collection_address = ctx.sender;
     self.mint_price = initArgs.mint_price;
     self.max_supply = initArgs.max_supply;
     self.mint_date_start = initArgs.mint_date_start;
@@ -138,7 +146,14 @@ contract NftManager with Deployable, Ownable {
 
   receive(msg: MintSafe) {
     let ctx: Context = context();
-    let item_content: Cell = beginCell().storeAddress(msg.item_owner).storeRef(emptyCell()).endCell();
+
+    let minterAddress: Address = ctx.sender;
+
+    if (msg.item_owner != null) {
+      minterAddress = msg.item_owner!!;
+    }
+
+    let item_content: Cell = beginCell().storeAddress(minterAddress).storeRef(emptyCell()).endCell();
 
     let pixelReward: Int = self.mint_price / 20;
     let restAmount: Int = myBalance() - minTonsForStorage - self.mint_price - pixelReward - ton("0.05") - ton("0.03");

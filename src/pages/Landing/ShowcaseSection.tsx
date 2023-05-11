@@ -2,7 +2,6 @@ import { EditionCard } from '@/components';
 import { IEditionItem } from '@/components/EditionCard/interface';
 import { useTonClient } from '@/hooks';
 import { getManagerContracts } from '@/libs/apiClient';
-import { Button, ButtonKinds } from '@/components/Button';
 
 import styles from '@/pages/Landing/styles.module.scss';
 import { useCallback, useEffect, useState } from 'react';
