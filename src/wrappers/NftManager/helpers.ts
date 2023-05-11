@@ -28,6 +28,7 @@ export function buildNftManagerDataCell(managerData: NftManagerInitData, systemC
 		.storeInt(managerData.mintDateEnd ?? 0n, 32)
 		.storeAddress(managerData.payoutAddress)
 		.storeRef(collectionContent)
+		.storeBit(Boolean(managerData.isPixelFeeDisabled))
 		.endCell();
 	return data;
 }

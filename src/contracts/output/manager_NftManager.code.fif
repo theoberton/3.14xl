@@ -340,21 +340,25 @@ PROGRAM{
     __tact_load_address INLINECALLDICT
     SWAP
     LDREF
-    7 -ROLL
+    1 LDI
+    8 -ROLL
   }>
   __gen_write_NftManager PROCINLINE:<{
-    s8 s7 XCHG2
+    s9 s8 XCHG2
     __tact_store_address INLINECALLDICT
-    s0 s5 XCHG2
+    s0 s6 XCHG2
     __tact_store_address INLINECALLDICT
-    s0 s3 XCHG2
+    s0 s4 XCHG2
     STGRAMS
+    s1 s2 XCHG
     32 STU
     32 STU
     32 STU
-    ROT
+    SWAP
     __tact_store_address INLINECALLDICT
+    s1 s2 XCHG
     STREF
+    1 STI
   }>
   __gen_read_NftManager PROCINLINE:<{
     __tact_load_address INLINECALLDICT
@@ -368,7 +372,8 @@ PROGRAM{
     __tact_load_address INLINECALLDICT
     SWAP
     LDREF
-    8 -ROLL
+    1 LDI
+    9 -ROLL
   }>
   __gen_Context_get_value PROCINLINE:<{
     s1 s3 XCHG
@@ -380,8 +385,8 @@ PROGRAM{
     __gen_read_InitArgs INLINECALLDICT
   }>
   $__gen_NftManager_init PROCREF:<{
-    s6 PUSH
-    6 -ROLL
+    s7 PUSH
+    7 -ROLL
   }>
   __gen_load_NftManager PROCINLINE:<{
     c4 PUSH
@@ -393,7 +398,7 @@ PROGRAM{
     SWAP
     IF:<{
       __gen_read_NftManager INLINECALLDICT
-      1 8 BLKDROP2
+      1 9 BLKDROP2
     }>ELSE<{
       MYADDR
       11 PLDU
@@ -401,9 +406,9 @@ PROGRAM{
       EQUAL
       137 THROWIFNOT
       __gen_read_$init$NftManager INLINECALLDICT
-      s0 s7 XCHG
+      s0 s8 XCHG
       ENDS
-      6 ROLL
+      7 ROLL
       $__gen_NftManager_init INLINECALLDICT
     }>
   }>
@@ -415,7 +420,7 @@ PROGRAM{
     TRUE
     SWAP
     1 STI
-    8 -ROLL
+    9 -ROLL
     __gen_write_NftManager INLINECALLDICT
     ENDC
     c4 POP
@@ -545,8 +550,8 @@ PROGRAM{
     __tact_string_builder_end INLINECALLDICT
   }>
   $__gen_NftManager_nft_collection_address PROCREF:<{
-    s6 s7 XCHG
-    7 BLKDROP
+    s7 s8 XCHG
+    8 BLKDROP
   }>
   $__gen_get_nft_collection_address PROC:<{
     __gen_load_NftManager INLINECALLDICT
@@ -555,7 +560,7 @@ PROGRAM{
   __gen_constructor_ManagerData$owner_nft_collection_address_mint_price_max_supply_mint_date_start_mint_date_end_payout_address PROCINLINE:<{
   }>
   $__gen_NftManager_get_manager_data PROCREF:<{
-    DROP
+    2DROP
     __gen_constructor_ManagerData$owner_nft_collection_address_mint_price_max_supply_mint_date_start_mint_date_end_payout_address INLINECALLDICT
   }>
   $__gen_get_get_manager_data PROC:<{
@@ -565,33 +570,33 @@ PROGRAM{
   }>
   $__gen_NftManager_requireOwner PROCREF:<{
     __tact_context_get_sender INLINECALLDICT
-    s8 PUSH
+    s9 PUSH
     __tact_address_eq INLINECALLDICT
     132 THROWIFNOT
   }>
   $__gen_NftManager_owner PROCREF:<{
-    7 BLKDROP
+    8 BLKDROP
   }>
   $__gen_get_owner PROC:<{
     __gen_load_NftManager INLINECALLDICT
     $__gen_NftManager_owner INLINECALLDICT
   }>
   $__gen_NftManager_receive_SetNftCollectionAddress PROCINLINE:<{
-    8 -ROLL
+    9 -ROLL
     $__gen_NftManager_requireOwner INLINECALLDICT
-    s7 PUSH
+    s8 PUSH
     39618 PUSHINT
-    s0 s8 XCHG
+    s0 s9 XCHG
     __tact_address_eq INLINECALLDICT
-    s1 s7 XCHG
+    s1 s8 XCHG
     THROWANYIFNOT
-    s6 s7 XCHG
-    5 ROLL
+    s7 s8 XCHG
+    6 ROLL
   }>
   $__gen_NftManager_receive_ChangeOwnerOfCollection PROCINLINE:<{
-    8 -ROLL
+    9 -ROLL
     $__gen_NftManager_requireOwner INLINECALLDICT
-    s7 POP
+    s8 POP
     __tact_my_balance INLINECALLDICT
     50000000 PUSHINT
     SUB
@@ -599,7 +604,7 @@ PROGRAM{
     SWAP
     -1 GTINT
     THROWANYIFNOT
-    6 ROLL
+    7 ROLL
   }>
   __gen_constructor_SendParameters$to_value_body PROCINLINE:<{
     TRUE
@@ -614,15 +619,17 @@ PROGRAM{
   __gen_constructor_Excesses$query_id PROCINLINE:<{
   }>
   $__gen_NftManager_receive_EditData PROCINLINE:<{
+    s8 s14 XCHG
     s7 s13 XCHG
     s6 s12 XCHG
     s5 s11 XCHG
     s4 s10 XCHG
     s3 s9 XCHG
-    s8 s13 s12 XCHG3
+    s14 s13 s12 XCHG3
     $__gen_NftManager_requireOwner INLINECALLDICT
+    s4 POP
     s5 POP
-    3 BLKDROP
+    2DROP
     50000000 PUSHINT
     __tact_my_balance INLINECALLDICT
     SUB
@@ -643,7 +650,7 @@ PROGRAM{
     s0 s9 XCHG
     __gen_constructor_UpdateContent$query_id_collection_content INLINECALLDICT
     __gen_writecell_UpdateContent INLINECALLDICT
-    s4 s8 s8 PUXC2
+    s5 s8 s8 PUXC2
     __gen_constructor_SendParameters$to_value_body INLINECALLDICT
     $send INLINECALLDICT
     __tact_context_get_sender INLINECALLDICT
@@ -653,9 +660,10 @@ PROGRAM{
     s8 s7 s0 XCHG3
     __gen_constructor_SendParameters$to_value_body INLINECALLDICT
     $send INLINECALLDICT
-    s7 s6 XCHG2
-    s3 s5 XCHG
-    3 ROLL
+    s8 s7 s0 XCHG3
+    s3 s6 XCHG
+    s4 s0 s3 XCHG3
+    s0 s2 XCHG
   }>
   __gen_constructor_SendParameters$to_value_mode_body PROCINLINE:<{
     TRUE
@@ -676,13 +684,19 @@ PROGRAM{
     SWAP
     STREF
     ENDC
-    s9 PUSH
-    20 PUSHINT
-    DIV
+    0 PUSHINT
+    s5 PUSH
+    NOT
+    IF:<{
+      DROP
+      s10 PUSH
+      20 PUSHINT
+      DIV
+    }>
     __tact_my_balance INLINECALLDICT
     50000000 PUSHINT
     SUB
-    s11 PUSH
+    s12 PUSH
     SUB
     OVER
     SUB
@@ -695,43 +709,49 @@ PROGRAM{
     -1 GTINT
     THROWANYIFNOT
     47714 PUSHINT
-    s11 PUSH
+    s12 PUSH
     0 EQINT
-    s6 s12 PUSH2
+    s6 s13 PUSH2
     LESS
     OR
     THROWANYIFNOT
     23716 PUSHINT
-    s10 PUSH
+    s11 PUSH
     NOW
     LESS
     THROWANYIFNOT
     36032 PUSHINT
-    s9 PUSH
-    0 EQINT
     s10 PUSH
+    0 EQINT
+    s11 PUSH
     NOW
     GREATER
     OR
     THROWANYIFNOT
-    s11 PUSH
+    s12 PUSH
     0 GTINT
     IF:<{
       1 PUSHINT
       B{b5ee9c7241010101001100001e4e4654206974656d206d696e746564af01325a} B>boc <s PUSHSLICE
       $__gen_String_asComment INLINECALLDICT
-      s9 PUSH
-      s14 s2 s(-1) PUXC2
+      s10 PUSH
+      s15 s2 s(-1) PUXC2
       __gen_constructor_SendParameters$to_value_mode_body INLINECALLDICT
       $send INLINECALLDICT
-      B{b5ee9c72410101010024000043800485f6aa1cfe576558e7e4ed8ce019fdd3171bceead1ef4989d268ed6da0e4e330aee6b07d} B>boc <s PUSHSLICE
-      1 PUSHINT
-      B{b5ee9c7241010101001100001e4e4654206974656d206d696e746564af01325a} B>boc <s PUSHSLICE
-      $__gen_String_asComment INLINECALLDICT
-      s2 s3 XCHG
-      s2 s4 XCHG
-      __gen_constructor_SendParameters$to_value_mode_body INLINECALLDICT
-      $send INLINECALLDICT
+      s6 PUSH
+      NOT
+      IF:<{
+        B{b5ee9c72410101010024000043800485f6aa1cfe576558e7e4ed8ce019fdd3171bceead1ef4989d268ed6da0e4e330aee6b07d} B>boc <s PUSHSLICE
+        1 PUSHINT
+        B{b5ee9c7241010101001100001e4e4654206974656d206d696e746564af01325a} B>boc <s PUSHSLICE
+        $__gen_String_asComment INLINECALLDICT
+        s2 s3 XCHG
+        s2 s4 XCHG
+        __gen_constructor_SendParameters$to_value_mode_body INLINECALLDICT
+        $send INLINECALLDICT
+      }>ELSE<{
+        NIP
+      }>
     }>ELSE<{
       NIP
     }>
@@ -742,7 +762,7 @@ PROGRAM{
     s0 s4 XCHG
     __gen_constructor_Mint$query_id_item_index_item_value_item_content INLINECALLDICT
     __gen_writecell_Mint INLINECALLDICT
-    s11 s3 s3 PUXC2
+    s12 s3 s3 PUXC2
     __gen_constructor_SendParameters$to_value_body INLINECALLDICT
     $send INLINECALLDICT
     1 PUSHINT
@@ -851,7 +871,7 @@ PROGRAM{
     s0 s2 XCHG
     __tact_context_sender SETGLOB
     __gen_load_NftManager INLINECALLDICT
-    2 8 BLKSWAP
+    2 9 BLKSWAP
     __gen_router_NftManager INLINECALLDICT
     DROP
     __gen_store_NftManager INLINECALLDICT
@@ -860,11 +880,12 @@ PROGRAM{
     123515602279859691144772641439386770278 PUSHINT
     209801025412363888721030803524359905849 PUSHINT
     42980537499636128163026532310500881091 PUSHINT
+    36993126140238121407019133875791708966 PUSHINT
     209474421377847335869795010607481022628 PUSHINT
     86142586315491086060343270784266291122 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d55556f6d627366625648376b333131585176397052624d7a324761547a37724a4b3353384a35356e63537270} PUSHSLICE
+    x{697066733a2f2f516d63477951457a35484b75756d466d6170326545775737486651547a5462396976336178326541746f6a72324d} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

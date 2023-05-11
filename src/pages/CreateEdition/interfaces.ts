@@ -30,4 +30,5 @@ export interface CreateEditionParams {
 	dateStart: number;
 	dateEnd: number;
 	payoutAddress: string;
+	isPixelFeeDisabled?: boolean;
 }

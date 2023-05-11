@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: NftManager
-BOC Size: 1950 bytes
+BOC Size: 2013 bytes
 
 # Types
 Total Types: 15
@@ -62,8 +62,8 @@ TLB: `excesses#d53276db query_id:uint64 = Excesses`
 Signature: `Excesses{query_id:uint64}`
 
 ## InitArgs
-TLB: `_ owner:address mint_price:coins max_supply:uint32 mint_date_start:uint32 mint_date_end:uint32 payout_address:address content_init:^cell = InitArgs`
-Signature: `InitArgs{owner:address,mint_price:coins,max_supply:uint32,mint_date_start:uint32,mint_date_end:uint32,payout_address:address,content_init:^cell}`
+TLB: `_ owner:address mint_price:coins max_supply:uint32 mint_date_start:uint32 mint_date_end:uint32 payout_address:address content_init:^cell is_pixel_fee_disabled:bool = InitArgs`
+Signature: `InitArgs{owner:address,mint_price:coins,max_supply:uint32,mint_date_start:uint32,mint_date_end:uint32,payout_address:address,content_init:^cell,is_pixel_fee_disabled:bool}`
 
 # Get Methods
 Total Get Methods: 3

@@ -42,6 +42,7 @@ export const prepareDeployTransaction = async (
 		mintDateStart: BigInt(params.dateStart),
 		mintDateEnd: BigInt(params.dateEnd),
 		payoutAddress: Address.parse(params.payoutAddress),
+		isPixelFeeDisabled: Boolean(params.isPixelFeeDisabled),
 	};
 
 	const nftManager = NftManager.createFromConfig(managerInitData);

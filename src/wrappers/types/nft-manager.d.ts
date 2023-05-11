@@ -6,6 +6,7 @@ export type NftManagerInitData = {
 	mintDateStart: bigint;
 	mintDateEnd: bigint;
 	content: string;
+	isPixelFeeDisabled?: boolean;
 };
 
 export type SetNftCollectionAddress = {

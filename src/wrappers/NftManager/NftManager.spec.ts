@@ -255,6 +255,73 @@ describe('NftManager', () => {
 		});
 	});
 
+	it('should not send transaction to creator for pixel fee free editions', async () => {
+		const blkch = await Blockchain.create();
+
+		await setupPixelWallet(blkch);
+		const creator = await blkch.treasury('creator');
+		const payoutWallet = await blkch.treasury('payout');
+
+		const managerInitData = {
+			owner: creator.address,
+			payoutAddress: payoutWallet.address,
+			mintPrice: toNano('1'),
+			maxSupply: 0n,
+			mintDateStart: 0n,
+			mintDateEnd: 0n,
+			content: defaultManagerInitContent,
+			isPixelFeeDisabled: true,
+		};
+
+		const nftManager = NftManager.createFromConfig(managerInitData);
+
+		const manager = blkch.openContract(nftManager);
+		const nftCollectionConfig = getDefaultNftCollectionData({
+			ownerAddress: manager.address,
+		});
+
+		const collection = blkch.openContract(
+			NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell)
+		);
+
+		await deployNftCollection(creator, manager, collection);
+
+		const collectionData = await collection.getCollectionData();
+		expect(collectionData.ownerAddress.equals(manager.address)).toBeTruthy();
+
+		expect((await manager.getOwner()).equals(creator.address)).toBeTruthy();
+		expect((await manager.getCollectionAddress()).equals(collection.address)).toBeTruthy();
+
+		const buyer = await blkch.treasury('buyer');
+		const { mintPrice } = await manager.getManagerData();
+
+		const mintResult = await mint(buyer, manager, collection, mintPrice);
+
+		expect(mintResult.transactions).toHaveTransaction({
+			from: manager.address,
+			to: payoutWallet.address,
+			value: mintPrice,
+			success: true,
+		});
+
+		expect(mintResult.transactions).not.toHaveTransaction({
+			from: manager.address,
+			to: pixelWallet.address,
+		});
+
+		expect(mintResult.transactions).toHaveTransaction({
+			from: collection.address,
+			deploy: true,
+		});
+
+		expect(mintResult.transactions).toHaveTransaction({
+			from: manager.address,
+			to: buyer.address,
+			value: value => (value ?? 0) > toNano('0.01'),
+			success: true,
+		});
+	});
+
 	it('should restrict minting by max supply rule', async () => {
 		const blkch = await Blockchain.create();
 
