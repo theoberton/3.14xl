@@ -5,6 +5,7 @@ import { SendTransactionRequest } from '@tonconnect/sdk';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import styles from '@/pages/CreateEdition/styles.module.scss';
 import { isTestnet } from '@/helpers/location';
+import { useEarlyMemberStatus } from '@/hooks';
 
 import { FormArea } from '@/pages/CreateEdition/FormArea';
 import { formSchema } from '@/pages/CreateEdition/validation';
@@ -47,10 +48,12 @@ function getTestnetInitialValues(address: string) {
 
 function CreateEditionForm() {
 	const isMobile = useIsMobileOrTablet();
+
 	const tonConnectAddress = useTonAddress();
 	const tonClient = useTonClient();
 	const [tonConnectUI] = useTonConnectUI();
 	const [getdeploymentState, setDeploymentState] = useGetSetState(initialDeploymentState);
+	const isEarlyMember = useEarlyMemberStatus();
 
 	const telegram = useTelegram();
 
@@ -80,6 +83,8 @@ function CreateEditionForm() {
 		collectionAddress: string;
 		editionName: string;
 	} | null>(null);
+	console.log('isEarlyMember', isEarlyMember);
+
 	const handleSubmit = async (
 		values: FormValues,
 		bag: { setSubmitting: (arg0: boolean) => void }
@@ -105,6 +110,7 @@ function CreateEditionForm() {
 					values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0',
 				dateStart: values.validity.start ? dateToUnix(values.validity.start) : 0,
 				dateEnd: values.validity.end ? dateToUnix(values.validity.end) : 0,
+				isPixelFeeDisabled: isEarlyMember,
 			});
 
 			if (isMobile) {

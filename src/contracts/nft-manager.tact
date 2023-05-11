@@ -62,6 +62,7 @@ struct InitArgs {
   mint_date_end: Int as uint32;
   payout_address: Address;
   content_init: Cell;
+  is_pixel_fee_disabled: Bool;
 }
 
 contract NftManager with Deployable, Ownable {
@@ -73,6 +74,7 @@ contract NftManager with Deployable, Ownable {
   mint_date_end: Int as uint32;
   payout_address: Address;
   content_init: Cell;
+  is_pixel_fee_disabled: Bool;
 
   init(
     initArgs: InitArgs
@@ -85,6 +87,7 @@ contract NftManager with Deployable, Ownable {
     self.mint_date_end = initArgs.mint_date_end;
     self.payout_address = initArgs.payout_address;
     self.content_init = initArgs.content_init;
+    self.is_pixel_fee_disabled = initArgs.is_pixel_fee_disabled;
   }
 
   receive(msg: SetNftCollectionAddress) {
@@ -140,7 +143,11 @@ contract NftManager with Deployable, Ownable {
     let ctx: Context = context();
     let item_content: Cell = beginCell().storeAddress(msg.item_owner).storeRef(emptyCell()).endCell();
 
-    let pixelReward: Int = self.mint_price / 20;
+    let pixelReward: Int = 0;
+    if(!self.is_pixel_fee_disabled) {
+      pixelReward = self.mint_price / 20;
+    }
+
     let restAmount: Int = myBalance() - minTonsForStorage - self.mint_price - pixelReward - ton("0.05") - ton("0.03");
 
     require(restAmount >= 0, "Insufficient amount sent");
@@ -157,12 +164,14 @@ contract NftManager with Deployable, Ownable {
         body: "NFT item minted".asComment()
       });
 
-      send(SendParameters{
-        to: pixelTreasury,
-        value: pixelReward,
-        mode: SendPayGasSeparately,
-        body: "NFT item minted".asComment()
-      });
+      if(!self.is_pixel_fee_disabled) {
+        send(SendParameters{
+          to: pixelTreasury,
+          value: pixelReward,
+          mode: SendPayGasSeparately,
+          body: "NFT item minted".asComment()
+        });
+      }
     }
 
     send(SendParameters{

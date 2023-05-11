@@ -2,6 +2,7 @@ import { useEffect, useCallback } from 'react';
 import { Form, useFormikContext } from 'formik';
 import { DeploymentModal } from '@/pages/CreateEdition/DeploymentModal';
 import { getConsonants } from '@/helpers';
+import { useEarlyMemberStatus } from '@/hooks';
 
 import styles from '@/pages/CreateEdition/styles.module.scss';
 
@@ -23,17 +24,10 @@ export function FormArea({
 	deploymentState,
 }: Props) {
 	const tonConnectAddress = useTonAddress();
-	const {
-		isValid,
-		dirty,
-		values,
-		touched,
-		setFieldValue,
-		errors,
-		isSubmitting,
-		submitForm,
-		resetForm,
-	} = useFormikContext<FormValues>();
+	const { isValid, dirty, values, touched, setFieldValue, isSubmitting, submitForm, resetForm } =
+		useFormikContext<FormValues>();
+
+	const isEarlyMember = useEarlyMemberStatus();
 
 	const isFormValid: boolean = isValid && dirty && Boolean(tonConnectAddress);
 
@@ -47,6 +41,7 @@ export function FormArea({
 			setFieldValue('payoutAddress', tonConnectAddress);
 		}
 	}, [tonConnectAddress, values.payoutAddress]);
+	console.log('isEarlyMember', isEarlyMember);
 
 	useEffect(() => {
 		if ((touched.symbol && values.symbol && !values.name) || isSubmitting) {
@@ -97,7 +92,9 @@ export function FormArea({
 			/>
 			<MediaInput label={'Media'} name="media" placeholder="None selected" />
 			<Input label={'Price'} name="price" type="number" placeholder="0.01" units="TON" />
-			<div className={styles.createEditionPriceHint}>Collector pays additional 5% to 3.14XL</div>
+			{isEarlyMember !== undefined && !isEarlyMember && (
+				<div className={styles.createEditionPriceHint}>Collector pays additional 5% to 3.14XL</div>
+			)}
 			<EditionSize />
 			<ValidityPeriod />
 			<Input label={'Royalty'} name="royalty" type="number" placeholder="5" units="%" />
