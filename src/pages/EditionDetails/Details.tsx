@@ -1,4 +1,6 @@
 import { useCallback, useState } from 'react';
+import { Label } from '@/components';
+import { useMediaQuery } from 'react-responsive';
 
 import { Tooltip } from '@/components/Tooltip';
 
@@ -15,6 +17,7 @@ import styles from './styles.module.scss';
 import { composeMintTransaction } from '@/pages/EditionDetails/helper';
 import MintDateSection from './MintTime';
 import { AddressLabel, ConnectButton } from '@/components';
+console.log('useMediaQuery', useMediaQuery);
 
 type Props = {
 	getEditionDetails: () => void;
@@ -31,6 +34,7 @@ function EditionDetails({
 	getEditionDetails,
 }: Props) {
 	const now = useTime();
+	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1199.98px)' });
 
 	const [isDeploymentModalOpened, setDeploymentStatus] = useState(false);
 
@@ -113,6 +117,7 @@ function EditionDetails({
 					<h3>ABOUT</h3>
 					<div className={styles.editionDetailsInfoAboutName}>
 						<h1>{content.name}</h1>
+						{content.isSoulbound ? <Label text={'Soulbound'} grey mini /> : null}
 					</div>
 					<p className={styles.editionDetailsInfoAboutDescription}>{content.description}</p>
 				</div>

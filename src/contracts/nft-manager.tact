@@ -63,6 +63,7 @@ struct InitArgs {
   payout_address: Address;
   content_init: Cell;
   is_pixel_fee_disabled: Bool;
+  is_soulbound: Bool;
 }
 
 contract NftManager with Deployable, Ownable {
@@ -75,6 +76,8 @@ contract NftManager with Deployable, Ownable {
   payout_address: Address;
   content_init: Cell;
   is_pixel_fee_disabled: Bool;
+  is_soulbound: Bool;
+
 
   init(
     initArgs: InitArgs
@@ -88,6 +91,7 @@ contract NftManager with Deployable, Ownable {
     self.payout_address = initArgs.payout_address;
     self.content_init = initArgs.content_init;
     self.is_pixel_fee_disabled = initArgs.is_pixel_fee_disabled;
+    self.is_soulbound = initArgs.is_soulbound;
   }
 
   receive(msg: SetNftCollectionAddress) {
@@ -181,7 +185,8 @@ contract NftManager with Deployable, Ownable {
         query_id: msg.query_id,
         item_index: msg.next_item_index,
         item_value: ton("0.02"),
-        item_content: item_content
+        item_content: item_content,
+        owner: self.owner,
       }.toCell()
     });
 

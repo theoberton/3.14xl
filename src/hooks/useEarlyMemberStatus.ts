@@ -24,6 +24,8 @@ const earlyMembersNFTList = [
 	'EQC89KxOv_ToW_3uVjJCHglFX5bEF4fEeWuubxERYPXXgRyj',
 	'EQCprtGF78RFcRkATdzcMSXcC1aYLpTnJy-acuY7nXNkpvcQ',
 	'EQC-ZtD3QtULNPteRu1vnJOzamwSZJcMUpWPmJ_wjwQKDVBo',
+	'EQAcVR8TWP-QM8Dk81KnWLiMHqUDCBPpt67IrLcsCLjw5rMT',
+	'EQBwlbfWZTXBICnJ_Tnq7P_o5_uMKr-lK9QvQkzLmdyk9TBn',
 ];
 
 export const useEarlyMemberStatus = () => {
@@ -44,7 +46,26 @@ export const useEarlyMemberStatus = () => {
 		const ownerAddressesRaw = await Promise.all(
 			nftItemsContracts.map(async contract => {
 				try {
+					// let data;
+					// console.log('contract.address.toString()', contract.address.toString());
+					// const finale =
+					// 	contract.address.toString() === 'EQAcVR8TWP-QM8Dk81KnWLiMHqUDCBPpt67IrLcsCLjw5rMT';
+					// console.log('finale', finale);
+
+					// if (finale) {
+					// 	let data;
+					// 	try {
+					// 		data = await contract.getAuthortyData();
+					// 	} catch (error) {
+					// 		console.log('error', error);
+					// 	}
+					// 	console.log('Authoriti datttta', data?.authorityAddress.toString());
+					// 	console.log('contract.address.toString()', contract.address.toString());
+
+					// 	return;
+					// } else {
 					const data = await contract.getData();
+					// }
 					if (!data.isInitialized) {
 						return null;
 					}

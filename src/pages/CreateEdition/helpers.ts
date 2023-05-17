@@ -27,6 +27,7 @@ export const prepareDeployTransaction = async (
 		symbol: params.symbol,
 		payoutAddress: params.payoutAddress,
 		feeRecipient: params.payoutAddress,
+		isSoulbound: params.isSoulbound,
 	};
 
 	const collectionContentUri = await storage.upload(content, { uploadWithGatewayUrl: true });
@@ -51,6 +52,7 @@ export const prepareDeployTransaction = async (
 	const nftCollectionInitData: NftCollectionDataOptional = {
 		ownerAddress: nftManagerContract.address,
 		collectionContentUri: collectionContentUrl,
+		isSoulbound: params.isSoulbound,
 		commonContent: collectionContentUrl,
 		royaltyParams: {
 			royaltyBase: 100,

@@ -33,6 +33,7 @@ function getTestnetInitialValues(address: string) {
 		description: 'Hello, this is description',
 		media: null,
 		price: '1',
+		isSoulbound: false,
 		editionSize: {
 			type: EDITIONS_SIZES.OPEN_EDITION,
 			amount: '',
@@ -105,6 +106,7 @@ function CreateEditionForm() {
 				price: values.price,
 				royalty: values.royalty,
 				payoutAddress: values.payoutAddress,
+				isSoulbound: values.isSoulbound,
 				creatorAddress: tonConnectAddress,
 				maxSupply:
 					values.editionSize.type === EDITIONS_SIZES.FIXED ? values.editionSize.amount : '0',
@@ -157,6 +159,7 @@ function CreateEditionForm() {
 			description: '',
 			media: null,
 			price: '',
+			isSoulbound: false,
 			editionSize: {
 				type: EDITIONS_SIZES.OPEN_EDITION,
 				amount: '',

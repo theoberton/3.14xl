@@ -162,6 +162,9 @@
 			}
 
 			&Name {
+				display: flex;
+				gap: 20px;
+
 				@media (max-width: $breakpoint-m) {
 					display: flex;
 					justify-content: space-between;

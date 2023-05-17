@@ -32,7 +32,7 @@ describe('nft item smc', () => {
 				collectionAddress: nftCollection.address,
 			});
 
-			nftItem = NftItem.createFromConfig(nftItemConfig, NftItemCodeCell);
+			nftItem = NftItem.createFromConfig(nftItemConfig);
 			contract = blockchain.openContract(nftItem);
 			const deployResult = await contract.sendDeploy(
 				nftCollection.getSender(),

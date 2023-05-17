@@ -11,6 +11,7 @@ import { FormValues } from '@/pages/CreateEdition/interfaces';
 import EditionSize from '@/pages/CreateEdition/EditionSize';
 import ValidityPeriod from '@/pages/CreateEdition/ValidityPeriod';
 import { useTonAddress } from '@tonconnect/ui-react';
+import { Checkbox } from '@/components';
 
 type Props = {
 	deploymentState: { isModalOpened: boolean; address: string; editionName: string };
@@ -41,7 +42,6 @@ export function FormArea({
 			setFieldValue('payoutAddress', tonConnectAddress);
 		}
 	}, [tonConnectAddress, values.payoutAddress]);
-	console.log('isEarlyMember', isEarlyMember);
 
 	useEffect(() => {
 		if ((touched.symbol && values.symbol && !values.name) || isSubmitting) {
@@ -97,6 +97,9 @@ export function FormArea({
 			)}
 			<EditionSize />
 			<ValidityPeriod />
+			<div className={styles.customFieldContainer}>
+				<Checkbox name="isSoulbound" label="NFT details" title="Soulbound" optional />
+			</div>
 			<Input label={'Royalty'} name="royalty" type="number" placeholder="5" units="%" />
 			<Input
 				subCaption="Address that will receive withdrawals and royalties"

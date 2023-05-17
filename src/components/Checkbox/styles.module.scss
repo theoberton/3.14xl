@@ -1,0 +1,12 @@
+@import '@/assets/styles/variables.scss';
+
+
+.checkbox {
+  &Content {
+    display: flex;
+    align-items: center;
+  }
+  &Title {
+    font-weight: $font-light;
+  }
+}

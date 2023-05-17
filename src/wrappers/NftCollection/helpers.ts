@@ -1,9 +1,10 @@
-import { beginCell, contractAddress, Cell } from 'ton-core';
+import { beginCell, contractAddress, Cell, Address } from 'ton-core';
 import { Buffer } from 'buffer';
 import { defaultsDeep } from 'lodash';
 
 import { NftCollectionCodeCell } from './NftCollection.source';
 import { NftItemCodeCell } from './../NftItem/NftItem.source';
+import { SBTItemCodeCell } from './../SbtItem/SbtItem.source';
 import { encodeOffChainContent } from './../utils/nft-content';
 import { randomAddress } from './../utils';
 import {
@@ -43,7 +44,8 @@ export function buildNftCollectionDataCell(data: NftCollectionData) {
 	royaltyCell.storeAddress(data.royaltyParams.royaltyAddress);
 	dataCell.storeRef(royaltyCell);
 
-	return dataCell.endCell();
+	const finishedCell = dataCell.endCell();
+	return finishedCell;
 }
 
 export const getDefaultNftCollectionData = (
@@ -57,7 +59,7 @@ export const getDefaultNftCollectionData = (
 		nextItemIndex: 0,
 		collectionContentUri: 'collection_content',
 		commonContent: 'common_content',
-		nftItemCode: NftItemCodeCell,
+		nftItemCode: source.isSoulbound ? SBTItemCodeCell : NftItemCodeCell,
 		royaltyParams: {
 			royaltyFactor: 100,
 			royaltyBase: 200,

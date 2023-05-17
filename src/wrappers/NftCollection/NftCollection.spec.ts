@@ -6,6 +6,7 @@ import { Blockchain, SandboxContract } from '@ton-community/sandbox';
 import { compile } from '@ton-community/blueprint';
 import { buildNftItemStateInit } from './../NftItem/helpers';
 import { NftCollection } from '.';
+import { NftItem } from '../NftItem';
 import { getDefaultNftCollectionData } from './helpers';
 import { NftCollectionCodeCell } from './NftCollection.source';
 import { NftItemCodeCell } from './../NftItem/NftItem.source';
@@ -13,7 +14,7 @@ import { NftItemCodeCell } from './../NftItem/NftItem.source';
 // TO get updated sources of contracts use code.toBoc().toString('base64')
 
 // describe.skip('nft collection smc', () => {
-describe('nft collection smc', () => {
+describe.only('nft collection smc', () => {
 	describe('nft collection getters', () => {
 		let blockchain: Blockchain | null;
 		let contract: SandboxContract<NftCollection> | null;
@@ -26,10 +27,10 @@ describe('nft collection smc', () => {
 				defaultNftCollectionConfig,
 				NftCollectionCodeCell
 			);
-			// const code = await compile('../../frontend/src/wrappers/NftCollection/NftCollection');
-			// console.log('_______')
-			// console.log(code.toBoc().toString('base64'));
-			// console.log('_______')
+			const code = await compile('../../3.14xl/src/wrappers/NftCollection/NftCollection');
+			console.log('______RSSSSSAAA_');
+			console.log(code.toBoc().toString('base64'));
+			console.log('_______');
 
 			contract = blockchain.openContract(nftCollection);
 
@@ -51,7 +52,9 @@ describe('nft collection smc', () => {
 		});
 
 		it('should return collection data', async () => {
+			console.log('should return collection datammmmmmm');
 			const res = await contract!.getCollectionData();
+			console.log('res', res);
 
 			expect(res.nextItemIndex).toEqual(defaultNftCollectionConfig.nextItemIndex);
 			expect(res.collectionContentUri).toEqual(defaultNftCollectionConfig.collectionContentUri);
@@ -250,6 +253,72 @@ describe('nft collection smc', () => {
 			from: randomAddress,
 			to: nftContract.address,
 			exitCode: 401,
+		});
+	});
+
+	it.only('should deploy souldbound nft', async () => {
+		const blockchain = await Blockchain.create();
+
+		const ownerOfNftItemContract = await blockchain.treasury('nft_item_owner');
+		const ownerOfNftItemAddress = ownerOfNftItemContract.address;
+
+		const ownerOfCollectionContract = await blockchain.treasury('nft_collection_owner');
+		const ownerOfCollectionAddress = ownerOfCollectionContract.address;
+		console.log('CollectionNFT', ownerOfCollectionAddress);
+		const nftCollectionConfig = getDefaultNftCollectionData({
+			ownerAddress: ownerOfCollectionAddress,
+			isSoulbound: true,
+			authorityAddress: ownerOfCollectionAddress,
+		});
+
+		const nftCollection = NftCollection.createFromConfig(
+			nftCollectionConfig,
+			NftCollectionCodeCell
+		);
+		const NftCollectionAddress = nftCollection.address;
+		console.log('NftCollectionAddress', NftCollectionAddress.toString());
+
+		const nftContract = blockchain.openContract(nftCollection);
+		console.log('nftContractCollection', nftContract.address)
+
+		const deployer = await blockchain.treasury('deployer');
+
+		const deployResult = await nftContract.sendDeploy(deployer.getSender(), toNano('1.8'));
+
+		expect(deployResult.transactions).toHaveTransaction({
+			from: deployer.address,
+			to: nftContract.address,
+			deploy: true,
+		});
+
+		const itemIndex = 0;
+
+		const newNftParams = {
+			amount: toNano('0.5'),
+			itemIndex,
+			itemOwnerAddress: ownerOfNftItemAddress,
+			itemContent: 'test_content',
+		};
+
+		const result = await nftContract!.sendNewNftItem(
+			ownerOfCollectionContract.getSender(),
+			newNftParams
+		);
+
+		const { address: creadNftItemAddress, stateInit } = await buildNftItemStateInit({
+			collectionAddress: NftCollectionAddress,
+			itemIndex,
+			isSoulbound: true,
+		});
+		console.log('creadNftItemAddress', creadNftItemAddress);
+
+		expect(result.transactions).toHaveTransaction({
+			from: nftContract!.address,
+			to: creadNftItemAddress,
+			initCode: stateInit.code,
+			initData: stateInit.data,
+			deploy: true,
+			success: true,
 		});
 	});
 

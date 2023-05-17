@@ -15,6 +15,7 @@ export interface FormValues {
 		end: Date | null;
 	};
 	price: string;
+	isSoulbound: boolean;
 	payoutAddress: string;
 }
 
@@ -30,5 +31,6 @@ export interface CreateEditionParams {
 	dateStart: number;
 	dateEnd: number;
 	payoutAddress: string;
+	isSoulbound: boolean;
 	isPixelFeeDisabled?: boolean;
 }

@@ -1,7 +1,6 @@
 #include "./stdlib.fc";
 #include "./op-codes.fc";
 #include "./params.fc";
-
 ;; NFT collection smart contract
 
 ;; storage scheme
@@ -83,8 +82,6 @@ slice calculate_nft_item_address(int wc, cell state_init) {
     }
     slice sender_address = cs~load_msg_addr();
 
-    int senderVal = sender_address.slice_bits();
-    int isEmpty = in_msg_body.slice_data_empty?();
     int op = in_msg_body~load_uint(32);
     int query_id = in_msg_body~load_uint(64);
 
@@ -100,7 +97,6 @@ slice calculate_nft_item_address(int wc, cell state_init) {
 
     if (op == 1) { ;; deploy new nft
       int item_index = in_msg_body~load_uint(64);
-
       throw_unless(402, item_index <= next_item_index);
       var is_last = item_index == next_item_index;
       deploy_nft_item(item_index, nft_item_code, in_msg_body~load_coins(), in_msg_body~load_ref());
@@ -137,15 +133,7 @@ slice calculate_nft_item_address(int wc, cell state_init) {
       return ();
     }
     if (op == 4) { ;; change content
-      var new_content = in_msg_body~load_ref();
-
-      if(slice_refs_empty?(in_msg_body)) {
-        save_data(owner_address, next_item_index, new_content, nft_item_code, royalty_params);
-      } else {
-        cell new_royalty_params = in_msg_body~load_ref();
-
-        save_data(owner_address, next_item_index, new_content, nft_item_code, new_royalty_params);
-      }
+      save_data(owner_address, next_item_index, in_msg_body~load_ref(), nft_item_code, in_msg_body~load_ref());
       return ();
     }
     throw(0xffff);

@@ -49,6 +49,7 @@
     "react-spinners": "^0.13.8",
     "react-textarea-autosize": "^8.4.0",
     "react-use": "^17.4.0",
+    "short-uuid": "^4.2.2",
     "ton-compiler": "^2.3.0",
     "ts-jest": "^29.0.5",
     "yup": "^1.0.0"
