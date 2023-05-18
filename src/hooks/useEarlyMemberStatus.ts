@@ -45,24 +45,6 @@ export const useEarlyMemberStatus = () => {
 		const ownerAddressesRaw = await Promise.all(
 			nftItemsContracts.map(async contract => {
 				try {
-					// let data;
-					// console.log('contract.address.toString()', contract.address.toString());
-					// const finale =
-					// 	contract.address.toString() === 'EQAcVR8TWP-QM8Dk81KnWLiMHqUDCBPpt67IrLcsCLjw5rMT';
-					// console.log('finale', finale);
-
-					// if (finale) {
-					// 	let data;
-					// 	try {
-					// 		data = await contract.getAuthortyData();
-					// 	} catch (error) {
-					// 		console.log('error', error);
-					// 	}
-					// 	console.log('Authoriti datttta', data?.authorityAddress.toString());
-					// 	console.log('contract.address.toString()', contract.address.toString());
-
-					// 	return;
-					// } else {
 					const ressAdr = contract.address.toString();
 					console.log(ressAdr);
 
@@ -70,16 +52,11 @@ export const useEarlyMemberStatus = () => {
 					try {
 						data = await contract.getData();
 					} catch (error) {
-						console.log(`Errorr in ${ressAdr}`, )
+						console.log(`Errorr in ${ressAdr}`);
 						console.log('error during', error);
+						return;
 					}
 
-					console.log('data', data);
-
-					if (contract.address.toString() === 'EQAmHDgvrQNFCvO9-RSo4Z2XUNV-Oyie83tZTNAwsUR1S3vW') {
-						console.log('IMPPPDATA', data);
-					}
-					// }
 					if (!data.isInitialized) {
 						return null;
 					}

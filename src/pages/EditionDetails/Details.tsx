@@ -154,7 +154,7 @@ function EditionDetails({
 								</Button>
 							</ConnectButton>
 						)}
-						{content.isSoulbound && (
+						{(
 							<div className={styles.editionDetailsInfoAboutMintQR}>
 								<Tooltip
 									isHoverable
