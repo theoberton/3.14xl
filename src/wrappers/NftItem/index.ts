@@ -70,7 +70,6 @@ export class NftItem extends BaseLocalContract {
 	async getAuthortyData(provider: ContractProvider): Promise<{ authorityAddress: Address }> {
 		const { stack } = await provider.get('get_authority_address', []);
 		const authorityAddress = stack.readAddress();
-		console.log('authorityAddress readddd', authorityAddress);
 
 		return {
 			authorityAddress,

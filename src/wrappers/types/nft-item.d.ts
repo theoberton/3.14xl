@@ -18,7 +18,6 @@ export interface NftItemData {
 	ownerAddress: Address;
 	content: string;
 	isSoulbound?: boolean;
-	authorityAddress?: Address | null;
 }
 
 export interface NftItemContent {

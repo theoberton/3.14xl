@@ -96,8 +96,16 @@ slice calculate_nft_item_address(int wc, cell state_init) {
 
 
     if (op == 1) { ;; deploy new nft
+      ;; reserve 99999999999 for anonymous mints
       int item_index = in_msg_body~load_uint(64);
+
+      var isAnon = item_index == 99999999999;
+
+      if(isAnon) {
+        item_index = next_item_index;
+      }
       throw_unless(402, item_index <= next_item_index);
+
       var is_last = item_index == next_item_index;
       deploy_nft_item(item_index, nft_item_code, in_msg_body~load_coins(), in_msg_body~load_ref());
       if (is_last) {
@@ -133,7 +141,7 @@ slice calculate_nft_item_address(int wc, cell state_init) {
       return ();
     }
     if (op == 4) { ;; change content
-      save_data(owner_address, next_item_index, in_msg_body~load_ref(), nft_item_code, in_msg_body~load_ref());
+      save_data(owner_address, next_item_index, in_msg_body~load_ref(), nft_item_code, royalty_params);
       return ();
     }
     throw(0xffff);

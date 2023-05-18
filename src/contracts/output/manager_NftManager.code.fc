@@ -27,6 +27,15 @@ slice __tact_verify_address(slice address) inline {
     return (cs, __tact_verify_address(raw));
 }
 
+(slice, slice) __tact_load_address_opt(slice cs) inline {
+    slice raw = cs~load_msg_addr();
+    if (raw.preload_uint(2) != 0) {
+        return (cs, __tact_verify_address(raw));
+    } else {
+        return (cs, null());
+    }
+}
+
 builder __tact_store_address(builder b, slice address) inline {
     return b.store_slice(__tact_verify_address(address));
 }
@@ -155,10 +164,10 @@ cell __gen_writecell_UpdateContent((int, cell) v) inline {
 }
 
 (slice, ((int, int, slice))) __gen_read_MintSafe(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 3323304562);
+    throw_unless(129, sc_0~load_uint(32) == 1200160875);
     var v'query_id = sc_0~load_uint(64);
     var v'next_item_index = sc_0~load_uint(64);
-    var v'item_owner = sc_0~__tact_load_address();
+    var v'item_owner = sc_0~__tact_load_address_opt();
     return (sc_0, (v'query_id, v'next_item_index, v'item_owner));
 }
 
@@ -253,6 +262,7 @@ _ __gen_Context_get_value((int, slice, int, slice) v) inline {
 (slice, slice, int, int, int, int, slice, cell, int) $__gen_NftManager_init((slice, int, int, int, int, slice, cell, int) $initArgs) impure inline_ref {
     var (($initArgs'owner, $initArgs'mint_price, $initArgs'max_supply, $initArgs'mint_date_start, $initArgs'mint_date_end, $initArgs'payout_address, $initArgs'content_init, $initArgs'is_pixel_fee_disabled)) = $initArgs;
     var (($self'owner, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address, $self'content_init, $self'is_pixel_fee_disabled)) = (null(), null(), null(), null(), null(), null(), null(), null(), null());
+    var ($ctx'bounced, $ctx'sender, $ctx'value, $ctx'raw) = __tact_context_get();
     $self'owner = $initArgs'owner;
     $self'nft_collection_address = $initArgs'owner;
     $self'mint_price = $initArgs'mint_price;
@@ -458,7 +468,11 @@ slice __gen_slice_address_d78b550aaa9750d9d9cefa48a13776d0c56f2aec64ae92bd04598a
     var ($self'owner, $self'nft_collection_address, $self'mint_price, $self'max_supply, $self'mint_date_start, $self'mint_date_end, $self'payout_address, $self'content_init, $self'is_pixel_fee_disabled) = $self;
     var ($msg'query_id, $msg'next_item_index, $msg'item_owner) = $msg;
     var ($ctx'bounced, $ctx'sender, $ctx'value, $ctx'raw) = __tact_context_get();
-    cell $item_content = end_cell(store_ref(__tact_store_address(begin_cell(), $msg'item_owner), $emptyCell()));
+    slice $minterAddress = $ctx'sender;
+    if ((~ null?($msg'item_owner))) {
+        $minterAddress = __tact_not_null($msg'item_owner);
+    }
+    cell $item_content = end_cell(store_ref(__tact_store_address(begin_cell(), $minterAddress), $emptyCell()));
     int $pixelReward = 0;
     if ((~ $self'is_pixel_fee_disabled)) {
         $pixelReward = ($self'mint_price / 20);
@@ -525,7 +539,7 @@ slice __gen_slice_address_d78b550aaa9750d9d9cefa48a13776d0c56f2aec64ae92bd04598a
     }
     
     ;; Receive MintSafe message
-    if (op == 3323304562) {
+    if (op == 1200160875) {
         var msg = in_msg~__gen_read_MintSafe();
         self~$__gen_NftManager_receive_MintSafe(msg);
         return (self, true);
@@ -569,14 +583,13 @@ _ supported_interfaces() method_id {
         "org.ton.introspection.v0"H >> 128,
         "org.ton.abi.ipfs.v0"H >> 128,
         "org.ton.deploy.lazy.v0"H >> 128,
-        "org.ton.debug.v0"H >> 128,
         "org.ton.chain.workchain.v0"H >> 128,
         "org.ton.ownable"H >> 128
     );
 }
 
 _ get_abi_ipfs() {
-    return "ipfs://QmcGyQEz5HKuumFmap2eEwW7HfQTzTb9iv3ax2eAtojr2M";
+    return "ipfs://QmQ6wBXpsvS6opPPdQjDCdCfAdJ1nv1qY3SxVXXGaqZCn2";
 }
 
 _ lazy_deployment_completed() {

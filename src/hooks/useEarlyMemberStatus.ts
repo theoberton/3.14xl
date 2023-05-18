@@ -24,7 +24,6 @@ const earlyMembersNFTList = [
 	'EQC89KxOv_ToW_3uVjJCHglFX5bEF4fEeWuubxERYPXXgRyj',
 	'EQCprtGF78RFcRkATdzcMSXcC1aYLpTnJy-acuY7nXNkpvcQ',
 	'EQC-ZtD3QtULNPteRu1vnJOzamwSZJcMUpWPmJ_wjwQKDVBo',
-	'EQAcVR8TWP-QM8Dk81KnWLiMHqUDCBPpt67IrLcsCLjw5rMT',
 	'EQBwlbfWZTXBICnJ_Tnq7P_o5_uMKr-lK9QvQkzLmdyk9TBn',
 ];
 
@@ -64,7 +63,22 @@ export const useEarlyMemberStatus = () => {
 
 					// 	return;
 					// } else {
-					const data = await contract.getData();
+					const ressAdr = contract.address.toString();
+					console.log(ressAdr);
+
+					let data;
+					try {
+						data = await contract.getData();
+					} catch (error) {
+						console.log(`Errorr in ${ressAdr}`, )
+						console.log('error during', error);
+					}
+
+					console.log('data', data);
+
+					if (contract.address.toString() === 'EQAmHDgvrQNFCvO9-RSo4Z2XUNV-Oyie83tZTNAwsUR1S3vW') {
+						console.log('IMPPPDATA', data);
+					}
 					// }
 					if (!data.isInitialized) {
 						return null;

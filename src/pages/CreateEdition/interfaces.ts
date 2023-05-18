@@ -31,6 +31,6 @@ export interface CreateEditionParams {
 	dateStart: number;
 	dateEnd: number;
 	payoutAddress: string;
-	isSoulbound: boolean;
+	isSoulbound?: boolean;
 	isPixelFeeDisabled?: boolean;
 }

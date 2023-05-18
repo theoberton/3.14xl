@@ -140,7 +140,7 @@ int builder_depth(builder b) asm "BDEPTH";
 
 builder begin_cell() asm "NEWC";
 cell end_cell(builder b) asm "ENDC";
-    builder store_ref(builder b, cell c) asm(c b) "STREF";
+builder store_ref(builder b, cell c) asm(c b) "STREF";
 ;; builder store_uint(builder b, int x, int len) asm(x b len) "STUX";
 ;; builder store_int(builder b, int x, int len) asm(x b len) "STIX";
 builder store_slice(builder b, slice s) asm "STSLICER";
@@ -336,17 +336,12 @@ global int storage::revoked_at;
 
   if (~ init?) {
     throw_unless(405, equal_slices(storage::collection_address, sender_address));
-    ~strdump("Init is processing");
-    slice vall = 
-    storage::owner_address     = in_msg_body~load_msg_addr();
-    ~strdump("owner_address");
-    ~dump(storage::owner_address);
+
+    slice owner_addr = in_msg_body~load_msg_addr();
+    storage::owner_address     = owner_addr;
     storage::content           = in_msg_body~load_ref();
-    storage::authority_address = in_msg_body~load_msg_addr();
-    ~strdump("authority_address");
-    ~dump(storage::authority_address);
+    storage::authority_address = owner_addr;
     storage::revoked_at        = 0;
-    ~strdump("Init is success");
 
     store_data();
     return ();

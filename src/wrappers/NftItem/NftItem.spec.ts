@@ -7,10 +7,9 @@ import { NftItem } from '.';
 import { randomAddress } from './../utils';
 import { NftItemData } from '../types';
 import { getDefaultNftItemData } from './helpers';
-import { NftItemCodeCell } from './NftItem.source';
-import { compile } from '@ton-community/blueprint';
 
 describe('nft item smc', () => {
+// describe.skip('nft item smc', () => {
 	describe('nft item getters', () => {
 		let blockchain: Blockchain | null;
 		let contract: SandboxContract<NftItem> | null;

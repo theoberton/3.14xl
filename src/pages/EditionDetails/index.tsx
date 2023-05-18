@@ -37,7 +37,7 @@ export default function EditionDetailsPage() {
 		getEditionDetails();
 	}, [collectionAddress, tonClient]);
 
-	if (isLoading && !edtionDetails) {
+	if (isLoading && !edtionDetails || !collectionAddress) {
 		return <PageLoader />;
 	}
 
@@ -51,6 +51,7 @@ export default function EditionDetailsPage() {
 						content={edtionDetails.content}
 					/>
 					<EditionDetails
+						collectionAddress={collectionAddress}
 						getEditionDetails={getEditionDetails}
 						setCurrentNftItemIndex={setCurrentNftItemIndex}
 						currentNextNftItemIndex={currentNextNftItemIndex}

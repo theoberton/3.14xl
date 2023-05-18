@@ -13,8 +13,8 @@ import { NftItemCodeCell } from './../NftItem/NftItem.source';
 
 // TO get updated sources of contracts use code.toBoc().toString('base64')
 
+describe('nft collection smc', () => {
 // describe.skip('nft collection smc', () => {
-describe.only('nft collection smc', () => {
 	describe('nft collection getters', () => {
 		let blockchain: Blockchain | null;
 		let contract: SandboxContract<NftCollection> | null;
@@ -27,10 +27,10 @@ describe.only('nft collection smc', () => {
 				defaultNftCollectionConfig,
 				NftCollectionCodeCell
 			);
-			const code = await compile('../../3.14xl/src/wrappers/NftCollection/NftCollection');
-			console.log('______RSSSSSAAA_');
-			console.log(code.toBoc().toString('base64'));
-			console.log('_______');
+			// const code = await compile('../../3.14xl/src/wrappers/NftCollection/NftCollection');
+			// console.log('______RSSSSSAAA_');
+			// console.log(code.toBoc().toString('base64'));
+			// console.log('_______');
 
 			contract = blockchain.openContract(nftCollection);
 
@@ -52,9 +52,7 @@ describe.only('nft collection smc', () => {
 		});
 
 		it('should return collection data', async () => {
-			console.log('should return collection datammmmmmm');
 			const res = await contract!.getCollectionData();
-			console.log('res', res);
 
 			expect(res.nextItemIndex).toEqual(defaultNftCollectionConfig.nextItemIndex);
 			expect(res.collectionContentUri).toEqual(defaultNftCollectionConfig.collectionContentUri);
@@ -256,7 +254,7 @@ describe.only('nft collection smc', () => {
 		});
 	});
 
-	it.only('should deploy souldbound nft', async () => {
+	it('should deploy souldbound nft', async () => {
 		const blockchain = await Blockchain.create();
 
 		const ownerOfNftItemContract = await blockchain.treasury('nft_item_owner');
@@ -264,7 +262,7 @@ describe.only('nft collection smc', () => {
 
 		const ownerOfCollectionContract = await blockchain.treasury('nft_collection_owner');
 		const ownerOfCollectionAddress = ownerOfCollectionContract.address;
-		console.log('CollectionNFT', ownerOfCollectionAddress);
+
 		const nftCollectionConfig = getDefaultNftCollectionData({
 			ownerAddress: ownerOfCollectionAddress,
 			isSoulbound: true,
@@ -276,10 +274,8 @@ describe.only('nft collection smc', () => {
 			NftCollectionCodeCell
 		);
 		const NftCollectionAddress = nftCollection.address;
-		console.log('NftCollectionAddress', NftCollectionAddress.toString());
 
 		const nftContract = blockchain.openContract(nftCollection);
-		console.log('nftContractCollection', nftContract.address)
 
 		const deployer = await blockchain.treasury('deployer');
 
@@ -310,7 +306,6 @@ describe.only('nft collection smc', () => {
 			itemIndex,
 			isSoulbound: true,
 		});
-		console.log('creadNftItemAddress', creadNftItemAddress);
 
 		expect(result.transactions).toHaveTransaction({
 			from: nftContract!.address,

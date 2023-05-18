@@ -9,12 +9,14 @@ import { TonClient } from 'ton';
 import { CreateEditionParams } from './interfaces';
 import { Queries } from '@/wrappers/NftManager/helpers';
 import { CollectionContent } from '@/wrappers/types';
+import { generateFastMinkLink } from '../EditionDetails/generateFastMintLink';
 
 export const prepareDeployTransaction = async (
 	tonClient: TonClient,
 	params: CreateEditionParams
 ) => {
 	/** Upload collection metadata */
+
 	const content: CollectionContent = {
 		name: params.name,
 		description: params.description,

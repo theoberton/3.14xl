@@ -11,6 +11,10 @@
 	align-items: center;
 	cursor: default;
 
+	&Clickable {
+		cursor: pointer;
+	}
+
 	&Black {
 		color: $white;
 		background-color: $black-one;

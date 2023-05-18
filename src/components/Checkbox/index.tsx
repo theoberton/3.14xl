@@ -12,11 +12,14 @@ export const Checkbox = ({
 	label,
 	title,
 	optional,
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	onClick = () => {},
 }: {
 	name: string;
 	label: string;
 	title: string;
 	optional: boolean;
+	onClick?: () => void;
 }) => {
 	const [id, setId] = useState<string>();
 	const [field] = useField(name);
@@ -27,9 +30,9 @@ export const Checkbox = ({
 	}, []);
 
 	const handleClick = useCallback(() => {
-
+		onClick();
 		setFieldValue(field.name, !field.value);
-	}, [field.value, setFieldValue]);
+	}, [onClick, field.value, setFieldValue]);
 
 	const { getError } = useCustomStateFormField(field.name);
 
@@ -45,10 +48,9 @@ export const Checkbox = ({
 					</label>
 				</>
 			)}
-			<div className={styles.checkboxContent}>
+			<div className={styles.checkboxContent} onClick={handleClick}>
 				<CheckboxComponent
 					color="secondary"
-					onClick={handleClick}
 					style={{ paddingLeft: 0 }}
 					sx={{
 						color: '#fff',
