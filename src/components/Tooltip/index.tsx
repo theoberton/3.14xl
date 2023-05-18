@@ -7,16 +7,17 @@ type Props = {
 	title?: string;
 	isOpen?: boolean;
 	isHoverable?: boolean;
+	bottomPlaced?: boolean;
 };
 
 export function Tooltip(props: Props) {
-	const { children, title = '', isOpen, isHoverable } = props;
+	const { children, title = '', isOpen, isHoverable, bottomPlaced } = props;
 
 	const open = _.isBoolean(isOpen) ? isOpen : undefined;
 
 	return (
 		<TooltipComponent
-			placement={'top'}
+			placement={bottomPlaced ? 'bottom' : 'top'}
 			open={open}
 			enterTouchDelay={10}
 			leaveTouchDelay={5000}

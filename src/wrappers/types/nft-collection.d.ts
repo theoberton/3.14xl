@@ -33,6 +33,7 @@ export type CollectionContent = {
 	dateStart: number;
 	payoutAddress: string;
 	dateEnd: number;
+	isSoulbound?: boolean;
 };
 
 export interface RoyaltyParams {
@@ -55,6 +56,8 @@ export interface NftCollectionData {
 	commonContent: string;
 	nftItemCode: Cell;
 	royaltyParams: RoyaltyParams;
+	isSoulbound?: boolean;
+	authorityAddress?: Address;
 }
 
 export type NftCollectionDataOptional = Partial<NftCollectionData>;

@@ -9,12 +9,14 @@ import { TonClient } from 'ton';
 import { CreateEditionParams } from './interfaces';
 import { Queries } from '@/wrappers/NftManager/helpers';
 import { CollectionContent } from '@/wrappers/types';
+import { generateFastMinkLink } from '../EditionDetails/generateFastMintLink';
 
 export const prepareDeployTransaction = async (
 	tonClient: TonClient,
 	params: CreateEditionParams
 ) => {
 	/** Upload collection metadata */
+
 	const content: CollectionContent = {
 		name: params.name,
 		description: params.description,
@@ -27,6 +29,7 @@ export const prepareDeployTransaction = async (
 		symbol: params.symbol,
 		payoutAddress: params.payoutAddress,
 		feeRecipient: params.payoutAddress,
+		isSoulbound: params.isSoulbound,
 	};
 
 	const collectionContentUri = await storage.upload(content, { uploadWithGatewayUrl: true });
@@ -51,6 +54,7 @@ export const prepareDeployTransaction = async (
 	const nftCollectionInitData: NftCollectionDataOptional = {
 		ownerAddress: nftManagerContract.address,
 		collectionContentUri: collectionContentUrl,
+		isSoulbound: params.isSoulbound,
 		commonContent: collectionContentUrl,
 		royaltyParams: {
 			royaltyBase: 100,

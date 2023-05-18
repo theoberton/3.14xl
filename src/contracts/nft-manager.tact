@@ -20,7 +20,7 @@ message(0x4) UpdateContent {
 message MintSafe {
   query_id: Int as uint64;
   next_item_index: Int as uint64;
-  item_owner: Address;
+  item_owner: Address?;
 }
 
 message EditData {
@@ -79,6 +79,8 @@ contract NftManager with Deployable, Ownable {
   init(
     initArgs: InitArgs
   ) {
+    let ctx: Context = context();
+
     self.owner = initArgs.owner;
     self.nft_collection_address = initArgs.owner;
     self.mint_price = initArgs.mint_price;
@@ -141,7 +143,14 @@ contract NftManager with Deployable, Ownable {
 
   receive(msg: MintSafe) {
     let ctx: Context = context();
-    let item_content: Cell = beginCell().storeAddress(msg.item_owner).storeRef(emptyCell()).endCell();
+
+    let minterAddress: Address = ctx.sender;
+
+    if (msg.item_owner != null) {
+      minterAddress = msg.item_owner!!;
+    }
+
+    let item_content: Cell = beginCell().storeAddress(minterAddress).storeRef(emptyCell()).endCell();
 
     let pixelReward: Int = 0;
     if(!self.is_pixel_fee_disabled) {

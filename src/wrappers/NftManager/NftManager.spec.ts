@@ -15,6 +15,7 @@ import { getDefaultNftCollectionData } from '../NftCollection/helpers';
 
 import { NftCollectionCodeCell } from '../NftCollection/NftCollection.source';
 import '@ton-community/test-utils'; // register matchers
+import { anonMintIndexMarker } from './../constants';
 
 const defaultManagerInitContent = 'www.google.com';
 
@@ -68,6 +69,23 @@ async function mint(
 		{
 			nextItemIndex: collectionData.nextItemIndex,
 			itemOwner: buyer.address,
+		},
+		mintPrice
+	);
+
+	return result;
+}
+
+async function mintAnonymously(
+	buyer: SandboxContract<TreasuryContract>,
+	manager: SandboxContract<NftManager>,
+	collection: SandboxContract<NftCollection>,
+	mintPrice: bigint
+) {
+	const result = await manager.sendMintSafe(
+		buyer.getSender(),
+		{
+			nextItemIndex: anonMintIndexMarker,
 		},
 		mintPrice
 	);
@@ -253,6 +271,44 @@ describe('NftManager', () => {
 			value: value => (value ?? 0) > toNano('0.01'),
 			success: true,
 		});
+	});
+
+	it('should allow mint nft taking owner address as senders', async () => {
+		const blkch = await Blockchain.create();
+		const creator = await blkch.treasury('creator');
+		const payoutWallet = await blkch.treasury('payout');
+
+		await setupPixelWallet(blkch);
+
+		const managerInitData = {
+			owner: creator.address,
+			payoutAddress: payoutWallet.address,
+			mintPrice: toNano('1'),
+			maxSupply: 0n,
+			mintDateStart: BigInt(dateToUnix(new Date()) - 1000),
+			mintDateEnd: BigInt(dateToUnix(new Date()) + 1000),
+			content: defaultManagerInitContent,
+		};
+
+		const nftManager = NftManager.createFromConfig(managerInitData);
+
+		const manager = blkch.openContract(nftManager);
+
+		const nftCollectionConfig = getDefaultNftCollectionData({
+			ownerAddress: manager.address,
+		});
+		const collection = blkch.openContract(
+			NftCollection.createFromConfig(nftCollectionConfig, NftCollectionCodeCell)
+		);
+
+		await deployNftCollection(creator, manager, collection);
+
+		const buyer = await blkch.treasury('buyer');
+		const { mintPrice } = await manager.getManagerData();
+
+		const mintResult = await mintAnonymously(buyer, manager, collection, mintPrice);
+
+		expectSuccessfullMint(mintResult, payoutWallet, buyer, manager, collection, mintPrice);
 	});
 
 	it('should not send transaction to creator for pixel fee free editions', async () => {

@@ -710,46 +710,71 @@ SETCP0
         -1 PUSHINT
       }> IFJMPREF
       s1 PUSH
-      3323304562 PUSHINT
+      1200160875 PUSHINT
       EQUAL
       <{
         s1 POP
         32 LDU
         s0 s1 XCHG
-        3323304562 PUSHINT
+        1200160875 PUSHINT
         EQUAL
         129 THROWIFNOT
         64 LDU
         64 LDU
         LDMSGADDR
-        s0 s1 XCHG
-        s0 PUSH
-        SBITS
-        267 PUSHINT
-        EQUAL
-        136 THROWIFNOT
-        s0 PUSH
-        11 PLDU
-        s0 PUSH
-        10 PUSHPOW2
-        EQUAL
         s1 PUSH
-        1279 PUSHINT
-        EQUAL
-        OR
-        136 THROWIFNOT
-        10 PUSHPOW2
-        EQUAL
-        137 THROWIFNOT
+        2 PLDU
+        0 NEQINT
+        <{
+          s0 s1 XCHG
+          s0 PUSH
+          SBITS
+          267 PUSHINT
+          EQUAL
+          136 THROWIFNOT
+          s0 PUSH
+          11 PLDU
+          s0 PUSH
+          10 PUSHPOW2
+          EQUAL
+          s1 PUSH
+          1279 PUSHINT
+          EQUAL
+          OR
+          136 THROWIFNOT
+          10 PUSHPOW2
+          EQUAL
+          137 THROWIFNOT
+        }> PUSHCONT
+        <{
+          s1 POP
+          PUSHNULL
+        }> PUSHCONT
+        IFELSE
         s3 s3 s0 XCHG3
         1 3 BLKDROP2
         <{
           1 GETGLOBVAR
           4 UNTUPLE
-          2DROP
+          s2 s3 XCHG
+          3 BLKDROP
+          s0 s1 PUSH2
+          ISNULL
+          NOT
+          <{
+            s0 POP
+            s0 s1 XCHG
+            s0 PUSH
+            ISNULL
+            128 THROWIF
+            s0 s1 XCHG
+          }> PUSHCONT
+          <{
+            s2 POP
+          }> PUSHCONT
+          IFELSE
           NEWC
-          s2 POP
-          s0 s2 XCHG
+          ROT
           s0 PUSH
           SBITS
           267 PUSHINT
@@ -2398,7 +2423,6 @@ SETCP0
     123515602279859691144772641439386770278 PUSHINT
     209801025412363888721030803524359905849 PUSHINT
     42980537499636128163026532310500881091 PUSHINT
-    36993126140238121407019133875791708966 PUSHINT
     209474421377847335869795010607481022628 PUSHINT
     86142586315491086060343270784266291122 PUSHINT
 ) 19 DICTPUSHCONST

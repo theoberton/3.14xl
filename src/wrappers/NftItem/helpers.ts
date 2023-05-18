@@ -8,13 +8,13 @@ import { defaultsDeep } from 'lodash';
 
 import { GetStaticDataParams, NftItemDataOptional, NftItemData, NftInitItemData } from './../types';
 import { NftItemCodeCell } from './NftItem.source';
+import { SBTItemCodeCell } from './../SbtItem/SbtItem.source';
 
 export function buildNftItemStateInitDataCell(data: NftInitItemData) {
 	const dataCell = beginCell();
 
 	dataCell.storeUint(data.itemIndex, 64);
 	dataCell.storeAddress(data.collectionAddress);
-	// dataCell.storeRef(contentCell);
 
 	return dataCell.endCell();
 }
@@ -35,12 +35,12 @@ export const getDefaultNftItemData = (source: NftItemDataOptional = {}): NftItem
 	return value;
 };
 
-export function buildNftItemStateInit(conf: NftItemDataOptional, code: Cell = NftItemCodeCell) {
+export function buildNftItemStateInit(conf: NftItemDataOptional) {
 	const nftItemData = getDefaultNftItemData(conf);
 	const dataCell = buildNftItemStateInitDataCell(nftItemData);
 
 	const stateInit = {
-		code: code,
+		code: conf.isSoulbound ? SBTItemCodeCell : NftItemCodeCell,
 		data: dataCell,
 	};
 

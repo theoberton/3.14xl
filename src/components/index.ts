@@ -18,3 +18,4 @@ export * from './AddressLabel';
 export * from './SharePanel';
 export * from './ShareButton';
 export * from './ConnectButton';
+export * from './Checkbox';

@@ -20,8 +20,8 @@ export class NftItem extends BaseLocalContract {
 		return new NftItem(address);
 	}
 
-	static createFromConfig(config: NftItemData, code?: Cell) {
-		const { stateInit, address } = buildNftItemStateInit(config, code);
+	static createFromConfig(config: NftItemData) {
+		const { stateInit, address } = buildNftItemStateInit(config);
 
 		return new NftItem(address, stateInit);
 	}
@@ -64,6 +64,15 @@ export class NftItem extends BaseLocalContract {
 			ownerAddress,
 			content: decodeOffChainContent(content),
 			contentRaw: content,
+		};
+	}
+
+	async getAuthortyData(provider: ContractProvider): Promise<{ authorityAddress: Address }> {
+		const { stack } = await provider.get('get_authority_address', []);
+		const authorityAddress = stack.readAddress();
+
+		return {
+			authorityAddress,
 		};
 	}
 

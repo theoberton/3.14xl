@@ -1,4 +1,6 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { Label } from '@/components';
+import { useMediaQuery } from 'react-responsive';
 
 import { Tooltip } from '@/components/Tooltip';
 
@@ -15,12 +17,16 @@ import styles from './styles.module.scss';
 import { composeMintTransaction } from '@/pages/EditionDetails/helper';
 import MintDateSection from './MintTime';
 import { AddressLabel, ConnectButton } from '@/components';
+console.log('useMediaQuery', useMediaQuery);
+import { FastMintModal } from './FastMintModal';
+import { generateFastMinkLink } from './generateFastMintLink';
 
 type Props = {
 	getEditionDetails: () => void;
 	setCurrentNftItemIndex: React.Dispatch<React.SetStateAction<number>>;
 	currentNextNftItemIndex: number;
 	editionData: ManagerFullData;
+	collectionAddress: string;
 };
 
 // @todo: refactor this func
@@ -29,8 +35,22 @@ function EditionDetails({
 	currentNextNftItemIndex,
 	setCurrentNftItemIndex,
 	getEditionDetails,
+	collectionAddress,
 }: Props) {
 	const now = useTime();
+	const [isFastMintModalOpened, setFastMintOpenModal] = useState(false);
+	const [fastMintLink, setFastMintLink] = useState<string | null>(null);
+	const [isFastMintQRLoading, setFastMintQrLoading] = useState(false);
+
+	const prepareFastMintLink = useCallback(async () => {
+		try {
+			const link = await generateFastMinkLink(collectionData, content, collectionAddress);
+			setFastMintLink(link);
+		} catch (error) {
+			console.error('Error occured when generating fast mint link');
+		}
+
+	}, [collectionData, setFastMintQrLoading]);
 
 	const [isDeploymentModalOpened, setDeploymentStatus] = useState(false);
 
@@ -45,6 +65,27 @@ function EditionDetails({
 	}, []);
 	const handleDeploymentModalOpen = useCallback(() => {
 		setDeploymentStatus(true);
+	}, []);
+
+	useEffect(() => {
+		if (!fastMintLink) {
+			prepareFastMintLink();
+		}
+	}, [fastMintLink]);
+
+	const runFastMintModal = useCallback(async () => {
+		if (!fastMintLink) {
+			setFastMintQrLoading(true);
+
+			await prepareFastMintLink();
+
+			setFastMintQrLoading(false);
+			setFastMintOpenModal(true);
+		}
+	}, [fastMintLink]);
+
+	const closeFastMintModal = useCallback(() => {
+		setFastMintOpenModal(false);
 	}, []);
 
 	const mint = async () => {
@@ -78,7 +119,15 @@ function EditionDetails({
 					onClose={handleDeploymentModalClose}
 				/>
 			)}
+			{isFastMintModalOpened && fastMintLink && (
+				<FastMintModal
+					value={fastMintLink}
+					isOpen={isFastMintModalOpened}
+					closeModal={closeFastMintModal}
+				/>
+			)}
 			<MintDateSection now={now} content={content} collectionData={collectionData} />
+
 			<div className={styles.editionDetailsInfoPrice}>
 				<div className={styles.editionDetailsInfoPriceBlock}>
 					<h3>PRICE</h3>
@@ -105,6 +154,25 @@ function EditionDetails({
 								</Button>
 							</ConnectButton>
 						)}
+						{(
+							<div className={styles.editionDetailsInfoAboutMintQR}>
+								<Tooltip
+									isHoverable
+									bottomPlaced
+									title="Note: Sometimes it may take up to 30 seconds for QR mint to become active after its generation"
+								>
+									<Button
+										componentType="button"
+										basicInverted
+										expanded
+										kind={ButtonKinds.basic}
+										onClick={runFastMintModal}
+									>
+										{!isFastMintQRLoading ? 'Generate Mint QR' : 'Preparing...'}
+									</Button>
+								</Tooltip>
+							</div>
+						)}
 					</div>
 				)}
 			</div>
@@ -113,6 +181,7 @@ function EditionDetails({
 					<h3>ABOUT</h3>
 					<div className={styles.editionDetailsInfoAboutName}>
 						<h1>{content.name}</h1>
+						{content.isSoulbound ? <Label text={'Soulbound'} grey mini /> : null}
 					</div>
 					<p className={styles.editionDetailsInfoAboutDescription}>{content.description}</p>
 				</div>
@@ -132,7 +201,9 @@ function EditionDetails({
 			<div className={styles.editionDetailsInfoData}>
 				<h3>DETAILS</h3>
 				<div>
-					<p>Contract Address</p>
+					<div className={styles.editionDetailsInfoDataContract}>
+						<p>Contract Address</p>
+					</div>
 					<AddressLabel address={collectionData.address} withIcon={false} />
 				</div>
 				<div>

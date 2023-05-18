@@ -4,6 +4,7 @@ import { RoyaltyParams } from './nft-collection';
 export interface NftInitItemData {
 	itemIndex: number;
 	collectionAddress: Address | null;
+	authorityAddress?: Address | null;
 }
 
 export interface NftItemInitMessageParams {
@@ -16,6 +17,7 @@ export interface NftItemData {
 	collectionAddress: Address | null;
 	ownerAddress: Address;
 	content: string;
+	isSoulbound?: boolean;
 }
 
 export interface NftItemContent {

@@ -1,8 +1,9 @@
 import { useEffect, useCallback } from 'react';
-import { Form, useFormikContext } from 'formik';
+import { Form, useFormikContext, useField } from 'formik';
 import { DeploymentModal } from '@/pages/CreateEdition/DeploymentModal';
 import { getConsonants } from '@/helpers';
 import { useEarlyMemberStatus } from '@/hooks';
+import { EDITIONS_SIZES } from '@/constants/common';
 
 import styles from '@/pages/CreateEdition/styles.module.scss';
 
@@ -11,6 +12,7 @@ import { FormValues } from '@/pages/CreateEdition/interfaces';
 import EditionSize from '@/pages/CreateEdition/EditionSize';
 import ValidityPeriod from '@/pages/CreateEdition/ValidityPeriod';
 import { useTonAddress } from '@tonconnect/ui-react';
+import { Checkbox } from '@/components';
 
 type Props = {
 	deploymentState: { isModalOpened: boolean; address: string; editionName: string };
@@ -41,7 +43,12 @@ export function FormArea({
 			setFieldValue('payoutAddress', tonConnectAddress);
 		}
 	}, [tonConnectAddress, values.payoutAddress]);
-	console.log('isEarlyMember', isEarlyMember);
+
+	useEffect(() => {
+		if (values.editionSize.type === EDITIONS_SIZES.FIXED) {
+			setFieldValue('isSoulbound', false);
+		}
+	}, [values.editionSize.type]);
 
 	useEffect(() => {
 		if ((touched.symbol && values.symbol && !values.name) || isSubmitting) {
@@ -56,6 +63,11 @@ export function FormArea({
 			setFieldValue('symbol', `$${symbolVersion.toUpperCase()}`);
 		}
 	}, [values.name, touched.symbol, isSubmitting]);
+
+	const handleSoulboundClick = useCallback(() => {
+		setFieldValue('editionSize.type', EDITIONS_SIZES.OPEN_EDITION);
+		setFieldValue('editionSize.amount', '');
+	}, []);
 
 	return (
 		<Form className={styles.createEdition}>
@@ -97,6 +109,15 @@ export function FormArea({
 			)}
 			<EditionSize />
 			<ValidityPeriod />
+			<div className={styles.customFieldContainer}>
+				<Checkbox
+					onClick={handleSoulboundClick}
+					name="isSoulbound"
+					label="NFT details"
+					title="Soulbound"
+					optional
+				/>
+			</div>
 			<Input label={'Royalty'} name="royalty" type="number" placeholder="5" units="%" />
 			<Input
 				subCaption="Address that will receive withdrawals and royalties"
