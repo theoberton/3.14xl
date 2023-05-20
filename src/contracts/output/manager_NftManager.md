@@ -38,7 +38,7 @@ TLB: `update_content#00000004 query_id:uint64 collection_content:^cell = UpdateC
 Signature: `UpdateContent{query_id:uint64,collection_content:^cell}`
 
 ## MintSafe
-TLB: `mint_safe#4789006b query_id:uint64 next_item_index:uint64 item_owner:Maybe address = MintSafe`
+TLB: `mint_safe#c6159a72 query_id:uint64 next_item_index:uint64 item_owner:Maybe address = MintSafe`
 Signature: `MintSafe{query_id:uint64,next_item_index:uint64,item_owner:Maybe address}`
 
 ## EditData

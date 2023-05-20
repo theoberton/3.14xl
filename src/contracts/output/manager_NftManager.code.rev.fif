@@ -710,13 +710,13 @@ SETCP0
         -1 PUSHINT
       }> IFJMPREF
       s1 PUSH
-      1200160875 PUSHINT
+      3323304562 PUSHINT
       EQUAL
       <{
         s1 POP
         32 LDU
         s0 s1 XCHG
-        1200160875 PUSHINT
+        3323304562 PUSHINT
         EQUAL
         129 THROWIFNOT
         64 LDU
