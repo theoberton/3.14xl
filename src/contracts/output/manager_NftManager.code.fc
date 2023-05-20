@@ -164,7 +164,7 @@ cell __gen_writecell_UpdateContent((int, cell) v) inline {
 }
 
 (slice, ((int, int, slice))) __gen_read_MintSafe(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 1200160875);
+    throw_unless(129, sc_0~load_uint(32) == 3323304562);
     var v'query_id = sc_0~load_uint(64);
     var v'next_item_index = sc_0~load_uint(64);
     var v'item_owner = sc_0~__tact_load_address_opt();
@@ -539,7 +539,7 @@ slice __gen_slice_address_d78b550aaa9750d9d9cefa48a13776d0c56f2aec64ae92bd04598a
     }
     
     ;; Receive MintSafe message
-    if (op == 1200160875) {
+    if (op == 3323304562) {
         var msg = in_msg~__gen_read_MintSafe();
         self~$__gen_NftManager_receive_MintSafe(msg);
         return (self, true);
@@ -589,7 +589,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() {
-    return "ipfs://QmQ6wBXpsvS6opPPdQjDCdCfAdJ1nv1qY3SxVXXGaqZCn2";
+    return "ipfs://QmanDCwquyzxYWtHMzceJ4A269qAndp9VX3wRSTYuoZmoz";
 }
 
 _ lazy_deployment_completed() {

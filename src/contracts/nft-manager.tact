@@ -17,7 +17,7 @@ message(0x4) UpdateContent {
   collection_content: Cell;
 }
 
-message MintSafe {
+message(0xc6159a72) MintSafe {
   query_id: Int as uint64;
   next_item_index: Int as uint64;
   item_owner: Address?;

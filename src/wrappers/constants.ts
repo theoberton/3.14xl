@@ -25,7 +25,7 @@ export const NftItemOpcodes = {
 };
 
 export const NftManagerOpcodes = {
-	MintSafe: 1200160875,
+	MintSafe: 3323304562,
 	EditData: 2226095555,
 	SetNftCollectionAddress: 435957060,
 	ChangeOwnerOfCollection: 1126980855,
