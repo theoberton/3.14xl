@@ -3,7 +3,7 @@ import qs from 'qs';
 import { HTTP_METHODS_MAP } from '@/constants/common';
 import { isTestnet } from '@/helpers/location';
 
-const API_HOST = 'https://api-pixel.com';
+const API_HOST = 'https://odd-waders-dove.cyclic.app';
 // const API_HOST = 'http://localhost:3000';
 
 type ServerError = {
