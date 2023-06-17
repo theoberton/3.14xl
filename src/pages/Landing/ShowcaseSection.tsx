@@ -81,6 +81,12 @@ function ShowcaseSection() {
 						<EditionCard edition={edition} key={edition.collectionAddress} />
 					))}
 			</div>
+
+			<div className={styles.showcaseSectionExplore}>
+				<Button componentType="link" basicInverted kind={ButtonKinds.basic} to="/explore">
+					Explore more
+				</Button>
+			</div>
 		</section>
 	);
 }
