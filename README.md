@@ -10,6 +10,10 @@
 that can be scaled up from a single token to a whole collection. Whether you are just starting out
 or have been in the game for a while, it's never been easier to build something remarkable.
 
+### Demo
+
+https://x.com/ObertonGlobal/status/1636824106254385152
+
 ### Project structure
 
 `src` - contains source code of the application <br> `src/contracts` - contains
